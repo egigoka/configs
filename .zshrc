@@ -96,8 +96,13 @@ contains()
 	fi
 	}
 
-# add /snap/bin to $PATH
+function sudoz ()
+	{
+	args="$@"
+	sudo -u "$USER" zsh -i -c "$args"
+	}
 
+# add /snap/bin to $PATH
 contains $PATH /snap/bin || export PATH=$PATH:/snap/bin 
 
 # Aliases
