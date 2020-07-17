@@ -102,8 +102,9 @@ function sudoz ()
 	sudo -u "$USER" zsh -i -c "$args"
 	}
 
-# add /snap/bin to $PATH
+# add some folders to PATH
 contains $PATH /snap/bin || export PATH=$PATH:/snap/bin 
+contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
 
 # Aliases
 alias py="python3"
