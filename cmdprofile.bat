@@ -5,6 +5,7 @@ doskey d=docker $*
 doskey ga=git add $*
 doskey gp=git pull
 doskey gc=git commit -a -m "$*"
+doskey gu=git push $*
 
 doskey py=python $*
 
