@@ -7,3 +7,5 @@ doskey gc=git commit -a -m "$*"
 doskey killall=taskkill /f /im $*
 doskey py=python $*
 doskey open=start "" "$*"
+
+doskey rm=del $*
