@@ -102,6 +102,22 @@ function sudoz ()
 	sudo -u "$USER" zsh -i -c "$args"
 	}
 
+function time_dotted()
+	{
+	return date +"%Y.%m.%d_at_%H.%M.%S.%N"
+	}
+
+btrsnap() {
+    args = "$@"
+    if [ "$1" != "" ]
+    then
+    	time = time_dotted()
+        sudo btrfs subvolume snapshot / /snap/time
+    else
+        
+    fi
+}
+
 # add some folders to PATH
 contains $PATH /snap/bin || export PATH=$PATH:/snap/bin 
 contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
@@ -117,3 +133,5 @@ alias ipconfig="ip a"
 alias ifconfig="ip a"
 alias reboot="sudo reboot"
 alias usedports="sudo nmap -n -PN -sT -sU -p- localhost"
+alias install="sudo zypper -n install"
+alias listdisks="lsblk -io NAME,TYPE,SIZE,MOUNTPOINT,FSTYPE,MODEL"
