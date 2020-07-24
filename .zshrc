@@ -124,18 +124,33 @@ contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.loca
 
 # Aliases
 alias py="python3"
+
+# sudo aliases
 alias unmount="sudo umount"
 alias mount="sudo mount"
 alias zypper="sudo zypper"
 alias snap="sudo snap"
 alias yast="sudo yast"
-alias ipconfig="ip a"
-alias ifconfig="ip a"
 alias reboot="sudo reboot"
-alias usedports="sudo nmap -n -PN -sT -sU -p- localhost"
+alias systemctl="sudo systemctl"
+alias useradd="sudo useradd"
+alias groupadd="sudo groupadd"
+alias usermod="sudo usermod"
+alias btrfs="sudo btrfs"
+
+# easy packet management
 alias install="sudo zypper -n install"
 alias uninstall="sudo zypper -n remove"
+
+# outdated commands
+alias ipconfig="ip a"
+alias ifconfig="ip a"
+
+# disk management
 alias listdisks="lsblk -io NAME,TYPE,SIZE,MOUNTPOINT,FSTYPE,MODEL"
 alias freespace="df -kh ."
 alias freespaceall="df -kh"
+alias listdisks="lsblk"
+
+# idk im stupid
 alias zshconfig="micro ~/.zshrc"
