@@ -124,6 +124,7 @@ contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.loca
 
 # Aliases
 alias py="python3"
+alias pip="pip3"
 
 # sudo aliases
 alias unmount="sudo umount"
@@ -134,9 +135,12 @@ alias yast="sudo yast"
 alias reboot="sudo reboot"
 alias systemctl="sudo systemctl"
 alias useradd="sudo useradd"
+alias userdel="sudo userdel"
 alias groupadd="sudo groupadd"
 alias usermod="sudo usermod"
 alias btrfs="sudo btrfs"
+alias mkfs.btrfs="sudo mkfs.btrfs"
+alias openvpn="sudo openvpn"
 
 # easy packet management
 alias install="sudo zypper -n install"
@@ -144,13 +148,17 @@ alias uninstall="sudo zypper -n remove"
 
 # outdated commands
 alias ipconfig="ip a"
-alias ifconfig="ip a"
+alias ifconfig="ipconfig"
 
 # disk management
 alias listdisks="lsblk -io NAME,TYPE,SIZE,MOUNTPOINT,FSTYPE,MODEL"
+alias alldisks="listdisks"
 alias freespace="df -kh ."
 alias freespaceall="df -kh"
 alias listdisks="lsblk"
+alias btr="btrfs"
+alias btrusage="btr filesystem usage"
+alias diskusage="ncdu"
 
 # idk im stupid
 alias zshconfig="micro ~/.zshrc"
