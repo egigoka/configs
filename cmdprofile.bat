@@ -14,4 +14,6 @@ doskey open=start "" "$*"
 
 doskey rm=del $*
 doskey killall=taskkill /f /im $*
-
+doskey ll=dir $*
+doskey ls=dir $*
+doskey la=dir $*
