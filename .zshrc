@@ -24,11 +24,15 @@ COMPLETION_WAITING_DOTS="true"
 
 HIST_STAMPS="yyyy.mm.dd"
 
+ZSH_COLORIZE_TOOL=chroma
+ZSH_COLORIZE_STYLE="colorful"
+ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python)
+plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -79,6 +83,7 @@ btrsnap() {
 contains $PATH /snap/bin || export PATH=$PATH:/snap/bin 
 contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
 contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
+contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
 
 # add plex home var
 export PLEX_HOME='/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/'
