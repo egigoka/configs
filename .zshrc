@@ -6,7 +6,8 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/configs/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM="$HOME/configs/ZSH_CUSTOM"
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="agnoster"
