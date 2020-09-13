@@ -33,7 +33,7 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions)
+plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions thefuck)
 
 source $ZSH/oh-my-zsh.sh
 
