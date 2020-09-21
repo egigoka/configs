@@ -19,7 +19,8 @@ HYPHEN_INSENSITIVE="true"
 
 export UPDATE_ZSH_DAYS=13
 
-ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false" # gib it to thefuck
+eval $(thefuck --enable-experimental-instant-mode)
 
 COMPLETION_WAITING_DOTS="true"
 
@@ -97,7 +98,10 @@ contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
 # add plex home var
 export PLEX_HOME='/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/'
 
-# Aliases
+# git
+alias gs="git status"
+
+# python
 alias py="python3"
 alias pip="pip3"
 
