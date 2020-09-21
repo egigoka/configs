@@ -7,6 +7,7 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM="$HOME/configs/ZSH_CUSTOM"
 
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="agnoster"
@@ -32,7 +33,7 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose)
+plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose thefuck)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -60,7 +61,14 @@ contains()
 function sudoz ()
 	{
 	args="$@"
-	sudo -u "$USER" zsh -i -c "$args"
+	sudo zsh -i -c "$args"
+	}
+
+autoload -U add-zsh-hook
+add-zsh-hook -Uz chpwd ()
+	{
+	# this hooks into chpwd (function to change working directory)
+	la; 
 	}
 
 function time_dotted()
@@ -80,6 +88,7 @@ btrsnap() {
 }
 
 # add some folders to PATH
+contains $PATH . || export PATH=$PATH:.
 contains $PATH /snap/bin || export PATH=$PATH:/snap/bin 
 contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
 contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
