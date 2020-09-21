@@ -34,7 +34,7 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions thefuck)
+plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose thefuck)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -101,7 +101,13 @@ export PLEX_HOME='/var/lib/plexmediaserver/Library/Application Support/Plex Medi
 # git
 alias gs="git status"
 
-# python
+# docker aliases
+alias d="docker"
+alias dps="docker ps --format \"table {{.ID}}\t{{.Status}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\""
+alias dip="docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'"
+alias dnwls="docker network ls"
+
+# aliases
 alias py="python3"
 alias pip="pip3"
 
@@ -124,6 +130,7 @@ alias openvpn="sudo openvpn"
 # easy packet management
 alias install="sudo zypper -n install"
 alias uninstall="sudo zypper -n remove"
+alias updateall="zypper ref; zypper list-updates --all; zypper update"
 
 # outdated commands
 alias ipconfig="ip a"
