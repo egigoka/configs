@@ -19,7 +19,7 @@ HYPHEN_INSENSITIVE="true"
 
 export UPDATE_ZSH_DAYS=13
 
-ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 
 COMPLETION_WAITING_DOTS="true"
 
@@ -33,7 +33,7 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose thefuck)
+plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose thefuck command-not-found osx autoupdate-oh-my-zsh-plugins colored-man-pages-mod homebrew last-working-directory sudo uvenv )
 
 source $ZSH/oh-my-zsh.sh
 
@@ -102,8 +102,14 @@ alias d="docker"
 alias dps="docker ps --format \"table {{.ID}}\t{{.Status}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\""
 alias dip="docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'"
 alias dnwls="docker network ls"
+alias d-="docker stop"
+alias d+="docker start"
+alias drm="d rm"
 
-# aliases
+# micro
+alias m="micro"
+
+# python
 alias py="python3"
 alias pip="pip3"
 
@@ -122,6 +128,7 @@ alias usermod="sudo usermod"
 alias btrfs="sudo btrfs"
 alias mkfs.btrfs="sudo mkfs.btrfs"
 alias openvpn="sudo openvpn"
+alias iotop="sudo iotop"
 
 # easy packet management
 alias install="sudo zypper -n install"
@@ -142,8 +149,19 @@ alias btr="btrfs"
 alias btrusage="btr filesystem usage"
 alias diskusage="ncdu"
 
+# systemd
+alias sc="systemctl"  # anyway I hate vim
+alias scdr="sc daemon-reload"
+alias scrd="scdr"
+alias sc+="sc start"
+alias sc-="sc stop"
+alias scr="sc restart"
+alias scs="sc status"
+
 # idk im stupid
 alias zshconfig="micro ~/.zshrc"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+eval $(thefuck --alias)
