@@ -20,6 +20,8 @@ HYPHEN_INSENSITIVE="true"
 export UPDATE_ZSH_DAYS=13
 
 ENABLE_CORRECTION="false"
+ENABLE_CORRECTION="false" # gib it to thefuck
+eval $(thefuck --enable-experimental-instant-mode)
 
 COMPLETION_WAITING_DOTS="true"
 
@@ -96,6 +98,9 @@ contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
 
 # add plex home var
 export PLEX_HOME='/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/'
+
+# git
+alias gs="git status"
 
 # docker aliases
 alias d="docker"
