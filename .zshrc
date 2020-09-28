@@ -165,6 +165,8 @@ alias scs="sc status"
 
 # idk im stupid
 alias zshconfig="micro ~/.zshrc"
+alias copy="cp"
+alias move="mv"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
