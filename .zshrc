@@ -107,7 +107,7 @@ alias dps="docker ps --format \"table {{.ID}}\t{{.Status}}\t{{.Names}}\t{{.Image
 alias dip="docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'"
 alias dnwls="docker network ls"
 
-# aliases
+# python aliases
 alias py="python3"
 alias pip="pip3"
 
@@ -145,6 +145,9 @@ alias listdisks="lsblk"
 alias btr="btrfs"
 alias btrusage="btr filesystem usage"
 alias diskusage="ncdu"
+
+# youtube-dl aliases
+alias ytd="youtube-dl"
 
 # idk im stupid
 alias zshconfig="micro ~/.zshrc"
