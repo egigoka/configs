@@ -88,12 +88,15 @@ btrsnap() {
     fi
 }
 
+# rust
+export RUST_BACKTRACE=full
+
 # add some folders to PATH
 contains $PATH . || export PATH=$PATH:.
-contains $PATH /snap/bin || export PATH=$PATH:/snap/bin 
 contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
 contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
 contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
+contains $PATH /home/egigoka/.cargo/bin || export PATH=$PATH:/home/egigoka/.cargo/bin  # rust
 
 # docker
 alias d="docker"
