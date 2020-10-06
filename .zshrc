@@ -19,7 +19,8 @@ HYPHEN_INSENSITIVE="true"
 
 export UPDATE_ZSH_DAYS=13
 
-ENABLE_CORRECTION="false"
+ENABLE_CORRECTION="false" # gib it to thefuck
+eval $(thefuck --enable-experimental-instant-mode)
 
 COMPLETION_WAITING_DOTS="true"
 
@@ -94,7 +95,7 @@ contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.loca
 contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
 contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
 
-# docker aliases
+# docker
 alias d="docker"
 alias dps="docker ps --format \"table {{.ID}}\t{{.Status}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\""
 alias dip="docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'"
@@ -103,7 +104,6 @@ alias d-="docker stop"
 alias d+="docker start"
 alias drm="d rm"
 
-# python aliases
 # micro
 alias m="micro"
 
@@ -111,7 +111,7 @@ alias m="micro"
 alias py="python3"
 alias pip="pip3"
 
-# sudo aliases
+# sudo
 alias unmount="sudo umount"
 alias mount="sudo mount"
 alias zypper="sudo zypper"
@@ -147,9 +147,10 @@ alias btr="btrfs"
 alias btrusage="btr filesystem usage"
 alias diskusage="ncdu"
 
-# youtube-dl aliases
+# youtube-dl
 alias ytd="youtube-dl"
 
+# systemd
 alias sc="systemctl"  # anyway I hate vim
 alias scdr="sc daemon-reload"
 alias scrd="scdr"
@@ -162,6 +163,9 @@ alias scs="sc status"
 alias zshconfig="micro ~/.zshrc"
 alias copy="cp"
 alias move="mv"
+
+# git
+alias gs="git status"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
