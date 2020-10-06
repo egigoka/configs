@@ -20,8 +20,6 @@ HYPHEN_INSENSITIVE="true"
 export UPDATE_ZSH_DAYS=13
 
 ENABLE_CORRECTION="false"
-ENABLE_CORRECTION="false" # gib it to thefuck
-eval $(thefuck --enable-experimental-instant-mode)
 
 COMPLETION_WAITING_DOTS="true"
 
@@ -95,12 +93,6 @@ contains $PATH /snap/bin || export PATH=$PATH:/snap/bin
 contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
 contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
 contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
-
-# add plex home var
-export PLEX_HOME='/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/'
-
-# git
-alias gs="git status"
 
 # docker aliases
 alias d="docker"
