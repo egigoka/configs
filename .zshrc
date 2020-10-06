@@ -103,6 +103,7 @@ alias d-="docker stop"
 alias d+="docker start"
 alias drm="d rm"
 
+# python aliases
 # micro
 alias m="micro"
 
@@ -146,7 +147,9 @@ alias btr="btrfs"
 alias btrusage="btr filesystem usage"
 alias diskusage="ncdu"
 
-# systemd
+# youtube-dl aliases
+alias ytd="youtube-dl"
+
 alias sc="systemctl"  # anyway I hate vim
 alias scdr="sc daemon-reload"
 alias scrd="scdr"
