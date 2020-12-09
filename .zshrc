@@ -1,80 +1,43 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export ZSH_CUSTOM="$HOME/configs/ZSH_CUSTOM"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster"
+# ZSH_THEME="agnoster"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+ZLE_RPROMPT_INDENT=0
 
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
 HYPHEN_INSENSITIVE="true"
 
-# Uncomment the following line to disable bi-weekly auto-update checks.
-# DISABLE_AUTO_UPDATE="true"
-
-# Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
-
-# Uncomment the following line to change how often to auto-update (in days).
 export UPDATE_ZSH_DAYS=13
 
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
+ENABLE_CORRECTION="false" # gib it to thefuck
+eval $(thefuck --enable-experimental-instant-mode)
 
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
-
-# Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
 HIST_STAMPS="yyyy.mm.dd"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+ZSH_COLORIZE_TOOL=chroma
+ZSH_COLORIZE_STYLE="colorful"
+ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python)
+plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose thefuck command-not-found osx autoupdate-oh-my-zsh-plugins colored-man-pages-mod homebrew last-working-directory sudo uvenv )
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
-
-# You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
@@ -99,7 +62,14 @@ contains()
 function sudoz ()
 	{
 	args="$@"
-	sudo -u "$USER" zsh -i -c "$args"
+	sudo zsh -i -c "$args"
+	}
+
+autoload -U add-zsh-hook
+add-zsh-hook -Uz chpwd ()
+	{
+	# this hooks into chpwd (function to change working directory)
+	la; 
 	}
 
 function time_dotted()
@@ -118,15 +88,33 @@ btrsnap() {
     fi
 }
 
-# add some folders to PATH
-contains $PATH /snap/bin || export PATH=$PATH:/snap/bin 
-contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
+# rust
+export RUST_BACKTRACE=full
 
-# Aliases
+# add some folders to PATH
+contains $PATH . || export PATH=$PATH:.
+contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
+contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
+contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
+contains $PATH /home/egigoka/.cargo/bin || export PATH=$PATH:/home/egigoka/.cargo/bin  # rust
+
+# docker
+alias d="docker"
+alias dps="docker ps --format \"table {{.ID}}\t{{.Status}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\""
+alias dip="docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'"
+alias dnwls="docker network ls"
+alias d-="docker stop"
+alias d+="docker start"
+alias drm="d rm"
+
+# micro
+alias m="micro"
+
+# python
 alias py="python3"
 alias pip="pip3"
 
-# sudo aliases
+# sudo
 alias unmount="sudo umount"
 alias mount="sudo mount"
 alias zypper="sudo zypper"
@@ -141,10 +129,12 @@ alias usermod="sudo usermod"
 alias btrfs="sudo btrfs"
 alias mkfs.btrfs="sudo mkfs.btrfs"
 alias openvpn="sudo openvpn"
+alias iotop="sudo iotop"
 
 # easy packet management
 alias install="sudo zypper -n install"
 alias uninstall="sudo zypper -n remove"
+alias updateall="zypper ref; zypper list-updates --all; zypper update"
 
 # outdated commands
 alias ipconfig="ip a"
@@ -160,5 +150,27 @@ alias btr="btrfs"
 alias btrusage="btr filesystem usage"
 alias diskusage="ncdu"
 
+# youtube-dl
+alias ytd="youtube-dl"
+
+# systemd
+alias sc="systemctl"  # anyway I hate vim
+alias scdr="sc daemon-reload"
+alias scrd="scdr"
+alias sc+="sc start"
+alias sc-="sc stop"
+alias scr="sc restart"
+alias scs="sc status"
+
 # idk im stupid
 alias zshconfig="micro ~/.zshrc"
+alias copy="cp"
+alias move="mv"
+
+# git
+alias gs="git status"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+eval $(thefuck --alias)
