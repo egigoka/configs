@@ -68,7 +68,7 @@ autoload -U add-zsh-hook
 add-zsh-hook -Uz chpwd ()
 	{
 	# this hooks into chpwd (function to change working directory)
-#!!! 	la; 
+ 	la; 
 	}
 
 function time_dotted()
