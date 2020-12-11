@@ -19,8 +19,7 @@ HYPHEN_INSENSITIVE="true"
 
 export UPDATE_ZSH_DAYS=13
 
-ENABLE_CORRECTION="false" # gib it to thefuck
-eval $(thefuck --enable-experimental-instant-mode)
+ENABLE_CORRECTION="false" # correction conflicts with colored-man-pages_mod
 
 COMPLETION_WAITING_DOTS="true"
 
@@ -34,7 +33,7 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose thefuck command-not-found osx autoupdate-oh-my-zsh-plugins colored-man-pages-mod homebrew last-working-directory sudo uvenv )
+plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found osx autoupdate colored-man-pages_mod omz-homebrew last-working-dir sudo uvenv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -69,7 +68,7 @@ autoload -U add-zsh-hook
 add-zsh-hook -Uz chpwd ()
 	{
 	# this hooks into chpwd (function to change working directory)
-	la; 
+ 	la; 
 	}
 
 function time_dotted()
@@ -172,5 +171,3 @@ alias gs="git status"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-eval $(thefuck --alias)
