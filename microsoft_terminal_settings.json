@@ -20,7 +20,7 @@
     "copyFormatting": false,
 	
 	//my
-	"startOnUserLogin": true,
+	"startOnUserLogin": false,
 	"confirmCloseAllTabs": false,
 	"snapToGridOnResize": false,
 	"tabWidthMode": "titleLength",

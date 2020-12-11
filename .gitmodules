@@ -1,0 +1,3 @@
+[submodule "ZSH_CUSTOM/plugins/ZSH_CUSTOM/plugins/autoupdate"]
+	path = ZSH_CUSTOM/plugins/ZSH_CUSTOM/plugins/autoupdate
+	url = https://github.com/TamCore/autoupdate-oh-my-zsh-plugins.git
