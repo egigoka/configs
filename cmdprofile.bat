@@ -14,7 +14,7 @@ doskey g=git $*
 
 doskey py=python $*
 
-doskey unelevated=cmd /min /C "set __COMPAT_LAYER=RUNASINVOKER && start "" %1"
+doskey unelevated=cmd /min /C "set __COMPAT_LAYER=RUNASINVOKER && start """" $1"
 doskey open=start "" "$*"
 
 doskey rm=del $*
