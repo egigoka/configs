@@ -36,7 +36,7 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found osx autoupdate colored-man-pages_mod omz-homebrew last-working-dir sudo uvenv)
+plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found osx autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
 
 source $ZSH/oh-my-zsh.sh
 
