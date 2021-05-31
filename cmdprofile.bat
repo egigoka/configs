@@ -3,6 +3,8 @@
 dir
 TITLE %CD%
 
+
+
 doskey cd=cd $* $T$T dir $T$T TITLE %%CD%%
 
 doskey k=kubectl $*
