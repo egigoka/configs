@@ -117,25 +117,31 @@ alias py="python3"
 alias pip="pip3"
 
 # sudo
-alias unmount="sudo umount"
-alias mount="sudo mount"
-alias zypper="sudo zypper"
-alias snap="sudo snap"
-alias yast="sudo yast"
-alias reboot="sudo reboot"
-alias systemctl="sudo systemctl"
-alias useradd="sudo useradd"
-alias userdel="sudo userdel"
-alias groupadd="sudo groupadd"
-alias usermod="sudo usermod"
-alias btrfs="sudo btrfs"
-alias mkfs.btrfs="sudo mkfs.btrfs"
-alias openvpn="sudo openvpn"
-alias iotop="sudo iotop"
+if [[ $UID == 0 || $EUID == 0 ]]; then
+   # root
+   
+else
+   # not root
+   alias unmount="sudo umount"
+   alias mount="sudo mount"
+   alias zypper="sudo zypper"
+   alias snap="sudo snap"
+   alias yast="sudo yast"
+   alias reboot="sudo reboot"
+   alias systemctl="sudo systemctl"
+   alias useradd="sudo useradd"
+   alias userdel="sudo userdel"
+   alias groupadd="sudo groupadd"
+   alias usermod="sudo usermod"
+   alias btrfs="sudo btrfs"
+   alias mkfs.btrfs="sudo mkfs.btrfs"
+   alias openvpn="sudo openvpn"
+   alias iotop="sudo iotop"
+fi
 
 # easy packet management
-alias install="sudo zypper -n install"
-alias uninstall="sudo zypper -n remove"
+alias install="zypper -n install"
+alias uninstall="zypper -n remove"
 alias updateall="zypper ref; zypper list-updates --all; zypper update"
 
 # outdated commands
