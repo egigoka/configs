@@ -38,6 +38,10 @@ plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autos
 
 source $ZSH/oh-my-zsh.sh
 
+# fix fucking ls utf8 decoding
+export LC_COLLATE=C
+export LANGUAGE=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
@@ -62,7 +66,7 @@ contains()
 function sudoz ()
 	{
 	args="$@"
-	sudo zsh -i -c "$args"
+	doas zsh -i -c "$args"
 	}
 
 autoload -U add-zsh-hook
@@ -114,7 +118,11 @@ alias m="micro"
 alias py="python3"
 alias pip="pip3"
 
-# sudo
+# youtube-dl
+alias ydl="youtube-dl"
+
+# sudo and doas
+alias sudo="doas"
 alias unmount="sudo umount"
 alias mount="sudo mount"
 alias zypper="sudo zypper"
@@ -130,6 +138,8 @@ alias btrfs="sudo btrfs"
 alias mkfs.btrfs="sudo mkfs.btrfs"
 alias openvpn="sudo openvpn"
 alias iotop="sudo iotop"
+alias iftop="sudo iftop"
+alias smbstatus="sudo smbstatus"
 
 # easy packet management
 alias install="sudo zypper -n install"
@@ -166,6 +176,7 @@ alias scs="sc status"
 alias zshconfig="micro ~/.zshrc"
 alias copy="cp"
 alias move="mv"
+alias q="exit"
 
 # git
 alias gs="git status"
