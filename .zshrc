@@ -1,3 +1,6 @@
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet  # to fix error because of output in chpwd
+# partially fixed, error does'n appear only on first zsh process
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -19,8 +22,7 @@ HYPHEN_INSENSITIVE="true"
 
 export UPDATE_ZSH_DAYS=13
 
-ENABLE_CORRECTION="false" # gib it to thefuck
-eval $(thefuck --enable-experimental-instant-mode)
+ENABLE_CORRECTION="false" # correction conflicts with colored-man-pages_mod
 
 COMPLETION_WAITING_DOTS="true"
 
@@ -34,7 +36,7 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose thefuck command-not-found osx autoupdate-oh-my-zsh-plugins colored-man-pages-mod homebrew last-working-directory sudo uvenv )
+plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found osx autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -50,6 +52,13 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='micro'
 fi
+
+autoload -U add-zsh-hook
+add-zsh-hook -Uz chpwd ()
+	{
+	# this hooks into chpwd (function to change working directory)
+	la;
+	}
 
 contains() 
 	{
@@ -67,13 +76,6 @@ function sudoz ()
 	{
 	args="$@"
 	doas zsh -i -c "$args"
-	}
-
-autoload -U add-zsh-hook
-add-zsh-hook -Uz chpwd ()
-	{
-	# this hooks into chpwd (function to change working directory)
-	la; 
 	}
 
 function time_dotted()
@@ -123,27 +125,32 @@ alias ydl="youtube-dl"
 
 # sudo and doas
 alias sudo="doas"
-alias unmount="sudo umount"
-alias mount="sudo mount"
-alias zypper="sudo zypper"
-alias snap="sudo snap"
-alias yast="sudo yast"
-alias reboot="sudo reboot"
-alias systemctl="sudo systemctl"
-alias useradd="sudo useradd"
-alias userdel="sudo userdel"
-alias groupadd="sudo groupadd"
-alias usermod="sudo usermod"
-alias btrfs="sudo btrfs"
-alias mkfs.btrfs="sudo mkfs.btrfs"
-alias openvpn="sudo openvpn"
-alias iotop="sudo iotop"
-alias iftop="sudo iftop"
-alias smbstatus="sudo smbstatus"
+if [[ $UID == 0 || $EUID == 0 ]]; then
+   # root
+else
+   # not root
+   alias unmount="sudo umount"
+   alias mount="sudo mount"
+   alias zypper="sudo zypper"
+   alias snap="sudo snap"
+   alias yast="sudo yast"
+   alias reboot="sudo reboot"
+   alias systemctl="sudo systemctl"
+   alias useradd="sudo useradd"
+   alias userdel="sudo userdel"
+   alias groupadd="sudo groupadd"
+   alias usermod="sudo usermod"
+   alias btrfs="sudo btrfs"
+   alias mkfs.btrfs="sudo mkfs.btrfs"
+   alias openvpn="sudo openvpn"
+   alias iotop="sudo iotop"
+   alias iftop="sudo iftop"
+   alias smbstatus="sudo smbstatus"
+fi
 
 # easy packet management
-alias install="sudo zypper -n install"
-alias uninstall="sudo zypper -n remove"
+alias install="zypper -n install"
+alias uninstall="zypper -n remove"
 alias updateall="zypper ref; zypper list-updates --all; zypper update"
 
 # outdated commands
@@ -181,7 +188,9 @@ alias q="exit"
 # git
 alias gs="git status"
 
+# gatekeeper
+alias gatekeeper-disable="sudo spctl --master-disable"
+alias gatekeeper-enable="sudo spctl --master-enable"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-eval $(thefuck --alias)
