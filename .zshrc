@@ -1,3 +1,6 @@
+#### FIG ENV VARIABLES ####
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+#### END FIG ENV VARIABLES ####
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet  # to fix error because of output in chpwd
 # partially fixed, error does'n appear only on first zsh process
 
@@ -36,7 +39,7 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found osx autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
+plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -102,7 +105,7 @@ contains $PATH /home/egigoka/.cargo/bin || export PATH=$PATH:/home/egigoka/.carg
 
 # docker
 alias d="docker"
-alias dps="docker ps --format \"table {{.ID}}\t{{.Status}}\t{{.Names}}\t{{.Image}}\t{{.Ports}}\""
+alias dps="docker ps --format \"table {{.ID}}	{{.Status}}	{{.Names}}	{{.Image}}	{{.Ports}}\""
 alias dip="docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'"
 alias dnwls="docker network ls"
 alias d-="docker stop"
@@ -184,3 +187,6 @@ alias gatekeeper-enable="sudo spctl --master-enable"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+#### FIG ENV VARIABLES ####
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####
