@@ -134,7 +134,7 @@ else
    alias zypper="sudo zypper"
    alias snap="sudo snap"
    alias yast="sudo yast"
-   alias reboot="sudo reboot"
+   alias reboot="sudo systemctl --force reboot"
    alias systemctl="sudo systemctl"
    alias useradd="sudo useradd"
    alias userdel="sudo userdel"
@@ -151,7 +151,8 @@ fi
 # easy packet management
 alias install="zypper -n install"
 alias uninstall="zypper -n remove"
-alias updateall="zypper ref; zypper list-updates --all; zypper update"
+# alias updateall="zypper ref; zypper list-updates --all; zypper update"
+alias updateall="zypper refresh;zypper dup";
 
 # outdated commands
 alias ipconfig="ip a"
