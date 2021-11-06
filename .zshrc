@@ -43,6 +43,10 @@ plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting z
 
 source $ZSH/oh-my-zsh.sh
 
+# fix fucking ls utf8 decoding
+export LC_COLLATE=C
+export LANGUAGE=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
@@ -74,7 +78,7 @@ contains()
 function sudoz ()
 	{
 	args="$@"
-	sudo zsh -i -c "$args"
+	doas zsh -i -c "$args"
 	}
 
 function time_dotted()
@@ -119,10 +123,13 @@ alias m="micro"
 alias py="python3"
 alias pip="pip3"
 
-# sudo
+# youtube-dl
+alias ydl="youtube-dl"
+
+# sudo and doas
+alias sudo="doas"
 if [[ $UID == 0 || $EUID == 0 ]]; then
    # root
-   
 else
    # not root
    alias unmount="sudo umount"
@@ -140,6 +147,8 @@ else
    alias mkfs.btrfs="sudo mkfs.btrfs"
    alias openvpn="sudo openvpn"
    alias iotop="sudo iotop"
+   alias iftop="sudo iftop"
+   alias smbstatus="sudo smbstatus"
 fi
 
 # easy packet management
@@ -177,6 +186,7 @@ alias scs="sc status"
 alias zshconfig="micro ~/.zshrc"
 alias copy="cp"
 alias move="mv"
+alias q="exit"
 
 # git
 alias gs="git status"
