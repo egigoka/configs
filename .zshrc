@@ -78,7 +78,7 @@ contains()
 function sudoz ()
 	{
 	args="$@"
-	doas zsh -i -c "$args"
+	sudo zsh -i -c "$args"
 	}
 
 function time_dotted()
@@ -127,7 +127,10 @@ alias pip="pip3"
 alias ydl="youtube-dl"
 
 # sudo and doas
-alias sudo="doas"
+if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
+  alias sudo="doas"
+fi
+
 if [[ $UID == 0 || $EUID == 0 ]]; then
    # root
 else
