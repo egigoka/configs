@@ -1,6 +1,7 @@
 #### FIG ENV VARIABLES ####
 [ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
 #### END FIG ENV VARIABLES ####
+
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet  # to fix error because of output in chpwd
 # partially fixed, error does'n appear only on first zsh process
 
@@ -172,8 +173,13 @@ alias uninstall="zypper -n remove"
 alias updateall="zypper refresh;zypper dup";
 
 # outdated commands
-alias ipconfig="ip a"
+if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
+	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
+		alias ipconfig="ip a"
+	fi
+fi
 alias ifconfig="ipconfig"
+		
 
 # disk management
 alias listdisks="lsblk -io NAME,TYPE,SIZE,MOUNTPOINT,FSTYPE,MODEL"
