@@ -35,7 +35,7 @@
     # os_icon               # os identifier
     dir                     # current directory
     vcs                     # git status
-    contexts				# user@hostname
+    context					# user@hostname
     # =========================[ Line #2 ]=========================
     newline                 # \n
     # prompt_char           # prompt symbol
@@ -95,11 +95,11 @@
     midnight_commander      # midnight commander shell (https://midnight-commander.org/)
     nix_shell               # nix shell (https://nixos.org/nixos/nix-pills/developing-with-nix-shell.html)
     # vi_mode                 # vi mode (you don't need this if you've enabled prompt_char)
-    vpn_ip                # virtual private network indicator
+    # vpn_ip                # virtual private network indicator
     load                  # CPU load
-    disk_usage            # disk usage
+    # disk_usage            # disk usage
     # ram                   # free RAM
-    swap                  # used swap
+    # swap                  # used swap
     todo                    # todo items (https://github.com/todotxt/todo.txt-cli)
     timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
