@@ -107,6 +107,15 @@ contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020
 contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
 contains $PATH /home/egigoka/.cargo/bin || export PATH=$PATH:/home/egigoka/.cargo/bin  # rust
 
+if [[ "$OSTYPE" == "darwin21.0"* ]]; then
+	#For compilers to find openssl@3 you may need to set:
+	export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
+	export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
+
+	#For pkg-config to find openssl@3 you may need to set:
+	export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig"
+fi
+
 # docker
 alias d="docker"
 alias dps="docker ps --format \"table {{.ID}}	{{.Status}}	{{.Names}}	{{.Image}}	{{.Ports}}\""
@@ -128,7 +137,9 @@ alias ydl="youtube-dl"
 
 # sudo and doas
 if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
-  alias sudo="doas"
+	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
+		alias sudo="doas"
+	fi
 fi
 
 if [[ $UID == 0 || $EUID == 0 ]]; then
