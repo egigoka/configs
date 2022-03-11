@@ -1,6 +1,8 @@
-# Fig pre block. Keep at the top of this file.
-export PATH="${PATH}:${HOME}/.local/bin"
-eval "$(fig init zsh pre)"
+if [[ "$OSTYPE" == "darwin21.0"* ]]; then
+  # Fig pre block. Keep at the top of this file.
+  export PATH="${PATH}:${HOME}/.local/bin"
+  eval "$(fig init zsh pre)"
+fi
 
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet  # to fix error because of output in chpwd
 # partially fixed, error does'n appear only on first zsh process
@@ -223,5 +225,7 @@ alias protonvpnfastest="curl -s https://api.protonmail.ch/vpn/logicals | jq '[.L
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
-# Fig post block. Keep at the bottom of this file.
-eval "$(fig init zsh post)"
+if [[ "$OSTYPE" == "darwin21.0"* ]]; then
+  # Fig post block. Keep at the bottom of this file.
+  eval "$(fig init zsh post)"
+fi
