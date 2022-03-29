@@ -1,3 +1,4 @@
+
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet  # to fix error because of output in chpwd
 # partially fixed, error does'n appear only on first zsh process
 
@@ -13,8 +14,6 @@ if [[ "$OSTYPE" == "darwin21.0"* ]]; then
   export PATH="${PATH}:${HOME}/.local/bin"
   eval "$(fig init zsh pre)"
 fi
-
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$HOME/configs/ZSH_CUSTOM"
@@ -66,8 +65,8 @@ add-zsh-hook -Uz chpwd ()
 	la;
 	}
 
-contains() 
 export LANGUAGE=en_US.UTF-8
+contains() 
 	{
 	string="$1"
 	substring="$2"
@@ -241,9 +240,7 @@ alias переведи="trans"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
 if [[ "$OSTYPE" == "darwin21.0"* ]]; then
   # Fig post block. Keep at the bottom of this file.
   eval "$(fig init zsh post)"
-  
 fi
