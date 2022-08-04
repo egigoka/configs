@@ -109,6 +109,7 @@ contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.loca
 contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
 contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
 contains $PATH /home/egigoka/.cargo/bin || export PATH=$PATH:/home/egigoka/.cargo/bin  # rust
+contains $PATH /home/egorov/.local/bin || export PATH=$PATH:/home/egorov/.local/bin
 
 if [[ "$OSTYPE" == "darwin21.0"* ]]; then
 	#For compilers to find openssl@3 you may need to set:
