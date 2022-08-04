@@ -16,6 +16,10 @@
             "keys": "ctrl+c"
         },
         {
+            "command": "unbound",
+            "keys": "ctrl+shift+3"
+        },
+        {
             "command": "find",
             "keys": "ctrl+shift+f"
         },
@@ -42,19 +46,28 @@
                 "action": "newTab",
                 "index": 0
             },
+            "keys": "ctrl+shift+1"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab",
+                "index": 2
+            },
             "keys": "ctrl+t"
         }
     ],
     "confirmCloseAllTabs": false,
     "copyFormatting": "none",
     "copyOnSelect": false,
-    "defaultProfile": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+    "defaultProfile": "{bc2da056-dd06-5879-b969-1dfcefc8d2c7}",
     "experimental.rendering.software": false,
     "profiles": 
     {
         "defaults": 
         {
             "antialiasingMode": "cleartype",
+            "closeOnExit": "always",
             "colorScheme": "EgigokaLight",
             "experimental.retroTerminalEffect": false,
             "font": 
@@ -69,21 +82,30 @@
         "list": 
         [
             {
+                "backgroundImage": "desktopWallpaper",
+                "backgroundImageOpacity": 0.25,
+                "closeOnExit": "always",
                 "commandline": "cmd.exe /K %USERPROFILE%\\configs\\cmdprofile.bat",
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "Command Prompt"
             },
             {
+                "closeOnExit": "always",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,
                 "name": "Windows PowerShell"
             },
             {
-                "guid": "{b453ae62-4e3d-5e58-b989-0a998ec441b8}",
-                "hidden": true,
-                "name": "Azure Cloud Shell",
-                "source": "Windows.Terminal.Azure"
+                "backgroundImage": "C:\\Users\\Egorov\\configs\\opensuse.jpg",
+                "backgroundImageOpacity": 0.25,
+                "backgroundImageStretchMode": "uniformToFill",
+                "closeOnExit": "always",
+                "guid": "{bc2da056-dd06-5879-b969-1dfcefc8d2c7}",
+                "hidden": false,
+                "icon": "C:\\Users\\Egorov\\configs\\opensuse32x32.png",
+                "name": "openSUSE-Tumbleweed",
+                "source": "Windows.Terminal.Wsl"
             }
         ]
     },
@@ -322,5 +344,6 @@
     ],
     "snapToGridOnResize": false,
     "startOnUserLogin": false,
-    "tabWidthMode": "titleLength"
+    "tabWidthMode": "titleLength",
+    "useAcrylicInTabRow": true
 }
