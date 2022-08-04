@@ -1,4 +1,5 @@
-
+# Fig pre block. Keep at the top of this file.
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet  # to fix error because of output in chpwd
 # partially fixed, error does'n appear only on first zsh process
 
@@ -11,7 +12,7 @@ fi
 
 if [[ "$OSTYPE" == "darwin21.0"* ]]; then
   # Fig pre block. Keep at the top of this file.
-  export PATH="${PATH}:${HOME}/.local/bin"
+  export PATH="${PATH}:${HOME}/.local/bin:~/.fig/bin"
   eval "$(fig init zsh pre)"
 fi
 # Path to your oh-my-zsh installation.
@@ -242,5 +243,7 @@ alias переведи="trans"
 
 if [[ "$OSTYPE" == "darwin21.0"* ]]; then
   # Fig post block. Keep at the bottom of this file.
-  eval "$(fig init zsh post)"
-fi
+  fi
+
+# Fig post block. Keep at the bottom of this file.
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
