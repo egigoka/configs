@@ -4,6 +4,13 @@
     "actions": 
     [
         {
+            "command": 
+            {
+                "action": "prevTab"
+            },
+            "keys": "ctrl+left"
+        },
+        {
             "command": "paste",
             "keys": "ctrl+v"
         },
@@ -17,7 +24,19 @@
         },
         {
             "command": "unbound",
-            "keys": "ctrl+shift+3"
+            "keys": "ctrl+shift+t"
+        },
+        {
+            "command": "unbound",
+            "keys": "shift+3"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+tab"
+        },
+        {
+            "command": "unbound",
+            "keys": "ctrl+shift+tab"
         },
         {
             "command": "find",
@@ -54,7 +73,21 @@
                 "action": "newTab",
                 "index": 2
             },
+            "keys": "ctrl+shift+3"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab"
+            },
             "keys": "ctrl+t"
+        },
+        {
+            "command": 
+            {
+                "action": "nextTab"
+            },
+            "keys": "ctrl+right"
         }
     ],
     "confirmCloseAllTabs": false,
