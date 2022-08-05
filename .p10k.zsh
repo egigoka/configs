@@ -104,6 +104,7 @@
     timewarrior             # timewarrior tracking status (https://timewarrior.net/)
     taskwarrior             # taskwarrior task count (https://taskwarrior.org/)
     time                    # current time
+    my_screen_status		# status of running in screen
     # =========================[ Line #2 ]=========================
     newline                 # \n
     # ip                    # ip address and bandwidth usage for a specified network interface
@@ -113,6 +114,32 @@
     # wifi                  # wifi speed
     # example               # example user-defined segment (see prompt_example function below)
   )
+
+# egigoka
+contains()
+    {
+     string="$1"
+     substring="$2"
+     if test "${string#*$substring}" != "$string"
+     then
+         return 0    # $substring is in $string
+     else
+         return 1    # $substring is not in $string
+     fi
+	}
+
+function prompt_my_screen_status()
+	{
+		if contains $TERM "screen"
+		then
+			p10k segment -s "[s]" -f "green" -i "📺" -t $STY
+		else 
+			p10k segment -s "" -f "red" -i "" -t "$STY"
+			# -t $STY
+		fi
+	}
+
+# egigoka end
 
   # Defines character set used by powerlevel10k. It's best to let `p10k configure` set it for you.
   typeset -g POWERLEVEL9K_MODE=powerline
@@ -1593,6 +1620,7 @@
   function prompt_example() {
     p10k segment -f 208 -i '⭐' -t 'hello, %n'
   }
+  
 
   # User-defined prompt segments may optionally provide an instant_prompt_* function. Its job
   # is to generate the prompt segment for display in instant prompt. See
@@ -1624,7 +1652,7 @@
   #   - always:   Trim down prompt when accepting a command line.
   #   - same-dir: Trim down prompt when accepting a command line unless this is the first command
   #               typed after changing current working directory.
-  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=same-dir
+  typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=off
 
   # Instant prompt mode.
   #
