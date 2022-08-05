@@ -1,5 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet  # to fix error because of output in chpwd
 # partially fixed, error does'n appear only on first zsh process
 
@@ -14,7 +12,10 @@ if [[ "$OSTYPE" == "darwin21.0"* ]]; then
   # Fig pre block. Keep at the top of this file.
   export PATH="${PATH}:${HOME}/.local/bin:~/.fig/bin"
   eval "$(fig init zsh pre)"
+  "$HOME/.fig/shell/zshrc.pre.zsh"
 fi
+
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$HOME/configs/ZSH_CUSTOM"
@@ -26,6 +27,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 ZLE_RPROMPT_INDENT=0
 
 HYPHEN_INSENSITIVE="true"
+
+ET_NO_TELEMETRY="fuck telemetry"
 
 export UPDATE_ZSH_DAYS=13
 
@@ -49,6 +52,7 @@ source $ZSH/oh-my-zsh.sh
 
 # fix fucking ls utf8 decoding
 export LC_COLLATE=C
+export LANGUAGE=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
 
@@ -66,7 +70,6 @@ add-zsh-hook -Uz chpwd ()
 	la;
 	}
 
-export LANGUAGE=en_US.UTF-8
 contains() 
 	{
 	string="$1"
@@ -242,9 +245,9 @@ alias переведи="trans"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
 if [[ "$OSTYPE" == "darwin21.0"* ]]; then
   # Fig post block. Keep at the bottom of this file.
-  fi
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
+  . "$HOME/.fig/shell/zshrc.post.zsh"
+  eval "$(fig init zsh post)"
+fi
