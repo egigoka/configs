@@ -4,8 +4,12 @@
     "actions": 
     [
         {
-            "command": "paste",
-            "keys": "ctrl+v"
+            "command": 
+            {
+                "action": "copy",
+                "singleLine": false
+            },
+            "keys": "ctrl+c"
         },
         {
             "command": 
@@ -15,12 +19,12 @@
             "keys": "alt+left"
         },
         {
-            "command": 
-            {
-                "action": "copy",
-                "singleLine": false
-            },
-            "keys": "ctrl+c"
+            "command": "paste",
+            "keys": "ctrl+v"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
         },
         {
             "command": "unbound",
@@ -135,10 +139,6 @@
             "keys": "ctrl+numpad_minus"
         },
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": 
             {
                 "action": "splitPane",
@@ -189,6 +189,13 @@
                 "action": "newWindow"
             },
             "keys": "ctrl+n"
+        },
+        {
+            "command": 
+            {
+                "action": "closeTab"
+            },
+            "keys": "ctrl+w"
         }
     ],
     "confirmCloseAllTabs": false,
@@ -240,6 +247,18 @@
                 "icon": "C:\\Users\\Egorov\\configs\\opensuse32x32.png",
                 "name": "openSUSE-Tumbleweed",
                 "source": "Windows.Terminal.Wsl"
+            },
+            {
+                "guid": "{112a0e1c-df78-53dc-8cbf-54a857ac81c6}",
+                "hidden": false,
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{ca88ee38-e978-55c1-a51d-36879cf36648}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
             }
         ]
     },
