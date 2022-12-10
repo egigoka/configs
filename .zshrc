@@ -165,7 +165,7 @@ fi
 # sudo and doas
 if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
 	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
-		if ! [[ "$OSTYPE" == "darwin22.1"* ]]; then
+		if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
 			alias sudo="doas"
 		fi
 	fi
@@ -203,7 +203,9 @@ alias updateall="zypper refresh;zypper dup";
 # outdated commands
 if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
 	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
-		alias ipconfig="ip a"
+		if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
+			alias ipconfig="ip a"
+		fi
 	fi
 fi
 alias ifconfig="ipconfig"
