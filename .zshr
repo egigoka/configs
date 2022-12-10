@@ -164,9 +164,7 @@ fi
 # sudo and doas
 if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
 	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
-		if ! [[ "$OSTYPE" == "darwin22.1"* ]]; then
-			alias sudo="doas"
-		fi
+		alias sudo="doas"
 	fi
 fi
 
@@ -276,4 +274,3 @@ unset __conda_setup
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
