@@ -234,6 +234,7 @@ alias zshconfig="micro ~/.zshrc"
 alias copy="cp"
 alias move="mv"
 alias q="exit"
+alias lll="ll -p | grep -v /"
 
 # git
 alias gs="git status"
@@ -245,6 +246,10 @@ alias protonvpnfastest="curl -s https://api.protonmail.ch/vpn/logicals | jq '[.L
 # https://github.com/dweinstein/google-translate-cli
 alias trl="trans"
 alias переведи="trans"
+
+#yd-dlp
+alias ytdl-audio="yt-dlp -f 'ba' -x –audio-format mp3"
+alias ytdl-video="yt-dlp -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best'"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -258,3 +263,7 @@ fi
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
+
+alias infusedocs="~/Containers/Data/Application/9D783797-4F41-4C0C-9628-35FA8C8E949C/Documents"
+
+eval $(thefuck --alias)
