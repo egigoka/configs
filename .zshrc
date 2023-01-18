@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet  # to fix error because of output in chpwd
 # partially fixed, error does'n appear only on first zsh process
 
@@ -165,7 +165,9 @@ fi
 # sudo and doas
 if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
 	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
-		alias sudo="doas"
+		if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
+			alias sudo="doas"
+		fi
 	fi
 fi
 
@@ -201,7 +203,9 @@ alias updateall="zypper refresh;zypper dup";
 # outdated commands
 if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
 	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
-		alias ipconfig="ip a"
+		if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
+			alias ipconfig="ip a"
+		fi
 	fi
 fi
 alias ifconfig="ipconfig"
@@ -261,9 +265,29 @@ if [[ "$OSTYPE" == "darwin21.0"* ]]; then
   eval "$(fig init zsh post)"
 fi
 
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/egigoka/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/egigoka/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/egigoka/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/egigoka/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
 
 alias infusedocs="~/Containers/Data/Application/9D783797-4F41-4C0C-9628-35FA8C8E949C/Documents"
 
 eval $(thefuck --alias)
+
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
