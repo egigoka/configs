@@ -17,6 +17,8 @@ doskey gu=git push $*
 doskey gs=git status $*
 doskey g=git $*
 
+doskey rebootwsl=wsl --shutdown
+
 doskey py=python $*
 
 doskey unelevated=cmd /min /C "set __COMPAT_LAYER=RUNASINVOKER && start """" $1"
