@@ -1,5 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && . "$HOME/.fig/shell/zshrc.pre.zsh"
+[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet  # to fix error because of output in chpwd
 # partially fixed, error does'n appear only on first zsh process
 
@@ -116,6 +116,7 @@ contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020
 contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
 contains $PATH /home/egigoka/.cargo/bin || export PATH=$PATH:/home/egigoka/.cargo/bin  # rust
 contains $PATH /home/egorov/.local/bin || export PATH=$PATH:/home/egorov/.local/bin
+contains $PATH /var/mobile/.local/bin || export PATH=$PATH:/var/mobile/.local/bin
 
 if [[ "$OSTYPE" == "darwin21.0"* ]]; then
 	#For compilers to find openssl@3 you may need to set:
@@ -164,7 +165,9 @@ fi
 # sudo and doas
 if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
 	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
-		alias sudo="doas"
+		if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
+			alias sudo="doas"
+		fi
 	fi
 fi
 
@@ -200,7 +203,9 @@ alias updateall="zypper refresh;zypper dup";
 # outdated commands
 if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
 	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
-		alias ipconfig="ip a"
+		if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
+			alias ipconfig="ip a"
+		fi
 	fi
 fi
 alias ifconfig="ipconfig"
@@ -233,6 +238,7 @@ alias zshconfig="micro ~/.zshrc"
 alias copy="cp"
 alias move="mv"
 alias q="exit"
+alias lll="ll -p | grep -v /"
 
 # git
 alias gs="git status"
@@ -245,6 +251,10 @@ alias protonvpnfastest="curl -s https://api.protonmail.ch/vpn/logicals | jq '[.L
 alias trl="trans"
 alias переведи="trans"
 
+#yd-dlp
+alias ytdl-audio="yt-dlp -f 'ba' -x –audio-format mp3"
+alias ytdl-video="yt-dlp -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best'"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -255,5 +265,30 @@ if [[ "$OSTYPE" == "darwin21.0"* ]]; then
   eval "$(fig init zsh post)"
 fi
 
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/egigoka/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/egigoka/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/egigoka/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/egigoka/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
+
+alias infusedocs="~/Containers/Data/Application/9D783797-4F41-4C0C-9628-35FA8C8E949C/Documents"
+
+eval $(thefuck --alias)
+
+[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
