@@ -11,10 +11,11 @@ doskey k=kubectl $*
 doskey d=docker $*
 
 doskey ga=git add $*
-doskey gp=git pull
+doskey gp=git push $*
 doskey gc=git commit -m "$*"
-doskey gu=git push $*
+doskey gpl=git push $*
 doskey gs=git status $*
+doskey gd=git diff $*
 doskey g=git $*
 
 doskey rebootwsl=wsl --shutdown
