@@ -146,6 +146,9 @@ alias pip="pip3"
 # youtube-dl
 alias ydl="youtube-dl"
 
+# cd
+alias cd..="cd .."
+
 # downloaders
 alias down="axel -a -n"
 
