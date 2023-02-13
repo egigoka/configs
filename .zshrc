@@ -256,7 +256,7 @@ alias trl="trans"
 alias переведи="trans"
 
 #yd-dlp
-alias ytdl-audio="yt-dlp -f 'ba' -x -–audio-format mp3"
+alias ytdl-audio="yt-dlp -f 'ba' -x --audio-format mp3"
 alias ytdl-video="yt-dlp -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best'"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
