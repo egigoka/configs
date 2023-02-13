@@ -10,12 +10,16 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-if [[ "$OSTYPE" == "darwin21.0"* ]]; then
+if [[ "$OSTYPE" == "darwin21.0"* ]] \
+	|| [[ "$OSTYPE" == "darwin22.0"* ]]; then
   # Fig pre block. Keep at the top of this file.
+  export PATH="$HOMEBREW_PREFIX/opt/python@3.11/libexec/bin:$PATH"
   export PATH="${PATH}:${HOME}/.local/bin:~/.fig/bin"
   eval "$(fig init zsh pre)"
   "$HOME/.fig/shell/zshrc.pre.zsh"
 fi
+
+
 
 
 # Path to your oh-my-zsh installation.
@@ -262,7 +266,8 @@ alias ytdl-video="yt-dlp -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best'"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
-if [[ "$OSTYPE" == "darwin21.0"* ]]; then
+if [[ "$OSTYPE" == "darwin21.0"* ]] \
+	|| [[ "$OSTYPE" == "darwin22.0"* ]]; then
   # Fig post block. Keep at the bottom of this file.
   . "$HOME/.fig/shell/zshrc.post.zsh"
   eval "$(fig init zsh post)"
