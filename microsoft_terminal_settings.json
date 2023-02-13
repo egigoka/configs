@@ -4,12 +4,15 @@
     "actions": 
     [
         {
-            "command": "find",
-            "keys": "ctrl+shift+f"
-        },
-        {
             "command": "paste",
             "keys": "ctrl+v"
+        },
+        {
+            "command": 
+            {
+                "action": "prevTab"
+            },
+            "keys": "alt+left"
         },
         {
             "command": 
@@ -22,9 +25,14 @@
         {
             "command": 
             {
-                "action": "prevTab"
+                "action": "newWindow",
+                "profile": "{bc2da056-dd06-5879-b969-1dfcefc8d2c7}"
             },
-            "keys": "alt+left"
+            "keys": "ctrl+n"
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
         },
         {
             "command": 
@@ -182,13 +190,6 @@
                 "action": "nextTab"
             },
             "keys": "alt+right"
-        },
-        {
-            "command": 
-            {
-                "action": "newWindow"
-            },
-            "keys": "ctrl+n"
         },
         {
             "command": 
@@ -532,6 +533,6 @@
     ],
     "snapToGridOnResize": false,
     "startOnUserLogin": false,
-    "tabWidthMode": "titleLength",
+    "tabWidthMode": "compact",
     "useAcrylicInTabRow": true
 }
