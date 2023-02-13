@@ -99,6 +99,21 @@ function time_dotted()
 	return date +"%Y.%m.%d_at_%H.%M.%S.%N"
 	}
 
+change_extension() {
+  if [ $# -lt 2 ]; then
+    echo "Usage: change_extension <filename> <new_extension>"
+    return 1
+  fi
+
+  local filename="$1"
+  local new_extension="$2"
+
+  local base_filename=$(basename "$filename" .${filename##*.})
+  local new_filename="$base_filename.$new_extension"
+
+  mv "$filename" "$new_filename"
+}
+
 btrsnap() {
     args = "$@"
     if [ "$1" != "" ]
@@ -129,6 +144,10 @@ if [[ "$OSTYPE" == "darwin21.0"* ]]; then
 
 	#For pkg-config to find openssl@3 you may need to set:
 	export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig"
+fi
+
+if [[ "$OSTYPE" == "darwin" ]]; then                                                         
+  alias yt-dlp="yt-dlp --ffmpeg-location /usr/bin/ffmpeg";
 fi
 
 # docker
