@@ -228,9 +228,6 @@ alias btr="btrfs"
 alias btrusage="btr filesystem usage"
 alias diskusage="ncdu"
 
-# youtube-dl
-alias ytd="youtube-dl"
-
 # systemd
 alias sc="systemctl"  # anyway I hate vim
 alias scdr="sc daemon-reload"
