@@ -252,7 +252,7 @@ alias trl="trans"
 alias переведи="trans"
 
 #yd-dlp
-alias ytdl-audio="yt-dlp -f 'ba' -x –audio-format mp3"
+alias ytdl-audio="yt-dlp -f 'ba' -x -–audio-format mp3"
 alias ytdl-video="yt-dlp -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best'"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -286,6 +286,7 @@ unset __conda_setup
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && . "$HOME/.fig/shell/zshrc.post.zsh"
 
 alias infusedocs="~/Containers/Data/Application/9D783797-4F41-4C0C-9628-35FA8C8E949C/Documents"
+alias downloaderdocs="~/Containers/Data/Application/F117B813-6946-4581-A280-D48115B9A063/Documents"
 
 eval $(thefuck --alias)
 
