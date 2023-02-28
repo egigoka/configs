@@ -277,6 +277,7 @@ alias переведи="trans"
 #yd-dlp
 alias ytdl-audio="yt-dlp -f 'ba' -x --audio-format mp3"
 alias ytdl-video="yt-dlp -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best'"
+alias twitch-download=" yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
