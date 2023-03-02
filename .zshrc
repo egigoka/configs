@@ -50,6 +50,8 @@ plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting z
 
 source $ZSH/oh-my-zsh.sh
 
+eval $(thefuck --alias)
+
 # fix fucking ls utf8 decoding
 export LC_COLLATE=C
 export LANGUAGE=en_US.UTF-8
