@@ -161,6 +161,13 @@ alias d-="docker stop"
 alias d+="docker start"
 alias drm="d rm"
 
+# screen
+alias screen+="screen -S"
+alias screenc="screen -Rd"
+alias screendaemon="screen -dmS"
+alias screenls="screen -list"
+alias screencc="screen -x"
+
 # micro
 alias m="micro"
 
