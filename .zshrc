@@ -309,7 +309,7 @@ unset __conda_setup
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
 alias infusedocs="~/Containers/Data/Application/9D783797-4F41-4C0C-9628-35FA8C8E949C/Documents"
-alias downloaderdocs="~/Containers/Data/Application/F117B813-6946-4581-A280-D48115B9A063/Documents"
+alias downloaderdocs="/private/var/mobile/Containers/Data/Application/A24D92C9-7F80-4129-8D06-880E107FA9D9/Documents"
 
 eval $(thefuck --alias)
 
