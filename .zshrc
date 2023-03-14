@@ -56,6 +56,8 @@ plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting z
 
 source $ZSH/oh-my-zsh.sh
 
+eval $(thefuck --alias)
+
 # fix fucking ls utf8 decoding
 export LC_COLLATE=C
 export LANGUAGE=en_US.UTF-8
@@ -158,6 +160,13 @@ alias dnwls="docker network ls"
 alias d-="docker stop"
 alias d+="docker start"
 alias drm="d rm"
+
+# screen
+alias screen+="screen -S"
+alias screenc="screen -Rd"
+alias screendaemon="screen -dmS"
+alias screenls="screen -list"
+alias screencc="screen -x"
 
 # micro
 alias m="micro"
@@ -277,6 +286,8 @@ alias переведи="trans"
 #yd-dlp
 alias ytdl-audio="yt-dlp -f 'ba' -x --audio-format mp3"
 alias ytdl-video="yt-dlp -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best'"
+alias twitch-download=" yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true"
+alias ytdl-list="yt-dlp --flat-playlist --print id"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
