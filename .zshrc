@@ -88,11 +88,18 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
-
+if [[ "$OSTYPE" == "linux-android"* ]]; then
+  plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
+else
+  plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
+fi
+  
 source $ZSH/oh-my-zsh.sh
 
-eval $(thefuck --alias)
+if [[ "$OSTYPE" == "linux-android"* ]]; then
+else
+  eval $(thefuck --alias)
+fi
 
 # fix fucking ls utf8 decoding
 export LC_COLLATE=C
@@ -360,7 +367,10 @@ export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 alias infusedocs="~/Containers/Data/Application/9D783797-4F41-4C0C-9628-35FA8C8E949C/Documents"
 alias downloaderdocs="/private/var/mobile/Containers/Data/Application/A24D92C9-7F80-4129-8D06-880E107FA9D9/Documents"
 
-eval $(thefuck --alias)
+if [[ "$OSTYPE" == "linux-android"* ]]; then
+else
+  eval $(thefuck --alias)
+fi
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
