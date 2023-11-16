@@ -10,9 +10,17 @@
         {
             "command": 
             {
-                "action": "prevTab"
+                "action": "newWindow",
+                "profile": "{bc2da056-dd06-5879-b969-1dfcefc8d2c7}"
             },
-            "keys": "alt+left"
+            "keys": "ctrl+n"
+        },
+        {
+            "command": 
+            {
+                "action": "newWindow",
+                "index": 0
+            }
         },
         {
             "command": 
@@ -25,21 +33,36 @@
         {
             "command": 
             {
-                "action": "newWindow",
-                "profile": "{bc2da056-dd06-5879-b969-1dfcefc8d2c7}"
+                "action": "newTab",
+                "index": 2
             },
-            "keys": "ctrl+n"
-        },
-        {
-            "command": "find",
-            "keys": "ctrl+shift+f"
+            "keys": "ctrl+shift+3"
         },
         {
             "command": 
             {
-                "action": "newWindow",
-                "index": 0
+                "action": "newTab"
+            },
+            "keys": "ctrl+t"
+        },
+        {
+            "command": 
+            {
+                "action": "prevTab"
+            },
+            "keys": "alt+left"
+        },
+        {
+            "command": 
+            {
+                "action": "splitPane",
+                "split": "auto",
+                "splitMode": "duplicate"
             }
+        },
+        {
+            "command": "find",
+            "keys": "ctrl+shift+f"
         },
         {
             "command": "unbound",
@@ -156,14 +179,6 @@
         {
             "command": 
             {
-                "action": "splitPane",
-                "split": "auto",
-                "splitMode": "duplicate"
-            }
-        },
-        {
-            "command": 
-            {
                 "action": "newTab",
                 "index": 0
             },
@@ -172,17 +187,9 @@
         {
             "command": 
             {
-                "action": "newTab",
-                "index": 2
+                "action": "closeTab"
             },
-            "keys": "ctrl+shift+3"
-        },
-        {
-            "command": 
-            {
-                "action": "newTab"
-            },
-            "keys": "ctrl+t"
+            "keys": "ctrl+w"
         },
         {
             "command": 
@@ -190,20 +197,19 @@
                 "action": "nextTab"
             },
             "keys": "alt+right"
-        },
-        {
-            "command": 
-            {
-                "action": "closeTab"
-            },
-            "keys": "ctrl+w"
         }
     ],
     "confirmCloseAllTabs": false,
     "copyFormatting": "none",
-    "copyOnSelect": false,
+    "copyOnSelect": true,
     "defaultProfile": "{bc2da056-dd06-5879-b969-1dfcefc8d2c7}",
     "experimental.rendering.software": false,
+    "newTabMenu": 
+    [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
     "profiles": 
     {
         "defaults": 
@@ -215,7 +221,7 @@
             "font": 
             {
                 "face": "Source Code Pro for Powerline",
-                "size": 11
+                "size": 11.0
             },
             "opacity": 70,
             "scrollbarState": "visible",
@@ -228,12 +234,20 @@
                 "backgroundImageOpacity": 0.25,
                 "closeOnExit": "always",
                 "commandline": "cmd.exe /K %USERPROFILE%\\configs\\cmdprofile.bat",
+                "font": 
+                {
+                    "face": "MesloLGS NF"
+                },
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "Command Prompt"
             },
             {
                 "closeOnExit": "always",
+                "font": 
+                {
+                    "face": "MesloLGS NF"
+                },
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,
                 "name": "Windows PowerShell"
@@ -243,6 +257,10 @@
                 "backgroundImageOpacity": 0.25,
                 "backgroundImageStretchMode": "uniformToFill",
                 "closeOnExit": "always",
+                "font": 
+                {
+                    "face": "MesloLGS NF"
+                },
                 "guid": "{bc2da056-dd06-5879-b969-1dfcefc8d2c7}",
                 "hidden": false,
                 "icon": "C:\\Users\\Egorov\\configs\\opensuse32x32.png",
@@ -250,24 +268,40 @@
                 "source": "Windows.Terminal.Wsl"
             },
             {
+                "font": 
+                {
+                    "face": "MesloLGS NF"
+                },
                 "guid": "{112a0e1c-df78-53dc-8cbf-54a857ac81c6}",
                 "hidden": false,
                 "name": "Developer Command Prompt for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
+                "font": 
+                {
+                    "face": "MesloLGS NF"
+                },
                 "guid": "{ca88ee38-e978-55c1-a51d-36879cf36648}",
                 "hidden": false,
                 "name": "Developer PowerShell for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
+                "font": 
+                {
+                    "face": "MesloLGS NF"
+                },
                 "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
                 "hidden": true,
                 "name": "Ubuntu",
                 "source": "Windows.Terminal.Wsl"
             },
             {
+                "font": 
+                {
+                    "face": "MesloLGS NF"
+                },
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
                 "hidden": false,
                 "name": "Ubuntu",
@@ -330,7 +364,7 @@
             "brightBlack": "#333333",
             "brightBlue": "#2F5AF3",
             "brightCyan": "#00F5F5",
-            "brightGreen": "#52BA4F",
+            "brightGreen": "#40913E",
             "brightPurple": "#A00095",
             "brightRed": "#DE3E35",
             "brightWhite": "#AAAAAA",
@@ -338,7 +372,7 @@
             "cursorColor": "#337037",
             "cyan": "#00A3A3",
             "foreground": "#000000",
-            "green": "#31762E",
+            "green": "#204D1E",
             "name": "EgigokaLight",
             "purple": "#950095",
             "red": "#DE3E35",
@@ -533,6 +567,7 @@
     ],
     "snapToGridOnResize": false,
     "startOnUserLogin": false,
-    "tabWidthMode": "compact",
+    "tabWidthMode": "equal",
+    "themes": [],
     "useAcrylicInTabRow": true
 }
