@@ -234,20 +234,12 @@
                 "backgroundImageOpacity": 0.25,
                 "closeOnExit": "always",
                 "commandline": "cmd.exe /K %USERPROFILE%\\configs\\cmdprofile.bat",
-                "font": 
-                {
-                    "face": "MesloLGS NF"
-                },
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "Command Prompt"
             },
             {
                 "closeOnExit": "always",
-                "font": 
-                {
-                    "face": "MesloLGS NF"
-                },
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,
                 "name": "Windows PowerShell"
@@ -257,10 +249,6 @@
                 "backgroundImageOpacity": 0.25,
                 "backgroundImageStretchMode": "uniformToFill",
                 "closeOnExit": "always",
-                "font": 
-                {
-                    "face": "MesloLGS NF"
-                },
                 "guid": "{bc2da056-dd06-5879-b969-1dfcefc8d2c7}",
                 "hidden": false,
                 "icon": "C:\\Users\\Egorov\\configs\\opensuse32x32.png",
@@ -268,40 +256,24 @@
                 "source": "Windows.Terminal.Wsl"
             },
             {
-                "font": 
-                {
-                    "face": "MesloLGS NF"
-                },
                 "guid": "{112a0e1c-df78-53dc-8cbf-54a857ac81c6}",
                 "hidden": false,
                 "name": "Developer Command Prompt for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "font": 
-                {
-                    "face": "MesloLGS NF"
-                },
                 "guid": "{ca88ee38-e978-55c1-a51d-36879cf36648}",
                 "hidden": false,
                 "name": "Developer PowerShell for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "font": 
-                {
-                    "face": "MesloLGS NF"
-                },
                 "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
                 "hidden": true,
                 "name": "Ubuntu",
                 "source": "Windows.Terminal.Wsl"
             },
             {
-                "font": 
-                {
-                    "face": "MesloLGS NF"
-                },
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
                 "hidden": false,
                 "name": "Ubuntu",
@@ -360,15 +332,15 @@
         {
             "background": "#F9F9F9",
             "black": "#000000",
-            "blue": "#2F5AF3",
+            "blue": "#1F4AE3",
             "brightBlack": "#333333",
-            "brightBlue": "#2F5AF3",
+            "brightBlue": "#3F6AFF",
             "brightCyan": "#00F5F5",
-            "brightGreen": "#40913E",
-            "brightPurple": "#A00095",
-            "brightRed": "#DE3E35",
+            "brightGreen": "#30812E",
+            "brightPurple": "#C020B5",
+            "brightRed": "#EE4E45",
             "brightWhite": "#AAAAAA",
-            "brightYellow": "#CCB100",
+            "brightYellow": "#FCF100",
             "cursorColor": "#337037",
             "cyan": "#00A3A3",
             "foreground": "#000000",
