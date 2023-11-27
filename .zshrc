@@ -13,7 +13,8 @@ fi
 if [[ "$OSTYPE" == "darwin21.0"* ]] \
 	|| [[ "$OSTYPE" == "darwin22.0"* ]]; then
   # Fig pre block. Keep at the top of this file.
-  export PATH="$HOMEBREW_PREFIX/opt/python@3.11/libexec/bin:$PATH"
+  # export PATH="$HOMEBREW_PREFIX/opt/python@3.10/libexec/bin:$PATH"
+  export TDLIB_PATH="/opt/homebrew/opt/tdlib"
   export PATH="${PATH}:${HOME}/.local/bin:~/.fig/bin"
   eval "$(fig init zsh pre)"
   "$HOME/.fig/shell/zshrc.pre.zsh"
