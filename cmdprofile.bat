@@ -3,6 +3,8 @@
 dir
 TITLE %CD%
 
+IF EXIST "C:\Program Files\Git\bin" SET PATH=%PATH%;"C:\Program Files\Git\bin"
+
 doskey npp="C:\Program Files\Notepad++\notepad++.exe" $*
 
 doskey cd=cd $* $T$T dir $T$T TITLE %%CD%%
