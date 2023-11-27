@@ -20,7 +20,43 @@ if [[ "$OSTYPE" == "darwin21.0"* ]] \
   "$HOME/.fig/shell/zshrc.pre.zsh"
 fi
 
+if [[ "$OSTYPE" == "linux-android"* ]]; then
+  export PATH=/data/data/com.termux/files/usr/bin:$PATH:/system/bin:/system/xbin:/system/sbin:/data/adb/modules/ssh/usr/bin
+  export LD_LIBRARY_PATH=/data/data/com.termux/files/usr/lib:$LD_LIBRARY_PATH
+  #/data/data/com.termux/files/usr/bin/zsh
+  export SHELL=/data/data/com.termux/files/usr/bin/zsh
+  
+  # termux
+  export ANDROID_ART_ROOT="/apex/com.android.art"
+  export ANDROID_DATA="/data"
+  export ANDROID_I18N_ROOT="/apex/com.android.i18n"
+  export ANDROID_ROOT="/system"
+  export ANDROID_TZDATA_ROOT="/apex/com.android.tzdata"
+  export BOOTCLASSPATH="/apex/com.android.art/javalib/core-oj.jar:/apex/com.android.art/javalib/core-libart.jar:/apex/com.android.art/javalib/okhttp.jar:/apex/com.android.art/javalib/bouncycastle.jar:/apex/com.android.art/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/framework-graphics.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/apex/com.android.i18n/javalib/core-icu4j.jar:/apex/com.android.appsearch/javalib/framework-appsearch.jar:/apex/com.android.conscrypt/javalib/conscrypt.jar:/apex/com.android.ipsec/javalib/android.net.ipsec.ike.jar:/apex/com.android.media/javalib/updatable-media.jar:/apex/com.android.mediaprovider/javalib/framework-mediaprovider.jar:/apex/com.android.os.statsd/javalib/framework-statsd.jar:/apex/com.android.permission/javalib/framework-permission.jar:/apex/com.android.permission/javalib/framework-permission-s.jar:/apex/com.android.scheduling/javalib/framework-scheduling.jar:/apex/com.android.sdkext/javalib/framework-sdkextensions.jar:/apex/com.android.tethering/javalib/framework-connectivity.jar:/apex/com.android.tethering/javalib/framework-tethering.jar:/apex/com.android.wifi/javalib/framework-wifi.jar"
+  export COLORTERM="truecolor"
+  export DEX2OATBOOTCLASSPATH="/apex/com.android.art/javalib/core-oj.jar:/apex/com.android.art/javalib/core-libart.jar:/apex/com.android.art/javalib/okhttp.jar:/apex/com.android.art/javalib/bouncycastle.jar:/apex/com.android.art/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/framework-graphics.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/apex/com.android.i18n/javalib/core-icu4j.jar"
+  export EXTERNAL_STORAGE="/sdcard"
+  export HISTCONTROL="ignoreboth"
+  export LANG="en_US.UTF-8"
+  export LD_PRELOAD="/data/data/com.termux/files/usr/lib/libtermux-exec.so"
+  export OLDPWD="/data/data/com.termux/files"
+  export PREFIX="/data/data/com.termux/files/usr"
+  export PWD="/data/data/com.termux/files/usr"
+  export SHELL="/data/data/com.termux/files/usr/bin/bash"
+  export SHLVL="1"
+  export TERM="xterm-256color"
+  export TERMUX_API_VERSION="0.50.1"
+  export TERMUX_APK_RELEASE="F_DROID"
+  export TERMUX_APP_PID="11781"
+  export TERMUX_IS_DEBUGGABLE_BUILD="0"
+  export TERMUX_MAIN_PACKAGE_FORMAT="debian"
+  export TERMUX_VERSION="0.118.0"
+  export TMPDIR="/data/data/com.termux/files/usr/tmp"
 
+  function pkg-as-shell {
+    /data/data/com.termux/files/usr/bin/sudo -u u0_a170 env "PATH=$PATH" pkg $*
+  }
+fi
 
 
 # Path to your oh-my-zsh installation.
@@ -53,11 +89,18 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
-
+if [[ "$OSTYPE" == "linux-android"* ]]; then
+  plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
+else
+  plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
+fi
+  
 source $ZSH/oh-my-zsh.sh
 
-eval $(thefuck --alias)
+if [[ "$OSTYPE" == "linux-android"* ]]; then
+else
+  eval $(thefuck --alias)
+fi
 
 # fix fucking ls utf8 decoding
 export LC_COLLATE=C
@@ -202,7 +245,9 @@ fi
 if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
 	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
 		if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
-			alias sudo="doas"
+			if ! [[ "$OSTYPE" == "linux-android" ]]; then
+				alias sudo="doas"
+			fi
 		fi
 	fi
 fi
@@ -321,9 +366,12 @@ unset __conda_setup
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
 alias infusedocs="~/Containers/Data/Application/9D783797-4F41-4C0C-9628-35FA8C8E949C/Documents"
-alias downloaderdocs="~/Containers/Data/Application/F117B813-6946-4581-A280-D48115B9A063/Documents"
+alias downloaderdocs="/private/var/mobile/Containers/Data/Application/A24D92C9-7F80-4129-8D06-880E107FA9D9/Documents"
 
-eval $(thefuck --alias)
+if [[ "$OSTYPE" == "linux-android"* ]]; then
+else
+  eval $(thefuck --alias)
+fi
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
