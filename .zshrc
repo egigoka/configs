@@ -11,7 +11,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 if [[ "$OSTYPE" == "darwin21.0"* ]] \
-	|| [[ "$OSTYPE" == "darwin22.0"* ]]; then
+        || [[ "$OSTYPE" == "darwin22.0"* ]]; then
   # Fig pre block. Keep at the top of this file.
   # export PATH="$HOMEBREW_PREFIX/opt/python@3.10/libexec/bin:$PATH"
   export TDLIB_PATH="/opt/homebrew/opt/tdlib"
@@ -92,14 +92,14 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 if [[ "$OSTYPE" == "linux-android"* ]]; then
   plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
 else
-  plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
+plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
 fi
-  
+
 source $ZSH/oh-my-zsh.sh
 
 if [[ "$OSTYPE" == "linux-android"* ]]; then
 else
-  eval $(thefuck --alias)
+eval $(thefuck --alias)
 fi
 
 # fix fucking ls utf8 decoding
@@ -117,33 +117,33 @@ fi
 
 autoload -U add-zsh-hook
 add-zsh-hook -Uz chpwd ()
-	{
-	# this hooks into chpwd (function to change working directory)
-	la;
-	}
+        {
+        # this hooks into chpwd (function to change working directory)
+        la;
+        }
 
-contains() 
-	{
-	string="$1"
-	substring="$2"
-	if test "${string#*$substring}" != "$string"
-	then
-		return 0    # $substring is in $string
-	else
-		return 1    # $substring is not in $string
-	fi
-	}
+contains()
+        {
+        string="$1"
+        substring="$2"
+        if test "${string#*$substring}" != "$string"
+        then
+                return 0    # $substring is in $string
+        else
+                return 1    # $substring is not in $string
+        fi
+        }
 
 function sudoz ()
-	{
-	args="$@"
-	sudo zsh -i -c "$args"
-	}
+        {
+        args="$@"
+        sudo zsh -i -c "$args"
+        }
 
 function time_dotted()
-	{
-	return date +"%Y.%m.%d_at_%H.%M.%S.%N"
-	}
+        {
+        return date +"%Y.%m.%d_at_%H.%M.%S.%N"
+        }
 
 change_extension() {
   if [ $# -lt 2 ]; then
@@ -164,10 +164,10 @@ btrsnap() {
     args = "$@"
     if [ "$1" != "" ]
     then
-    	time = time_dotted()
+        time = time_dotted()
         sudo btrfs subvolume snapshot / /snap/time
     else
-        
+
     fi
 }
 
@@ -184,21 +184,21 @@ contains $PATH /home/egorov/.local/bin || export PATH=$PATH:/home/egorov/.local/
 contains $PATH /var/mobile/.local/bin || export PATH=$PATH:/var/mobile/.local/bin
 
 if [[ "$OSTYPE" == "darwin21.0"* ]]; then
-	#For compilers to find openssl@3 you may need to set:
-	export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
-	export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
+        #For compilers to find openssl@3 you may need to set:
+        export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
+        export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
 
-	#For pkg-config to find openssl@3 you may need to set:
-	export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig"
+        #For pkg-config to find openssl@3 you may need to set:
+        export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig"
 fi
 
-if [[ "$OSTYPE" == "darwin" ]]; then                                                         
+if [[ "$OSTYPE" == "darwin" ]]; then
   alias yt-dlp="yt-dlp --ffmpeg-location /usr/bin/ffmpeg";
 fi
 
 # docker
 alias d="docker"
-alias dps="docker ps --format \"table {{.ID}}	{{.Status}}	{{.Names}}	{{.Image}}	{{.Ports}}\""
+alias dps="docker ps --format \"table {{.ID}}   {{.Status}}     {{.Names}}      {{.Image}}      {{.Ports}}\""
 alias dip="docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'"
 alias dnwls="docker network ls"
 alias d-="docker stop"
@@ -218,6 +218,8 @@ alias m="micro"
 # python
 alias py="python3"
 alias pip="pip3"
+alias pyvenva="source venv/bin/activate"
+alias pyvenvd="deactivate"
 
 # youtube-dl
 alias ydl="youtube-dl"
@@ -231,26 +233,29 @@ alias down="axel -a -n"
 # fig
 alias figdoctor="cp ~/configs/.zshrc ~/configs/.zshrc_bak; fig doctor; mv ~/configs/.zshrc_bak ~/configs/.zshr"
 
-if [[ "$OSTYPE" == "darwin21.0"* ]]; then
-	# networksetup
-	alias listnetworkinterfaces="networksetup -listnetworkserviceorder"
-	alias setroutes="sudo networksetup -setadditionalroutes " # name from listnetworinterfaces, ip, mask, router; multiple routes should be set through use of space between 
-	
-	# gatekeeper
-	alias gatekeeper-disable="sudo spctl --master-disable"
-	alias gatekeeper-enable="sudo spctl --master-enable"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+        # networksetup
+        alias listnetworkinterfaces="networksetup -listnetworkserviceorder"
+        alias setroutes="sudo networksetup -setadditionalroutes " # name from listnetworinterfaces, ip, mask, router; multiple routes should be set through use of space between
+
+        # gatekeeper
+        alias gatekeeper-disable="sudo spctl --master-disable"
+        alias gatekeeper-enable="sudo spctl --master-enable"
 fi
 
 # sudo and doas
 if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
-	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
-		if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
-			if ! [[ "$OSTYPE" == "linux-android" ]]; then
-				alias sudo="doas"
-			fi
-		fi
-	fi
+  if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
+    if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
+      if ! [[ "$OSTYPE" == "linux-android" ]]; then
+        alias sudo="doas"
+      fi
+    fi
+  fi
 fi
+
+alias saferebootmacos="sudo fdesetup authrestart"
+alias saferebootmacoslater="sudo fdesetup authrestart -delayminutes -1"
 
 if [[ $UID == 0 || $EUID == 0 ]]; then
    # root
@@ -283,14 +288,14 @@ alias updateall="zypper refresh;zypper dup";
 
 # outdated commands
 if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
-	if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
-		if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
-			alias ipconfig="ip a"
-		fi
-	fi
+        if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
+                if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
+                        alias ipconfig="ip a"
+                fi
+        fi
 fi
 alias ifconfig="ipconfig"
-		
+
 
 # disk management
 alias listdisks="lsblk -io NAME,TYPE,SIZE,MOUNTPOINT,FSTYPE,MODEL"
@@ -333,7 +338,7 @@ alias переведи="trans"
 alias ytdl-audio="yt-dlp -f 'ba' -x --audio-format mp3"
 alias ytdl-video="yt-dlp --embed-subs --sub-langs all --convert-subs srt --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mkv -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).205B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
 alias ytdl-video-meta="yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata '%(title)s:%(meta_title)s' --parse-metadata '%(uploader)s:%(meta_artist)s' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --convert-subs srt --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mkv -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).205B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
-alias twitch-download="yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true"
+alias twitch-download=" yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true"
 alias ytdl-list="yt-dlp --flat-playlist --print id"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -341,7 +346,7 @@ alias ytdl-list="yt-dlp --flat-playlist --print id"
 
 
 if [[ "$OSTYPE" == "darwin21.0"* ]] \
-	|| [[ "$OSTYPE" == "darwin22.0"* ]]; then
+        || [[ "$OSTYPE" == "darwin22.0"* ]]; then
   # Fig post block. Keep at the bottom of this file.
   . "$HOME/.fig/shell/zshrc.post.zsh"
   eval "$(fig init zsh post)"
@@ -366,12 +371,9 @@ unset __conda_setup
 
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
-alias infusedocs="~/Containers/Data/Application/9D783797-4F41-4C0C-9628-35FA8C8E949C/Documents"
-alias downloaderdocs="/private/var/mobile/Containers/Data/Application/A24D92C9-7F80-4129-8D06-880E107FA9D9/Documents"
-
 if [[ "$OSTYPE" == "linux-android"* ]]; then
 else
-  eval $(thefuck --alias)
+eval $(thefuck --alias)
 fi
 
 # Fig post block. Keep at the bottom of this file.
