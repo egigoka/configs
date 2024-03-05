@@ -18,17 +18,17 @@
         {
             "command": 
             {
-                "action": "newWindow",
-                "index": 0
-            }
-        },
-        {
-            "command": 
-            {
                 "action": "copy",
                 "singleLine": false
             },
             "keys": "ctrl+c"
+        },
+        {
+            "command": 
+            {
+                "action": "newTab"
+            },
+            "keys": "ctrl+t"
         },
         {
             "command": 
@@ -41,9 +41,9 @@
         {
             "command": 
             {
-                "action": "newTab"
-            },
-            "keys": "ctrl+t"
+                "action": "newWindow",
+                "index": 0
+            }
         },
         {
             "command": 
@@ -53,16 +53,16 @@
             "keys": "alt+left"
         },
         {
+            "command": "find",
+            "keys": "ctrl+shift+f"
+        },
+        {
             "command": 
             {
                 "action": "splitPane",
                 "split": "auto",
                 "splitMode": "duplicate"
             }
-        },
-        {
-            "command": "find",
-            "keys": "ctrl+shift+f"
         },
         {
             "command": "unbound",
@@ -266,12 +266,6 @@
                 "hidden": false,
                 "name": "Developer PowerShell for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{2c4de342-38b7-51cf-b940-2309a097f518}",
-                "hidden": true,
-                "name": "Ubuntu",
-                "source": "Windows.Terminal.Wsl"
             },
             {
                 "guid": "{51855cb2-8cce-5362-8f54-464b92b32386}",
