@@ -1,8 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet  # to fix error because of output in chpwd
-# partially fixed, error does'n appear only on first zsh process
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -344,14 +339,6 @@ alias ytdl-list="yt-dlp --flat-playlist --print id"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-
-if [[ "$OSTYPE" == "darwin21.0"* ]] \
-        || [[ "$OSTYPE" == "darwin22.0"* ]]; then
-  # Fig post block. Keep at the bottom of this file.
-  . "$HOME/.fig/shell/zshrc.post.zsh"
-  eval "$(fig init zsh post)"
-fi
-
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
 # >>> conda initialize >>>
@@ -375,6 +362,3 @@ if [[ "$OSTYPE" == "linux-android"* ]]; then
 else
 eval $(thefuck --alias)
 fi
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
