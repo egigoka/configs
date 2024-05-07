@@ -267,6 +267,7 @@ else
    alias snap="sudo snap"
    alias yast="sudo yast"
    alias reboot="sudo systemctl --force reboot"
+   alias shutdown="sudo /usr/sbin/shutdown now"
    alias systemctl="sudo systemctl"
    alias useradd="sudo useradd"
    alias userdel="sudo userdel"
@@ -369,12 +370,10 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+contains $PATH /opt/homebrew/opt/llvm/bin || export PATH=$PATH:/opt/homebrew/opt/llvm/bin
+contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
 
 if [[ "$OSTYPE" == "linux-android"* ]]; then
 else
 eval $(thefuck --alias)
 fi
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
