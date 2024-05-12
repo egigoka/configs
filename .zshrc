@@ -291,7 +291,7 @@ alias scrd="scdr"
 alias sc+="sc start"
 alias sc-="sc stop"
 alias scr="sc restart"
-alias scs="sc status"
+alias scs="sc status -l"
 
 # idk im stupid
 alias zshconfig="micro ~/.zshrc"
