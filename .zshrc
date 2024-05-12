@@ -108,6 +108,7 @@ function fzf_history_search() {
     local selected_command=$(history | sed 's/^\s*[0-9]*\s*yyyy\.mm\.dd\s*//' | fzf --tac --sync -e +s --tiebreak=index | sed 's/^[0-9]*\s*//')
     if [ -n "$selected_command" ]; then
         printf "%s\n" "$selected_command"
+        print -s "$selected_command"  # Save command to history
         if [[ -n $KEYMAP ]]; then
             # If ZLE is active, use BUFFER and zle
             BUFFER=$selected_command
