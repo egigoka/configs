@@ -15,45 +15,6 @@ if [[ "$OSTYPE" == "darwin21.0"* ]] \
   "$HOME/.fig/shell/zshrc.pre.zsh"
 fi
 
-if [[ "$OSTYPE" == "linux-android"* ]]; then
-  export PATH=/data/data/com.termux/files/usr/bin:$PATH:/system/bin:/system/xbin:/system/sbin:/data/adb/modules/ssh/usr/bin
-  export LD_LIBRARY_PATH=/data/data/com.termux/files/usr/lib:$LD_LIBRARY_PATH
-  #/data/data/com.termux/files/usr/bin/zsh
-  export SHELL=/data/data/com.termux/files/usr/bin/zsh
-  
-  # termux
-  export ANDROID_ART_ROOT="/apex/com.android.art"
-  export ANDROID_DATA="/data"
-  export ANDROID_I18N_ROOT="/apex/com.android.i18n"
-  export ANDROID_ROOT="/system"
-  export ANDROID_TZDATA_ROOT="/apex/com.android.tzdata"
-  export BOOTCLASSPATH="/apex/com.android.art/javalib/core-oj.jar:/apex/com.android.art/javalib/core-libart.jar:/apex/com.android.art/javalib/okhttp.jar:/apex/com.android.art/javalib/bouncycastle.jar:/apex/com.android.art/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/framework-graphics.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/apex/com.android.i18n/javalib/core-icu4j.jar:/apex/com.android.appsearch/javalib/framework-appsearch.jar:/apex/com.android.conscrypt/javalib/conscrypt.jar:/apex/com.android.ipsec/javalib/android.net.ipsec.ike.jar:/apex/com.android.media/javalib/updatable-media.jar:/apex/com.android.mediaprovider/javalib/framework-mediaprovider.jar:/apex/com.android.os.statsd/javalib/framework-statsd.jar:/apex/com.android.permission/javalib/framework-permission.jar:/apex/com.android.permission/javalib/framework-permission-s.jar:/apex/com.android.scheduling/javalib/framework-scheduling.jar:/apex/com.android.sdkext/javalib/framework-sdkextensions.jar:/apex/com.android.tethering/javalib/framework-connectivity.jar:/apex/com.android.tethering/javalib/framework-tethering.jar:/apex/com.android.wifi/javalib/framework-wifi.jar"
-  export COLORTERM="truecolor"
-  export DEX2OATBOOTCLASSPATH="/apex/com.android.art/javalib/core-oj.jar:/apex/com.android.art/javalib/core-libart.jar:/apex/com.android.art/javalib/okhttp.jar:/apex/com.android.art/javalib/bouncycastle.jar:/apex/com.android.art/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/framework-graphics.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/apex/com.android.i18n/javalib/core-icu4j.jar"
-  export EXTERNAL_STORAGE="/sdcard"
-  export HISTCONTROL="ignoreboth"
-  export LANG="en_US.UTF-8"
-  export LD_PRELOAD="/data/data/com.termux/files/usr/lib/libtermux-exec.so"
-  export OLDPWD="/data/data/com.termux/files"
-  export PREFIX="/data/data/com.termux/files/usr"
-  export PWD="/data/data/com.termux/files/usr"
-  export SHELL="/data/data/com.termux/files/usr/bin/bash"
-  export SHLVL="1"
-  export TERM="xterm-256color"
-  export TERMUX_API_VERSION="0.50.1"
-  export TERMUX_APK_RELEASE="F_DROID"
-  export TERMUX_APP_PID="11781"
-  export TERMUX_IS_DEBUGGABLE_BUILD="0"
-  export TERMUX_MAIN_PACKAGE_FORMAT="debian"
-  export TERMUX_VERSION="0.118.0"
-  export TMPDIR="/data/data/com.termux/files/usr/tmp"
-
-  function pkg-as-shell {
-    /data/data/com.termux/files/usr/bin/sudo -u u0_a170 env "PATH=$PATH" pkg $*
-  }
-fi
-
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 export ZSH_CUSTOM="$HOME/configs/ZSH_CUSTOM"
@@ -102,6 +63,8 @@ export LC_COLLATE=C
 export LANGUAGE=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+export SYSTEMD_PAGER=
 
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
