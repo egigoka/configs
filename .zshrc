@@ -372,6 +372,7 @@ unset __conda_setup
 
 contains $PATH /opt/homebrew/opt/llvm/bin || export PATH=$PATH:/opt/homebrew/opt/llvm/bin
 contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
+contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 
 if [[ "$OSTYPE" == "linux-android"* ]]; then
 else
