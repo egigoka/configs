@@ -140,6 +140,24 @@ function time_dotted()
         return date +"%Y.%m.%d_at_%H.%M.%S.%N"
         }
 
+function fzf_history_search() {
+    # Search the command history
+    local selected_command=$(history | sed 's/^\s*[0-9]*\s*yyyy\.mm\.dd\s*//' | fzf --tac --sync -e +s --tiebreak=index | sed 's/^[0-9]*\s*//')
+    if [ -n "$selected_command" ]; then
+        printf "%s\n" "$selected_command"
+        if [[ -n $KEYMAP ]]; then
+            # If ZLE is active, use BUFFER and zle
+            BUFFER=$selected_command
+            zle accept-line
+        else
+            # If ZLE is not active, use eval
+            eval "$selected_command"
+        fi
+    fi
+}
+
+alias fh='fzf_history_search'
+
 change_extension() {
   if [ $# -lt 2 ]; then
     echo "Usage: change_extension <filename> <new_extension>"
