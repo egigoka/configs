@@ -5,8 +5,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-if [[ "$OSTYPE" == "darwin21.0"* ]] \
-        || [[ "$OSTYPE" == "darwin22.0"* ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
   # Fig pre block. Keep at the top of this file.
   # export PATH="$HOMEBREW_PREFIX/opt/python@3.10/libexec/bin:$PATH"
   export TDLIB_PATH="/opt/homebrew/opt/tdlib"
@@ -45,18 +44,11 @@ ZSH_COLORIZE_CHROMA_FORMATTER=terminal256
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Add wisely, as too many plugins slow down shell startup.
-if [[ "$OSTYPE" == "linux-android"* ]]; then
-  plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
-else
 plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
-fi
 
 source $ZSH/oh-my-zsh.sh
 
-if [[ "$OSTYPE" == "linux-android"* ]]; then
-else
 eval $(thefuck --alias)
-fi
 
 # fix fucking ls utf8 decoding
 export LC_COLLATE=C
@@ -160,7 +152,7 @@ contains $PATH /home/egigoka/.cargo/bin || export PATH=$PATH:/home/egigoka/.carg
 contains $PATH /home/egorov/.local/bin || export PATH=$PATH:/home/egorov/.local/bin
 contains $PATH /var/mobile/.local/bin || export PATH=$PATH:/var/mobile/.local/bin
 
-if [[ "$OSTYPE" == "darwin21.0"* ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
         #For compilers to find openssl@3 you may need to set:
         export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
         export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
@@ -221,18 +213,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # sudo and doas
-if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
-  if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
-    if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
-      if ! [[ "$OSTYPE" == "linux-android" ]]; then
-        alias sudo="doas"
-      fi
-    fi
-  fi
+if ! [[ "$OSTYPE" == "darwin"* ]]; then
+  alias sudo="doas"
 fi
 
 alias saferebootmacos="sudo fdesetup authrestart"
 alias saferebootmacoslater="sudo fdesetup authrestart -delayminutes -1"
+alias sleepmacos="pmset sleepnow"
 
 if [[ $UID == 0 || $EUID == 0 ]]; then
    # root
@@ -265,14 +252,10 @@ alias uninstall="zypper -n remove"
 alias updateall="zypper refresh;zypper dup";
 
 # outdated commands
-if ! [[ "$OSTYPE" == "darwin20.0"* ]]; then
-        if ! [[ "$OSTYPE" == "darwin21.0"* ]]; then
-                if ! [[ "$OSTYPE" == "darwin22.0"* ]]; then
-                        alias ipconfig="ip a"
-                fi
-        fi
+if ! [[ "$OSTYPE" == "darwin"* ]]; then
+  alias ipconfig="ip a"
+  alias ifconfig="ipconfig"
 fi
-alias ifconfig="ipconfig"
 
 
 # disk management
@@ -342,8 +325,8 @@ unset __conda_setup
 contains $PATH /opt/homebrew/opt/llvm/bin || export PATH=$PATH:/opt/homebrew/opt/llvm/bin
 contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
 contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
+contains $PATH /opt/homebrew/opt/ccache/libexec || export PATH=$PATH:/opt/homebrew/opt/ccache/libexec
 
-if [[ "$OSTYPE" == "linux-android"* ]]; then
-else
 eval $(thefuck --alias)
-fi
+
+eval "$(fzf --zsh)"
