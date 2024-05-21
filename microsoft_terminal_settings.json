@@ -223,6 +223,7 @@
                 "face": "Source Code Pro for Powerline",
                 "size": 11.0
             },
+            "historySize": 262144,
             "opacity": 70,
             "scrollbarState": "visible",
             "useAcrylic": true
