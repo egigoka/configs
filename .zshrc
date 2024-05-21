@@ -1,8 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-[[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet  # to fix error because of output in chpwd
-# partially fixed, error does'n appear only on first zsh process
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -19,45 +14,6 @@ if [[ "$OSTYPE" == "darwin21.0"* ]] \
   eval "$(fig init zsh pre)"
   "$HOME/.fig/shell/zshrc.pre.zsh"
 fi
-
-if [[ "$OSTYPE" == "linux-android"* ]]; then
-  export PATH=/data/data/com.termux/files/usr/bin:$PATH:/system/bin:/system/xbin:/system/sbin:/data/adb/modules/ssh/usr/bin
-  export LD_LIBRARY_PATH=/data/data/com.termux/files/usr/lib:$LD_LIBRARY_PATH
-  #/data/data/com.termux/files/usr/bin/zsh
-  export SHELL=/data/data/com.termux/files/usr/bin/zsh
-  
-  # termux
-  export ANDROID_ART_ROOT="/apex/com.android.art"
-  export ANDROID_DATA="/data"
-  export ANDROID_I18N_ROOT="/apex/com.android.i18n"
-  export ANDROID_ROOT="/system"
-  export ANDROID_TZDATA_ROOT="/apex/com.android.tzdata"
-  export BOOTCLASSPATH="/apex/com.android.art/javalib/core-oj.jar:/apex/com.android.art/javalib/core-libart.jar:/apex/com.android.art/javalib/okhttp.jar:/apex/com.android.art/javalib/bouncycastle.jar:/apex/com.android.art/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/framework-graphics.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/apex/com.android.i18n/javalib/core-icu4j.jar:/apex/com.android.appsearch/javalib/framework-appsearch.jar:/apex/com.android.conscrypt/javalib/conscrypt.jar:/apex/com.android.ipsec/javalib/android.net.ipsec.ike.jar:/apex/com.android.media/javalib/updatable-media.jar:/apex/com.android.mediaprovider/javalib/framework-mediaprovider.jar:/apex/com.android.os.statsd/javalib/framework-statsd.jar:/apex/com.android.permission/javalib/framework-permission.jar:/apex/com.android.permission/javalib/framework-permission-s.jar:/apex/com.android.scheduling/javalib/framework-scheduling.jar:/apex/com.android.sdkext/javalib/framework-sdkextensions.jar:/apex/com.android.tethering/javalib/framework-connectivity.jar:/apex/com.android.tethering/javalib/framework-tethering.jar:/apex/com.android.wifi/javalib/framework-wifi.jar"
-  export COLORTERM="truecolor"
-  export DEX2OATBOOTCLASSPATH="/apex/com.android.art/javalib/core-oj.jar:/apex/com.android.art/javalib/core-libart.jar:/apex/com.android.art/javalib/okhttp.jar:/apex/com.android.art/javalib/bouncycastle.jar:/apex/com.android.art/javalib/apache-xml.jar:/system/framework/framework.jar:/system/framework/framework-graphics.jar:/system/framework/ext.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/ims-common.jar:/apex/com.android.i18n/javalib/core-icu4j.jar"
-  export EXTERNAL_STORAGE="/sdcard"
-  export HISTCONTROL="ignoreboth"
-  export LANG="en_US.UTF-8"
-  export LD_PRELOAD="/data/data/com.termux/files/usr/lib/libtermux-exec.so"
-  export OLDPWD="/data/data/com.termux/files"
-  export PREFIX="/data/data/com.termux/files/usr"
-  export PWD="/data/data/com.termux/files/usr"
-  export SHELL="/data/data/com.termux/files/usr/bin/bash"
-  export SHLVL="1"
-  export TERM="xterm-256color"
-  export TERMUX_API_VERSION="0.50.1"
-  export TERMUX_APK_RELEASE="F_DROID"
-  export TERMUX_APP_PID="11781"
-  export TERMUX_IS_DEBUGGABLE_BUILD="0"
-  export TERMUX_MAIN_PACKAGE_FORMAT="debian"
-  export TERMUX_VERSION="0.118.0"
-  export TMPDIR="/data/data/com.termux/files/usr/tmp"
-
-  function pkg-as-shell {
-    /data/data/com.termux/files/usr/bin/sudo -u u0_a170 env "PATH=$PATH" pkg $*
-  }
-fi
-
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -108,6 +64,8 @@ export LANGUAGE=en_US.UTF-8
 export LC_CTYPE=en_US.UTF-8
 export LANG=en_US.UTF-8
 
+export SYSTEMD_PAGER=
+
 # Preferred editor for local and remote sessions
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='micro'
@@ -144,6 +102,25 @@ function time_dotted()
         {
         return date +"%Y.%m.%d_at_%H.%M.%S.%N"
         }
+
+function fzf_history_search() {
+    # Search the command history
+    local selected_command=$(history | sed 's/^\s*[0-9]*\s*yyyy\.mm\.dd\s*//' | fzf --tac --sync -e +s --tiebreak=index | sed 's/^[0-9]*\s*//')
+    if [ -n "$selected_command" ]; then
+        printf "%s\n" "$selected_command"
+        print -s "$selected_command"  # Save command to history
+        if [[ -n $KEYMAP ]]; then
+            # If ZLE is active, use BUFFER and zle
+            BUFFER=$selected_command
+            zle accept-line
+        else
+            # If ZLE is not active, use eval
+            eval "$selected_command"
+        fi
+    fi
+}
+
+alias fh='fzf_history_search'
 
 change_extension() {
   if [ $# -lt 2 ]; then
@@ -267,6 +244,7 @@ else
    alias snap="sudo snap"
    alias yast="sudo yast"
    alias reboot="sudo systemctl --force reboot"
+   alias shutdown="sudo /usr/sbin/shutdown now"
    alias systemctl="sudo systemctl"
    alias useradd="sudo useradd"
    alias userdel="sudo userdel"
@@ -314,7 +292,7 @@ alias scrd="scdr"
 alias sc+="sc start"
 alias sc-="sc stop"
 alias scr="sc restart"
-alias scs="sc status"
+alias scs="sc status -l"
 
 # idk im stupid
 alias zshconfig="micro ~/.zshrc"
@@ -336,21 +314,13 @@ alias переведи="trans"
 
 #yd-dlp
 alias ytdl-audio="yt-dlp -f 'ba' -x --audio-format mp3"
-alias ytdl-video="yt-dlp --embed-subs --sub-langs all --convert-subs srt --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mkv -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
-alias ytdl-video-meta="yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata '%(title)s:%(meta_title)s' --parse-metadata '%(uploader)s:%(meta_artist)s' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --convert-subs srt --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mkv -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
+alias ytdl-video="yt-dlp --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mkv -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
+alias ytdl-video-meta="yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata '%(title)s:%(meta_title)s' --parse-metadata '%(uploader)s:%(meta_artist)s' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mkv -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
 alias twitch-download=" yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true"
 alias ytdl-list="yt-dlp --flat-playlist --print id"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-
-if [[ "$OSTYPE" == "darwin21.0"* ]] \
-        || [[ "$OSTYPE" == "darwin22.0"* ]]; then
-  # Fig post block. Keep at the bottom of this file.
-  . "$HOME/.fig/shell/zshrc.post.zsh"
-  eval "$(fig init zsh post)"
-fi
 
 export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
 
@@ -369,12 +339,11 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+contains $PATH /opt/homebrew/opt/llvm/bin || export PATH=$PATH:/opt/homebrew/opt/llvm/bin
+contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
+contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 
 if [[ "$OSTYPE" == "linux-android"* ]]; then
 else
 eval $(thefuck --alias)
 fi
-
-# Fig post block. Keep at the bottom of this file.
-[[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"
