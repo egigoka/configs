@@ -207,7 +207,7 @@
 	eval "$(fzf --zsh)"
 
 ### zellij
-	export ZELLIJ_CONFIG_FILE="~/configs/zellij.kdl"
+	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij.kdl"
 
 ### oh-my-zsh
 
