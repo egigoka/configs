@@ -206,6 +206,9 @@
 	eval $(thefuck --alias)
 	eval "$(fzf --zsh)"
 
+### zellij
+	export ZELLIJ_CONFIG_FILE="~/configs/zellij.kdl"
+
 ### oh-my-zsh
 
 	# Path to your oh-my-zsh installation.
