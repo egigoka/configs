@@ -128,6 +128,9 @@
 	alias sc-="sc stop"
 	alias scr="sc restart"
 	alias scs="sc status -l"
+	alias sc--="sc disable"
+	alias sc++="sc enable"
+	alias scls="systemctl list-units --type=service --state=running"
 
 	# idk im stupid
 	alias zshconfig="micro ~/.zshrc"
