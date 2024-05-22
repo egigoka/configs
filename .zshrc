@@ -53,6 +53,7 @@
 
 	# downloaders
 	alias down="axel -a -n"
+	alias aria16="aria2c -j 16 -x 16"
 
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 	    # networksetup
@@ -155,6 +156,9 @@
 
 	# fastfetch
 	alias neofetch="fastfetch"
+
+	# zellij
+	alias z="zellij"
 
 ### functions
 	contains()
