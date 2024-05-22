@@ -202,10 +202,6 @@
 	    fi
 	}
 
-### external aliases
-	eval $(thefuck --alias)
-	eval "$(fzf --zsh)"
-
 ### zellij
 	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij.kdl"
 
@@ -244,6 +240,10 @@
 	plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
 
 	source $ZSH/oh-my-zsh.sh
+
+### external aliases
+	eval $(thefuck --alias)
+	eval "$(fzf --zsh)"
 
 ### systemd configs
 	export SYSTEMD_PAGER=
