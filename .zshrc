@@ -259,6 +259,11 @@
 ### zellij
 	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij.kdl"
 
+### you-should-use
+	Found existing alias for "docker". You should use: "d"
+	export YSU_MESSAGE_FORMAT="$(tput setaf 1)Hey! I found %alias_type for \"%command\": \"%alias$\"(tput sgr0)"
+	export YSU_MESSAGE_POSITION="after"
+
 ### oh-my-zsh
 
 	# Path to your oh-my-zsh installation.
@@ -291,7 +296,7 @@
 	# Standard plugins can be found in $ZSH/plugins/
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Add wisely, as too many plugins slow down shell startup.
-	plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv)
+	plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
 
 	source $ZSH/oh-my-zsh.sh
 
