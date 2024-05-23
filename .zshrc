@@ -65,7 +65,7 @@
 	    alias gatekeeper-disable="sudo spctl --master-disable"
 	    alias gatekeeper-enable="sudo spctl --master-enable"
 	fi
-
+	
 	# sudo and doas
 	alias sudo="doas"
 
@@ -201,6 +201,7 @@
 	alias ytdl-list="yt-dlp --flat-playlist --print id"
 
 	# fastfetch
+	alias fastfetchdeps="install fastfetch chafa dbus dconf ddcutil directx-headers glib2 imagemagick libnm libpulse mesa libxrandr ocl-icd hwdata vulkan-icd-loader xfconf zlib libdrm || echo chafa dbus dconf ddcutil directx-headers glib2 imagemagick libnm libpulse mesa libxrandr ocl-icd hwdata vulkan-icd-loader xfconf zlib libdrm"
 	alias neofetch="fastfetch"
 
 	# zellij
