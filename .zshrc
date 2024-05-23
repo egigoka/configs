@@ -108,7 +108,7 @@
                 . /etc/os-release
                 case "$ID" in
                     arch)
-                        alias updateall='yay -Syu'
+                        alias updateall='yay -Syu --devel --timeupdate'
                         alias install="yay -S"
                         alias uninstall="yay -Rns"
                         ;;
