@@ -5,4 +5,5 @@ git clone https://github.com/zuxfoucault/colored-man-pages_mod $ZSH_CUSTOM/plugi
 git clone https://github.com/digitalraven/omz-homebrew $ZSH_CUSTOM/plugins/omz-homebrew
 git clone https://github.com/mdumitru/last-working-dir $ZSH_CUSTOM/plugins/last-working-dir
 git clone https://github.com/vincentto13/uvenv.plugin.zsh $ZSH_CUSTOM/plugins/uvenv
+git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $ZSH_CUSTOM/plugins/you-should-use
 git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
