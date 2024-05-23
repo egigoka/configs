@@ -1,0 +1,7 @@
+https://www.reddit.com/r/zellij/comments/13twru4/comment/kpmsjv2/
+
+	1.	Open iTerm2 preferences.
+	2.	Go to Profiles -> Keys -> General.
+	3.	Set the Left/Right Option key to Esc+.
+
+This fixes the issue for using Option as a standalone key.
