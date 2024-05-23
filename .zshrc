@@ -96,13 +96,55 @@
 	   alias iotop="sudo iotop"
 	   alias iftop="sudo iftop"
 	   alias smbstatus="sudo smbstatus"
+	   alias apt="sudo apt"
+	   alias yay="sudo yay"
+	   alias pacman="sudo pacman"
 	fi
 
 	# easy packet management
-	alias install="zypper -n install"
-	alias uninstall="zypper -n remove"
-	# alias updateall="zypper ref; zypper list-updates --all; zypper update"
-	alias updateall="zypper refresh;zypper dup";
+	case "$(uname -s)" in
+        Linux)
+            if [ -f /etc/os-release ]; then
+                . /etc/os-release
+                case "$ID" in
+                    arch)
+                        alias updateall='yay -Syu'
+                        alias install="yay -S"
+                        alias uninstall="yay -Rns"
+                        ;;
+                    debian|ubuntu)
+                        alias updateall='apt update && apt upgrade -y'
+                        alias install="apt install"
+                        alias uninstall="apt -y remove"
+                        ;;
+                    opensuse)
+                        alias updateall='zypper refresh;zypper dup'
+                        alias install="zypper -n install"
+                        alias uninstall="zypper -n remove"
+                        ;;
+                    *)
+                        alias updateall='echo "Unknown Linux distribution"'
+                        alias install='echo "Unknown Linux distribution"'
+                        alias uninstall='echo "Unknown Linux distribution"'
+                        ;;
+                esac
+            else
+                alias updateall='echo "Unknown Linux distribution"'
+                alias install='echo "Unknown Linux distribution"'
+                alias uninstall='echo "Unknown Linux distribution"'
+            fi
+            ;;
+        Darwin)
+            alias updateall='brew update; brew upgrade --no-quarantine --greedy; brew cleanup --prune=all'
+            alias install='brew install --no-quarantine'
+            alias uninstall='brew remove --no-quarantine'
+            ;;
+        *)
+            alias updateall='echo "Unknown operating system"'
+            alias install='echo "Unknown operating system"'
+            alias uninstall='echo "Unknown operating system"'
+            ;;
+    esac
 
 	# outdated commands
 	if ! [[ "$OSTYPE" == "darwin"* ]]; then
