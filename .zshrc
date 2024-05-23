@@ -206,6 +206,8 @@
 
 	# zellij
 	alias z="zellij"
+	alias zd="zellij action new-pane --direction down"
+	alias zr="zellij action new-pane --direction right"
 
 ### functions
 	contains()
