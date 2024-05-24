@@ -10,7 +10,7 @@ echo %TARGETDIR%
 
 del %LINK%
 
-mklink %LINK% %TARGETDIR%\microsoft_terminal_settings.json
+mklink /H %LINK% %TARGETDIR%\microsoft_terminal_settings.json
 
 REM registering fonts, not tested, syntax is okay, I guess
 
