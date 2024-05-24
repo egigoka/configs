@@ -263,7 +263,6 @@
 	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij.kdl"
 
 ### you-should-use
-	Found existing alias for "docker". You should use: "d"
 	export YSU_MESSAGE_FORMAT="$(tput setaf 1)Hey! I found %alias_type for \"%command\": \"%alias\"$(tput sgr0)"
 	export YSU_MESSAGE_POSITION="after"
 
