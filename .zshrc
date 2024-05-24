@@ -112,7 +112,7 @@
                         alias install="yay -S"
                         alias uninstall="yay -Rns"
                         ;;
-                    debian|ubuntu)
+                    debian|ubuntu|droidian)
                         alias updateall='apt update && apt dist-upgrade -y'
                         alias install="apt install"
                         alias uninstall="apt -y remove"
