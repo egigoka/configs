@@ -1,14 +1,15 @@
+//current
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
             "command": "paste",
             "keys": "ctrl+v"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "newWindow",
                 "profile": "{bc2da056-dd06-5879-b969-1dfcefc8d2c7}"
@@ -16,7 +17,7 @@
             "keys": "ctrl+n"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "copy",
                 "singleLine": false
@@ -24,14 +25,14 @@
             "keys": "ctrl+c"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "newTab"
             },
             "keys": "ctrl+t"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "newTab",
                 "index": 2
@@ -39,14 +40,14 @@
             "keys": "ctrl+shift+3"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "newWindow",
                 "index": 0
             }
         },
         {
-            "command": 
+            "command":
             {
                 "action": "prevTab"
             },
@@ -57,7 +58,7 @@
             "keys": "ctrl+shift+f"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "auto",
@@ -177,7 +178,7 @@
             "keys": "ctrl+numpad_minus"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "newTab",
                 "index": 0
@@ -185,14 +186,14 @@
             "keys": "ctrl+shift+1"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "closeTab"
             },
             "keys": "ctrl+w"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "nextTab"
             },
@@ -202,23 +203,23 @@
     "confirmCloseAllTabs": false,
     "copyFormatting": "none",
     "copyOnSelect": true,
-    "defaultProfile": "{bc2da056-dd06-5879-b969-1dfcefc8d2c7}",
+    "defaultProfile": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
     "experimental.rendering.software": false,
-    "newTabMenu": 
+    "newTabMenu":
     [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles": 
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
             "antialiasingMode": "cleartype",
             "closeOnExit": "always",
             "colorScheme": "EgigokaLight",
             "experimental.retroTerminalEffect": false,
-            "font": 
+            "font":
             {
                 "face": "Source Code Pro for Powerline",
                 "size": 11.0
@@ -228,7 +229,7 @@
             "scrollbarState": "visible",
             "useAcrylic": true
         },
-        "list": 
+        "list":
         [
             {
                 "backgroundImage": "desktopWallpaper",
@@ -242,7 +243,7 @@
             {
                 "closeOnExit": "always",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
-                "hidden": false,
+                "hidden": true,
                 "name": "Windows PowerShell"
             },
             {
@@ -258,13 +259,13 @@
             },
             {
                 "guid": "{112a0e1c-df78-53dc-8cbf-54a857ac81c6}",
-                "hidden": false,
+                "hidden": true,
                 "name": "Developer Command Prompt for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
                 "guid": "{ca88ee38-e978-55c1-a51d-36879cf36648}",
-                "hidden": false,
+                "hidden": true,
                 "name": "Developer PowerShell for VS 2022",
                 "source": "Windows.Terminal.VisualStudio"
             },
@@ -273,10 +274,17 @@
                 "hidden": false,
                 "name": "Ubuntu",
                 "source": "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc"
+            },
+            {
+                "guid": "{a5a97cb8-8961-5535-816d-772efe0c6a3f}",
+                "hidden": false,
+                "icon": "C:\\Program Files\\WindowsApps\\yuk7.archwsl_24.4.28.0_x64__35zwpb4sx6e50\\Arch.exe",
+                "name": "Arch",
+                "source": "Windows.Terminal.Wsl"
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#0C0C0C",
