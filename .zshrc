@@ -97,7 +97,6 @@
 	   alias iftop="sudo iftop"
 	   alias smbstatus="sudo smbstatus"
 	   alias apt="sudo apt"
-	   alias yay="sudo yay"
 	   alias pacman="sudo pacman"
 	fi
 
