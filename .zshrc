@@ -209,7 +209,11 @@
 	        echo "Error: session should have name."
 	        return 1
 	    else
-	        zellij --session "$*"
+	        session_name="$*"
+	        zellij --session "$session_name" || zellij_attach "$session_name"
+	        if [ "$(zellij list-sessions --no-formatting | grep -E \"^$session_name\s+EXITED\" | wc -l)" -eq 1 ]; then
+	            zellij delete-session "$session_name"
+	        fi
 	    fi
 	}
 	alias zls='zellij ls | grep -v "attach to resurrect"'
@@ -241,6 +245,20 @@
 		    fi
 		else
 	        zellij_kill_session "$*"
+	    fi
+	}
+
+	z--() {
+		if [ "$#" -eq 0 ]; then
+		    sessions=$(zellij list-sessions --reverse --no-formatting | grep -v "(EXITED" | awk '{printf "\033[1;36m%-20s\033[0m %s\n", $1, $3}')
+		    selected_session=$(echo "$sessions" | fzf --height ${FZF_TMUX_HEIGHT:-20%} --ansi | awk '{print $1}')
+		    if [ -n "$selected_session" ]; then
+		        zellij_delete_session "$selected_session"
+		    else
+		        echo "No session selected."
+		    fi
+		else
+	        zellij_delete_session "$*"
 	    fi
 	}
 	
@@ -298,8 +316,12 @@
         zellij attach "$*"
     }
     
-    zellij_kill_session(){
+    zellij_kill_session() {
     	zellij kill-session "$*"
+    }
+
+    zellij_delete_session() {
+    	zellij delete-session "$*"
     }
 
 ### zellij
