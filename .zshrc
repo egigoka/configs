@@ -163,7 +163,7 @@
 	alias diskusage="ncdu"
 
 	# systemd
-	alias sc="systemctl"  # anyway I hate vim
+	alias sc="systemctl"
 	alias scdr="sc daemon-reload"
 	alias scrd="scdr"
 	alias sc+="sc start"
@@ -204,10 +204,46 @@
 	alias neofetch="fastfetch"
 
 	# zellij
-	alias z="zellij"
+	z() {
+	    if [ "$#" -eq 0 ]; then
+	        echo "Error: session should have name."
+	        return 1
+	    else
+	        zellij --session "$*"
+	    fi
+	}
+	alias zls='zellij ls | grep -v "attach to resurrect"'
 	alias zd="zellij action new-pane --direction down"
 	alias zr="zellij action new-pane --direction right"
+	
+	zc() {
+		if [ "$#" -eq 0 ]; then
+		    sessions=$(zellij list-sessions --reverse --no-formatting | grep -v "(EXITED" | awk '{printf "\033[1;36m%-20s\033[0m %s\n", $1, $3}')
+		    selected_session=$(echo "$sessions" | fzf --height ${FZF_TMUX_HEIGHT:-20%} --ansi | awk '{print $1}')
+		    if [ -n "$selected_session" ]; then
+		        zellij_attach "$selected_session"
+		    else
+		        echo "No session selected."
+		    fi
+		else
+	        zellij_attach "$*"
+	    fi
+	}
 
+	z-() {
+		if [ "$#" -eq 0 ]; then
+		    sessions=$(zellij list-sessions --reverse --no-formatting | grep -v "(EXITED" | awk '{printf "\033[1;36m%-20s\033[0m %s\n", $1, $3}')
+		    selected_session=$(echo "$sessions" | fzf --height ${FZF_TMUX_HEIGHT:-20%} --ansi | awk '{print $1}')
+		    if [ -n "$selected_session" ]; then
+		        zellij_kill_session "$selected_session"
+		    else
+		        echo "No session selected."
+		    fi
+		else
+	        zellij_kill_session "$*"
+	    fi
+	}
+	
 ### functions
 	contains()
 	        {
@@ -257,6 +293,14 @@
 
 	    fi
 	}
+	
+	zellij_attach() {
+        zellij attach "$*"
+    }
+    
+    zellij_kill_session(){
+    	zellij kill-session "$*"
+    }
 
 ### zellij
 	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij.kdl"
@@ -307,6 +351,7 @@
 
 ### systemd configs
 	export SYSTEMD_PAGER=
+	export SYSTEMD_LESS=
 
 ### default editor
 	if [[ -n $SSH_CONNECTION ]]; then
