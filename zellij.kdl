@@ -203,4 +203,4 @@ plugins {
 
 theme "catppuccin-latte"
 default_layout "compact"
-session_serialization true
+session_serialization false
