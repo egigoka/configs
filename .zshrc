@@ -345,6 +345,8 @@
 
 	HYPHEN_INSENSITIVE="true"
 
+	HIST_STAMPS="%Y.%m.%d %T"
+
 	ET_NO_TELEMETRY="fuck telemetry"
 
 	export UPDATE_ZSH_DAYS=13
