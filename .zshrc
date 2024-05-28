@@ -75,6 +75,7 @@
 
 	if [[ $UID == 0 || $EUID == 0 ]]; then
 	   # root
+	   alias unmount="umount"
 	else
 	   # not root
 	   alias unmount="sudo umount"
