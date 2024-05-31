@@ -323,6 +323,18 @@
     	zellij delete-session "$*"
     }
 
+	shh () {
+	    local secret="$1"
+	    local replacement="$2"
+	    
+	    if [[ -z "$secret" || -z "$replacement" ]]; then
+	        echo "Usage: shh <secret_to_replace> <replacement_text>"
+	        return 1
+	    fi
+	    
+	    sed "s/$secret/$replacement/g"
+	}
+
 ### zellij
 	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij.kdl"
 
