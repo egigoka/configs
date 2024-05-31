@@ -75,6 +75,7 @@
 
 	if [[ $UID == 0 || $EUID == 0 ]]; then
 	   # root
+	   alias unmount="umount"
 	else
 	   # not root
 	   alias unmount="sudo umount"
@@ -356,6 +357,8 @@
 
 	HYPHEN_INSENSITIVE="true"
 
+	HIST_STAMPS="%Y.%m.%d %T"
+
 	ET_NO_TELEMETRY="fuck telemetry"
 
 	export UPDATE_ZSH_DAYS=13
@@ -363,8 +366,6 @@
 	ENABLE_CORRECTION="false" # correction conflicts with colored-man-pages_mod
 
 	COMPLETION_WAITING_DOTS="true"
-
-	HIST_STAMPS="yyyy.mm.dd"
 
 	ZSH_COLORIZE_TOOL=chroma
 	ZSH_COLORIZE_STYLE="colorful"
