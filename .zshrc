@@ -174,6 +174,7 @@
 	alias sc--="sc disable"
 	alias sc++="sc enable"
 	alias scls="systemctl list-units --type=service --state=running"
+	alias scfailed="sc list-units --state=failed"
 
 	# idk im stupid
 	alias zshconfig="micro ~/.zshrc"
