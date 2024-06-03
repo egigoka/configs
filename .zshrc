@@ -11,6 +11,7 @@
 
 ### PATH
 	contains $PATH . || export PATH=$PATH:.
+	contains $PATH /opt/homebrew/bin || export PATH=/opt/homebrew/bin:$PATH
 	contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
 	contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
 	contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
@@ -75,6 +76,7 @@
 
 	if [[ $UID == 0 || $EUID == 0 ]]; then
 	   # root
+	   alias unmount="umount"
 	else
 	   # not root
 	   alias unmount="sudo umount"
@@ -166,6 +168,7 @@
 	alias sc--="sc disable"
 	alias sc++="sc enable"
 	alias scls="systemctl list-units --type=service --state=running"
+	alias scfailed="sc list-units --state=failed"
 
 	# idk im stupid
 	alias zshconfig="micro ~/.zshrc"
@@ -317,6 +320,18 @@
     	zellij delete-session "$*"
     }
 
+	shh () {
+	    local secret="$1"
+	    local replacement="$2"
+	    
+	    if [[ -z "$secret" || -z "$replacement" ]]; then
+	        echo "Usage: shh <secret_to_replace> <replacement_text>"
+	        return 1
+	    fi
+	    
+	    sed "s/$secret/$replacement/g"
+	}
+
 ### zellij
 	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij.kdl"
 
@@ -338,6 +353,8 @@
 
 	HYPHEN_INSENSITIVE="true"
 
+	HIST_STAMPS="%Y.%m.%d %T"
+
 	ET_NO_TELEMETRY="fuck telemetry"
 
 	export UPDATE_ZSH_DAYS=13
@@ -345,8 +362,6 @@
 	ENABLE_CORRECTION="false" # correction conflicts with colored-man-pages_mod
 
 	COMPLETION_WAITING_DOTS="true"
-
-	HIST_STAMPS="yyyy.mm.dd"
 
 	ZSH_COLORIZE_TOOL=chroma
 	ZSH_COLORIZE_STYLE="colorful"
