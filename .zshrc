@@ -144,12 +144,6 @@
             ;;
     esac
 
-	# outdated commands
-	if ! [[ "$OSTYPE" == "darwin"* ]]; then
-	  alias ipconfig="ip a"
-	  alias ifconfig="ipconfig"
-	fi
-
 
 	# disk management
 	alias listdisks="lsblk -io NAME,TYPE,SIZE,MOUNTPOINT,FSTYPE,MODEL"
