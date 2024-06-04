@@ -11,6 +11,7 @@
 
 ### PATH
 	contains $PATH . || export PATH=$PATH:.
+	contains $PATH /opt/homebrew/bin || export PATH=/opt/homebrew/bin:$PATH
 	contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
 	contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
 	contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
@@ -145,12 +146,6 @@
             ;;
     esac
 
-	# outdated commands
-	if ! [[ "$OSTYPE" == "darwin"* ]]; then
-	  alias ipconfig="ip a"
-	  alias ifconfig="ipconfig"
-	fi
-
 
 	# disk management
 	alias listdisks="lsblk -io NAME,TYPE,SIZE,MOUNTPOINT,FSTYPE,MODEL"
@@ -173,6 +168,7 @@
 	alias sc--="sc disable"
 	alias sc++="sc enable"
 	alias scls="systemctl list-units --type=service --state=running"
+	alias scfailed="sc list-units --state=failed"
 
 	# idk im stupid
 	alias zshconfig="micro ~/.zshrc"
@@ -325,6 +321,18 @@
     zellij_delete_session() {
     	zellij delete-session "$*"
     }
+
+	shh () {
+	    local secret="$1"
+	    local replacement="$2"
+	    
+	    if [[ -z "$secret" || -z "$replacement" ]]; then
+	        echo "Usage: shh <secret_to_replace> <replacement_text>"
+	        return 1
+	    fi
+	    
+	    sed "s/$secret/$replacement/g"
+	}
 
 ### zellij
 	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij.kdl"
