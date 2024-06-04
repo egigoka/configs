@@ -176,7 +176,7 @@
 	alias move="mv"
 	alias q="exit"
 	alias lll="ll -p | grep -v /"
-	alias mvv='rsync --remove-source-files --info=progress2'
+	alias mvv='rsync -a --remove-source-files --info=progress2'
 	alias cpr='rsync -a --info=progress2'
 
 	# git
