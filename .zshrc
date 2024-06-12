@@ -113,12 +113,12 @@
                         alias uninstall="yay -Rns"
                         ;;
                     debian|ubuntu|droidian)
-                        alias updateall='apt update && apt dist-upgrade'
+                        alias updateall='apt update && apt upgrade && apt dist-upgrade'
                         alias install="apt install"
                         alias uninstall="apt -y remove"
                         ;;
                     opensuse-tumbleweed)
-                        alias updateall='zypper refresh;zypper dup'
+                        alias updateall='zypper refreshzypper dup'
                         alias install="zypper -n install"
                         alias uninstall="zypper -n remove"
                         ;;
