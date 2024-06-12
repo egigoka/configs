@@ -113,7 +113,7 @@
                         alias uninstall="yay -Rns"
                         ;;
                     debian|ubuntu|droidian)
-                        alias updateall='apt update && apt dist-upgrade -y'
+                        alias updateall='apt update && apt dist-upgrade'
                         alias install="apt install"
                         alias uninstall="apt -y remove"
                         ;;
