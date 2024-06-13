@@ -132,7 +132,7 @@ function prompt_my_screen_status()
 	{
 		if contains $TERM "screen"
 		then
-			p10k segment -s "[s]" -f "green" -i "📺" -t $STY
+			p10k segment -s "[s]" -f "green" -i "📺" -t "$STY"
 		else 
 			p10k segment -s "" -f "red" -i "" -t "$STY"
 			# -t $STY
