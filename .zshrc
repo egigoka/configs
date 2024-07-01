@@ -118,7 +118,7 @@
                         alias uninstall="apt -y remove"
                         ;;
                     opensuse-tumbleweed)
-                        alias updateall='zypper refreshzypper dup'
+                        alias updateall='zypper refresh && zypper dup'
                         alias install="zypper -n install"
                         alias uninstall="zypper -n remove"
                         ;;
