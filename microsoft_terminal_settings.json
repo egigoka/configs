@@ -51,7 +51,7 @@
             {
                 "action": "prevTab"
             },
-            "keys": "alt+left"
+            "keys": "alt+shift+left"
         },
         {
             "command": "find",
@@ -197,7 +197,7 @@
             {
                 "action": "nextTab"
             },
-            "keys": "alt+right"
+            "keys": "alt+shift+right"
         }
     ],
     "confirmCloseAllTabs": false,
@@ -350,8 +350,8 @@
             "green": "#055A04",
             "name": "EgigokaLight",
             "purple": "#950095",
-            "red": "#DE3E35",
-            "selectionBackground": "#337037",
+            "red": "#de3E35",
+            "selectionBackground": "#257A24",
             "white": "#999999",
             "yellow": "#b48F0A"
         },
