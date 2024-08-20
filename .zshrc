@@ -385,6 +385,9 @@
 	export SYSTEMD_PAGER=
 	export SYSTEMD_LESS=
 
+### aider configs
+	export AIDER_AUTO_COMMITS=False
+
 ### default editor
 	if [[ -n $SSH_CONNECTION ]]; then
 	  export EDITOR='micro'
