@@ -118,7 +118,7 @@
                         alias uninstall="apt -y remove"
                         ;;
                     opensuse-tumbleweed)
-                        alias updateall='zypper refreshzypper dup'
+                        alias updateall='zypper refresh && zypper dup'
                         alias install="zypper -n install"
                         alias uninstall="zypper -n remove"
                         ;;
@@ -137,7 +137,7 @@
         Darwin)
             alias updateall='brew update; brew upgrade --no-quarantine --greedy; brew cleanup --prune=all'
             alias install='brew install --no-quarantine'
-            alias uninstall='brew remove --no-quarantine'
+            alias uninstall='brew remove'
             ;;
         *)
             alias updateall='echo "Unknown operating system"'
