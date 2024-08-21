@@ -396,6 +396,9 @@
 	  export EDITOR='micro'
 	fi
 
+### ls configs
+	eval `dircolors $ZSH_CUSTOM/dircolors-solarized/dircolors.ansi-light`
+
 ### show current directory items when changing directories
 	list_dir() {
 		la;
