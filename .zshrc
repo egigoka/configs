@@ -55,6 +55,7 @@
 	# downloaders
 	alias down="axel -a -n"
 	alias aria16="aria2c -j 16 -x 16"
+	alias ariaipfsrelay=" aria2c -j 1 -x 1 --file-allocation=none --allow-overwrite --no-file-allocation=100000M --auto-file-renaming=false"
 
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 	    # networksetup
