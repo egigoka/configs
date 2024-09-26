@@ -52,6 +52,9 @@
 	# cd
 	alias cd..="cd .."
 
+	# xattr
+	alias attributesread="xattr -l"
+
 	# downloaders
 	alias down="axel -a -n"
 	alias aria16="aria2c -j 16 -x 16"
