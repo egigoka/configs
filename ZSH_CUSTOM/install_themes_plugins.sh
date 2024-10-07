@@ -7,3 +7,4 @@ git clone https://github.com/mdumitru/last-working-dir $ZSH_CUSTOM/plugins/last-
 git clone https://github.com/vincentto13/uvenv.plugin.zsh $ZSH_CUSTOM/plugins/uvenv
 git clone https://github.com/MichaelAquilina/zsh-you-should-use.git $ZSH_CUSTOM/plugins/you-should-use
 git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
+git clone https://github.com/seebi/dircolors-solarized $ZSH_CUSTOM/dircolors-solarized
