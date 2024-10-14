@@ -401,6 +401,9 @@
 	fi
 
 ### ls configs
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		alias dircolors="gdircolors"
+	fi
 	eval `dircolors $ZSH_CUSTOM/dircolors-solarized/dircolors.ansi-light`
 
 ### show current directory items when changing directories
