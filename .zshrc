@@ -43,6 +43,9 @@
 	# micro
 	alias m="micro"
 
+	# find
+	alias findne="find 2>/dev/null"
+
 	# python
 	alias py="python3"
 	alias pip="pip3"
