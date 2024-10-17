@@ -190,6 +190,7 @@
 	# git
 	alias gs="git status"
 	alias gpl="git pull"
+	alias gcommitstoday=" (git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"; echo)"
 
 	# protonvpn
 	alias protonvpnfastest="curl -s https://api.protonmail.ch/vpn/logicals | jq '[.LogicalServers[]|select(.Name|contains(\"$1\"))|select(.Tier==2)|{ServerName: .Name, ServerLoad: (.Load|tonumber),EntryIP: .Servers[].EntryIP}] | sort_by(.ServerLoad)' | jq -r '.[0:7]'"
