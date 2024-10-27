@@ -117,6 +117,7 @@ apps:
                 - VLC
                 - What to Watch 2
                 - calibre
+                - ChatGPT
                 - mpv
         - folder: File management
           pages:
@@ -182,23 +183,22 @@ apps:
                 - KeyClu
                 - CustomShortcuts
                 - Multitouch
-                - Logi Options
                 - Logi Options+
                 - Smart Scroll
+                - Logi Options
         - folder: LLMs
           pages:
             - number: 1
               items:
-                - ChatGPT
                 - Amazon Q
                 - ChatGPT
                 - Chatbox
-                - Copilot
                 - DiffusionBee
                 - LM Studio
                 - Machato
                 - gpt4all
                 - maintenancetool
+                - Copilot
         - folder: Menubar apps
           pages:
             - number: 1
@@ -390,10 +390,10 @@ apps:
                 - Deeper
                 - Geekbench 6
                 - Hammerspoon
-                - Kill All Apps
                 - Raycast
                 - coconutBattery
                 - AlDente
+                - Kill All Apps
         - folder: Terminal emulators
           pages:
             - number: 1
