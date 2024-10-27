@@ -2,8 +2,6 @@ apps:
   pages:
     - number: 1
       items:
-        - System Settings
-        - Bitwarden
         - folder: API Tools
           pages:
             - number: 1
@@ -25,6 +23,13 @@ apps:
                 - MyApplications
                 - TestFlight
                 - Replacicon
+        - folder: Automation
+          pages:
+            - number: 1
+              items:
+                - Hammerspoon
+                - Automator
+                - Shortcuts
         - folder: Backup
           pages:
             - number: 1
@@ -45,13 +50,9 @@ apps:
                 - Brave Browser
                 - Chromium
                 - Safari Technology Preview
-                - Speedtest
                 - Tor Browser
                 - Vivaldi
-                - UniFi
-                - Transmission
                 - Zen Browser
-                - qBittorrent
         - folder: Development iOS
           pages:
             - number: 1
@@ -117,7 +118,6 @@ apps:
                 - VLC
                 - What to Watch 2
                 - calibre
-                - ChatGPT
                 - mpv
         - folder: File management
           pages:
@@ -183,22 +183,23 @@ apps:
                 - KeyClu
                 - CustomShortcuts
                 - Multitouch
+                - Logi Options
                 - Logi Options+
                 - Smart Scroll
-                - Logi Options
         - folder: LLMs
           pages:
             - number: 1
               items:
-                - Amazon Q
                 - ChatGPT
+                - Copilot
+                - Machato
+                - LM Studio
                 - Chatbox
                 - DiffusionBee
-                - LM Studio
-                - Machato
+                - ChatGPT
                 - gpt4all
                 - maintenancetool
-                - Copilot
+                - Amazon Q
         - folder: Menubar apps
           pages:
             - number: 1
@@ -280,6 +281,14 @@ apps:
                 - krita
                 - Photos
                 - Photo Booth
+        - folder: Network tools
+          pages:
+            - number: 1
+              items:
+                - qBittorrent
+                - Speedtest
+                - Transmission
+                - UniFi
         - folder: Notes/Organizers
           pages:
             - number: 1
@@ -351,6 +360,7 @@ apps:
           pages:
             - number: 1
               items:
+                - Bitwarden
                 - BlockBlock Helper
                 - KnockKnock
                 - DHS
@@ -378,22 +388,20 @@ apps:
           pages:
             - number: 1
               items:
+                - System Settings
                 - CleanMyMac X
-                - Shortcuts
                 - TinkerTool
                 - TinkerTool System
                 - OnyX
                 - LaunchControl
-                - Automator
                 - System Information
                 - Activity Monitor
                 - Deeper
                 - Geekbench 6
-                - Hammerspoon
+                - Kill All Apps
                 - Raycast
                 - coconutBattery
                 - AlDente
-                - Kill All Apps
         - folder: Terminal emulators
           pages:
             - number: 1
