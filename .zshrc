@@ -84,6 +84,7 @@
 	if [[ $UID == 0 || $EUID == 0 ]]; then
 	   # root
 	   alias unmount="umount"
+	   alias iotop="sysctl kernel.task_delayacct=1; iotop; sysctl kernel.task_delayacct=0"
 	else
 	   # not root
 	   alias unmount="sudo umount"
@@ -101,7 +102,7 @@
 	   alias btrfs="sudo btrfs"
 	   alias mkfs.btrfs="sudo mkfs.btrfs"
 	   alias openvpn="sudo openvpn"
-	   alias iotop="sudo iotop"
+	   alias iotop="sudo sysctl kernel.task_delayacct=1; sudo iotop; sudo sysctl kernel.task_delayacct=0"
 	   alias iftop="sudo iftop"
 	   alias smbstatus="sudo smbstatus"
 	   alias apt="sudo apt"
@@ -160,9 +161,15 @@
 	alias alldisks="listdisks"
 	alias freespace="df -kh ."
 	alias freespaceall="df -kh"
-	alias listdisks="lsblk"
+	
 	alias btr="btrfs"
 	alias btrusage="btr filesystem usage"
+	alias btrqgroup="btr qgroup show -r"
+	alias btrusagebysnapshot="btr filesystem du -s"
+	alias btrqgrouprescan="btrfs quota rescan /mnt/btr"
+	alias btrqgrouprescanstatus="btrfs quota rescan -s /mnt/btr"
+	alias btrremovesnapshot="btrfs subvolume delete --commit-after"
+
 	alias diskusage="ncdu"
 
 	# systemd
