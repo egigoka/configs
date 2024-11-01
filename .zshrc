@@ -277,6 +277,19 @@
 	}
 	
 ### functions
+	function clip() {
+	    # If no input is provided, read from stdin
+	    local text
+	    if [[ $# -eq 0 ]]; then
+	        text=$(cat)
+	    else
+	        text="$*"
+	    fi
+	
+	    # Create OSC 52 sequence: ESC + ]52;c; + base64_data + BEL
+	    printf "\033]52;c;$(printf "%s" "$text" | base64)\a" >&2
+	}
+
 	contains()
 	        {
 	        string="$1"
