@@ -1,0 +1,500 @@
+apps:
+  pages:
+    - number: 1
+      items:
+        - folder: API Tools
+          pages:
+            - number: 1
+              items:
+                - RapidAPI
+                - Postman
+                - Proxyman
+        - folder: App management
+          pages:
+            - number: 1
+              items:
+                - App Store
+                - AppCleaner
+                - App Tamer
+                - Bresink Software Updater
+                - Cakebrew
+                - Dolphin Updater
+                - MacUpdater
+                - MyApplications
+                - TestFlight
+                - Replacicon
+        - folder: Automation
+          pages:
+            - number: 1
+              items:
+                - Hammerspoon
+                - Automator
+                - Shortcuts
+        - folder: Backup
+          pages:
+            - number: 1
+              items:
+                - TimeMachineEditor
+                - Duplicati
+                - Time Machine
+                - ChronoSync
+                - Exporter
+        - folder: Browsers
+          pages:
+            - number: 1
+              items:
+                - Safari
+                - Firefox
+                - Aloha
+                - Waterfox
+                - Brave Browser
+                - Chromium
+                - Safari Technology Preview
+                - Tor Browser
+                - Vivaldi
+                - Zen Browser
+        - folder: Development iOS
+          pages:
+            - number: 1
+              items:
+                - Xcode-16.0.0
+                - iOS App Signer
+                - Xcodes
+                - Copilot for Xcode
+                - RocketSim
+                - iPhone Mirroring
+                - DevCleaner
+                - Developer
+                - Squirrel
+                - Unwrap
+                - App Icon Generator
+        - folder: Development other
+          pages:
+            - number: 1
+              items:
+                - Beyond Compare
+                - Meld
+                - Docker
+                - PyCharm CE
+                - Sourcetree
+                - Sublime Merge
+                - Sublime Text
+                - TextMate
+                - VSCodium
+                - kdiff3
+        - folder: Display Tools
+          pages:
+            - number: 1
+              items:
+                - MonitorDetector
+                - BetterDisplay
+                - Displaperture
+                - Aerial Companion
+                - Lunar
+                - Greenshot
+                - flameshot
+                - Kap
+                - TextSniper
+        - folder: Entertainment
+          pages:
+            - number: 1
+              items:
+                - Podcasts
+                - Books
+                - Plexamp
+                - AirServer
+                - Broadcasts
+                - Clicker for YouTube
+                - Elpy
+                - Desktop Goose
+                - Friendly Streaming
+                - Infuse
+                - IINA
+                - Movist Pro
+                - MyShows
+                - Plex
+                - Shazam
+                - Spotify
+                - VLC
+                - What to Watch 2
+                - calibre
+                - mpv
+        - folder: File management
+          pages:
+            - number: 1
+              items:
+                - Syncthing
+                - DaisyDisk
+                - EasyFind
+                - Bluetooth File Exchange
+                - Blackmagic Disk Speed Test
+                - Disk Utility
+                - CPDT
+                - Command X
+                - DriveDx
+                - HighTop
+                - HoudahSpot
+                - Mountain Duck
+                - Nextcloud
+                - Transmit
+                - TeraCopy
+                - balenaEtcher
+                - dupeguru
+                - Resilio Sync
+                - CloudMounter
+                - LocalSend
+                - Keka
+        - folder: Finance
+          pages:
+            - number: 1
+              items:
+                - МиГ
+                - Korona
+                - Rabby Desktop
+                - Exodus
+                - Subtrack
+                - Sber KZ
+                - Zenmoney
+                - СберБанк
+        - folder: Games
+          pages:
+            - number: 1
+              items:
+                - PlayCover
+                - Ryujinx
+                - Chess
+                - Dolphin
+                - Epic Games Launcher
+                - Minecraft
+                - Make it True
+                - Mythic
+                - OpenEmu
+                - Steam
+        - folder: Input
+          pages:
+            - number: 1
+              items:
+                - SaneSideButtons
+                - BetterMouse
+                - Mousecape
+                - BetterTouchTool
+                - Karabiner-Elements
+                - Karabiner-EventViewer
+                - KeyClu
+                - CustomShortcuts
+                - Multitouch
+                - Logi Options
+                - Logi Options+
+                - Smart Scroll
+        - folder: LLMs
+          pages:
+            - number: 1
+              items:
+                - ChatGPT
+                - Copilot
+                - Machato
+                - LM Studio
+                - Chatbox
+                - DiffusionBee
+                - ChatGPT
+                - gpt4all
+                - maintenancetool
+                - Amazon Q
+        - folder: Menubar apps
+          pages:
+            - number: 1
+              items:
+                - Silicon Info
+                - Amphetamine
+                - Amphetamine Enhancer
+                - Hand Mirror
+                - Ice
+                - Menu Bar Spacing
+                - Pippo
+                - AirBuddy
+                - Better Window Manager
+                - Dropover
+                - Gestimer
+                - HazeOver
+                - Maccy
+                - Mic Drop
+                - Mission Control Plus
+                - ScreenshotMenu
+                - Shareful
+                - TinyStopwatch
+                - iStat Menus
+                - noTunes
+                - MenubarPing
+        - folder: Messengers
+          pages:
+            - number: 1
+              items:
+                - Mail
+                - Mimestream
+                - Contacts
+                - Messages
+                - FaceTime
+                - Element
+                - Discord
+                - Ripcord
+                - Telegram
+                - Skype
+                - Signal
+                - VencordInstaller
+                - WhatsApp
+        - folder: Mobile device managements
+          pages:
+            - number: 1
+              items:
+                - ubports-installer
+                - droidian-installer
+                - AltServer
+                - Find My
+                - AnyTrans
+                - Apple Configurator
+                - CheckNonceGUI
+                - Sideloadly
+                - WALTR PRO
+                - OpenMTP
+                - NearDrop
+                - Waltr 2
+                - checkra1n
+                - iBetterCharge
+                - iMazing
+                - heimdall-frontend
+        - folder: Multimedia production
+          pages:
+            - number: 1
+              items:
+                - Audacity
+                - Audio Hijack
+                - Camo Studio
+                - Final Cut Pro
+                - HandBrake
+                - ImageOptim
+                - OBS
+                - PDF Squeezer
+                - Permute 3
+                - Pixelmator Pro
+                - SoundSource
+                - WALTR HEIC Converter
+                - krita
+                - Photos
+                - Photo Booth
+        - folder: Network tools
+          pages:
+            - number: 1
+              items:
+                - qBittorrent
+                - Speedtest
+                - Transmission
+                - UniFi
+        - folder: Notes/Organizers
+          pages:
+            - number: 1
+              items:
+                - Notes
+                - Pages
+                - Numbers
+                - Keynote
+                - Notion
+                - Reminders
+                - Bike
+                - Cloud Outliner
+                - Dynalist
+                - QuikFlow
+                - Soulver 3
+                - Trello
+                - Tydlig
+                - Calendar
+                - Clock
+                - Weather
+                - Be Focused Pro
+                - Focus
+                - JobSnail
+                - Progress
+                - Todoist
+                - aTimeLogger
+                - aTimeLogger Pro
+                - LibreOffice
+        - folder: Remote access
+          pages:
+            - number: 1
+              items:
+                - Windows App
+                - Parsec
+                - Screen Sharing
+                - AnyDesk
+                - Barrier
+                - Remote for Mac
+                - Royal TSX
+                - Screens 5
+                - TigerVNC Viewer 1.13.1
+                - VNC Server
+                - Vine Server
+                - VNC Viewer
+        - folder: Safari Extensions
+          pages:
+            - number: 1
+              items:
+                - PiPifier
+                - Glarity
+                - AdBlock
+                - DuckDuckGo Privacy for Safari
+                - Adblock Plus
+                - Ghostery Privacy Ad Blocker
+                - Hush
+                - Turn Off the Lights for Safari
+                - PiPer
+                - Wipr
+                - Dark Mode for Safari
+                - AdBlock Pro
+                - Dark Reader for Safari
+                - Dislikes Democratized Desktop
+                - Right Click
+                - Super Agent
+                - SponsorBlock
+                - WOT for Safari
+                - Tampermonkey
+        - folder: Security
+          pages:
+            - number: 1
+              items:
+                - Bitwarden
+                - BlockBlock Helper
+                - KnockKnock
+                - DHS
+                - Malwarebytes
+                - Little Snitch
+                - Netiquette
+                - OverSight
+                - RansomWhere_Installer
+                - ReiKey
+                - SpyBuster
+                - TaskExplorer
+                - VirusTotalUploader
+                - Wireshark
+                - Zenmap
+                - Passwords
+        - folder: Speech
+          pages:
+            - number: 1
+              items:
+                - WhisperNotes
+                - Siri
+                - Voice Memos
+                - Speechify
+        - folder: System utilities
+          pages:
+            - number: 1
+              items:
+                - System Settings
+                - CleanMyMac X
+                - TinkerTool
+                - TinkerTool System
+                - OnyX
+                - LaunchControl
+                - System Information
+                - Activity Monitor
+                - Deeper
+                - Geekbench 6
+                - Kill All Apps
+                - Raycast
+                - coconutBattery
+                - AlDente
+        - folder: Terminal emulators
+          pages:
+            - number: 1
+              items:
+                - iTerm
+                - Alacritty
+                - Terminal
+                - cool-retro-term
+        - folder: VM
+          pages:
+            - number: 1
+              items:
+                - VirtualBuddy
+                - Parallels Desktop
+                - NoxAppPlayer
+                - VirtualBox
+                - Whisky
+        - folder: VPN
+          pages:
+            - number: 1
+              items:
+                - ProtonVPN
+                - Psiphon
+                - Outline
+                - Liberty_macOS
+                - Lantern
+                - OpenVPN Connect
+                - Surfshark
+                - Tunnelblick
+                - WireGuard
+    - number: 2
+      items:
+        - folder: Bullshit
+          pages:
+            - number: 1
+              items:
+                - TV
+                - Migration Assistant
+                - AirPort Utility
+                - Music
+                - News
+                - Stocks
+                - QuickTime Player
+                - Mission Control
+                - Dictionary
+                - Audio MIDI Setup
+                - Grapher
+                - Preview
+                - GarageBand
+                - Home
+                - Screenshot
+                - Freeform
+                - Calculator
+                - Image Capture
+                - TextEdit
+                - Font Book
+                - Console
+                - Script Editor
+                - Adobe Zii 2021 6.1.7
+                - Maps
+                - ColorSync Utility
+                - Print Centre
+                - VoiceOver Utility
+                - Stickies
+                - Digital Colour Meter
+                - IDLE
+                - PD Runner 0.3.8
+                - Python Launcher
+                - QuickLook Video
+                - Tips
+        - MagnumGO
+widgets:
+  pages: []
+dock_items:
+  apps:
+    - /System/Applications/Launchpad.app
+    - /System/Applications/Mission Control.app
+    - /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app
+    - /Applications/iTerm.app
+    - /Applications/Xcode-16.0.0.app
+    - /Applications/VSCodium.app
+    - /Applications/ChatGPT.app
+    - ""
+    - /Applications/Spotify.app
+    - /Applications/Discord.app
+    - ""
+    - /System/Applications/System Settings.app
+  settings:
+    autohide: true
+    largesize: 86
+    magnification: false
+    minimize-to-application: false
+    mru-spaces: false
+    show-recents: false
+    tilesize: 46
+desktop: {}
