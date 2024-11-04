@@ -95,6 +95,7 @@ apps:
                 - flameshot
                 - Kap
                 - TextSniper
+                - ChatGPT
         - folder: Entertainment
           pages:
             - number: 1
@@ -137,7 +138,6 @@ apps:
                 - Mountain Duck
                 - Nextcloud
                 - Transmit
-                - TeraCopy
                 - balenaEtcher
                 - dupeguru
                 - Resilio Sync
@@ -190,8 +190,6 @@ apps:
           pages:
             - number: 1
               items:
-                - ChatGPT
-                - Copilot
                 - Machato
                 - LM Studio
                 - Chatbox
@@ -200,6 +198,7 @@ apps:
                 - gpt4all
                 - maintenancetool
                 - Amazon Q
+                - Copilot
         - folder: Menubar apps
           pages:
             - number: 1
@@ -381,9 +380,9 @@ apps:
             - number: 1
               items:
                 - WhisperNotes
-                - Siri
                 - Voice Memos
                 - Speechify
+                - Siri
         - folder: System utilities
           pages:
             - number: 1
@@ -398,10 +397,10 @@ apps:
                 - Activity Monitor
                 - Deeper
                 - Geekbench 6
-                - Kill All Apps
                 - Raycast
                 - coconutBattery
                 - AlDente
+                - Kill All Apps
         - folder: Terminal emulators
           pages:
             - number: 1
@@ -463,15 +462,15 @@ apps:
                 - Adobe Zii 2021 6.1.7
                 - Maps
                 - ColorSync Utility
-                - Print Centre
                 - VoiceOver Utility
                 - Stickies
-                - Digital Colour Meter
                 - IDLE
                 - PD Runner 0.3.8
                 - Python Launcher
                 - QuickLook Video
                 - Tips
+                - Print Center
+                - Digital Color Meter
         - MagnumGO
 widgets:
   pages: []
