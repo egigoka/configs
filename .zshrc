@@ -277,6 +277,13 @@
 	}
 	
 ### functions
+
+	clip() {
+	    local input
+	    input=$(cat)
+	    printf "\033]52;c;$(echo -n "$input" | base64 | tr -d '\n')\a"
+	}
+	
 	contains()
 	        {
 	        string="$1"
