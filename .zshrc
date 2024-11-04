@@ -22,6 +22,7 @@
 	contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
 	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
+	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
 
 ### aliases
 	# docker
