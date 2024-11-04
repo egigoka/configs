@@ -22,7 +22,7 @@
 	contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
 	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
-	contains $PATH /Users/egigoka/go/bin || export PATH=$PATH:/Users/egigoka/go/bin
+	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
 
 ### aliases
 	# docker
@@ -278,6 +278,12 @@
 	}
 	
 ### functions
+	clip() {
+	    local input
+	    input=$(cat)
+	    printf "\033]52;c;$(echo -n "$input" | base64 | tr -d '\n')\a"
+	}
+	
 	contains()
 	        {
 	        string="$1"
