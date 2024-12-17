@@ -25,6 +25,10 @@
 	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
 
 ### aliases
+	# tar
+	alias targzip="tar -czvf"
+	alias targunzip="tar -xzvf"
+	
 	# docker
 	alias d="docker"
 	alias dps="docker ps --format \"table {{.ID}}   {{.Status}}     {{.Names}}      {{.Image}}      {{.Ports}}\""
