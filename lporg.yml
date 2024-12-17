@@ -8,7 +8,6 @@ apps:
               items:
                 - RapidAPI
                 - Postman
-                - Proxyman
         - folder: App management
           pages:
             - number: 1
@@ -43,21 +42,20 @@ apps:
           pages:
             - number: 1
               items:
-                - Safari
                 - Firefox
-                - Aloha
                 - Waterfox
                 - Brave Browser
                 - Chromium
                 - Safari Technology Preview
-                - Tor Browser
                 - Vivaldi
                 - Zen Browser
+                - Aloha
+                - Safari
+                - Tor Browser
         - folder: Development iOS
           pages:
             - number: 1
               items:
-                - Xcode-16.0.0
                 - iOS App Signer
                 - Xcodes
                 - Copilot for Xcode
@@ -68,6 +66,11 @@ apps:
                 - Squirrel
                 - Unwrap
                 - App Icon Generator
+                - Xcode-16.2.0
+                - Start Android emulator
+                - Genymotion
+                - Android Studio
+                - Genymotion Shell
         - folder: Development other
           pages:
             - number: 1
@@ -82,6 +85,7 @@ apps:
                 - TextMate
                 - VSCodium
                 - kdiff3
+                - Cursor
         - folder: Display Tools
           pages:
             - number: 1
@@ -120,6 +124,7 @@ apps:
                 - What to Watch 2
                 - calibre
                 - mpv
+                - KinoPub
         - folder: File management
           pages:
             - number: 1
@@ -162,14 +167,14 @@ apps:
               items:
                 - PlayCover
                 - Ryujinx
-                - Chess
                 - Dolphin
                 - Epic Games Launcher
                 - Minecraft
-                - Make it True
                 - Mythic
                 - OpenEmu
                 - Steam
+                - Make it True
+                - Chess
         - folder: Input
           pages:
             - number: 1
@@ -183,22 +188,31 @@ apps:
                 - KeyClu
                 - CustomShortcuts
                 - Multitouch
-                - Logi Options
                 - Logi Options+
                 - Smart Scroll
+                - Logi Options
         - folder: LLMs
           pages:
             - number: 1
               items:
                 - Machato
-                - LM Studio
                 - Chatbox
                 - DiffusionBee
-                - ChatGPT
-                - gpt4all
                 - maintenancetool
                 - Amazon Q
+                - gpt4all
+                - LM Studio
+                - Claude
+                - Image Playground
+                - Perplexity
                 - Copilot
+                - ChatGPT
+        - folder: Maps
+          pages:
+            - number: 1
+              items:
+                - 2GIS
+                - 2GIS (wine)
         - folder: Menubar apps
           pages:
             - number: 1
@@ -248,8 +262,6 @@ apps:
                 - ubports-installer
                 - droidian-installer
                 - AltServer
-                - Find My
-                - AnyTrans
                 - Apple Configurator
                 - CheckNonceGUI
                 - Sideloadly
@@ -260,6 +272,7 @@ apps:
                 - checkra1n
                 - iBetterCharge
                 - iMazing
+                - Find My
                 - heimdall-frontend
         - folder: Multimedia production
           pages:
@@ -279,6 +292,9 @@ apps:
                 - WALTR HEIC Converter
                 - krita
                 - Photos
+                - Get Sauce
+                - LosslessCut
+                - Reversee
                 - Photo Booth
         - folder: Network tools
           pages:
@@ -288,11 +304,11 @@ apps:
                 - Speedtest
                 - Transmission
                 - UniFi
+                - ZeroTier
         - folder: Notes/Organizers
           pages:
             - number: 1
               items:
-                - Notes
                 - Pages
                 - Numbers
                 - Keynote
@@ -316,6 +332,7 @@ apps:
                 - aTimeLogger
                 - aTimeLogger Pro
                 - LibreOffice
+                - Notes
         - folder: Remote access
           pages:
             - number: 1
@@ -354,7 +371,7 @@ apps:
                 - Super Agent
                 - SponsorBlock
                 - WOT for Safari
-                - Tampermonkey
+                - Tampermonkey Classic
         - folder: Security
           pages:
             - number: 1
@@ -367,7 +384,6 @@ apps:
                 - Little Snitch
                 - Netiquette
                 - OverSight
-                - RansomWhere_Installer
                 - ReiKey
                 - SpyBuster
                 - TaskExplorer
@@ -375,6 +391,7 @@ apps:
                 - Wireshark
                 - Zenmap
                 - Passwords
+                - RansomWhere_Installer
         - folder: Speech
           pages:
             - number: 1
@@ -401,6 +418,7 @@ apps:
                 - coconutBattery
                 - AlDente
                 - Kill All Apps
+                - Launchpad Manager
         - folder: Terminal emulators
           pages:
             - number: 1
@@ -418,6 +436,7 @@ apps:
                 - NoxAppPlayer
                 - VirtualBox
                 - Whisky
+                - Wine Stable
         - folder: VPN
           pages:
             - number: 1
@@ -431,8 +450,8 @@ apps:
                 - Surfshark
                 - Tunnelblick
                 - WireGuard
-    - number: 2
-      items:
+        - Anki
+        - MagnumGO
         - folder: Bullshit
           pages:
             - number: 1
@@ -440,12 +459,11 @@ apps:
                 - TV
                 - Migration Assistant
                 - AirPort Utility
-                - Music
                 - News
                 - Stocks
-                - QuickTime Player
                 - Mission Control
                 - Dictionary
+                - Music
                 - Audio MIDI Setup
                 - Grapher
                 - Preview
@@ -471,7 +489,7 @@ apps:
                 - Tips
                 - Print Center
                 - Digital Color Meter
-        - MagnumGO
+                - QuickTime Player
 widgets:
   pages: []
 dock_items:
@@ -480,7 +498,7 @@ dock_items:
     - /System/Applications/Mission Control.app
     - /System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app
     - /Applications/iTerm.app
-    - /Applications/Xcode-16.0.0.app
+    - /Applications/Xcode-16.2.0.app
     - /Applications/VSCodium.app
     - /Applications/ChatGPT.app
     - ""
