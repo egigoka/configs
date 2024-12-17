@@ -28,6 +28,7 @@
 	# tar
 	alias targzip="tar -czvf"
 	alias targunzip="tar -xzvf"
+	alias targzls="tar -tzvf" # list files
 	
 	# docker
 	alias d="docker"
