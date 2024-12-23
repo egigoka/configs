@@ -48,8 +48,6 @@ apps:
                 - Chromium
                 - Safari Technology Preview
                 - Vivaldi
-                - Zen Browser
-                - Aloha
                 - Safari
                 - Tor Browser
         - folder: Development iOS
@@ -111,7 +109,6 @@ apps:
                 - Broadcasts
                 - Clicker for YouTube
                 - Elpy
-                - Desktop Goose
                 - Friendly Streaming
                 - Infuse
                 - IINA
@@ -159,7 +156,6 @@ apps:
                 - Exodus
                 - Subtrack
                 - Sber KZ
-                - Zenmoney
                 - СберБанк
         - folder: Games
           pages:
@@ -198,7 +194,6 @@ apps:
                 - Machato
                 - Chatbox
                 - DiffusionBee
-                - maintenancetool
                 - Amazon Q
                 - gpt4all
                 - LM Studio
@@ -263,7 +258,6 @@ apps:
                 - droidian-installer
                 - AltServer
                 - Apple Configurator
-                - CheckNonceGUI
                 - Sideloadly
                 - WALTR PRO
                 - OpenMTP
@@ -467,7 +461,6 @@ apps:
                 - Audio MIDI Setup
                 - Grapher
                 - Preview
-                - GarageBand
                 - Home
                 - Screenshot
                 - Freeform
@@ -477,14 +470,10 @@ apps:
                 - Font Book
                 - Console
                 - Script Editor
-                - Adobe Zii 2021 6.1.7
                 - Maps
                 - ColorSync Utility
                 - VoiceOver Utility
                 - Stickies
-                - IDLE
-                - PD Runner 0.3.8
-                - Python Launcher
                 - QuickLook Video
                 - Tips
                 - Print Center
