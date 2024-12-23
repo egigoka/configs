@@ -80,7 +80,9 @@
 	fi
 	
 	# sudo and doas
-	alias sudo="doas"
+	if [[ "$OSTYPE" != "darwin"* ]]; then
+		alias sudo="doas"
+	fi
 
 	alias saferebootmacos="sudo fdesetup authrestart"
 	alias saferebootmacoslater="sudo fdesetup authrestart -delayminutes -1"
