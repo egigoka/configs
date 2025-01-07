@@ -23,8 +23,14 @@
 	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
 	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
+	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin
 
 ### aliases
+	# tar
+	alias targzip="tar -czvf"
+	alias targunzip="tar -xzvf"
+	alias targzls="tar -tzvf" # list files
+	
 	# docker
 	alias d="docker"
 	alias dps="docker ps --format \"table {{.ID}}   {{.Status}}     {{.Names}}      {{.Image}}      {{.Ports}}\""
@@ -77,7 +83,9 @@
 	fi
 	
 	# sudo and doas
-	alias sudo="doas"
+	if [[ "$OSTYPE" != "darwin"* ]]; then
+		alias sudo="doas"
+	fi
 
 	alias saferebootmacos="sudo fdesetup authrestart"
 	alias saferebootmacoslater="sudo fdesetup authrestart -delayminutes -1"
@@ -129,7 +137,7 @@
                         alias install="apt install"
                         alias uninstall="apt -y remove"
                         ;;
-                    opensuse-tumbleweed)
+                    opensuse-tumbleweed|opensuse-leap)
                         alias updateall='zypper refresh && zypper dup'
                         alias install="zypper -n install"
                         alias uninstall="zypper -n remove"
