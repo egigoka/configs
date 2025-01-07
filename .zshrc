@@ -23,6 +23,7 @@
 	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
 	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
+	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin
 
 ### aliases
 	# tar
