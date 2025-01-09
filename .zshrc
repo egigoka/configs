@@ -404,12 +404,13 @@
 	# Standard plugins can be found in $ZSH/plugins/
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Add wisely, as too many plugins slow down shell startup.
-	plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
+	plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
 
 	source $ZSH/oh-my-zsh.sh
 
 ### external aliases
-	eval $(thefuck --alias)
+	#eval $(thefuck --alias)
+	eval "$(pay-respects zsh --alias fuck)"
 	eval "$(fzf --zsh)"
 
 ### systemd configs
