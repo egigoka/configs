@@ -69,6 +69,8 @@
 	alias down="axel -a -n"
 	alias aria16="aria2c -j 16 -x 16"
 	alias ariaipfsrelay=" aria2c -j 1 -x 1 --file-allocation=none --allow-overwrite --no-file-allocation=100000M --auto-file-renaming=false"
+	alias aria16torrent="aria16 --split=16 --enable-dht=true --bt-enable-lpd=true --bt-max-open-files=100 "
+	alias aria16noseed="aria16torrent --seed-time=0"
 
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 	    # networksetup
