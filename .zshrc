@@ -23,8 +23,14 @@
 	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
 	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
+	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin
 
 ### aliases
+	# tar
+	alias targzip="tar -czvf"
+	alias targunzip="tar -xzvf"
+	alias targzls="tar -tzvf" # list files
+	
 	# docker
 	alias d="docker"
 	alias dps="docker ps --format \"table {{.ID}}   {{.Status}}     {{.Names}}      {{.Image}}      {{.Ports}}\""
@@ -63,6 +69,8 @@
 	alias down="axel -a -n"
 	alias aria16="aria2c -j 16 -x 16"
 	alias ariaipfsrelay=" aria2c -j 1 -x 1 --file-allocation=none --allow-overwrite --no-file-allocation=100000M --auto-file-renaming=false"
+	alias aria16torrent="aria16 --split=16 --enable-dht=true --bt-enable-lpd=true --bt-max-open-files=100 "
+	alias aria16noseed="aria16torrent --seed-time=0"
 
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 	    # networksetup
@@ -75,7 +83,9 @@
 	fi
 	
 	# sudo and doas
-	alias sudo="doas"
+	if [[ "$OSTYPE" != "darwin"* ]]; then
+		alias sudo="doas"
+	fi
 
 	alias saferebootmacos="sudo fdesetup authrestart"
 	alias saferebootmacoslater="sudo fdesetup authrestart -delayminutes -1"
@@ -127,7 +137,7 @@
                         alias install="apt install"
                         alias uninstall="apt -y remove"
                         ;;
-                    opensuse-tumbleweed)
+                    opensuse-tumbleweed|opensuse-leap)
                         alias updateall='zypper refresh && zypper dup'
                         alias install="zypper -n install"
                         alias uninstall="zypper -n remove"
@@ -280,19 +290,12 @@
 	}
 	
 ### functions
-	function clip() {
-	    # If no input is provided, read from stdin
-	    local text
-	    if [[ $# -eq 0 ]]; then
-	        text=$(cat)
-	    else
-	        text="$*"
-	    fi
-	
-	    # Create OSC 52 sequence: ESC + ]52;c; + base64_data + BEL
-	    printf "\033]52;c;$(printf "%s" "$text" | base64)\a" >&2
+	clip() {
+	    local input
+	    input=$(cat)
+	    printf "\033]52;c;$(echo -n "$input" | base64 | tr -d '\n')\a"
 	}
-
+	
 	contains()
 	        {
 	        string="$1"
@@ -405,12 +408,13 @@
 	# Standard plugins can be found in $ZSH/plugins/
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Add wisely, as too many plugins slow down shell startup.
-	plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
+	plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
 
 	source $ZSH/oh-my-zsh.sh
 
 ### external aliases
-	eval $(thefuck --alias)
+	#eval $(thefuck --alias)
+	eval "$(pay-respects zsh --alias fuck)"
 	eval "$(fzf --zsh)"
 
 ### systemd configs
