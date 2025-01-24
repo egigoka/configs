@@ -23,8 +23,14 @@
 	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
 	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
+	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin
 
 ### aliases
+	# tar
+	alias targzip="tar -czvf"
+	alias targunzip="tar -xzvf"
+	alias targzls="tar -tzvf" # list files
+	
 	# docker
 	alias d="docker"
 	alias dps="docker ps --format \"table {{.ID}}   {{.Status}}     {{.Names}}      {{.Image}}      {{.Ports}}\""
@@ -63,6 +69,8 @@
 	alias down="axel -a -n"
 	alias aria16="aria2c -j 16 -x 16"
 	alias ariaipfsrelay=" aria2c -j 1 -x 1 --file-allocation=none --allow-overwrite --no-file-allocation=100000M --auto-file-renaming=false"
+	alias aria16torrent="aria16 --split=16 --enable-dht=true --bt-enable-lpd=true --bt-max-open-files=100 "
+	alias aria16noseed="aria16torrent --seed-time=0"
 
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 	    # networksetup
@@ -75,7 +83,9 @@
 	fi
 	
 	# sudo and doas
-	alias sudo="doas"
+	if [[ "$OSTYPE" != "darwin"* ]]; then
+		alias sudo="doas"
+	fi
 
 	alias saferebootmacos="sudo fdesetup authrestart"
 	alias saferebootmacoslater="sudo fdesetup authrestart -delayminutes -1"
@@ -127,7 +137,7 @@
                         alias install="apt install"
                         alias uninstall="apt -y remove"
                         ;;
-                    opensuse-tumbleweed)
+                    opensuse-tumbleweed|opensuse-leap)
                         alias updateall='zypper refresh && zypper dup'
                         alias install="zypper -n install"
                         alias uninstall="zypper -n remove"
@@ -199,6 +209,7 @@
 	alias gs="git status"
 	alias gpl="git pull"
 	alias gcommitstoday=" (git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"; echo)"
+	alias gdownloadreleases="dra download"
 
 	# protonvpn
 	alias protonvpnfastest="curl -s https://api.protonmail.ch/vpn/logicals | jq '[.LogicalServers[]|select(.Name|contains(\"$1\"))|select(.Tier==2)|{ServerName: .Name, ServerLoad: (.Load|tonumber),EntryIP: .Servers[].EntryIP}] | sort_by(.ServerLoad)' | jq -r '.[0:7]'"
@@ -213,6 +224,7 @@
 	alias ytdl-video-meta="yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata '%(title)s:%(meta_title)s' --parse-metadata '%(uploader)s:%(meta_artist)s' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mkv -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
 	alias twitch-download=" yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true'"
 	alias ytdl-list="yt-dlp --flat-playlist --print id"
+	alias soundcloud-download="yt-dlp --match-filter 'format_id !*= preview'"
 
 	# fastfetch
 	alias fastfetchdeps="install fastfetch chafa dbus dconf ddcutil directx-headers glib2 imagemagick libnm libpulse mesa libxrandr ocl-icd hwdata vulkan-icd-loader xfconf zlib libdrm || echo chafa dbus dconf ddcutil directx-headers glib2 imagemagick libnm libpulse mesa libxrandr ocl-icd hwdata vulkan-icd-loader xfconf zlib libdrm"
@@ -396,12 +408,13 @@
 	# Standard plugins can be found in $ZSH/plugins/
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Add wisely, as too many plugins slow down shell startup.
-	plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
+	plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
 
 	source $ZSH/oh-my-zsh.sh
 
 ### external aliases
-	eval $(thefuck --alias)
+	#eval $(thefuck --alias)
+	eval "$(pay-respects zsh --alias fuck)"
 	eval "$(fzf --zsh)"
 
 ### systemd configs
@@ -429,7 +442,7 @@
 		la;
 	}
 	
-	list_dir
+	#list_dir
 	chpwd_functions+=(list_dir)
 
 ### macos fixes
