@@ -333,7 +333,8 @@
 	        return 1
 	    fi
 	    
-	    sed "s/$secret/$replacement/g"
+	    #sed "s/$secret/$replacement/g"
+	    sed -e "s@${secret//@/\\@}@${replacement//@/\\@}@g"
 	}
 
 ### zellij
