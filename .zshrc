@@ -11,6 +11,7 @@
 
 ### PATH
 	contains $PATH . || export PATH=$PATH:.
+	contains $PATH /opt/homebrew/bin || export PATH=/opt/homebrew/bin:$PATH
 	contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
 	contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
 	contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
@@ -21,8 +22,15 @@
 	contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
 	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
+	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
+	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin
 
 ### aliases
+	# tar
+	alias targzip="tar -czvf"
+	alias targunzip="tar -xzvf"
+	alias targzls="tar -tzvf" # list files
+	
 	# docker
 	alias d="docker"
 	alias dps="docker ps --format \"table {{.ID}}   {{.Status}}     {{.Names}}      {{.Image}}      {{.Ports}}\""
@@ -42,6 +50,9 @@
 	# micro
 	alias m="micro"
 
+	# find
+	alias findne="find 2>/dev/null"
+
 	# python
 	alias py="python3"
 	alias pip="pip3"
@@ -51,9 +62,15 @@
 	# cd
 	alias cd..="cd .."
 
+	# xattr
+	alias attributesread="xattr -l"
+
 	# downloaders
 	alias down="axel -a -n"
 	alias aria16="aria2c -j 16 -x 16"
+	alias ariaipfsrelay=" aria2c -j 1 -x 1 --file-allocation=none --allow-overwrite --no-file-allocation=100000M --auto-file-renaming=false"
+	alias aria16torrent="aria16 --split=16 --enable-dht=true --bt-enable-lpd=true --bt-max-open-files=100 "
+	alias aria16noseed="aria16torrent --seed-time=0"
 
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 	    # networksetup
@@ -66,7 +83,9 @@
 	fi
 	
 	# sudo and doas
-	alias sudo="doas"
+	if [[ "$OSTYPE" != "darwin"* ]]; then
+		alias sudo="doas"
+	fi
 
 	alias saferebootmacos="sudo fdesetup authrestart"
 	alias saferebootmacoslater="sudo fdesetup authrestart -delayminutes -1"
@@ -76,6 +95,7 @@
 	if [[ $UID == 0 || $EUID == 0 ]]; then
 	   # root
 	   alias unmount="umount"
+	   alias iotop="sysctl kernel.task_delayacct=1; iotop; sysctl kernel.task_delayacct=0"
 	else
 	   # not root
 	   alias unmount="sudo umount"
@@ -93,7 +113,7 @@
 	   alias btrfs="sudo btrfs"
 	   alias mkfs.btrfs="sudo mkfs.btrfs"
 	   alias openvpn="sudo openvpn"
-	   alias iotop="sudo iotop"
+	   alias iotop="sudo sysctl kernel.task_delayacct=1; sudo iotop; sudo sysctl kernel.task_delayacct=0"
 	   alias iftop="sudo iftop"
 	   alias smbstatus="sudo smbstatus"
 	   alias apt="sudo apt"
@@ -110,14 +130,15 @@
                         alias updateall='yay -Syu --devel --timeupdate'
                         alias install="yay -S"
                         alias uninstall="yay -Rns"
+                        alias updatemirrors="cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak; rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; sudo pacman -Syy"
                         ;;
                     debian|ubuntu|droidian)
-                        alias updateall='apt update && apt dist-upgrade -y'
+                        alias updateall='apt update && apt upgrade && apt dist-upgrade'
                         alias install="apt install"
                         alias uninstall="apt -y remove"
                         ;;
-                    opensuse-tumbleweed)
-                        alias updateall='zypper refresh;zypper dup'
+                    opensuse-tumbleweed|opensuse-leap)
+                        alias updateall='zypper refresh && zypper dup'
                         alias install="zypper -n install"
                         alias uninstall="zypper -n remove"
                         ;;
@@ -136,7 +157,7 @@
         Darwin)
             alias updateall='brew update; brew upgrade --no-quarantine --greedy; brew cleanup --prune=all'
             alias install='brew install --no-quarantine'
-            alias uninstall='brew remove --no-quarantine'
+            alias uninstall='brew remove'
             ;;
         *)
             alias updateall='echo "Unknown operating system"'
@@ -145,21 +166,21 @@
             ;;
     esac
 
-	# outdated commands
-	if ! [[ "$OSTYPE" == "darwin"* ]]; then
-	  alias ipconfig="ip a"
-	  alias ifconfig="ipconfig"
-	fi
-
 
 	# disk management
 	alias listdisks="lsblk -io NAME,TYPE,SIZE,MOUNTPOINT,FSTYPE,MODEL"
 	alias alldisks="listdisks"
 	alias freespace="df -kh ."
 	alias freespaceall="df -kh"
-	alias listdisks="lsblk"
+	
 	alias btr="btrfs"
 	alias btrusage="btr filesystem usage"
+	alias btrqgroup="btr qgroup show -r"
+	alias btrusagebysnapshot="btr filesystem du -s"
+	alias btrqgrouprescan="btrfs quota rescan /mnt/btr"
+	alias btrqgrouprescanstatus="btrfs quota rescan -s /mnt/btr"
+	alias btrremovesnapshot="btrfs subvolume delete --commit-after"
+
 	alias diskusage="ncdu"
 
 	# systemd
@@ -173,6 +194,7 @@
 	alias sc--="sc disable"
 	alias sc++="sc enable"
 	alias scls="systemctl list-units --type=service --state=running"
+	alias scfailed="sc list-units --state=failed"
 
 	# idk im stupid
 	alias zshconfig="micro ~/.zshrc"
@@ -180,10 +202,14 @@
 	alias move="mv"
 	alias q="exit"
 	alias lll="ll -p | grep -v /"
+	alias mvv='rsync -a --remove-source-files --info=progress2'
+	alias cpr='rsync -a --info=progress2'
 
 	# git
 	alias gs="git status"
 	alias gpl="git pull"
+	alias gcommitstoday=" (git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"; echo)"
+	alias gdownloadreleases="dra download"
 
 	# protonvpn
 	alias protonvpnfastest="curl -s https://api.protonmail.ch/vpn/logicals | jq '[.LogicalServers[]|select(.Name|contains(\"$1\"))|select(.Tier==2)|{ServerName: .Name, ServerLoad: (.Load|tonumber),EntryIP: .Servers[].EntryIP}] | sort_by(.ServerLoad)' | jq -r '.[0:7]'"
@@ -196,8 +222,9 @@
 	alias ytdl-audio="yt-dlp -f 'ba' -x --audio-format mp3"
 	alias ytdl-video="yt-dlp --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mkv -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
 	alias ytdl-video-meta="yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata '%(title)s:%(meta_title)s' --parse-metadata '%(uploader)s:%(meta_artist)s' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mkv -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
-	alias twitch-download=" yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true"
+	alias twitch-download=" yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true'"
 	alias ytdl-list="yt-dlp --flat-playlist --print id"
+	alias soundcloud-download="yt-dlp --match-filter 'format_id !*= preview'"
 
 	# fastfetch
 	alias fastfetchdeps="install fastfetch chafa dbus dconf ddcutil directx-headers glib2 imagemagick libnm libpulse mesa libxrandr ocl-icd hwdata vulkan-icd-loader xfconf zlib libdrm || echo chafa dbus dconf ddcutil directx-headers glib2 imagemagick libnm libpulse mesa libxrandr ocl-icd hwdata vulkan-icd-loader xfconf zlib libdrm"
@@ -263,6 +290,12 @@
 	}
 	
 ### functions
+	clip() {
+	    local input
+	    input=$(cat)
+	    printf "\033]52;c;$(echo -n "$input" | base64 | tr -d '\n')\a"
+	}
+	
 	contains()
 	        {
 	        string="$1"
@@ -376,17 +409,21 @@
 	# Standard plugins can be found in $ZSH/plugins/
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Add wisely, as too many plugins slow down shell startup.
-	plugins=(thefuck git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
+	plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
 
 	source $ZSH/oh-my-zsh.sh
 
 ### external aliases
-	eval $(thefuck --alias)
+	#eval $(thefuck --alias)
+	eval "$(pay-respects zsh --alias fuck)"
 	eval "$(fzf --zsh)"
 
 ### systemd configs
 	export SYSTEMD_PAGER=
 	export SYSTEMD_LESS=
+
+### aider configs
+	export AIDER_AUTO_COMMITS=False
 
 ### default editor
 	if [[ -n $SSH_CONNECTION ]]; then
@@ -395,12 +432,18 @@
 	  export EDITOR='micro'
 	fi
 
+### ls configs
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		alias dircolors="gdircolors"
+	fi
+	eval `dircolors $ZSH_CUSTOM/dircolors-solarized/dircolors.ansi-light`
+
 ### show current directory items when changing directories
 	list_dir() {
 		la;
 	}
 	
-	list_dir
+	#list_dir
 	chpwd_functions+=(list_dir)
 
 ### macos fixes
@@ -441,3 +484,4 @@
 	fi
 	unset __conda_setup
 	# <<< conda initialize <<<
+export THEOS=~/theos
