@@ -442,7 +442,7 @@
 		la;
 	}
 	
-	list_dir
+	#list_dir
 	chpwd_functions+=(list_dir)
 
 ### macos fixes
