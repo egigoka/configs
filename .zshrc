@@ -127,7 +127,7 @@
                 . /etc/os-release
                 case "$ID" in
                     arch)
-                        alias updateall='yay -Syu --devel --timeupdate'
+                        alias updateall='yay -Syu --devel --timeupdate; yay -Sc'
                         alias install="yay -S"
                         alias uninstall="yay -Rns"
                         alias updatemirrors="cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak; rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; sudo pacman -Syy"
