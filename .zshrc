@@ -29,6 +29,7 @@
 	# tar
 	alias targzip="tar -czvf"
 	alias targunzip="tar -xzvf"
+	alias untargz=targunzip
 	alias targzls="tar -tzvf" # list files
 	
 	# docker
@@ -366,7 +367,8 @@
 	        return 1
 	    fi
 	    
-	    sed "s/$secret/$replacement/g"
+	    #sed "s/$secret/$replacement/g"
+	    sed -e "s@${secret//@/\\@}@${replacement//@/\\@}@g"
 	}
 
 ### zellij
