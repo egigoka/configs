@@ -377,6 +377,7 @@
 ### you-should-use
 	export YSU_MESSAGE_FORMAT="$(tput setaf 1)Hey! I found %alias_type for \"%command\": \"%alias\"$(tput sgr0)"
 	export YSU_MESSAGE_POSITION="after"
+	export YSU_IGNORED_ALIASES=("g" "bi" "cd..")
 
 ### oh-my-zsh
 
@@ -486,3 +487,5 @@
 	unset __conda_setup
 	# <<< conda initialize <<<
 export THEOS=~/theos
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
