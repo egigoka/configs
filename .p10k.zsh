@@ -483,11 +483,11 @@ function prompt_my_screen_status()
 
     if (( $1 )); then
       # Styling for up-to-date Git status.
-      local       meta='%246F'  # grey foreground
-      local      clean='%15F'   # green foreground
-      local   modified='%178F'  # yellow foreground
-      local  untracked='%39F'   # blue foreground
-      local conflicted='%196F'  # red foreground
+      local       meta='%015F'  # white foreground
+      local      clean='%015F'  # white foreground
+      local   modified='%228F'  # yellow foreground
+      local  untracked='%153F'  # blue foreground
+      local conflicted='%009F'  # red foreground
     else
       # Styling for incomplete and stale Git status.
       local       meta='%244F'  # grey foreground
