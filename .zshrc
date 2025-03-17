@@ -24,6 +24,7 @@
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
 	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
 	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin
+	contains $PATH /home/linuxbrew/.linuxbrew/bin/ || export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
 
 ### aliases
 	# tar
