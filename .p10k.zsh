@@ -332,7 +332,7 @@ function prompt_my_screen_status()
   typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=255
   # Color of the anchor directory segments. Anchor segments are never shortened. The first
   # segment is always an anchor.
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=195
+  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=194
   # Display anchor directory segments in bold.
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   # Don't shorten directories that contain any of these files. They are anchors.
@@ -1036,7 +1036,7 @@ function prompt_my_screen_status()
   typeset -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=009
   #typeset -g POWERLEVEL9K_CONTEXT_ROOT_BACKGROUND=203
   # Context color in SSH without privileges.
-  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=039
+  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=015
   #typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_BACKGROUND=180
   # Default context color (no privileges, no SSH).
   typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=015
@@ -1045,8 +1045,8 @@ function prompt_my_screen_status()
   # Context format when running with privileges: bold user@hostname.
   typeset -g POWERLEVEL9K_CONTEXT_ROOT_TEMPLATE='%B%n@%m'
   # Context format when in SSH without privileges: user@hostname.
-  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n@%m'
-  # Default context format (no privileges, no SSH): user@hostname.
+  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_TEMPLATE='%n%040F@%046F%m'
+  # Default context format (no privileges, no SSH): user
 #  typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n@%m'
   typeset -g POWERLEVEL9K_CONTEXT_TEMPLATE='%n'
 
