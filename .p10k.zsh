@@ -332,7 +332,7 @@ function prompt_my_screen_status()
   typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=255
   # Color of the anchor directory segments. Anchor segments are never shortened. The first
   # segment is always an anchor.
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=195
+  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=194
   # Display anchor directory segments in bold.
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   # Don't shorten directories that contain any of these files. They are anchors.
@@ -483,11 +483,11 @@ function prompt_my_screen_status()
 
     if (( $1 )); then
       # Styling for up-to-date Git status.
-      local       meta='%246F'  # grey foreground
-      local      clean='%15F'   # green foreground
-      local   modified='%178F'  # yellow foreground
-      local  untracked='%39F'   # blue foreground
-      local conflicted='%196F'  # red foreground
+      local       meta='%015F'  # white foreground
+      local      clean='%015F'  # white foreground
+      local   modified='%228F'  # yellow foreground
+      local  untracked='%153F'  # blue foreground
+      local conflicted='%009F'  # red foreground
     else
       # Styling for incomplete and stale Git status.
       local       meta='%244F'  # grey foreground
@@ -1036,7 +1036,7 @@ function prompt_my_screen_status()
   typeset -g POWERLEVEL9K_CONTEXT_ROOT_FOREGROUND=009
   #typeset -g POWERLEVEL9K_CONTEXT_ROOT_BACKGROUND=203
   # Context color in SSH without privileges.
-  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=039
+  typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_FOREGROUND=015
   #typeset -g POWERLEVEL9K_CONTEXT_{REMOTE,REMOTE_SUDO}_BACKGROUND=180
   # Default context color (no privileges, no SSH).
   typeset -g POWERLEVEL9K_CONTEXT_FOREGROUND=015

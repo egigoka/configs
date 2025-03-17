@@ -487,5 +487,3 @@
 	unset __conda_setup
 	# <<< conda initialize <<<
 export THEOS=~/theos
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
