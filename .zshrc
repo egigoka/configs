@@ -125,6 +125,11 @@
             if [ -f /etc/os-release ]; then
                 . /etc/os-release
                 case "$ID" in
+                	rocky)
+                		alias updateall="dnf clean all && dnf makecache && dnf upgrade -y"
+                		alias install="dnf install -y"
+                		alias uninstall="dnf remove -y"
+                		;;
                     arch)
                         alias updateall='yay -Syu --devel --timeupdate; yay -Sc'
                         alias install="yay -S"
