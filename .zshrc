@@ -84,16 +84,13 @@
 	    alias gatekeeper-enable="sudo spctl --master-enable"
 	fi
 	
-	# sudo and doas
-	if [[ "$OSTYPE" != "darwin"* ]]; then
-		alias sudo="doas"
-	fi
-
-	alias saferebootmacos="sudo fdesetup authrestart"
-	alias saferebootmacoslater="sudo fdesetup authrestart -delayminutes -1"
-	alias sleepmacos="pmset sleepnow"
+	# macosspecific
+	alias macossafereboot="sudo fdesetup authrestart"
+	alias macossaferebootlater="sudo fdesetup authrestart -delayminutes -1"
+	alias macossleep="pmset sleepnow"
 	alias macosunlockkeychain="security unlock-keychain"
 
+	# sudo
 	if [[ $UID == 0 || $EUID == 0 ]]; then
 	   # root
 	   alias unmount="umount"
