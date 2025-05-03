@@ -449,6 +449,7 @@ apps:
                 - Whisky
                 - Wine Stable
                 - Viable
+                - Liviable
         - folder: VPN
           pages:
             - number: 1
