@@ -25,6 +25,8 @@
 	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
 	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin
 	contains $PATH /home/linuxbrew/.linuxbrew/bin/ || export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
+	contains $PATH ~/.filen-cli/bin || export PATH=$PATH:~/.filen-cli/bin
+	contains $PATH /usr/local/bin || export PATH:$PATH:/usr/local/bin
 
 ### aliases
 	# tar
@@ -490,3 +492,5 @@
 	unset __conda_setup
 	# <<< conda initialize <<<
 export THEOS=~/theos
+
+
