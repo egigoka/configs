@@ -25,6 +25,8 @@
 	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
 	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin
 	contains $PATH /home/linuxbrew/.linuxbrew/bin/ || export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
+	contains $PATH ~/.filen-cli/bin || export PATH=$PATH:~/.filen-cli/bin
+	contains $PATH /usr/local/bin || export PATH=$PATH:/usr/local/bin
 
 ### aliases
 	# tar
@@ -415,7 +417,11 @@
 	# Standard plugins can be found in $ZSH/plugins/
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Add wisely, as too many plugins slow down shell startup.
-	plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
+	plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
+
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		plugins+=("macos")
+	fi
 
 	source $ZSH/oh-my-zsh.sh
 
@@ -491,3 +497,5 @@
 	unset __conda_setup
 	# <<< conda initialize <<<
 export THEOS=~/theos
+
+
