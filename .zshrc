@@ -43,6 +43,7 @@
 	alias d-="docker stop"
 	alias d+="docker start"
 	alias drm="d rm"
+	alias dprune="d builder prune -a; d container prune; d image prune -a; d network prune; d volume prune"
 
 	# screen
 	alias screen+="screen -S"
@@ -416,7 +417,11 @@
 	# Standard plugins can be found in $ZSH/plugins/
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Add wisely, as too many plugins slow down shell startup.
-	plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
+	plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
+
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		plugins+=("macos")
+	fi
 
 	source $ZSH/oh-my-zsh.sh
 
