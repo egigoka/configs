@@ -50,6 +50,8 @@ apps:
                 - Vivaldi
                 - Safari
                 - Tor Browser
+                - Orion
+                - MagnumGO
         - folder: Development iOS
           pages:
             - number: 1
@@ -84,6 +86,9 @@ apps:
                 - VSCodium
                 - kdiff3
                 - Cursor
+                - Windsurf
+                - Regextor
+                - Anki
         - folder: Display Tools
           pages:
             - number: 1
@@ -97,7 +102,6 @@ apps:
                 - flameshot
                 - Kap
                 - TextSniper
-                - ChatGPT
         - folder: Entertainment
           pages:
             - number: 1
@@ -140,7 +144,6 @@ apps:
                 - Mountain Duck
                 - Nextcloud
                 - Transmit
-                - balenaEtcher
                 - dupeguru
                 - Resilio Sync
                 - CloudMounter
@@ -171,6 +174,8 @@ apps:
                 - Steam
                 - Make it True
                 - Chess
+                - CurseForge
+                - Prism Launcher
         - folder: Input
           pages:
             - number: 1
@@ -201,6 +206,8 @@ apps:
                 - Image Playground
                 - Perplexity
                 - Copilot
+                - ChatGPT
+                - BoltAI
                 - ChatGPT
         - folder: Maps
           pages:
@@ -233,6 +240,9 @@ apps:
                 - iStat Menus
                 - noTunes
                 - MenubarPing
+                - Lickable Menu Bar
+                - Alarm
+                - IM!Clock
         - folder: Messengers
           pages:
             - number: 1
@@ -250,6 +260,8 @@ apps:
                 - Signal
                 - VencordInstaller
                 - WhatsApp
+                - Jitsi
+                - Telegram Desktop
         - folder: Mobile device managements
           pages:
             - number: 1
@@ -290,6 +302,7 @@ apps:
                 - LosslessCut
                 - Reversee
                 - Photo Booth
+                - Downie 4
         - folder: Network tools
           pages:
             - number: 1
@@ -299,6 +312,8 @@ apps:
                 - Transmission
                 - UniFi
                 - ZeroTier
+                - Fing
+                - My Links
         - folder: Notes/Organizers
           pages:
             - number: 1
@@ -348,7 +363,6 @@ apps:
             - number: 1
               items:
                 - PiPifier
-                - Glarity
                 - AdBlock
                 - DuckDuckGo Privacy for Safari
                 - Adblock Plus
@@ -366,6 +380,7 @@ apps:
                 - SponsorBlock
                 - WOT for Safari
                 - Tampermonkey Classic
+                - Kagi for Safari
         - folder: Security
           pages:
             - number: 1
@@ -386,6 +401,7 @@ apps:
                 - Zenmap
                 - Passwords
                 - RansomWhere_Installer
+                - Raivo
         - folder: Speech
           pages:
             - number: 1
@@ -421,6 +437,7 @@ apps:
                 - Alacritty
                 - Terminal
                 - cool-retro-term
+                - Ghostty
         - folder: VM
           pages:
             - number: 1
@@ -431,6 +448,8 @@ apps:
                 - VirtualBox
                 - Whisky
                 - Wine Stable
+                - Viable
+                - Liviable
         - folder: VPN
           pages:
             - number: 1
@@ -444,8 +463,6 @@ apps:
                 - Surfshark
                 - Tunnelblick
                 - WireGuard
-        - Anki
-        - MagnumGO
         - folder: Bullshit
           pages:
             - number: 1
