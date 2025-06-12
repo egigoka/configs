@@ -18,7 +18,8 @@ disable_inputs() {
 	
 	/bin/ectool pwmsetkblight 0
 
-	/root/.local/bin/toggle-gjs-osk.sh on
+	/root/.local/bin/toggle-gjs-osk-extension.sh on
+	#/root/.local/bin/toggle-gjs-osk-activation.sh on
 
 	mv /etc/keyd/cros.conf /etc/keyd/cros.conf.disabled
 	mv /etc/keyd/tab.conf.disabled /etc/keyd/tab.conf
@@ -37,8 +38,9 @@ enable_inputs() {
     #fi
 
     /bin/ectool pwmsetkblight $KBD_LIGHT
-    
-    /root/.local/bin/toggle-gjs-osk.sh off
+
+    /root/.local/bin/toggle-gjs-osk-extension.sh off    
+    #/root/.local/bin/toggle-gjs-osk-activation.sh off
 
     mv /etc/keyd/tab.conf /etc/keyd/tab.conf.disabled
     mv /etc/keyd/cros.conf.disabled /etc/keyd/cros.conf
