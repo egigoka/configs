@@ -1,0 +1,115 @@
+[ids]
+k:18d1:5030
+k:18d1:5061
+k:18d1:503d
+k:0001:0001
+k:18d1:503c
+k:18d1:5057
+k:18d1:504c
+k:18d1:502b
+k:18d1:505b
+k:0000:0000
+k:18d1:5050
+k:18d1:5052
+k:18d1:5044
+
+[main]
+esc = noop
+f1 = noop
+f2 = noop
+f3 = noop
+f4 = noop
+f5 = noop
+f6 = noop
+f7 = noop
+f8 = noop
+f9 = noop
+f10 = noop
+
+back = noop
+forward = noop
+refresh = noop
+zoom = noop
+scale = noop
+brightnessdown = noop
+brightnessup = noop
+mute = noop
+volumedown = noop
+volumeup = noop
+
+f13 = noop
+
+` = noop
+1 = noop
+2 = noop
+3 = noop
+4 = noop
+5 = noop
+6 = noop
+7 = noop
+8 = noop
+9 = noop
+9 = noop
+0 = noop
+- = noop
+= = noop
+backspace = noop
+
+tab = noop
+q = noop
+w = noop
+e = noop
+r = noop
+t = noop
+y = noop
+u = noop
+i = noop
+o = noop
+p = noop
+[ = noop
+] = noop
+\ = noop
+
+leftmeta = noop
+a = noop
+s = noop
+d = noop
+f = noop
+g = noop
+h = noop
+j = noop
+k = noop
+l = noop
+; = noop
+' = noop
+enter = noop
+
+leftshift = noop
+102nd = noop
+z = noop
+x = noop
+c = noop
+v = noop
+b = noop
+n = noop
+m = noop
+, = noop
+. = noop
+/ = noop
+rightshift = noop
+
+leftcontrol = noop
+leftalt = noop
+space = noop
+rightalt = noop
+altgr = noop
+rightcontrol = noop
+
+left = noop
+right = noop
+up = noop
+down = noop
+
+volumedown = volumedown
+volumeup = volumeup
+power = sleep
