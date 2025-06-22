@@ -490,3 +490,7 @@
 	unset __conda_setup
 	# <<< conda initialize <<<
 export THEOS=~/theos
+
+
+# filen-cli
+PATH=$PATH:~/.filen-cli/bin
