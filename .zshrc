@@ -25,6 +25,8 @@
 	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
 	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin
 	contains $PATH /home/linuxbrew/.linuxbrew/bin/ || export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
+	contains $PATH ~/.filen-cli/bin || export PATH=$PATH:~/.filen-cli/bin
+	contains $PATH /usr/local/bin || export PATH=$PATH:/usr/local/bin
 
 ### aliases
 	# tar
@@ -41,6 +43,7 @@
 	alias d-="docker stop"
 	alias d+="docker start"
 	alias drm="d rm"
+	alias dprune="d builder prune -a; d container prune; d image prune -a; d network prune; d volume prune"
 
 	# screen
 	alias screen+="screen -S"
@@ -380,7 +383,7 @@
 ### you-should-use
 	export YSU_MESSAGE_FORMAT="$(tput setaf 1)Hey! I found %alias_type for \"%command\": \"%alias\"$(tput sgr0)"
 	export YSU_MESSAGE_POSITION="after"
-	export YSU_IGNORED_ALIASES=("g" "bi" "cd..")
+	export YSU_IGNORED_ALIASES=("g" "bi" "cd.." "sc")
 
 ### oh-my-zsh
 
@@ -414,7 +417,11 @@
 	# Standard plugins can be found in $ZSH/plugins/
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Add wisely, as too many plugins slow down shell startup.
-	plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found macos autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
+	plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
+
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		plugins+=("macos")
+	fi
 
 	source $ZSH/oh-my-zsh.sh
 
@@ -490,7 +497,3 @@
 	unset __conda_setup
 	# <<< conda initialize <<<
 export THEOS=~/theos
-
-
-# filen-cli
-PATH=$PATH:~/.filen-cli/bin
