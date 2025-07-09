@@ -17,6 +17,9 @@ systemd-creds encrypt --name cred-name.cred /path/to/plaintext/file /path/to/enc
 shred /path/to/plaintext/file
 # delete plaintext file
 rm /path/to/plaintext/file
+# set permissions 
+chmod 0600 /path/to/encrypted/file.cred
+chown root:root /path/to/encrypted/file.cred
 # now you can load it in systemd.service
 # in .service file under [Service] add
 LoadCredentialEncrypted=cred-name.cred:/path/to/encrypted/file.cred
