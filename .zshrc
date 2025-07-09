@@ -43,7 +43,8 @@
 	alias d-="docker stop"
 	alias d+="docker start"
 	alias drm="d rm"
-	alias dprune="d builder prune -a; d container prune; d image prune -a; d network prune; d volume prune"
+	# alias dprune="d builder prune -a; d container prune; d image prune -a; d network prune; d volume prune"
+	alias dprune="d system prune -a --volumes"
 
 	# screen
 	alias screen+="screen -S"
