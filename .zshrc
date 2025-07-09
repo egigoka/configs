@@ -295,6 +295,9 @@
 	        zellij_delete_session "$*"
 	    fi
 	}
+
+	# mpv
+	alias mpvcli="mpv --no-config --vo=tct --really-quiet --profile=sw-fast --vo-tct-algo=half-blocks"
 	
 ### functions
 	clip() {
