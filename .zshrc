@@ -299,6 +299,9 @@
 
 	# mpv
 	alias mpvcli="mpv --no-config --vo=tct --really-quiet --profile=sw-fast --vo-tct-algo=half-blocks"
+
+	# btop
+	alias bntop="btop --config ~/configs/bntop.conf -p 1"
 	
 ### functions
 	clip() {
