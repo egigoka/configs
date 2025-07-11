@@ -11,8 +11,8 @@ chmod 600 privatekey publickey
 [Interface] # this server
 Address = {SERVER_VPN_IP}/{PREFIX}  # example: 10.0.0.1/24
 ListenPort = 51820
-PostUp = iptables -A FORWARD -i {WG_IFACE} (USUALLY wg and number)} -j ACCEPT; iptables -t nat -A POSTROUTING -o {EXTERNAL_IFACE} -j MASQUERADE
-PostDown = iptables -D FORWARD -i {WG_IFACE} (USUALLY wg and number)} -j ACCEPT; iptables -t nat -D POSTROUTING -o {EXTERNAL_IFACE} -j MASQUERADE
+PostUp = iptables -A FORWARD -i {WG_IFACE (USUALLY wg and number)} -j ACCEPT; iptables -t nat -A POSTROUTING -o {EXTERNAL_IFACE} -j MASQUERADE
+PostDown = iptables -D FORWARD -i {WG_IFACE (USUALLY wg and number)} -j ACCEPT; iptables -t nat -D POSTROUTING -o {EXTERNAL_IFACE} -j MASQUERADE
 PrivateKey = {SERVER_PRIVATE_KEY}
 
 [Peer] # friendly name for your client
