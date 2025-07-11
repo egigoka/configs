@@ -1,0 +1,39 @@
+# ┌──────────────────────┐
+# │ wireguard Cheatsheet │
+# └──────────────────────┘
+
+# GENERATE KEYS ON BOTH SERVER AND CLIENT
+wg genkey | tee privatekey | \
+ wg pubkey > publickey
+chmod 600 privatekey publickey
+
+# ADD SERVER CONFIG
+[Interface] # this server
+Address = {SERVER_VPN_IP}/{PREFIX}  # example: 10.0.0.1/24
+ListenPort = 51820
+PostUp = iptables -A FORWARD -i {WG_IFACE} (USUALLY wg and number)} -j ACCEPT; iptables -t nat -A POSTROUTING -o {EXTERNAL_IFACE} -j MASQUERADE
+PostDown = iptables -D FORWARD -i {WG_IFACE} (USUALLY wg and number)} -j ACCEPT; iptables -t nat -D POSTROUTING -o {EXTERNAL_IFACE} -j MASQUERADE
+PrivateKey = {SERVER_PRIVATE_KEY}
+
+[Peer] # friendly name for your client
+PublicKey = {CLIENT_PUBLIC_KEY}
+AllowedIPs = {CLIENT_VPN_IP}/32  # what range will be forwarded to this client, usually just one
+
+# CLIENT CONFIGURATION
+[Interface]
+PrivateKey = {CLIENT_PRIVATE_KEY}
+Address = {CLIENT_VPN_IP}/32
+
+[Peer]
+PublicKey = {SERVER_PUBLIC_KEY}
+Endpoint = {SERVER_PUBLIC_IP}:51820
+AllowedIPs = {ROUTE_CIDR}/{MASK}  # what range will be forwarded to server, based on your needs
+# example: 0.0.0.0/0 for a full forward or {SERVER_VPN_IP}/24 to access other clients (last quartet)
+PersistentKeepalive = 25
+
+# RESTART WG-QUCK ON SERVER
+systemctl restart wg-quick@{WG_IFACE}.service
+
+# ENABLE AND START WG-QUICK ON CLIENT
+systemctl enable --now wg-quick@{WG_IFACE}.service
+
