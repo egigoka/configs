@@ -1,0 +1,27 @@
+# ┌────────────────────┐
+# │ systemd Cheatsheet │
+# └────────────────────┘
+
+# MAKE SERVICES RESTART ALWAYS INSTEAD OF HITTING StartLimitIntervalSec=100ms with StartLimitBurst=5 and StartLimitInterval=1
+# add /etc/systemd/system.conf.d/restartdefaults.conf
+[Manager]
+DefaultRestartSec=1s
+DefaultStartLimitIntervalSec=0
+
+# SAFE CREDENTIALS
+# create a new file with credential
+$EDITOR /path/to/plaintext/file
+# encrypt it
+systemd-creds encrypt --name cred-name.cred /path/to/plaintext/file /path/to/encrypted/file.cred
+# shred plaintext file
+shred /path/to/plaintext/file
+# delete plaintext file
+rm /path/to/plaintext/file
+# set permissions 
+chmod 0600 /path/to/encrypted/file.cred
+chown root:root /path/to/encrypted/file.cred
+# now you can load it in systemd.service
+# in .service file under [Service] add
+LoadCredentialEncrypted=cred-name.cred:/path/to/encrypted/file.cred
+# and use as argument
+ExecStart=/bin/bash -c '/bin/some-bin --password "$(systemd-creds cat filen-webdav-password.cred)"'
