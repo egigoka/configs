@@ -10,23 +10,17 @@
 	[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 ### PATH
+	contains $PATH ~/go/bin/ || export PATH=$PATH:~/go/bin/
+	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin  # rust
+	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
+	contains $PATH ~/.filen-cli/bin || export PATH=$PATH:~/.filen-cli/bin
 	contains $PATH . || export PATH=$PATH:.
 	contains $PATH /opt/homebrew/bin || export PATH=/opt/homebrew/bin:$PATH
-	contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
-	contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
-	contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
-	contains $PATH /home/egigoka/.cargo/bin || export PATH=$PATH:/home/egigoka/.cargo/bin  # rust
-	contains $PATH /home/egorov/.local/bin || export PATH=$PATH:/home/egorov/.local/bin
-	contains $PATH /var/mobile/.local/bin || export PATH=$PATH:/var/mobile/.local/bin
 	contains $PATH /opt/homebrew/opt/llvm/bin || export PATH=/opt/homebrew/opt/llvm/bin:$PATH
-	contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
-	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
-	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
-	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin
-	contains $PATH /home/linuxbrew/.linuxbrew/bin/ || export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
-	contains $PATH ~/.filen-cli/bin || export PATH=$PATH:~/.filen-cli/bin
+	contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
 	contains $PATH /usr/local/bin || export PATH=$PATH:/usr/local/bin
+	contains $PATH /home/linuxbrew/.linuxbrew/bin/ || export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
 
 ### aliases
 	# tar
@@ -410,7 +404,7 @@
 
 	ET_NO_TELEMETRY="fuck telemetry"
 
-	export UPDATE_ZSH_DAYS=13
+	export UPDATE_ZSH_DAYS=90
 
 	ENABLE_CORRECTION="false" # correction conflicts with colored-man-pages_mod
 
@@ -433,7 +427,6 @@
 	source $ZSH/oh-my-zsh.sh
 
 ### external aliases
-	#eval $(thefuck --alias)
 	eval "$(pay-respects zsh --alias fuck)"
 	eval "$(fzf --zsh)"
 
@@ -467,12 +460,12 @@
 
 ### macos fixes
 	if [[ "$OSTYPE" == "darwin"* ]]; then
-	        #For compilers to find openssl@3 you may need to set:
-	        export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
-	        export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
+		#For compilers to find openssl@3 you may need to set:
+		export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
+		export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
 
-	        #For pkg-config to find openssl@3 you may need to set:
-	        export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig"
+		#For pkg-config to find openssl@3 you may need to set:
+		export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig"
 	fi
 
 	if [[ "$OSTYPE" == "darwin" ]]; then
@@ -488,19 +481,4 @@
 ### rust configs
 	export RUST_BACKTRACE=full
 
-### conda
-	# >>> conda initialize >>>
-	# !! Contents within this block are managed by 'conda init' !!
-	__conda_setup="$('/Users/egigoka/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-	if [ $? -eq 0 ]; then
-	    eval "$__conda_setup"
-	else
-	    if [ -f "/Users/egigoka/miniconda3/etc/profile.d/conda.sh" ]; then
-	        . "/Users/egigoka/miniconda3/etc/profile.d/conda.sh"
-	    else
-	        export PATH="/Users/egigoka/miniconda3/bin:$PATH"
-	    fi
-	fi
-	unset __conda_setup
-	# <<< conda initialize <<<
 export THEOS=~/theos
