@@ -153,6 +153,11 @@
                         alias install="zypper -n install"
                         alias uninstall="zypper -n remove"
                         ;;
+                    alpine)
+                    	alias updateall='apk upgrade --available'
+                    	alias install='apk add'
+                    	alias uninstall='apk del'
+                    	;;
                     *)
                         alias updateall='echo "Unknown Linux distribution"'
                         alias install='echo "Unknown Linux distribution"'
@@ -192,7 +197,9 @@
 	alias btrqgrouprescanstatus="btrfs quota rescan -s /mnt/btr"
 	alias btrremovesnapshot="btrfs subvolume delete --commit-after"
 
-	alias diskusage="gdu"
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		alias gdu="gdu-go"
+	fi
 
 	# systemd
 	alias sc="systemctl"
@@ -517,11 +524,44 @@
 	  export EDITOR='micro'
 	fi
 
+### Alpine bs
+	# 1) Fix up $USER if empty
+	if [ -z "$USER" ]; then
+	  if command -v id >/dev/null 2>&1; then
+	    USER=$(id -un)
+	  elif command -v whoami >/dev/null 2>&1; then
+	    USER=$(whoami)
+	  else
+	    USER="unknown"
+	  fi
+	  export USER
+	fi
+
+	# 2) Fix up $SHELL if empty
+	if [ -z "$SHELL" ]; then
+	  # Make sure we have a username to look up
+	  : "${USER:=$(id -un 2>/dev/null || echo "")}"
+
+	  # Try getent (Linux)
+	  if command -v getent >/dev/null 2>&1; then
+	    SHELL=$(getent passwd "$USER" | cut -d: -f7)
+	  else
+	    # Fallback: parse /etc/passwd
+	    SHELL=$(awk -F: -v u="$USER" '$1==u{print $NF}' /etc/passwd 2>/dev/null)
+	  fi
+
+	  # Final fallback
+	  SHELL=${SHELL:-/bin/sh}
+	  export SHELL
+	fi
+
 ### ls configs
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		alias dircolors="gdircolors"
 	fi
+	
 	eval `dircolors $ZSH_CUSTOM/dircolors-solarized/dircolors.ansi-light`
+	
 
 ### show current directory items when changing directories
 	list_dir() {
