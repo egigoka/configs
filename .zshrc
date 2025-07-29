@@ -43,9 +43,9 @@
 	# screen
 	alias screen+="screen -S"
 	alias screenc="screen -Rd"
+	alias screencc="screen -x"
 	alias screendaemon="screen -dmS"
 	alias screenls="screen -list"
-	alias screencc="screen -x"
 
 	# micro
 	alias m="micro"
@@ -72,6 +72,7 @@
 	alias aria16torrent="aria16 --split=16 --enable-dht=true --bt-enable-lpd=true --bt-max-open-files=100 "
 	alias aria16noseed="aria16torrent --seed-time=0"
 
+	# macosspecific
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 	    # networksetup
 	    alias listnetworkinterfaces="networksetup -listnetworkserviceorder"
@@ -80,13 +81,15 @@
 	    # gatekeeper
 	    alias gatekeeper-disable="sudo spctl --master-disable"
 	    alias gatekeeper-enable="sudo spctl --master-enable"
+
+		# power
+		alias macossafereboot="sudo fdesetup authrestart"
+		alias macossaferebootlater="sudo fdesetup authrestart -delayminutes -1"
+		alias macossleep="pmset sleepnow"
+
+		# keychain
+		alias macosunlockkeychain="security unlock-keychain"
 	fi
-	
-	# macosspecific
-	alias macossafereboot="sudo fdesetup authrestart"
-	alias macossaferebootlater="sudo fdesetup authrestart -delayminutes -1"
-	alias macossleep="pmset sleepnow"
-	alias macosunlockkeychain="security unlock-keychain"
 
 	# sudo
 	if [[ $UID == 0 || $EUID == 0 ]]; then
@@ -183,18 +186,20 @@
 	alias btrqgrouprescanstatus="btrfs quota rescan -s /mnt/btr"
 	alias btrremovesnapshot="btrfs subvolume delete --commit-after"
 
-	alias diskusage="ncdu"
+	alias diskusage="gdu"
 
 	# systemd
 	alias sc="systemctl"
 	alias scdr="sc daemon-reload"
 	alias scrd="scdr"
 	alias sc+="sc start"
-	alias sc-="sc stop"
-	alias scr="sc restart"
-	alias scs="sc status -l"
-	alias sc--="sc disable"
 	alias sc++="sc enable"
+	alias sc+++="sc enable --now"
+	alias sc-="sc stop"
+	alias sc--="sc disable"
+	alias sc---="sc disable --now"
+	alias scr="sc restart"
+	alias scs="sc status -l"	
 	alias scls="systemctl list-units --type=service --state=running"
 	alias scfailed="sc list-units --state=failed"
 
@@ -204,7 +209,44 @@
 	alias move="mv"
 	alias q="exit"
 	alias lll="ll -p | grep -v /"
-	alias mvv='rsync -a --remove-source-files --info=progress2'
+	# alias mvv='rsync -a --remove-source-files --info=progress2'
+
+	mvv() {
+	  if (( $# < 2 )); then
+	    print -u2 "Usage: mvv <source>... <destination>"
+	    return 1
+	  fi
+	
+	  typeset -a sources
+	  sources=( "${(@)argv[1,-2]}" )
+	  local dest=$argv[-1]
+	
+	  typeset -a rsync_opts
+	  rsync_opts=( -a --remove-source-files --info=progress2 )
+	
+	  local need_trailing_slash=false
+	  if (( ${#sources[@]} == 1 )) && [[ ! -e $dest ]] && [[ -d ${sources[1]} ]]; then
+	    need_trailing_slash=true
+	  fi
+	
+	  typeset -a rsync_srcs
+	  for src in "${sources[@]}"; do
+	    if $need_trailing_slash; then
+	      # copy CONTENTS of src/ → dest
+	      rsync_srcs+=( "${src}/" )
+	    else
+	      rsync_srcs+=( "$src" )
+	    fi
+	  done
+	
+	  rsync "${rsync_opts[@]}" "${rsync_srcs[@]}" "$dest" || return $?
+	
+	  for src in "${sources[@]}"; do
+	    [[ -d $src ]] || continue
+	    find "$src" -depth -type d -empty -exec rmdir {} \;
+	  done
+	}
+	
 	alias cpr='rsync -a --info=progress2'
 
 	# git
