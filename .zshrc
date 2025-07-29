@@ -9,6 +9,12 @@
 	# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 	[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+### INIT
+	if [[ ! -f ~/configs/.init ]] then
+		git config --global core.pager ""
+		touch ~/configs/.init
+	fi
+
 ### PATH
 	contains $PATH ~/go/bin/ || export PATH=$PATH:~/go/bin/
 	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin  # rust
@@ -209,8 +215,7 @@
 	alias move="mv"
 	alias q="exit"
 	alias lll="ll -p | grep -v /"
-	# alias mvv='rsync -a --remove-source-files --info=progress2'
-
+	alias cpr='rsync -a --info=progress2'
 	mvv() {
 	  if (( $# < 2 )); then
 	    print -u2 "Usage: mvv <source>... <destination>"
@@ -246,14 +251,38 @@
 	    find "$src" -depth -type d -empty -exec rmdir {} \;
 	  done
 	}
-	
-	alias cpr='rsync -a --info=progress2'
 
 	# git
 	alias gs="git status"
 	alias gpl="git pull"
-	alias gcommitstoday="git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"; echo"
 	alias gdownloadreleases="dra download"
+	alias gcommitstoday="(git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"; echo)"
+	get_monday_iso8601() {
+	  if [[ "${OSTYPE}" == darwin* ]]; then
+	    local ts=$(date -vmon -v0H -v0M '+%Y-%m-%dT%H:%M:%S')
+	    local tz=$(date +%z)        # e.g. "-0700"
+	    tz="${tz:0:3}:${tz:3}"      # -> "-07:00"
+	    printf '%s%s\n' "$ts" "$tz"
+	  else
+	    local dow offset
+        dow=$(date +%u)                       # 1..7, Mon=1
+        offset=$(( dow - 1 ))                 # 0 for Mon, 1 for Tue, …
+        # date -d "YYYY-MM-DD -N days" gives midnight minus N days
+        date -d "$(date +%Y-%m-%d) -${offset} days" \
+          '+%Y-%m-%dT%H:%M:%S%:z'
+	  fi
+	}
+	
+	gcommitsweek() {
+	  local since
+	  since=$(get_monday_iso8601)
+	  git log \
+	    --since="$since" \
+	    --until=now \
+	    --pretty=format:"%h - %ar - %an: %s" \
+	    "$@"
+	  
+	}
 
 	# protonvpn
 	alias protonvpnfastest="curl -s https://api.protonmail.ch/vpn/logicals | jq '[.LogicalServers[]|select(.Name|contains(\"$1\"))|select(.Tier==2)|{ServerName: .Name, ServerLoad: (.Load|tonumber),EntryIP: .Servers[].EntryIP}] | sort_by(.ServerLoad)' | jq -r '.[0:7]'"
