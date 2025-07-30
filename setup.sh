@@ -84,13 +84,13 @@ echo $(which zsh)
 echo
 chsh $(whoami)
 
+# custom plugins
+ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_themes_plugins.sh
+
 # zsh config
 sh ~/configs/install_scripts/install_omz.sh
 install_link ~/configs/zsh/.zshrc ~/.zshrc
 install_link ~/configs/zsh/.p10k.zsh ~/.p10k.zsh
-
-# custom plugins
-ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_themes_plugins.sh
 
 # apps that used in shell config
 install pay-respects || sh ~/configs/install_scripts/install_pay_respects.sh
@@ -99,8 +99,7 @@ install dircolors || install coreutils
 install python3
 install autojump || install_autojump
 
-# apps configs
-install_link ~/configs/mpv ~/.config/mpv
+# my chromebook
 if [ "$product_name" = "Morphius" ]; then
   echo "This is Morphius"
   install_link ~/configs/Morphius-chromebook/root/.local/bin/toggle-inputs.sh /root/.local/bin/toggle-inputs.sh
@@ -112,10 +111,19 @@ else
   echo "Not Morphius (it's $product_name)"
 fi
 
-install_link ~/configs/.local/share/kxmlgui5/konsole/sessionui.rc ~/.local/share/kxmlgui5/konsole/sessionui.rc
-install_link ~/configs/.local/share/kxmlgui5/konsole/konsoleui.rc ~/.local/share/kxmlgui5/konsole/konsoleui.rc
+# mpv
+install_link ~/configs/mpv ~/.config/mpv
 
-install_link ~/configs/.config/fish/fish_plugins ~/.config/
+# konsole
+install_link ~/configs/konsole/sessionui.rc ~/.local/share/kxmlgui5/konsole/sessionui.rc
+install_link ~/configs/konsole/konsoleui.rc ~/.local/share/kxmlgui5/konsole/konsoleui.rc
+
+# fish
+install_link ~/configs/fish/fish_plugins ~/.config/fish/fish_plugins
+install_link ~/configs/fish/config.fish ~/.config/fish/config.fish
+
+# micro
+install_link ~/configs/micro/bindings.json ~/.config/micro/bindings.json
 
 # launch shell
 exec zsh --login
