@@ -1,85 +1,96 @@
 #!/bin/bash
 
-# easy packet management
+product_name=$(cat /sys/class/dmi/id/product_name 2>/dev/null)
+
+# install command
+source ~/configs/install_scripts/epm.sh
+
+# if no package
+install_autojump() {
+  pwd=$PWD
+  shell=$SHELL
+  git clone https://github.com/wting/autojump.git ~/configs/autojump
+  cd ~/configs/autojump
+  export SHELL=/bin/zsh
+  python3 ~/configs/autojump/install.py
+  rm -rf ~/configs/autojump
+  cd $pwd
+  export SHELL=$shell
+}
+
+install_link() {
+  if [ $# -ne 2 ]; then
+    printf 'Usage: %s SRC DST\n' "${0##*/}" >&2
+    return 1
+  fi
+
+  src=$1
+  dst=$2
+
+  parent=$(dirname -- "$dst")
+  mkdir -p -- "$parent" || return
+
+  if [ -e "$dst" ] || [ -L "$dst" ]; then
+    mv -- "$dst" "$dst.preinstall" || return
+  fi
+
+  ln -s -- "$src" "$dst"
+}
+
+# install some packages
 case "$(uname -s)" in
   Linux)
     if [ -f /etc/os-release ]; then
       . /etc/os-release
       case "$ID" in
       	rocky)
-     	  alias updateall="dnf clean all && dnf makecache && dnf upgrade -y"
-          alias install="dnf install -y"
-          alias uninstall="dnf remove -y"
           ;;
         arch)
-          alias updateall='yay -Syu --devel --timeupdate; yay -Sc'
-          alias install="yay -S"
-          alias uninstall="yay -Rns"
-          alias updatemirrors="cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak; rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; sudo pacman -Syy"
           ;;
         debian|ubuntu|droidian)
-          alias updateall='apt update && apt upgrade && apt dist-upgrade'
-          alias install="apt install"
-          alias uninstall="apt -y remove"
           ;;
         opensuse-tumbleweed|opensuse-leap)
-          alias updateall='zypper refresh && zypper dup'
-          alias install="zypper -n install"
-          alias uninstall="zypper -n remove"
           ;;
         alpine)
-          alias updateall='apk upgrade --available'
-          alias install='apk add'
-          alias uninstall='apk del'
+          install git
+          install shadow # chsh
+          install ncurses # tput in omz
           ;;
         *)
-          alias updateall='echo "Unknown Linux distribution"'
-          alias install='echo "Unknown Linux distribution"'
-          alias uninstall='echo "Unknown Linux distribution"'
+         echo "Unknown Linux distribution"
+         exit
           ;;
       esac
     else
-      alias updateall='echo "Unknown Linux distribution"'
-      alias install='echo "Unknown Linux distribution"'
-      alias uninstall='echo "Unknown Linux distribution"'
+      echo "Unknown Linux distribution"
+      exit
     fi
     ;;
   Darwin)
-    alias updateall='brew update; brew upgrade --no-quarantine --greedy; brew cleanup --prune=all'
-    alias install='brew install --no-quarantine'
-    alias uninstall='brew remove'
+    
     ;;
   *)
-    alias updateall='echo "Unknown operating system"'
-    alias install='echo "Unknown operating system"'
-    alias uninstall='echo "Unknown operating system"'
+  	echo Unsupported OS
+  	exit
     ;;
 esac
-
-# if no package
-install_autojump() {
-  pwd=$PWD
-  git clone https://github.com/wting/autojump.git ~/configs/autojump
-  cd ~/configs/autojump
-  python3 ~/configs/autojump/install.py
-  rm -rf ~/configs/autojump
-}
 
 # install shell
 install zsh
 
 # setup default shell
+echo
 echo $(which zsh)
+echo
 chsh $(whoami)
 
 # zsh config
 sh ~/configs/install_scripts/install_omz.sh
-mv ~/.zshrc ~/.zshrc.preinstall
-mv ~/.p10k.zsh ~/.p10k.zsh.preinstall
-ln -s ~/configs/.zshrc ~/.zshrc
-ln -s ~/configs/.p10k.zsh ~/.p10k.zsh
+install_link ~/configs/zsh/.zshrc ~/.zshrc
+install_link ~/configs/zsh/.p10k.zsh ~/.p10k.zsh
+
 # custom plugins
-ZSH_CUSTOM="$HOME/configs/ZSH_CUSTOM" sh ~/configs/ZSH_CUSTOM/install_themes_plugins.sh
+ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_themes_plugins.sh
 
 # apps that used in shell config
 install pay-respects || sh ~/configs/install_scripts/install_pay_respects.sh
@@ -87,6 +98,24 @@ install fzf
 install dircolors || install coreutils
 install python3
 install autojump || install_autojump
+
+# apps configs
+install_link ~/configs/mpv ~/.config/mpv
+if [ "$product_name" = "Morphius" ]; then
+  echo "This is Morphius"
+  install_link ~/configs/Morphius-chromebook/root/.local/bin/toggle-inputs.sh /root/.local/bin/toggle-inputs.sh
+  install_link ~/configs/Morphius-chromebook/root/.local/bin/toggle-gjs-osk-extension.sh /root/.local/bin/toggle-gjs-osk-extension.sh
+  install_link ~/configs/Morphius-chromebook/etc/keyd/tab.conf.disabled /etc/keyd/tab.conf.disabled
+  install_link ~/configs/Morphius-chromebook/etc/keyd/cros.conf /etc/keyd/cros.conf
+  install_link ~/configs/Morphius-chromebook/bin/ectool /bin/ectool
+else
+  echo "Not Morphius (it's $product_name)"
+fi
+
+install_link ~/configs/.local/share/kxmlgui5/konsole/sessionui.rc ~/.local/share/kxmlgui5/konsole/sessionui.rc
+install_link ~/configs/.local/share/kxmlgui5/konsole/konsoleui.rc ~/.local/share/kxmlgui5/konsole/konsoleui.rc
+
+install_link ~/configs/.config/fish/fish_plugins ~/.config/
 
 # launch shell
 exec zsh --login

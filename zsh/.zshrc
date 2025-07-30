@@ -373,7 +373,7 @@
 	alias mpvcli="mpv --no-config --vo=tct --really-quiet --profile=sw-fast --vo-tct-algo=half-blocks"
 
 	# btop
-	alias bntop="btop --config ~/configs/bntop.conf -p 1"
+	alias bntop="btop --config ~/configs/btop/bntop.conf -p 1"
 	
 ### functions
 	clip() {
@@ -457,7 +457,7 @@
 	}
 
 ### zellij
-	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij.kdl"
+	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij/zellij.kdl"
 
 ### you-should-use
 	export YSU_MESSAGE_FORMAT="$(tput setaf 1)Hey! I found %alias_type for \"%command\": \"%alias\"$(tput sgr0)"
@@ -468,7 +468,7 @@
 
 	# Path to your oh-my-zsh installation.
 	export ZSH="$HOME/.oh-my-zsh"
-	export ZSH_CUSTOM="$HOME/configs/ZSH_CUSTOM"
+	export ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM"
 
 	# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 	# ZSH_THEME="agnoster"
