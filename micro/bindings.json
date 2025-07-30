@@ -3,4 +3,6 @@
     "CtrlUnderscore": "lua:comment.comment",
     "Ctrl-G": "command-edit:goto ",
     "Ctrl-L": "ToggleHelp",
+    "Ctrl-Shift-v": "Paste",
+    "Ctrl-Shift-c": "CopyLine|Copy",
 }
