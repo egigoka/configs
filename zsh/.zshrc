@@ -266,7 +266,7 @@
 	alias gcommitstoday="(git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"; echo)"
 	get_monday_iso8601() {
 	  if [[ "${OSTYPE}" == darwin* ]]; then
-	    local ts=$(date -vmon -v0H -v0M '+%Y-%m-%dT%H:%M:%S')
+	    local ts=$(date -v-mon -v0H -v0M '+%Y-%m-%dT%H:%M:%S')
 	    local tz=$(date +%z)        # e.g. "-0700"
 	    tz="${tz:0:3}:${tz:3}"      # -> "-07:00"
 	    printf '%s%s\n' "$ts" "$tz"
