@@ -81,6 +81,7 @@ install zsh
 # setup default shell
 echo
 echo $(which zsh)
+echo $(which fish)
 echo
 chsh $(whoami)
 
@@ -126,8 +127,6 @@ install_link ~/configs/konsole/sessionui.rc ~/.local/share/kxmlgui5/konsole/sess
 install_link ~/configs/konsole/konsoleui.rc ~/.local/share/kxmlgui5/konsole/konsoleui.rc
 
 # fish
-#install_link ~/configs/fish/fish_plugins ~/.config/fish/fish_plugins
-#install_link ~/configs/fish/config.fish ~/.config/fish/config.fish
 install_link ~/configs/fish ~/.configs/fish
 
 # micro
