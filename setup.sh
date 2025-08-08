@@ -31,11 +31,14 @@ install_link() {
   parent=$(dirname -- "$dst")
   mkdir -p -- "$parent" || return
 
+  dst="${dst%/}"  # strip slash at the end
+
   if [ -e "$dst" ] || [ -L "$dst" ]; then
     mv -- "$dst" "$dst.preinstall" || return
   fi
 
   ln -s -- "$src" "$dst"
+  
 }
 
 # install some packages
@@ -117,7 +120,6 @@ if [ "$product_name" = "Morphius" ]; then
   install_link ~/configs/Morphius-chromebook/etc/keyd/tab.conf.disabled /etc/keyd/tab.conf.disabled
   install_link ~/configs/Morphius-chromebook/etc/keyd/cros.conf /etc/keyd/cros.conf
   install_link ~/configs/Morphius-chromebook/bin/ectool /bin/ectool
-else
 fi
 
 # mpv
