@@ -410,7 +410,7 @@
 
 	ET_NO_TELEMETRY="fuck telemetry"
 
-	export UPDATE_ZSH_DAYS=13
+	export UPDATE_ZSH_DAYS=90
 
 	ENABLE_CORRECTION="false" # correction conflicts with colored-man-pages_mod
 
@@ -424,14 +424,15 @@
 	# Standard plugins can be found in $ZSH/plugins/
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Add wisely, as too many plugins slow down shell startup.
+	# debug
 	plugins=(git python autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
 
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		plugins+=("macos")
 	fi
 
-	fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-	autoload -U compinit && compinit
+	#fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+	#autoload -U compinit && compinit
 	source $ZSH/oh-my-zsh.sh
 
 ### external aliases
