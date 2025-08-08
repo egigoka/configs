@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 product_name=$(cat /sys/class/dmi/id/product_name 2>/dev/null)
 
