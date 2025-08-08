@@ -92,12 +92,19 @@ sh ~/configs/install_scripts/install_omz.sh
 install_link ~/configs/zsh/.zshrc ~/.zshrc
 install_link ~/configs/zsh/.p10k.zsh ~/.p10k.zsh
 
+# fish config
+fish -c "cat ~/configs/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher"
+
 # apps that used in shell config
 install pay-respects || sh ~/configs/install_scripts/install_pay_respects.sh
 install fzf
 install dircolors || install coreutils
 install python3
 install autojump || install_autojump
+install uv
+uv tool install virtualfish
+vf install
+# install zoxide
 
 # my chromebook
 if [ "$product_name" = "Morphius" ]; then
@@ -119,11 +126,15 @@ install_link ~/configs/konsole/sessionui.rc ~/.local/share/kxmlgui5/konsole/sess
 install_link ~/configs/konsole/konsoleui.rc ~/.local/share/kxmlgui5/konsole/konsoleui.rc
 
 # fish
-install_link ~/configs/fish/fish_plugins ~/.config/fish/fish_plugins
-install_link ~/configs/fish/config.fish ~/.config/fish/config.fish
+#install_link ~/configs/fish/fish_plugins ~/.config/fish/fish_plugins
+#install_link ~/configs/fish/config.fish ~/.config/fish/config.fish
+install_link ~/configs/fish ~/.configs/fish
 
 # micro
 install_link ~/configs/micro/bindings.json ~/.config/micro/bindings.json
+
+# starship
+install_link ~/configs/starship/starship.toml ~/.config/starship.toml
 
 # launch shell
 exec zsh --login
