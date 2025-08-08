@@ -1,3 +1,4 @@
 ZSH_CUSTOM/themes/powerlevel10k
 .init
 default.profraw
+fish/fish_variables
