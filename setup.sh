@@ -77,6 +77,7 @@ esac
 
 # install shell
 install zsh
+install fish
 
 # setup default shell
 echo
