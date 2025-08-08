@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# get product name
 product_name=$(cat /sys/class/dmi/id/product_name 2>/dev/null)
 
 # install command
@@ -76,26 +77,27 @@ case "$(uname -s)" in
 esac
 
 # install shell
-install zsh
+#install zsh
 install fish
 
 # setup default shell
 echo
-echo $(which zsh)
+#echo $(which zsh)
 echo $(which fish)
 echo
 chsh $(whoami)
 
 # custom plugins
-ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_themes_plugins.sh
+#ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_themes_plugins.sh
 
 # zsh config
-sh ~/configs/install_scripts/install_omz.sh
-install_link ~/configs/zsh/.zshrc ~/.zshrc
-install_link ~/configs/zsh/.p10k.zsh ~/.p10k.zsh
+#sh ~/configs/install_scripts/install_omz.sh
+#install_link ~/configs/zsh/.zshrc ~/.zshrc
+#install_link ~/configs/zsh/.p10k.zsh ~/.p10k.zsh
 
-# fish config
+# install fisher
 fish -c "cat ~/configs/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher"
+install_link ~/configs/fish ~/.configs/fish
 
 # apps that used in shell config
 install pay-respects || sh ~/configs/install_scripts/install_pay_respects.sh
@@ -110,14 +112,12 @@ vf install
 
 # my chromebook
 if [ "$product_name" = "Morphius" ]; then
-  echo "This is Morphius"
   install_link ~/configs/Morphius-chromebook/root/.local/bin/toggle-inputs.sh /root/.local/bin/toggle-inputs.sh
   install_link ~/configs/Morphius-chromebook/root/.local/bin/toggle-gjs-osk-extension.sh /root/.local/bin/toggle-gjs-osk-extension.sh
   install_link ~/configs/Morphius-chromebook/etc/keyd/tab.conf.disabled /etc/keyd/tab.conf.disabled
   install_link ~/configs/Morphius-chromebook/etc/keyd/cros.conf /etc/keyd/cros.conf
   install_link ~/configs/Morphius-chromebook/bin/ectool /bin/ectool
 else
-  echo "Not Morphius (it's $product_name)"
 fi
 
 # mpv
@@ -126,9 +126,6 @@ install_link ~/configs/mpv ~/.config/mpv
 # konsole
 install_link ~/configs/konsole/sessionui.rc ~/.local/share/kxmlgui5/konsole/sessionui.rc
 install_link ~/configs/konsole/konsoleui.rc ~/.local/share/kxmlgui5/konsole/konsoleui.rc
-
-# fish
-install_link ~/configs/fish ~/.configs/fish
 
 # micro
 install_link ~/configs/micro/bindings.json ~/.config/micro/bindings.json
