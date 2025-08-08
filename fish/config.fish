@@ -183,6 +183,16 @@ if status is-interactive
 
     # dircolors homebrew
     alias dircolors="gdircolors"
+
+    # yt-dlp
+    alias yt-dlp="yt-dlp --ffmpeg-location /usr/bin/ffmpeg"
+
+    #For compilers to find openssl@3 you may need to set:
+    set -x LDFLAGS "-L/opt/homebrew/opt/openssl@3/lib"
+    set -x CPPFLAGS "-I/opt/homebrew/opt/openssl@3/include"
+
+    #For pkg-config to find openssl@3 you may need to set:
+    set -x PKG_CONFIG_PATH "/opt/homebrew/opt/openssl@3/lib/pkgconfig"
   end
 
   # sudo
@@ -302,7 +312,17 @@ if status is-interactive
   eval (dircolors -c "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized/dircolors.ansi-light" | string collect)
   # TODO: separate from zsh configs
 
-    
+  # pisces
+  set -x pisces_only_insert_at_eol 1
+
+  # sponge
+  set -x sponge_purge_only_on_exit true
+
+  # rust
+  set -x RUST_BACKTRACE full
+
+  # theos
+  set -x THEOS ~/theos
 
   # Alpine bs
   if not set -q USER
@@ -330,6 +350,12 @@ if status is-interactive
     end
   end
 
+  ### NO STUPID ENCODINGS
+  set -x LC_COLLATE C
+  set -x LANGUAGE en_US.UTF-8
+  set -x LC_CTYPE en_US.UTF-8
+  set -x LANG en_US.UTF-8
+
   ### INIT
   if not test -f ~/configs/.init
     git config --global core.pager ""
@@ -337,7 +363,7 @@ if status is-interactive
   end
 
   ### EXTERNAL PROGRAMS INIT
-  zoxide init fish | source
+  #zoxide init fish | source
   pay-respects fish --alias fuck | source
   fzf --fish | source
   if test -f $HOME/.autojump/share/autojump/autojump.fish
