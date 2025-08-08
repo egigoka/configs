@@ -1,3 +1,3 @@
-function zellij_kill_session
+function zellij_attach
     zellij attach $argv
 end
