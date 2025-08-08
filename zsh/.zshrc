@@ -99,31 +99,31 @@
 
 	# sudo
 	if [[ $UID == 0 || $EUID == 0 ]]; then
-	   # root
-	   alias unmount="umount"
-	   alias iotop="sysctl kernel.task_delayacct=1; iotop; sysctl kernel.task_delayacct=0"
+	    # root
+	    alias unmount="umount"
+	    alias iotop="sysctl kernel.task_delayacct=1; iotop; sysctl kernel.task_delayacct=0"
 	else
-	   # not root
-	   alias unmount="sudo umount"
-	   alias mount="sudo mount"
-	   alias zypper="sudo zypper"
-	   alias snap="sudo snap"
-	   alias yast="sudo yast"
-	   alias reboot="sudo systemctl --force reboot"
-	   alias shutdown="sudo /usr/sbin/shutdown now"
-	   alias systemctl="sudo systemctl"
-	   alias useradd="sudo useradd"
-	   alias userdel="sudo userdel"
-	   alias groupadd="sudo groupadd"
-	   alias usermod="sudo usermod"
-	   alias btrfs="sudo btrfs"
-	   alias mkfs.btrfs="sudo mkfs.btrfs"
-	   alias openvpn="sudo openvpn"
-	   alias iotop="sudo sysctl kernel.task_delayacct=1; sudo iotop; sudo sysctl kernel.task_delayacct=0"
-	   alias iftop="sudo iftop"
-	   alias smbstatus="sudo smbstatus"
-	   alias apt="sudo apt"
-	   alias pacman="sudo pacman"
+		# not root
+		alias unmount="sudo umount"
+		alias mount="sudo mount"
+		alias zypper="sudo zypper"
+		alias snap="sudo snap"
+		alias yast="sudo yast"
+		alias reboot="sudo systemctl --force reboot"
+		alias shutdown="sudo /usr/sbin/shutdown now"
+		alias systemctl="sudo systemctl"
+		alias useradd="sudo useradd"
+		alias userdel="sudo userdel"
+		alias groupadd="sudo groupadd"
+		alias usermod="sudo usermod"
+		alias btrfs="sudo btrfs"
+		alias mkfs.btrfs="sudo mkfs.btrfs"
+		alias openvpn="sudo openvpn"
+		alias iotop="sudo sysctl kernel.task_delayacct=1; sudo iotop; sudo sysctl kernel.task_delayacct=0"
+		alias iftop="sudo iftop"
+		alias smbstatus="sudo smbstatus"
+		alias apt="sudo apt"
+		alias pacman="sudo pacman"
 	fi
 
 	# easy packet management
