@@ -89,5 +89,6 @@
   <Action iconText="𝙿𝚊𝚜𝚝𝚎" name="edit_paste"/>
   <Action iconText="𝙲𝚘𝚙𝚢" name="edit_copy"/>
   <Action iconText="𝙵𝚒𝚗𝚍" name="edit_find"/>
+  <Action iconText="𝙾𝚙𝚎𝚗 𝙼𝚎𝚗𝚞" name="hamburger_menu"/>
  </ActionProperties>
 </gui>
