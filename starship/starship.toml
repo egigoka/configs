@@ -52,7 +52,6 @@ $kotlin\
 $gradle\
 $lua\
 $nim\
-$nodejs\
 $ocaml\
 $opa\
 $perl\
@@ -112,7 +111,10 @@ $cmd_duration\
 $status\
 """
 
-right_format = """$python"""
+right_format = """\
+$python\
+$nodejs\
+"""
 
 [cmd_duration]
 format='[$duration]($style)'
@@ -197,6 +199,12 @@ symbol = '󰟼'
 symbol = ''
 style = 'bg:black fg:white'
 format = '[$symbol($version)]($style)'
+
+[nodejs]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
 
 [custom.load]
 command = "awk '{print $2}' /proc/loadavg 2>/dev/null || sysctl -n vm.loadavg | awk '{print $2}'"
