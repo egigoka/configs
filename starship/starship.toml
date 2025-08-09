@@ -162,7 +162,7 @@ style='bold bg:black fg:white'
 [os]
 disabled=false
 style='bold bg:black fg:white'
-format='[$symbol]($style)'
+format='[$symbol ]($style)'
 
 [os.symbols]
 Windows = "󰍲"
