@@ -90,8 +90,8 @@ echo $(which fish)
 echo
 chsh $(whoami)
 
-# custom plugins
-#ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_themes_plugins.sh
+# custom zsh plugins (still needed for dircolors-solarized)
+ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_themes_plugins.sh
 
 # zsh config
 #sh ~/configs/install_scripts/install_omz.sh
