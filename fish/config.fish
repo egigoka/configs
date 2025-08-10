@@ -161,7 +161,7 @@ if status is-interactive
   alias bntop="btop --config ~/configs/btop/bntop.conf -p 1"
   
   # macosspecific
-  if string match -q "darwin*" -- $OSTYPE
+  if string match -q "Darwin*" -- (uname)
     # networksetup
     alias listnetworkinterfaces="networksetup -listnetworkserviceorder"
     alias setroutes="sudo networksetup -setadditionalroutes " # name from listnetworinterfaces, ip, mask, router; multiple routes should be set through use of space between
@@ -309,6 +309,7 @@ if status is-interactive
   end
 
   # dircolors
+  
   eval (dircolors -c "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized/dircolors.ansi-light" | string collect)
   # TODO: separate from zsh configs
 
