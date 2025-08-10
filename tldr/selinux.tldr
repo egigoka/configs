@@ -1,0 +1,22 @@
+# ┌─────────────────────────────┐
+# │ SELinux Survival Cheatsheet │
+# └─────────────────────────────┘
+
+# QUICKLY ALLOW RECENT DENIALS
+ausearch -m avc -ts recent | audit2allow -M rulename
+# cat rulename.te
+semodule -i rulename.pp
+
+# IF APP IS SEGFAULTING (11/SEGV), CHECK FOR EXECUTION BLOCK
+semanage fcontext -a -t bin_t '/path/to/bin'
+restorecon -v /path/to/bin
+
+# CHECK SELINUX CONTEXT OF FILES
+ls -Z /path/to/something
+
+# CHECK CURRENT SELINUX STATUS
+getenforce
+
+# TEMPORARILY SET SELINUX MODE (until reboot)
+setenforce 0  # Disable (Permissive)
+setenforce 1  # Enable (Enforcing)

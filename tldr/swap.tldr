@@ -1,0 +1,18 @@
+# ┌─────────────────┐
+# │ swap Cheatsheet │
+# └─────────────────┘
+
+# MAKE SWAP FILE
+fallocate -l 4G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+
+# ADD IT TO /etc/fstab
+/swapfile none swap sw 0 0
+
+# CHECK SWAP USAGE
+swapon --show
+
+# DISABLE SWAP
+swapoff /swapfile
+rm /swapfile
