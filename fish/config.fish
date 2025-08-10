@@ -118,6 +118,8 @@ if status is-interactive
   alias q="exit"
   alias lll="ll -p | grep -v /"
   alias cpr='rsync -a --info=progress2'
+  #alias md='mkdir -p'
+  abbr --add md --position command 'mkdir -p'
   # alias mvv in function
 
   # git
