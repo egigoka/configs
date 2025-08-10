@@ -9,24 +9,24 @@
 	# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 	[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+### INIT
+	if [[ ! -f ~/configs/.init ]] then
+		git config --global core.pager ""
+		touch ~/configs/.init
+	fi
+
 ### PATH
+	contains $PATH ~/go/bin/ || export PATH=$PATH:~/go/bin/
+	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin  # rust
+	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
+	contains $PATH ~/.filen-cli/bin || export PATH=$PATH:~/.filen-cli/bin
 	contains $PATH . || export PATH=$PATH:.
 	contains $PATH /opt/homebrew/bin || export PATH=/opt/homebrew/bin:$PATH
-	contains $PATH /home/egigoka/.local/bin || export PATH=$PATH:/home/egigoka/.local/bin
-	contains $PATH /etc/pycharm-2020.2.1/bin/ || export PATH=$PATH:/etc/pycharm-2020.2.1/bin/
-	contains $PATH /home/egigoka/go/bin/ || export PATH=$PATH:/home/egigoka/go/bin/
-	contains $PATH /home/egigoka/.cargo/bin || export PATH=$PATH:/home/egigoka/.cargo/bin  # rust
-	contains $PATH /home/egorov/.local/bin || export PATH=$PATH:/home/egorov/.local/bin
-	contains $PATH /var/mobile/.local/bin || export PATH=$PATH:/var/mobile/.local/bin
 	contains $PATH /opt/homebrew/opt/llvm/bin || export PATH=/opt/homebrew/opt/llvm/bin:$PATH
-	contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
-	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
-	contains $PATH ~/go/bin || export PATH=$PATH:~/go/bin
-	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin
-	contains $PATH /home/linuxbrew/.linuxbrew/bin/ || export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
-	contains $PATH ~/.filen-cli/bin || export PATH=$PATH:~/.filen-cli/bin
+	contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
 	contains $PATH /usr/local/bin || export PATH=$PATH:/usr/local/bin
+	contains $PATH /home/linuxbrew/.linuxbrew/bin/ || export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
 
 ### aliases
 	# tar
@@ -43,14 +43,15 @@
 	alias d-="docker stop"
 	alias d+="docker start"
 	alias drm="d rm"
-	alias dprune="d builder prune -a; d container prune; d image prune -a; d network prune; d volume prune"
+	# alias dprune="d builder prune -a; d container prune; d image prune -a; d network prune; d volume prune"
+	alias dprune="d system prune -a --volumes"
 
 	# screen
 	alias screen+="screen -S"
 	alias screenc="screen -Rd"
+	alias screencc="screen -x"
 	alias screendaemon="screen -dmS"
 	alias screenls="screen -list"
-	alias screencc="screen -x"
 
 	# micro
 	alias m="micro"
@@ -77,6 +78,7 @@
 	alias aria16torrent="aria16 --split=16 --enable-dht=true --bt-enable-lpd=true --bt-max-open-files=100 "
 	alias aria16noseed="aria16torrent --seed-time=0"
 
+	# macosspecific
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 	    # networksetup
 	    alias listnetworkinterfaces="networksetup -listnetworkserviceorder"
@@ -85,13 +87,19 @@
 	    # gatekeeper
 	    alias gatekeeper-disable="sudo spctl --master-disable"
 	    alias gatekeeper-enable="sudo spctl --master-enable"
+
+		# power
+		alias macossafereboot="sudo fdesetup authrestart"
+		alias macossaferebootlater="sudo fdesetup authrestart -delayminutes -1"
+		alias macossleep="pmset sleepnow"
+
+		# keychain
+		alias macosunlockkeychain="security unlock-keychain"
 	fi
-	
-	# macosspecific
-	alias macossafereboot="sudo fdesetup authrestart"
-	alias macossaferebootlater="sudo fdesetup authrestart -delayminutes -1"
-	alias macossleep="pmset sleepnow"
-	alias macosunlockkeychain="security unlock-keychain"
+
+	if [[ "$OSTYPE" == "linux-gnu" ]]; then
+		alias resetgraphics="sudo systemctl isolate multi-user.target; sleep 30; sudo systemctl start graphical.target"
+	fi
 
 	# sudo
 	if [[ $UID == 0 || $EUID == 0 ]]; then
@@ -149,6 +157,11 @@
                         alias install="zypper -n install"
                         alias uninstall="zypper -n remove"
                         ;;
+                    alpine)
+                    	alias updateall='apk upgrade --available'
+                    	alias install='apk add'
+                    	alias uninstall='apk del'
+                    	;;
                     *)
                         alias updateall='echo "Unknown Linux distribution"'
                         alias install='echo "Unknown Linux distribution"'
@@ -188,18 +201,22 @@
 	alias btrqgrouprescanstatus="btrfs quota rescan -s /mnt/btr"
 	alias btrremovesnapshot="btrfs subvolume delete --commit-after"
 
-	alias diskusage="ncdu"
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		alias gdu="gdu-go"
+	fi
 
 	# systemd
 	alias sc="systemctl"
 	alias scdr="sc daemon-reload"
 	alias scrd="scdr"
 	alias sc+="sc start"
-	alias sc-="sc stop"
-	alias scr="sc restart"
-	alias scs="sc status -l"
-	alias sc--="sc disable"
 	alias sc++="sc enable"
+	alias sc+++="sc enable --now"
+	alias sc-="sc stop"
+	alias sc--="sc disable"
+	alias sc---="sc disable --now"
+	alias scr="sc restart"
+	alias scs="sc status -l"	
 	alias scls="systemctl list-units --type=service --state=running"
 	alias scfailed="sc list-units --state=failed"
 
@@ -209,14 +226,74 @@
 	alias move="mv"
 	alias q="exit"
 	alias lll="ll -p | grep -v /"
-	alias mvv='rsync -a --remove-source-files --info=progress2'
 	alias cpr='rsync -a --info=progress2'
+	mvv() {
+	  if (( $# < 2 )); then
+	    print -u2 "Usage: mvv <source>... <destination>"
+	    return 1
+	  fi
+	
+	  typeset -a sources
+	  sources=( "${(@)argv[1,-2]}" )
+	  local dest=$argv[-1]
+	
+	  typeset -a rsync_opts
+	  rsync_opts=( -a --remove-source-files --info=progress2 )
+	
+	  local need_trailing_slash=false
+	  if (( ${#sources[@]} == 1 )) && [[ ! -e $dest ]] && [[ -d ${sources[1]} ]]; then
+	    need_trailing_slash=true
+	  fi
+	
+	  typeset -a rsync_srcs
+	  for src in "${sources[@]}"; do
+	    if $need_trailing_slash; then
+	      # copy CONTENTS of src/ → dest
+	      rsync_srcs+=( "${src}/" )
+	    else
+	      rsync_srcs+=( "$src" )
+	    fi
+	  done
+	
+	  rsync "${rsync_opts[@]}" "${rsync_srcs[@]}" "$dest" || return $?
+	
+	  for src in "${sources[@]}"; do
+	    [[ -d $src ]] || continue
+	    find "$src" -depth -type d -empty -exec rmdir {} \;
+	  done
+	}
 
 	# git
 	alias gs="git status"
 	alias gpl="git pull"
-	alias gcommitstoday=" (git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"; echo)"
 	alias gdownloadreleases="dra download"
+	alias gcommitstoday="(git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"; echo)"
+	get_monday_iso8601() {
+	  if [[ "${OSTYPE}" == darwin* ]]; then
+	    local ts=$(date -v-mon -v0H -v0M '+%Y-%m-%dT%H:%M:%S')
+	    local tz=$(date +%z)        # e.g. "-0700"
+	    tz="${tz:0:3}:${tz:3}"      # -> "-07:00"
+	    printf '%s%s\n' "$ts" "$tz"
+	  else
+	    local dow offset
+        dow=$(date +%u)                       # 1..7, Mon=1
+        offset=$(( dow - 1 ))                 # 0 for Mon, 1 for Tue, …
+        # date -d "YYYY-MM-DD -N days" gives midnight minus N days
+        date -d "$(date +%Y-%m-%d) -${offset} days" \
+          '+%Y-%m-%dT%H:%M:%S%:z'
+	  fi
+	}
+	
+	gcommitsweek() {
+	  local since
+	  since=$(get_monday_iso8601)
+	  git log \
+	    --since="$since" \
+	    --until=now \
+	    --pretty=format:"%h - %ar - %an: %s" \
+	    "$@"
+	  
+	}
 
 	# protonvpn
 	alias protonvpnfastest="curl -s https://api.protonmail.ch/vpn/logicals | jq '[.LogicalServers[]|select(.Name|contains(\"$1\"))|select(.Tier==2)|{ServerName: .Name, ServerLoad: (.Load|tonumber),EntryIP: .Servers[].EntryIP}] | sort_by(.ServerLoad)' | jq -r '.[0:7]'"
@@ -226,9 +303,9 @@
 	alias переведи="trans"
 
 	# yd-dlp
-	alias ytdl-audio="yt-dlp -f 'ba' -x --audio-format mp3"
-	alias ytdl-video="yt-dlp --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mkv -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
-	alias ytdl-video-meta="yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata '%(title)s:%(meta_title)s' --parse-metadata '%(uploader)s:%(meta_artist)s' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mkv -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
+    alias ytdl-audio="yt-dlp -f 'ba' -x"
+    alias ytdl-video="yt-dlp --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mp4 -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
+    alias ytdl-video-meta="yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata '%(title)s:%(meta_title)s' --parse-metadata '%(uploader)s:%(meta_artist)s' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mp4 -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
 	alias twitch-download=" yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true'"
 	alias ytdl-list="yt-dlp --flat-playlist --print id"
 	alias soundcloud-download="yt-dlp --match-filter 'format_id !*= preview'"
@@ -295,6 +372,12 @@
 	        zellij_delete_session "$*"
 	    fi
 	}
+
+	# mpv
+	alias mpvcli="mpv --no-config --vo=tct --really-quiet --profile=sw-fast --vo-tct-algo=half-blocks"
+
+	# btop
+	alias bntop="btop --config ~/configs/btop/bntop.conf -p 1"
 	
 ### functions
 	clip() {
@@ -378,7 +461,7 @@
 	}
 
 ### zellij
-	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij.kdl"
+	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij/zellij.kdl"
 
 ### you-should-use
 	export YSU_MESSAGE_FORMAT="$(tput setaf 1)Hey! I found %alias_type for \"%command\": \"%alias\"$(tput sgr0)"
@@ -389,7 +472,7 @@
 
 	# Path to your oh-my-zsh installation.
 	export ZSH="$HOME/.oh-my-zsh"
-	export ZSH_CUSTOM="$HOME/configs/ZSH_CUSTOM"
+	export ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM"
 
 	# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 	# ZSH_THEME="agnoster"
@@ -403,7 +486,7 @@
 
 	ET_NO_TELEMETRY="fuck telemetry"
 
-	export UPDATE_ZSH_DAYS=13
+	export UPDATE_ZSH_DAYS=90
 
 	ENABLE_CORRECTION="false" # correction conflicts with colored-man-pages_mod
 
@@ -417,16 +500,18 @@
 	# Standard plugins can be found in $ZSH/plugins/
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Add wisely, as too many plugins slow down shell startup.
-	plugins=(git python compleat autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
+	# debug
+	plugins=(git python autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
 
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		plugins+=("macos")
 	fi
 
+	#fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+	#autoload -U compinit && compinit
 	source $ZSH/oh-my-zsh.sh
 
 ### external aliases
-	#eval $(thefuck --alias)
 	eval "$(pay-respects zsh --alias fuck)"
 	eval "$(fzf --zsh)"
 
@@ -444,11 +529,44 @@
 	  export EDITOR='micro'
 	fi
 
+### Alpine bs
+	# 1) Fix up $USER if empty
+	if [ -z "$USER" ]; then
+	  if command -v id >/dev/null 2>&1; then
+	    USER=$(id -un)
+	  elif command -v whoami >/dev/null 2>&1; then
+	    USER=$(whoami)
+	  else
+	    USER="unknown"
+	  fi
+	  export USER
+	fi
+
+	# 2) Fix up $SHELL if empty
+	if [ -z "$SHELL" ]; then
+	  # Make sure we have a username to look up
+	  : "${USER:=$(id -un 2>/dev/null || echo "")}"
+
+	  # Try getent (Linux)
+	  if command -v getent >/dev/null 2>&1; then
+	    SHELL=$(getent passwd "$USER" | cut -d: -f7)
+	  else
+	    # Fallback: parse /etc/passwd
+	    SHELL=$(awk -F: -v u="$USER" '$1==u{print $NF}' /etc/passwd 2>/dev/null)
+	  fi
+
+	  # Final fallback
+	  SHELL=${SHELL:-/bin/sh}
+	  export SHELL
+	fi
+
 ### ls configs
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		alias dircolors="gdircolors"
 	fi
+	
 	eval `dircolors $ZSH_CUSTOM/dircolors-solarized/dircolors.ansi-light`
+	
 
 ### show current directory items when changing directories
 	list_dir() {
@@ -460,12 +578,12 @@
 
 ### macos fixes
 	if [[ "$OSTYPE" == "darwin"* ]]; then
-	        #For compilers to find openssl@3 you may need to set:
-	        export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
-	        export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
+		#For compilers to find openssl@3 you may need to set:
+		export LDFLAGS="-L/opt/homebrew/opt/openssl@3/lib"
+		export CPPFLAGS="-I/opt/homebrew/opt/openssl@3/include"
 
-	        #For pkg-config to find openssl@3 you may need to set:
-	        export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig"
+		#For pkg-config to find openssl@3 you may need to set:
+		export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@3/lib/pkgconfig"
 	fi
 
 	if [[ "$OSTYPE" == "darwin" ]]; then
@@ -481,21 +599,4 @@
 ### rust configs
 	export RUST_BACKTRACE=full
 
-### conda
-	# >>> conda initialize >>>
-	# !! Contents within this block are managed by 'conda init' !!
-	__conda_setup="$('/Users/egigoka/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-	if [ $? -eq 0 ]; then
-	    eval "$__conda_setup"
-	else
-	    if [ -f "/Users/egigoka/miniconda3/etc/profile.d/conda.sh" ]; then
-	        . "/Users/egigoka/miniconda3/etc/profile.d/conda.sh"
-	    else
-	        export PATH="/Users/egigoka/miniconda3/bin:$PATH"
-	    fi
-	fi
-	unset __conda_setup
-	# <<< conda initialize <<<
 export THEOS=~/theos
-
-
