@@ -66,7 +66,6 @@ $ruby\
 $rust\
 $scala\
 $solidity\
-$swift\
 $terraform\
 $typst\
 $vlang\
@@ -114,6 +113,7 @@ $status\
 right_format = """\
 $python\
 $nodejs\
+$swift\
 """
 
 [cmd_duration]
@@ -205,6 +205,10 @@ symbol = ''
 style = 'bg:black fg:white'
 format = '[$symbol($version)]($style)'
 
+[swift]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
 
 [custom.load]
 command = "awk '{print $2}' /proc/loadavg 2>/dev/null || sysctl -n vm.loadavg | awk '{print $2}'"
