@@ -382,6 +382,9 @@
 
 	# btop
 	alias bntop="btop --config ~/configs/btop/bntop.conf -p 1"
+
+	# battery
+	alias bat='upower -i /org/freedesktop/UPower/devices/battery_\* | grep -E "state|to\ full|percentage"'
 	
 ### functions
 	clip() {
