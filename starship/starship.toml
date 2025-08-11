@@ -1,0 +1,254 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# https://starship.rs/config/#style-strings
+palette = "catppuccin_mocha"
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+format = """
+\
+$os\
+$username\
+$hostname\
+[](bg:black fg:white)\
+$localip\
+$shlvl\
+$singularity\
+$kubernetes\
+$vcsh\
+$fossil_branch\
+$fossil_metrics\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$pijul_channel\
+$docker_context\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$gleam\
+$golang\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$gradle\
+$lua\
+$nim\
+$ocaml\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$quarto\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$terraform\
+$typst\
+$vlang\
+$vagrant\
+$zig\
+$buf\
+$nix_shell\
+$conda\
+$meson\
+$spack\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$nats\
+$direnv\
+$env_var\
+$mise\
+$crystal\
+$sudo\
+$time\
+[](bg:black fg:white)\
+$custom\
+\
+$line_break\
+\
+\
+$directory\
+\
+\
+$line_break\
+\
+\
+$jobs\
+$battery\
+$container\
+$netns\
+$shell\
+\
+$cmd_duration\
+$status\
+"""
+
+right_format = """\
+$python\
+$nodejs\
+$swift\
+$package\
+"""
+
+[cmd_duration]
+format='[$duration]($style)'
+style='bg:black fg:white'
+
+[status]
+disabled=false
+format='[$symbol$status]($style)'
+style='bg:black fg:white'
+
+[username]
+show_always=true
+style_user='bold bg:black fg:white'
+style_root='bg:black fg:red'
+format='[$user]($style)'
+
+[hostname]
+ssh_symbol='🌐'
+style='bold bg:black fg:green'
+format='[$ssh_symbol$hostname]($style)'
+
+[directory]
+truncate_to_repo=false
+style='bg:black fg:white'
+read_only_style='bg:black fg:red'
+read_only=''
+format='[$read_only]($read_only_style)[$path]($style)'
+repo_root_format='[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+truncation_length = 3
+truncation_symbol = '…/'
+fish_style_pwd_dir_length = 1
+
+[time]
+disabled=false
+format='[$time]($style)'
+style='bg:black fg:white'
+
+[git_branch]
+symbol=''
+format='[$symbol$branch(:$remote_branch)]($style)'
+style='bg:black fg:white'
+
+[git_status]
+format='([$all_status$ahead_behind]($style)[](bg:black fg:white))'
+style='bold bg:black fg:white'
+
+[os]
+disabled=false
+style='bold bg:black fg:white'
+format='[$symbol ]($style)'
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+openSUSE=""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+EndeavourOS = ""
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Pop = ""
+
+[jobs]
+style = 'bg:black fg:white'
+format = '[$symbol$number]($style)'
+symbol = '󰟼'
+
+[python]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[nodejs]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[swift]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[package]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[custom.load]
+command = "awk '{print $2}' /proc/loadavg 2>/dev/null || sysctl -n vm.loadavg | awk '{print $2}'"
+when = true
+style="fg:white bg:black"
+format = '[$output]($style)'
+shell = ["sh", "--noprofile", "--noprofile"]  # speedup 30x
+
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#ffffff"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#010101"
+mantle = "#181825"
+crust = "#11111b"
+black = "#000000"
+white = "#ffffff"
