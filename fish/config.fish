@@ -110,8 +110,11 @@ if status is-interactive
   # git
   abbr --add gs --position command git status
   abbr --add gpl --position command git pull
-  abbr --add dprune --position command d system prune -a --volumes
+  abbr --add gc --set-cursor git commit -m \"%\"
   abbr --add gdownloadreleases --position command dra download
+  abbr --add ga. --position command git add .
+  abbr --add gcommitstoday --position command begin\; git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
+  abbr --add gcommitsweek --position command begin\; git log --since=$(get_monday_iso8601) --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
   
   # protonvpn
   abbr --add protonvpnfastest --position command curl -s https://api.protonmail.ch/vpn/logicals \| jq '[.LogicalServers[]|select(.Name|contains(\"$1\"))|select(.Tier==2)|{ServerName: .Name, ServerLoad: (.Load|tonumber),EntryIP: .Servers[].EntryIP}] | sort_by(.ServerLoad)' \| jq -r '.[0:7]'
@@ -136,9 +139,9 @@ if status is-interactive
   abbr --add zls --position command zellij ls | grep -v "attach to resurrect"
   abbr --add zd  --position command zellij action new-pane --direction down
   abbr --add zr  --position command zellij action new-pane --direction right
-  # alias z- in funtcion
-  # alias z-- in funtcion
-  # alias zc in function
+  abbr --add z-  --position command zellij kill-session
+  abbr --add z-- --position command zellij delete-session
+  abbr --add zc  --position command zellij attach
 
   # mpv
   abbr --add mpvcli --position command mpv --no-config --vo=tct --really-quiet --profile=sw-fast --vo-tct-algo=half-blocks
