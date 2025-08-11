@@ -1,1 +1,0 @@
-/usr/bin /bin /usr/sbin /sbin /home/egigoka/go/bin /home/egigoka/.cargo/bin /home/egigoka/.local/bin /home/egigoka/.filen-cli/bin /opt/homebrew/bin /opt/homebrew/opt/llvm/bin /usr/games /usr/local/bin /home/linuxbrew/.linuxbrew/bin
