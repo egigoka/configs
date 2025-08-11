@@ -148,6 +148,10 @@ if status is-interactive
 
   # btop
   abbr --add bntop --position command btop --config ~/configs/btop/bntop.conf -p 1
+
+  # battery
+  
+  abbr --add bat --position command upower -i /org/freedesktop/UPower/devices/battery_\\* \| grep -E \"state\|to\\ full\|percentage\"
   
   # macosspecific
   if string match -q "Darwin*" -- (uname)
