@@ -15,176 +15,163 @@ if status is-interactive
 
   ### ALIASES
   # tar
-  alias targzip="tar -czvf"
-  alias targunzip="tar -xzvf"
-  alias untargz=targunzip
-  alias targzls="tar -tzvf" # list files
+  abbr --add targzip   --position command tar -czvf
+  abbr --add targunzip --position command tar -xzvf
+  abbr --add untargz   --position command targunzip
+  abbr --add targzls   --position command tar -tzvf  # list files
 
   # docker
-  alias d="docker"
-  alias dps="docker ps --format \"table {{.ID}}   {{.Status}}     {{.Names}}      {{.Image}}      {{.Ports}}\""
-  alias dip="docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'"
-  alias dnwls="docker network ls"
-  alias d-="docker stop"
-  alias d+="docker start"
-  alias drm="d rm"
-  # alias dprune="d builder prune -a; d container prune; d image prune -a; d network prune; d volume prune"
-  alias dprune="d system prune -a --volumes"
-
-  # screen
-  alias screen+="screen -S"
-  alias screenc="screen -Rd"
-  alias screencc="screen -x"
-  alias screendaemon="screen -dmS"
-  alias screenls="screen -list"
+  abbr --add d      --position command docker
+  abbr --add dexec  --position command docker exec -it
+  abbr --add dps    --position command docker ps --format "table {{.ID}}   {{.Status}}     {{.Names}}      {{.Image}}      {{.Ports}}"
+  abbr --add dip    --position command docker inspect -f '{{range .NetworkSettings.Networks}}{{println .IPAddress}}{{end}}'
+  abbr --add dnls   --position command docker network ls
+  abbr --add d-     --position command docker stop
+  abbr --add d+     --position command docker start
+  abbr --add drm    --position command docker rm
+  abbr --add dc     --position command docker compose
+  abbr --add dc+    --position command docker compose up
+  abbr --add dc-    --position command docker compose down
+  abbr --add dprune --position command d system prune -a --volumes
 
   # micro
-  alias m="micro"
+  abbr --add m --position command micro
 
   # find
-  alias findne="find 2>/dev/null"
-
-  # python
-  alias py="python3"
-  alias pip="pip3"
-  alias pyvenva="source venv/bin/activate"
-  alias pyvenvd="deactivate"
+  abbr --add findne --position command find 2\>/dev/null
 
   # screen
-  alias screen+="screen -S"
-  alias screenc="screen -Rd"
-  alias screencc="screen -x"
-  alias screendaemon="screen -dmS"
-  alias screenls="screen -list"
-
-  # micro
-  alias m="micro"
-
-  # find
-  alias findne="find 2>/dev/null"
+  abbr --add screen+      --position command screen -S
+  abbr --add screenc      --position command screen -Rd
+  abbr --add screencc     --position command screen -x
+  abbr --add screendaemon --position command screen -dmS
+  abbr --add screenls     --position command screen -list
 
   # python
-  alias py="python3"
-  alias pip="pip3"
-  alias pyvenva="source venv/bin/activate"
-  alias pyvenvd="deactivate"
+  abbr --add py  --position command python3
+  abbr --add pip --position command python3 -m pip
+  abbr --add pyvenva --position command source venv/bin/activate
+  abbr --add pyvenvd --position command deactivate
   
   # cd
-  alias cd..="cd .."
+  abbr --add cd.. --position command cd ..
   
   # xattr
-  alias attributesread="xattr -l"
+  abbr --add attributesread --position command xattr -l
 
   # downloaders
-  alias down="axel -a -n"
-  alias aria16="aria2c -j 16 -x 16"
-  alias ariaipfsrelay=" aria2c -j 1 -x 1 --file-allocation=none --allow-overwrite --no-file-allocation=100000M --auto-file-renaming=false"
-  alias aria16torrent="aria16 --split=16 --enable-dht=true --bt-enable-lpd=true --bt-max-open-files=100 "
-  alias aria16noseed="aria16torrent --seed-time=0"
+  abbr --add down --position command axel -a -n
+  abbr --add aria16        --position command aria2c -j 16 -x 16
+  abbr --add ariaipfsrelay --position command aria2c -j 1 -x 1 --file-allocation=none --allow-overwrite --no-file-allocation=100000M --auto-file-renaming=false
+  abbr --add aria16torrent --position command aria2c -j 16 -x 16 --split=16 --enable-dht=true --bt-enable-lpd=true --bt-max-open-files=100
+  abbr --add aria16noseed  --position command aria2c -j 16 -x 16 --split=16 --enable-dht=true --bt-enable-lpd=true --bt-max-open-files=100 --seed-time=0
 
   # disk management
-  alias listdisks="lsblk -io NAME,TYPE,SIZE,MOUNTPOINT,FSTYPE,MODEL"
-  alias alldisks="listdisks"
-  alias freespace="df -kh ."
-  alias freespaceall="df -kh"
+  abbr --add listdisks --position command lsblk -io NAME,TYPE,SIZE,MOUNTPOINT,FSTYPE,MODEL
+  abbr --add alldisks --position command listdisks
+  
+  abbr --add freespace    --position command df -kh .
+  abbr --add freespaceall --position command df -kh
 
-  alias btr="btrfs"
-  alias btrusage="btr filesystem usage"
-  alias btrqgroup="btr qgroup show -r"
-  alias btrusagebysnapshot="btr filesystem du -s"
-  alias btrqgrouprescan="btrfs quota rescan /mnt/btr"
-  alias btrqgrouprescanstatus="btrfs quota rescan -s /mnt/btr"
-  alias btrremovesnapshot="btrfs subvolume delete --commit-after"
+  abbr --add btr                   --position command btrfs
+  abbr --add btrusage              --position command btrfs filesystem usage
+  abbr --add btrqgroup             --position command btrfs qgroup show -r
+  abbr --add btrusagebysnapshot    --position command btrfs filesystem du -s
+  abbr --add btrqgrouprescan       --position command btrfs quota rescan /mnt/btr
+  abbr --add btrqgrouprescanstatus --position command btrfs quota rescan -s /mnt/btr
+  abbr --add btrremovesnapshot     --position command btrfs subvolume delete --commit-after
 
   # systemd
-  alias sc="systemctl"
-  alias scdr="sc daemon-reload"
-  alias scrd="scdr"
-  alias sc+="sc start"
-  alias sc++="sc enable"
-  alias sc+++="sc enable --now"
-  alias sc-="sc stop"
-  alias sc--="sc disable"
-  alias sc---="sc disable --now"
-  alias scr="sc restart"
-  alias scs="sc status -l"
-  alias scls="systemctl list-units --type=service --state=running"
-  alias scfailed="sc list-units --state=failed"
+  abbr --add sc       --position command systemctl
+  abbr --add scdr     --position command systemctl daemon-reload
+  abbr --add scrd     --position command systemctl daemon-reload
+  abbr --add sc+      --position command systemctl start
+  abbr --add sc++     --position command systemctl enable
+  abbr --add sc+++    --position command systemctl enable --now
+  abbr --add sc-      --position command systemctl stop
+  abbr --add sc--     --position command systemctl disable
+  abbr --add sc---    --position command systemctl disable --now
+  abbr --add scr      --position command systemctl restart
+  abbr --add scs      --position command systemctl status -l
+  abbr --add scls     --position command systemctl list-units --type=service --state=running
+  abbr --add scfailed --position command systemctl list-units --state=failed
 
   # idk im stupid
-  alias zshconfig="micro ~/.zshrc"
-  alias copy="cp"
-  alias move="mv"
-  alias q="exit"
-  alias lll="ll -p | grep -v /"
-  alias cpr='rsync -a --info=progress2'
-  #alias md='mkdir -p'
-  abbr --add md --position command 'mkdir -p'
+  abbr --add zshconfig  --position command micro ~/.zshrc
+  abbr --add fishconfig --position command micro ~/.config/fish/config.fish
+  abbr --add copy --position command cp
+  abbr --add move --position command mv
+  abbr --add q --position command exit
+  abbr --add lll --position command ll -p \| grep -v /
+  abbr --add cpr --position command rsync -a --info=progress2
+  abbr --add md --position command mkdir -p
   # alias mvv in function
 
   # git
-  alias gs="git status"
-  alias gpl="git pull"
-  alias gdownloadreleases="dra download"
-  # alias gcommitstoday in function
-  # alias gcommitsweek in function
+  abbr --add gs --position command git status
+  abbr --add gpl --position command git pull
+  abbr --add gc --set-cursor git commit -m \"%\"
+  abbr --add gdownloadreleases --position command dra download
+  abbr --add ga. --position command git add .
+  abbr --add gcommitstoday --position command begin\; git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
+  abbr --add gcommitsweek --position command begin\; git log --since=$(get_monday_iso8601) --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
   
   # protonvpn
-  alias protonvpnfastest="curl -s https://api.protonmail.ch/vpn/logicals | jq '[.LogicalServers[]|select(.Name|contains(\"$1\"))|select(.Tier==2)|{ServerName: .Name, ServerLoad: (.Load|tonumber),EntryIP: .Servers[].EntryIP}] | sort_by(.ServerLoad)' | jq -r '.[0:7]'"
+  abbr --add protonvpnfastest --position command curl -s https://api.protonmail.ch/vpn/logicals \| jq '[.LogicalServers[]|select(.Name|contains(\"$1\"))|select(.Tier==2)|{ServerName: .Name, ServerLoad: (.Load|tonumber),EntryIP: .Servers[].EntryIP}] | sort_by(.ServerLoad)' \| jq -r '.[0:7]'
 
   # https://github.com/dweinstein/google-translate-cli
-  alias trl="trans"
-  alias переведи="trans"
+  abbr --add trl --position command trans
+  abbr --add переведи --position command trans
   
   # yd-dlp
-  alias ytdl-audio="yt-dlp -f 'ba' -x"
-  alias ytdl-video="yt-dlp --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mp4 -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
-  alias ytdl-video-meta="yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata '%(title)s:%(meta_title)s' --parse-metadata '%(uploader)s:%(meta_artist)s' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mp4 -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'"
-  alias ytdl-list="yt-dlp --flat-playlist --print id"
-  alias twitch-download=" yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true'"
-  alias soundcloud-download="yt-dlp --match-filter 'format_id !*= preview'"
+  abbr --add ytdl-audio --position command yt-dlp -f 'ba' -x
+  abbr --add ytdl-video --position command yt-dlp --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mp4 -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'
+  abbr --add ytdl-video-meta --position command yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata '%(title)s:%(meta_title)s' --parse-metadata '%(uploader)s:%(meta_artist)s' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mp4 -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'
+  abbr --add ytdl-list --position command yt-dlp --flat-playlist --print id
+  abbr --add twitch-download --position command yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true'
+  abbr --add soundcloud-download --position command yt-dlp --match-filter 'format_id !*= preview'
   
   # fastfetch
-  alias neofetch="fastfetch"
+  abbr --add neofetch --position command fastfetch
 
   # zellij
   # alias z in function
-  alias zls='zellij ls | grep -v "attach to resurrect"'
-  alias zd="zellij action new-pane --direction down"
-  alias zr="zellij action new-pane --direction right"
-  # alias z- in funtcion
-  # alias z-- in funtcion
-  # alias zc in function
+  abbr --add zls --position command zellij ls | grep -v "attach to resurrect"
+  abbr --add zd  --position command zellij action new-pane --direction down
+  abbr --add zr  --position command zellij action new-pane --direction right
+  abbr --add z-  --position command zellij kill-session
+  abbr --add z-- --position command zellij delete-session
+  abbr --add zc  --position command zellij attach
 
   # mpv
-  alias mpvcli="mpv --no-config --vo=tct --really-quiet --profile=sw-fast --vo-tct-algo=half-blocks"
+  abbr --add mpvcli --position command mpv --no-config --vo=tct --really-quiet --profile=sw-fast --vo-tct-algo=half-blocks
 
   # btop
-  alias bntop="btop --config ~/configs/btop/bntop.conf -p 1"
+  abbr --add bntop --position command btop --config ~/configs/btop/bntop.conf -p 1
   
   # macosspecific
   if string match -q "Darwin*" -- (uname)
     # networksetup
-    alias listnetworkinterfaces="networksetup -listnetworkserviceorder"
-    alias setroutes="sudo networksetup -setadditionalroutes " # name from listnetworinterfaces, ip, mask, router; multiple routes should be set through use of space between
+    abbr --add listnetworkinterfaces --position command networksetup -listnetworkserviceorder
+    abbr --add setroutes        --position command sudo networksetup -setadditionalroutes # name from listnetworinterfaces, ip, mask, router; multiple routes should be set through use of space between
 
     # gatekeeper
-    alias gatekeeper-disable="sudo spctl --master-disable"
-    alias gatekeeper-enable="sudo spctl --master-enable"
+    abbr --add gatekeeper-disable --position command sudo spctl --master-disable
+    abbr --add gatekeeper-enable  --position command sudo spctl --master-enable
 
     # power
-    alias macossafereboot="sudo fdesetup authrestart"
-    alias macossaferebootlater="sudo fdesetup authrestart -delayminutes -1"
-    alias macossleep="pmset sleepnow"
+    abbr --add macossafereboot      --position command sudo fdesetup authrestart
+    abbr --add macossaferebootlater --position command sudo fdesetup authrestart -delayminutes -1
+    abbr --add macossleep --position command pmset sleepnow
 
     # keychain
-    alias macosunlockkeychain="security unlock-keychain"
+    abbr --add macosunlockkeychain --position command security unlock-keychain
 
     # gdu homebrew
-    alias gdu="gdu-go"
+    alias gdu=gdu-go
 
     # dircolors homebrew
-    alias dircolors="gdircolors"
+    alias dircolors=gdircolors
 
     # yt-dlp
     alias yt-dlp="yt-dlp --ffmpeg-location /usr/bin/ffmpeg"
@@ -200,30 +187,30 @@ if status is-interactive
   # sudo
   if test (id -u) -eq 0
     # root
-    alias unmount="umount"
-    alias iotop="sysctl kernel.task_delayacct=1; iotop; sysctl kernel.task_delayacct=0"
+    abbr --add unmount --position command umount
+    abbr --add iotop --position command sysctl kernel.task_delayacct=1 \&\& iotop \&\& sysctl kernel.task_delayacct=0
   else
     # not root
-    alias unmount="sudo umount"
-    alias mount="sudo mount"
-    alias zypper="sudo zypper"
-    alias snap="sudo snap"
-    alias yast="sudo yast"
-    alias reboot="sudo systemctl --force reboot"
-    alias shutdown="sudo /usr/sbin/shutdown now"
-    alias systemctl="sudo systemctl"
-    alias useradd="sudo useradd"
-    alias userdel="sudo userdel"
-    alias groupadd="sudo groupadd"
-    alias usermod="sudo usermod"
-    alias btrfs="sudo btrfs"
-    alias mkfs.btrfs="sudo mkfs.btrfs"
-    alias openvpn="sudo openvpn"
-    alias iotop="sudo sysctl kernel.task_delayacct=1; sudo iotop; sudo sysctl kernel.task_delayacct=0"
-    alias iftop="sudo iftop"
-    alias smbstatus="sudo smbstatus"
-    alias apt="sudo apt"
-    alias pacman="sudo pacman"
+    abbr --add iotop --position command sudo sysctl kernel.task_delayacct=1 \&\& sudo iotop \&\& sudo sysctl kernel.task_delayacct=0
+    abbr --add unmount --position command sudo umount
+    abbr --add mount --position command sudo mount
+    abbr --add zypper --position command sudo zypper
+    abbr --add snap --position command sudo snap
+    abbr --add yast --position command sudo yast
+    abbr --add reboot --position command sudo systemctl --force reboot
+    abbr --add shutdown --position command sudo /usr/sbin/shutdown now
+    abbr --add systemctl --position command sudo systemctl
+    abbr --add useradd --position command sudo useradd
+    abbr --add userdel --position command sudo userdel
+    abbr --add groupadd --position command sudo groupadd
+    abbr --add usermod --position command sudo usermod
+    abbr --add btrfs --position command sudo btrfs
+    abbr --add mkfs.btrfs --position command sudo mkfs.btrfs
+    abbr --add openvpn --position command sudo openvpn
+    abbr --add iftop --position command sudo iftop
+    abbr --add smbstatus --position command sudo smbstatus
+    abbr --add apt --position command sudo apt
+    abbr --add pacman --position command sudo pacman
   end
 
   # easy packet management
@@ -234,46 +221,46 @@ if status is-interactive
         set -l os_id (grep '^ID=' /etc/os-release | cut -d= -f2 | tr -d '"')
         switch $os_id
           case rocky
-            alias updateall="dnf clean all && dnf makecache && dnf upgrade -y && fisher update"
-            alias install="dnf install -y"
-            alias uninstall="dnf remove -y"
+            abbr --add updateall --position command dnf clean all \&\& dnf makecache \&\& dnf upgrade -y \&\& fisher update
+            abbr --add install   --position command dnf install -y
+            abbr --add uninstall --position command dnf remove -y
           case arch
-            alias updateall='yay -Syu --devel --timeupdate; yay -Sc && fisher update --all'
-            alias install="yay -S"
-            alias uninstall="yay -Rns"
-            alias updatemirrors="cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak; rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; sudo pacman -Syy"
+            abbr --add updateall --position command yay -Syu --devel --timeupdate \&\& yay -Sc \&\& fisher update --all
+            abbr --add install   --position command yay -S
+            abbr --add uninstall --position command yay -Rns
+            abbr --add updatemirrors --position command cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak \&\& rate-mirrors arch \| sudo tee /etc/pacman.d/mirrorlist \&\& sudo pacman -Syy
           case debian ubuntu droidian
-            alias updateall='apt update && apt upgrade && apt dist-upgrade && fisher update'
-            alias install="apt install"
-            alias uninstall="apt -y remove"
+            abbr --add updateall --position command apt update \&\& apt upgrade \&\& apt dist-upgrade \&\& fisher update
+            abbr --add install   --position command apt install
+            abbr --add uninstall --position command apt -y remove
           case opensuse-tumbleweed opensuse-leap
-            alias updateall='zypper refresh && zypper dup && fisher update --all'
-            alias install="zypper -n install"
-            alias uninstall="zypper -n remove"
+            abbr --add updateall --position command zypper refresh \&\& zypper dup \&\& fisher update --all
+            abbr --add install   --position command zypper -n install
+            abbr --add uninstall --position command zypper -n remove
           case alpine
-            alias updateall='apk upgrade --available && fisher update --all'
-            alias install='apk add'
-            alias uninstall='apk del'
+            abbr --add updateall --position command apk upgrade --available \&\& fisher update --all
+            abbr --add install   --position command apk add
+            abbr --add uninstall --position command apk del
           case *
-            alias updateall='echo "Unknown Linux distribution"'
-            alias install='echo "Unknown Linux distribution"'
-            alias uninstall='echo "Unknown Linux distribution"'
+            abbr --add updateall --position command echo "Unknown Linux distribution"
+            abbr --add install   --position command echo "Unknown Linux distribution"
+            abbr --add uninstall --position command echo "Unknown Linux distribution"
         end
       else
-        alias updateall='echo "Unknown Linux distribution"'
-        alias install='echo "Unknown Linux distribution"'
-        alias uninstall='echo "Unknown Linux distribution"'
+        abbr --add updateall --position command echo "Unknown Linux distribution"
+        abbr --add install   --position command echo "Unknown Linux distribution"
+        abbr --add uninstall --position command echo "Unknown Linux distribution"
       end
     case Darwin
       # mAcos
-      alias updateall='brew update; brew upgrade --no-quarantine --greedy; brew cleanup --prune=all && fisher update'
-      alias install='brew install --no-quarantine'
-      alias uninstall='brew remove'
+      abbr --add updateall --position command brew update \&\& brew upgrade --no-quarantine --greedy \&\& brew cleanup --prune=all \&\& fisher update
+      abbr --add install   --position command brew install --no-quarantine
+      abbr --add uninstall --position command brew remove
     case *
       # unsupported
-      alias updateall='echo "Unknown operating system"'
-      alias install='echo "Unknown operating system"'
-      alias uninstall='echo "Unknown operating system"'
+      abbr --add updateall --position command echo "Unknown operating system"
+      abbr --add install   --position command echo "Unknown operating system"
+      abbr --add uninstall --position command echo "Unknown operating system"
   end
 
   ### FISH SPECIFIC
