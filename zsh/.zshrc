@@ -16,16 +16,20 @@
 	fi
 
 ### PATH
+	contains $PATH ~/bin || export PATH=$PATH:~/bin
 	contains $PATH ~/go/bin/ || export PATH=$PATH:~/go/bin/
 	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin  # rust
 	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 	contains $PATH ~/.filen-cli/bin || export PATH=$PATH:~/.filen-cli/bin
-	contains $PATH . || export PATH=$PATH:.
 	contains $PATH /opt/homebrew/bin || export PATH=/opt/homebrew/bin:$PATH
 	contains $PATH /opt/homebrew/opt/llvm/bin || export PATH=/opt/homebrew/opt/llvm/bin:$PATH
+	contains $PATH /usr/local/sbin || export PATH=$PATH:/usr/local/sbin
+	contains $PATH /usr/local/bin || export PATH=$PATH:/usr/local/bin
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
 	contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
-	contains $PATH /usr/local/bin || export PATH=$PATH:/usr/local/bin
+	contains $PATH /usr/bin || export PATH=$PATH:/usr/bin
+	contains $PATH /sbin || export PATH=$PATH:/sbin
+	contains $PATH /bin || export PATH=$PATH:/bin
 	contains $PATH /home/linuxbrew/.linuxbrew/bin/ || export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
 
 ### aliases
