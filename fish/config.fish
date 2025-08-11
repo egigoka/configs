@@ -234,9 +234,9 @@ if status is-interactive
             abbr --add uninstall --position command yay -Rns
             abbr --add updatemirrors --position command cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak \&\& rate-mirrors arch \| sudo tee /etc/pacman.d/mirrorlist \&\& sudo pacman -Syy
           case debian ubuntu droidian
-            abbr --add updateall --position command apt update \&\& apt upgrade \&\& apt dist-upgrade \&\& fisher update
-            abbr --add install   --position command apt install
-            abbr --add uninstall --position command apt -y remove
+            abbr --add updateall --position command sudo apt update \&\& sudo apt upgrade \&\& sudo apt dist-upgrade \&\& fisher update
+            abbr --add install   --position command sudo apt install
+            abbr --add uninstall --position command sudo apt -y remove
           case opensuse-tumbleweed opensuse-leap
             abbr --add updateall --position command zypper refresh \&\& zypper dup \&\& fisher update --all
             abbr --add install   --position command zypper -n install
