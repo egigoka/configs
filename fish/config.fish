@@ -126,6 +126,8 @@ if status is-interactive
   alias gs="git status"
   alias gpl="git pull"
   alias gdownloadreleases="dra download"
+  abbr --add gc --set-cursor "git commit -m \"%\""
+  abbr --add ga. git add .
   # alias gcommitstoday in function
   # alias gcommitsweek in function
   
