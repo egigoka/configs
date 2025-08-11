@@ -16,16 +16,20 @@
 	fi
 
 ### PATH
+	contains $PATH ~/bin || export PATH=$PATH:~/bin
 	contains $PATH ~/go/bin/ || export PATH=$PATH:~/go/bin/
 	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin  # rust
 	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
 	contains $PATH ~/.filen-cli/bin || export PATH=$PATH:~/.filen-cli/bin
-	contains $PATH . || export PATH=$PATH:.
 	contains $PATH /opt/homebrew/bin || export PATH=/opt/homebrew/bin:$PATH
 	contains $PATH /opt/homebrew/opt/llvm/bin || export PATH=/opt/homebrew/opt/llvm/bin:$PATH
+	contains $PATH /usr/local/sbin || export PATH=$PATH:/usr/local/sbin
+	contains $PATH /usr/local/bin || export PATH=$PATH:/usr/local/bin
 	contains $PATH /usr/games || export PATH=$PATH:/usr/games
 	contains $PATH /usr/sbin || export PATH=$PATH:/usr/sbin
-	contains $PATH /usr/local/bin || export PATH=$PATH:/usr/local/bin
+	contains $PATH /usr/bin || export PATH=$PATH:/usr/bin
+	contains $PATH /sbin || export PATH=$PATH:/sbin
+	contains $PATH /bin || export PATH=$PATH:/bin
 	contains $PATH /home/linuxbrew/.linuxbrew/bin/ || export PATH=$PATH:/home/linuxbrew/.linuxbrew/bin/
 
 ### aliases
@@ -97,33 +101,37 @@
 		alias macosunlockkeychain="security unlock-keychain"
 	fi
 
+	if [[ "$OSTYPE" == "linux-gnu" ]]; then
+		alias resetgraphics="sudo systemctl isolate multi-user.target; sleep 30; sudo systemctl start graphical.target"
+	fi
+
 	# sudo
 	if [[ $UID == 0 || $EUID == 0 ]]; then
-	   # root
-	   alias unmount="umount"
-	   alias iotop="sysctl kernel.task_delayacct=1; iotop; sysctl kernel.task_delayacct=0"
+	    # root
+	    alias unmount="umount"
+	    alias iotop="sysctl kernel.task_delayacct=1; iotop; sysctl kernel.task_delayacct=0"
 	else
-	   # not root
-	   alias unmount="sudo umount"
-	   alias mount="sudo mount"
-	   alias zypper="sudo zypper"
-	   alias snap="sudo snap"
-	   alias yast="sudo yast"
-	   alias reboot="sudo systemctl --force reboot"
-	   alias shutdown="sudo /usr/sbin/shutdown now"
-	   alias systemctl="sudo systemctl"
-	   alias useradd="sudo useradd"
-	   alias userdel="sudo userdel"
-	   alias groupadd="sudo groupadd"
-	   alias usermod="sudo usermod"
-	   alias btrfs="sudo btrfs"
-	   alias mkfs.btrfs="sudo mkfs.btrfs"
-	   alias openvpn="sudo openvpn"
-	   alias iotop="sudo sysctl kernel.task_delayacct=1; sudo iotop; sudo sysctl kernel.task_delayacct=0"
-	   alias iftop="sudo iftop"
-	   alias smbstatus="sudo smbstatus"
-	   alias apt="sudo apt"
-	   alias pacman="sudo pacman"
+	    # not root
+	    alias unmount="sudo umount"
+	    alias mount="sudo mount"
+	    alias zypper="sudo zypper"
+	    alias snap="sudo snap"
+	    alias yast="sudo yast"
+	    alias reboot="sudo systemctl --force reboot"
+	    alias shutdown="sudo /usr/sbin/shutdown now"
+	    alias systemctl="sudo systemctl"
+	    alias useradd="sudo useradd"
+	    alias userdel="sudo userdel"
+	    alias groupadd="sudo groupadd"
+	    alias usermod="sudo usermod"
+	    alias btrfs="sudo btrfs"
+	    alias mkfs.btrfs="sudo mkfs.btrfs"
+	    alias openvpn="sudo openvpn"
+	    alias iotop="sudo sysctl kernel.task_delayacct=1; sudo iotop; sudo sysctl kernel.task_delayacct=0"
+	    alias iftop="sudo iftop"
+	    alias smbstatus="sudo smbstatus"
+	    alias apt="sudo apt"
+	    alias pacman="sudo pacman"
 	fi
 
 	# easy packet management
@@ -266,7 +274,7 @@
 	alias gcommitstoday="(git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"; echo)"
 	get_monday_iso8601() {
 	  if [[ "${OSTYPE}" == darwin* ]]; then
-	    local ts=$(date -vmon -v0H -v0M '+%Y-%m-%dT%H:%M:%S')
+	    local ts=$(date -v-mon -v0H -v0M '+%Y-%m-%dT%H:%M:%S')
 	    local tz=$(date +%z)        # e.g. "-0700"
 	    tz="${tz:0:3}:${tz:3}"      # -> "-07:00"
 	    printf '%s%s\n' "$ts" "$tz"
@@ -374,6 +382,9 @@
 
 	# btop
 	alias bntop="btop --config ~/configs/btop/bntop.conf -p 1"
+
+	# battery
+	alias bat='upower -i /org/freedesktop/UPower/devices/battery_\* | grep -E "state|to\ full|percentage"'
 	
 ### functions
 	clip() {
@@ -496,14 +507,15 @@
 	# Standard plugins can be found in $ZSH/plugins/
 	# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 	# Add wisely, as too many plugins slow down shell startup.
+	# debug
 	plugins=(git python autojump colorize zsh-syntax-highlighting zsh-autosuggestions docker docker-compose command-not-found autoupdate colored-man-pages_mod omz-homebrew last-working-dir uvenv you-should-use)
 
 	if [[ "$OSTYPE" == "darwin"* ]]; then
 		plugins+=("macos")
 	fi
 
-	fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
-	autoload -U compinit && compinit
+	#fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
+	#autoload -U compinit && compinit
 	source $ZSH/oh-my-zsh.sh
 
 ### external aliases
