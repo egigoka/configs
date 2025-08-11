@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 # easy packet management
 case "$(uname -s)" in
@@ -22,6 +23,9 @@ case "$(uname -s)" in
           alias uninstall="apt -y remove"
           ;;
         opensuse-tumbleweed|opensuse-leap)
+          if [[ $UID != 0 && $EUID != 0 ]]; then
+            alias zypper='sudo zypper'
+          fi
           alias updateall='zypper refresh && zypper dup'
           alias install="zypper -n install"
           alias uninstall="zypper -n remove"
