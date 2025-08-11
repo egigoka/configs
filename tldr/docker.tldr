@@ -1,0 +1,10 @@
+# ┌───────────────────┐
+# │ docker Cheatsheet │
+# └───────────────────┘
+
+# RUN EPHIMERAL CONTAINER
+docker run -it --rm alpine /bin/sh
+
+# MOUNT DIR
+-v /host/dir:/container/dir:ro
+-v /host/dir:/container/dir:rw
