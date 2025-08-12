@@ -234,9 +234,9 @@ if status is-interactive
             abbr --add install   --position command sudo apt install
             abbr --add uninstall --position command sudo apt -y remove
           case opensuse-tumbleweed opensuse-leap
-            abbr --add updateall --position command zypper refresh \&\& zypper dup \&\& fisher update --all
-            abbr --add install   --position command zypper -n install
-            abbr --add uninstall --position command zypper -n remove
+            abbr --add updateall --position command sudo zypper refresh \&\& sudo zypper dup \&\& fisher update --all
+            abbr --add install   --position command sudo zypper -n install
+            abbr --add uninstall --position command sudo zypper -n remove
           case alpine
             abbr --add updateall --position command apk upgrade --available \&\& fisher update --all
             abbr --add install   --position command apk add
