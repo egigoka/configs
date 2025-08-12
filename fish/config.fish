@@ -40,6 +40,9 @@ if status is-interactive
   # find
   abbr --add findne --position command find 2\>/dev/null
 
+  # fd
+  abbr --add findd --position command fd --hidden --ignore-case --glob
+
   # screen
   abbr --add screen+      --position command screen -S
   abbr --add screenc      --position command screen -Rd
