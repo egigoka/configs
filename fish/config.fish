@@ -119,20 +119,17 @@ if status is-interactive
   abbr --add gcommitstoday --position command begin\; git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
   abbr --add gcommitsweek --position command begin\; git log --since=$(get_monday_iso8601) --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
   
-  # protonvpn
-  abbr --add protonvpnfastest --position command curl -s https://api.protonmail.ch/vpn/logicals \| jq '[.LogicalServers[]|select(.Name|contains(\"$1\"))|select(.Tier==2)|{ServerName: .Name, ServerLoad: (.Load|tonumber),EntryIP: .Servers[].EntryIP}] | sort_by(.ServerLoad)' \| jq -r '.[0:7]'
-
   # https://github.com/dweinstein/google-translate-cli
   abbr --add trl --position command trans
   abbr --add переведи --position command trans
   
   # yd-dlp
-  abbr --add ytdl-audio --position command yt-dlp -f 'ba' -x
-  abbr --add ytdl-video --position command yt-dlp --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mp4 -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'
-  abbr --add ytdl-video-meta --position command yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata '%(title)s:%(meta_title)s' --parse-metadata '%(uploader)s:%(meta_artist)s' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --ppa 'EmbedSubtitle:-disposition:s:0 0' -f 'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best' --prefer-ffmpeg --merge-output-format mp4 -o 'Videos/%(upload_date>%Y-%m-%d)s - %(title).197B [%(id)s].%(ext)s' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive 'archive.ytdlp'
+  abbr --add ytdl-audio --position command yt-dlp -f \'ba\' -x
+  abbr --add ytdl-video --position command yt-dlp --embed-subs --sub-langs all --ppa \'EmbedSubtitle:-disposition:s:0 0\' -f \'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best\' --prefer-ffmpeg --merge-output-format mp4 -o \'Videos/%\(upload_date\>%Y-%m-%d\)s - %\(title\).197B \[\%\(id\)s\].%\(ext\)s\' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive \'archive.ytdlp\'
+  abbr --add ytdl-video-meta --position command yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata \'\%\(title\)s:%\(meta_title\)s\' --parse-metadata \'\%\(uploader\)s\:\%\(meta_artist\)s\' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --ppa \'EmbedSubtitle\:\-disposition\:s\:0\ 0\' -f \'bv\[ext=mp4\] +ba\[ext=m4a\]/best\[ext=mp4\]/best\' --prefer-ffmpeg --merge-output-format mp4 -o \'Videos/\%\(upload_date\>%Y-%m-%d\)s - \%\(title\).197B \[\%\(id\)s\].\%\(ext\)s\' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive \'archive.ytdlp\'
   abbr --add ytdl-list --position command yt-dlp --flat-playlist --print id
-  abbr --add twitch-download --position command yt-dlp --downloader aria2c --downloader-args aria2c:'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true'
-  abbr --add soundcloud-download --position command yt-dlp --match-filter 'format_id !*= preview'
+  abbr --add twitch-download --position command yt-dlp --downloader aria2c --downloader-args aria2c\:\'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true\'
+  abbr --add soundcloud-download --position command yt-dlp --match-filter \'format_id \!\*\= preview\'
   
   # fastfetch
   abbr --add neofetch --position command fastfetch
