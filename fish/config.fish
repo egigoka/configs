@@ -108,6 +108,7 @@ if status is-interactive
   abbr --add lll --position command ll -p \| grep -v /
   abbr --add cpr --position command rsync -a --info=progress2
   abbr --add md --position command mkdir -p
+  abbr --add rd --position command rmdir
   # alias mvv in function
 
   # git
