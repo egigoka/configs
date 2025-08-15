@@ -226,7 +226,7 @@ if status is-interactive
             abbr --add install   --position command sudo dnf install -y
             abbr --add uninstall --position command sudo dnf remove -y
           case arch
-            abbr --add updateall --position command yay -Syu --devel --timeupdate \&\& yay -Sc \&\& fisher update --all
+            abbr --add updateall --position command yay -Syu --devel --timeupdate \&\& yay -Sc \&\& fisher update
             abbr --add install   --position command yay -S
             abbr --add uninstall --position command yay -Rns
             abbr --add updatemirrors --position command cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak \&\& rate-mirrors arch \| sudo tee /etc/pacman.d/mirrorlist \&\& sudo pacman -Syy
@@ -235,11 +235,11 @@ if status is-interactive
             abbr --add install   --position command sudo apt install
             abbr --add uninstall --position command sudo apt -y remove
           case opensuse-tumbleweed opensuse-leap
-            abbr --add updateall --position command sudo zypper refresh \&\& sudo zypper dup \&\& fisher update --all
+            abbr --add updateall --position command sudo zypper refresh \&\& sudo zypper dup \&\& fisher update
             abbr --add install   --position command sudo zypper -n install
             abbr --add uninstall --position command sudo zypper -n remove
           case alpine
-            abbr --add updateall --position command apk upgrade --available \&\& fisher update --all
+            abbr --add updateall --position command apk upgrade --available \&\& fisher update
             abbr --add install   --position command apk add
             abbr --add uninstall --position command apk del
           case *
