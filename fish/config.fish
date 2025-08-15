@@ -149,6 +149,14 @@ if status is-interactive
 
   # btop
   abbr --add bntop --position command btop --config ~/configs/btop/bntop.conf -p 1
+
+  # lsd
+  abbr --add ls --position command lsd
+  abbr --add la --position command lsd -lAhg
+  abbr --add tree --position command lsd --tree
+
+  # bat
+  abbr --add bat --position command bat --paging=never
   
   # macosspecific
   if string match -q "Darwin*" -- (uname)
@@ -269,7 +277,7 @@ if status is-interactive
   abbr --add !! --position anywhere --function __last_command
   abbr --add !!! --position anywhere --function __last_argument
   abbr --add r --position command --function __last_command
-
+  abbr --add where --position command whereis
 
   ### ENVIRONMENT
   # zellij
