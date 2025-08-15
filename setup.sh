@@ -135,5 +135,8 @@ install_link ~/configs/micro/bindings.json ~/.config/micro/bindings.json
 # starship
 install_link ~/configs/starship/starship.toml ~/.config/starship.toml
 
+# lsd
+install_link ~/configs/lsd ~/.config/lsd
+
 # launch shell
-exec zsh --login
+exec fish
