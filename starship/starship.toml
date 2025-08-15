@@ -100,7 +100,6 @@ $line_break\
 \
 \
 $jobs\
-$battery\
 $container\
 $netns\
 $shell\
@@ -110,6 +109,7 @@ $status\
 """
 
 right_format = """\
+$battery\
 $python\
 $nodejs\
 $swift\
@@ -214,6 +214,18 @@ format = '[$symbol($version)]($style)'
 symbol = ''
 style = 'bg:black fg:white'
 format = '[$symbol($version)]($style)'
+
+[battery]
+format ='[$symbol$percentage]($style)[](bg:black fg:white)'
+[[battery.display]]
+threshold = 10
+style = 'bold bg:black fg:red'
+[[battery.display]]
+threshold = 50
+style = 'bold bg:black fg:yellow'
+[[battery.display]]
+threshold = 100
+style = 'bold bg:black fg:green'
 
 [custom.load]
 command = "awk '{print $2}' /proc/loadavg 2>/dev/null || sysctl -n vm.loadavg | awk '{print $2}'"
