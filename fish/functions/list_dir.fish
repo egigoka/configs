@@ -1,3 +1,3 @@
 function list_dir --on-variable PWD
-    la
+    lsd -lAhg
 end
