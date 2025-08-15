@@ -89,3 +89,7 @@ fish/conf.d/git.fish
 fish/conf.d/fzf.fish
 fish/conf.d/done.fish
 fish/conf.d/docker.fish
+fish/functions/unset.fish
+fish/functions/updatedb.fish
+fish/functions/fisher.fish
+fish/completions/fisher.fish
