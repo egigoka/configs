@@ -114,7 +114,8 @@ if status is-interactive
   # git
   abbr --add gs --position command git status
   abbr --add gpl --position command git pull
-  abbr --add gc --set-cursor git commit -m \"%\"
+  abbr --add gc --position command git commit
+  abbr --add gcm --position command --set-cursor git commit -m \"%\"
   abbr --add gdownloadreleases --position command dra download
   abbr --add ga. --position command git add .
   abbr --add gcommitstoday --position command begin\; git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
