@@ -108,6 +108,9 @@ install fzf
 install dircolors || install coreutils
 install python3
 install autojump || install_autojump
+install bat
+install lsd
+install difftastic
 install uv
 uv tool install virtualfish
 vf install
