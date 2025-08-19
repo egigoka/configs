@@ -231,7 +231,7 @@ if status is-interactive
         set -l os_id (grep '^ID=' /etc/os-release | cut -d= -f2 | tr -d '"')
         switch $os_id
           case rocky
-            abbr --add updateall --position command sudo dnf clean all \&\& dnf makecache \&\& sudo dnf upgrade -y \&\& fisher update
+            abbr --add updateall --position command sudo dnf clean all \&\& sudo dnf makecache \&\& sudo dnf upgrade -y \&\& fisher update
             abbr --add install   --position command sudo dnf install -y
             abbr --add uninstall --position command sudo dnf remove -y
           case arch
