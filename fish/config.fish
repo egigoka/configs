@@ -370,6 +370,8 @@ if status is-interactive
     source $HOME/.autojump/share/autojump/autojump.fish
   else if test -f /usr/share/autojump/autojump.fish
     source /usr/share/autojump/autojump.fish
+  else if test -f /opt/homebrew/share/autojump/autojump.fish
+    source /opt/homebrew/share/autojump/autojump.fish
   end
   
   starship init fish | source
