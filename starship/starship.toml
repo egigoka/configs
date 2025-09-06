@@ -62,7 +62,6 @@ $raku\
 $rlang\
 $red\
 $ruby\
-$rust\
 $scala\
 $solidity\
 $terraform\
@@ -113,6 +112,7 @@ $battery\
 $python\
 $nodejs\
 $swift\
+$rust\
 $package\
 """
 
@@ -212,6 +212,11 @@ format = '[$symbol($version)]($style)'
 
 [package]
 symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[rust]
+symbol = ''
 style = 'bg:black fg:white'
 format = '[$symbol($version)]($style)'
 
