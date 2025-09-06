@@ -1,33 +1,33 @@
-user: 0
-group: 0
+user: default
+group: default
 permission:
-  read: 0
-  write: 0
+  read: default
+  write: default
   exec: red
   exec-sticky: red
-  no-access: 0
-  octal: 0
-  acl: 0
-  context: 0
+  no-access: default
+  octal: default
+  acl: default
+  context: default
 date:
-  hour-old: 0
-  day-old: 0
-  older: 0
+  hour-old: default
+  day-old: default
+  older: default
 size:
-  none: 232
-  small: 235
-  medium: 238
-  large: 241
+  none: default
+  small: default
+  medium: default
+  large: default
 inode:
   valid: green
   invalid: red
 links:
   valid: green
   invalid: red
-tree-edge: 240
+tree-edge: default
 git-status:
-  default: 0
-  unmodified: 0
+  default: default
+  unmodified: default
   ignored: dark_cyan
   new-in-index: dark_green
   new-in-workdir: dark_green
