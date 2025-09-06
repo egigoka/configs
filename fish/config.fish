@@ -184,7 +184,7 @@ if status is-interactive
     alias dircolors=gdircolors
 
     # yt-dlp
-    alias yt-dlp="yt-dlp --ffmpeg-location /usr/bin/ffmpeg"
+    alias yt-dlp="yt-dlp --ffmpeg-location /opt/homebrew/bin/ffmpeg"
 
     #For compilers to find openssl@3 you may need to set:
     set -x LDFLAGS "-L/opt/homebrew/opt/openssl@3/lib"
