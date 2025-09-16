@@ -116,7 +116,7 @@ if status is-interactive
   abbr --add gpl --position command git pull
   abbr --add gc --position command git commit
   abbr --add gcm --position command --set-cursor git commit -m \"%\"
-  abbr --add gdownloadreleases --position command dra download
+  abbr --add git-download-releases --position command dra download
   abbr --add ga. --position command git add .
   abbr --add gcommitstoday --position command begin\; git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
   abbr --add gcommitsweek --position command begin\; git log --since=$(get_monday_iso8601) --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
