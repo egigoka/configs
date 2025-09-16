@@ -29,18 +29,14 @@ $hg_branch\
 $pijul_channel\
 $docker_context\
 $c\
-$cmake\
 $cobol\
 $daml\
 $dart\
-$deno\
-$dotnet\
 $elixir\
 $elm\
 $erlang\
 $fennel\
 $gleam\
-$golang\
 $guix_shell\
 $haskell\
 $haxe\
@@ -114,6 +110,10 @@ $nodejs\
 $swift\
 $rust\
 $package\
+$cmake\
+$dotnet\
+$deno\
+$golang\
 """
 
 [cmd_duration]
@@ -201,7 +201,7 @@ style = 'bg:black fg:white'
 format = '[$symbol($version)]($style)'
 
 [nodejs]
-symbol = ''
+symbol = '󰎙'
 style = 'bg:black fg:white'
 format = '[$symbol($version)]($style)'
 
@@ -219,6 +219,27 @@ format = '[$symbol($version)]($style)'
 symbol = ''
 style = 'bg:black fg:white'
 format = '[$symbol($version)]($style)'
+
+[cmake]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[dotnet]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)(󰓾$tfm)]($style)'
+
+[deno]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[golang]
+symbol = '󰟓'
+style = 'bg:black fg:white'
+format = '[$symbol($version)(󰕳$mod_version)]($style)'
+version_format = '${raw}'
 
 [battery]
 format ='[$symbol$percentage]($style)[](bg:black fg:white)'
