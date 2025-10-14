@@ -1,33 +1,33 @@
-user: default
-group: default
+user: reset
+group: reset
 permission:
-  read: default
-  write: default
+  read: reset
+  write: reset
   exec: red
   exec-sticky: red
-  no-access: default
-  octal: default
-  acl: default
-  context: default
+  no-access: reset
+  octal: reset
+  acl: reset
+  context: reset
 date:
-  hour-old: default
-  day-old: default
-  older: default
+  hour-old: reset
+  day-old: reset
+  older: reset
 size:
-  none: default
-  small: default
-  medium: default
-  large: default
+  none: reset
+  small: reset
+  medium: reset
+  large: reset
 inode:
   valid: green
   invalid: red
 links:
   valid: green
   invalid: red
-tree-edge: default
+tree-edge: reset
 git-status:
-  default: default
-  unmodified: default
+  default: reset
+  unmodified: reset
   ignored: dark_cyan
   new-in-index: dark_green
   new-in-workdir: dark_green
