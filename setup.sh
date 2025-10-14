@@ -100,7 +100,7 @@ ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_th
 
 # install fisher
 fish -c "cat ~/configs/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher"
-install_link ~/configs/fish ~/.configs/fish
+install_link ~/configs/fish ~/.config/fish
 
 # apps that used in shell config
 install pay-respects || sh ~/configs/install_scripts/install_pay_respects.sh
