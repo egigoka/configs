@@ -4,9 +4,15 @@ function mvv
         return 1
     end
 
+    # Strip trailing slashes from all arguments first
+    set clean_args
+    for arg in $argv
+        set clean_args $clean_args (string replace -r '/$' '' $arg)
+    end
+
     # Extract destination (last arg) and sources (all but last)
-    set dest $argv[-1]
-    set sources $argv[1..-2]
+    set dest $clean_args[-1]
+    set sources $clean_args[1..-2]
 
     set rsync_opts -a --remove-source-files --info=progress2
 
