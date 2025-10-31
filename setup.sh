@@ -141,5 +141,8 @@ install_link ~/configs/starship/starship.toml ~/.config/starship.toml
 # lsd
 install_link ~/configs/lsd ~/.config/lsd
 
+# fontconfig
+install_link ~/configs/fontconfig ~/.config/fontconfig/conf.d
+
 # launch shell
 exec fish
