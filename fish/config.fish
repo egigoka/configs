@@ -160,6 +160,9 @@ if status is-interactive
   # bat
   abbr --add bat --position command bat --paging=never
   
+  # awk
+  abbr --add catwithfilename --position command awk "'FNR==1{print \"===\",FILENAME,\"===\"}; 1;'"
+  
   # macosspecific
   if string match -q "Darwin*" -- (uname)
     # networksetup
