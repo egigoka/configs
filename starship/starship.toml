@@ -189,6 +189,7 @@ Debian = "󰣚"
 Redhat = "󱄛"
 RedHatEnterprise = "󱄛"
 Pop = ""
+NixOS = ""
 
 [jobs]
 style = 'bg:black fg:white'
