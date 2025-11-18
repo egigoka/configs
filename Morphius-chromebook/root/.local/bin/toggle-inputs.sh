@@ -1,6 +1,6 @@
 #!/bin/bash
 
-KEYBOARD_DEV="/dev/input/event13"   # Adjust as needed
+#KEYBOARD_DEV="/dev/input/event13"   # Adjust as needed
 
 # Keep track of evtest processes
 #KBD_PID=""
@@ -13,7 +13,8 @@ disable_inputs() {
     #evtest --grab "$KEYBOARD_DEV" >/dev/null &
     #KBD_PID=$!
 
-	export KBD_LIGHT=$(/bin/ectool pwmgetkblight | awk '{print $NF}')
+	#export KBD_LIGHT=$(/bin/ectool pwmgetkblight | awk '{print $NF}')
+	export KBD_LIGHT=$(echo /sys/class/leds/chromeos::kbd_backlight/brightness)
 	echo $KBD_LIGHT
 	
 	/bin/ectool pwmsetkblight 0
@@ -37,7 +38,8 @@ enable_inputs() {
     #    KBD_PID=""
     #fi
 
-    /bin/ectool pwmsetkblight $KBD_LIGHT
+    # /bin/ectool pwmsetkblight $KBD_LIGHT
+    echo $KBD_LIGHT > /sys/class/leds/chromeos::kbd_backlight/brightness
 
     /root/.local/bin/toggle-gjs-osk-extension.sh off    
     #/root/.local/bin/toggle-gjs-osk-activation.sh off
