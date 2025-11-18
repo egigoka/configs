@@ -1,0 +1,14 @@
+{
+	"autosu": true,
+	"clipboard": "terminal",
+	"eofnewline": false,
+	"hlsearch": true,
+	"keepautoindent": true,
+	"mkparents": true,
+	"paste": true,
+	"savecursor": true,
+	"saveundo": true,
+	"statusformatl": "$(modified)$(filename) $(overwrite)($(line),$(col)) $(status.paste)| ft:$(opt:filetype) | $(opt:fileformat) | $(opt:encoding)",
+	"#tabstospaces": true,
+	"#tabmovement": true,
+}

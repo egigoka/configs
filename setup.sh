@@ -134,6 +134,7 @@ install_link ~/configs/konsole/konsoleui.rc ~/.local/share/kxmlgui5/konsole/kons
 
 # micro
 install_link ~/configs/micro/bindings.json ~/.config/micro/bindings.json
+install_link ~/configs/micro/settings.json ~/.config/micro/settings.json
 
 # starship
 install_link ~/configs/starship/starship.toml ~/.config/starship.toml
