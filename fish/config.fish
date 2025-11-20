@@ -154,7 +154,8 @@ if status is-interactive
 
   # lsd
   abbr --add ls --position command lsd
-  abbr --add la --position command lsd -lAhg
+  abbr --add la --position command lsd -A
+  abbr --add ll --position command lsd -lAhg
   abbr --add tree --position command lsd --tree
 
   # bat
