@@ -11,8 +11,5 @@ function shh
     set escaped_secret (string replace -a '@' '\@' -- "$secret")
     set escaped_replacement (string replace -a '@' '\@' -- "$replacement")
 
-    read --function --null stdin_content
-    echo $stdin_content
-
-    printf "$stdin_content" | sed "s@$escaped_secret@$escaped_replacement@g"
+    sed "s@$escaped_secret@$escaped_replacement@g"
 end
