@@ -154,7 +154,8 @@ if status is-interactive
 
   # lsd
   abbr --add ls --position command lsd
-  abbr --add la --position command lsd -lAhg
+  abbr --add la --position command lsd -A
+  abbr --add ll --position command lsd -lAhg
   abbr --add tree --position command lsd --tree
 
   # bat
@@ -162,6 +163,9 @@ if status is-interactive
   
   # awk
   abbr --add catwithfilename --position command awk "'FNR==1{print \"===\",FILENAME,\"===\"}; 1;'"
+  
+  # bcrypt
+  abbr --add bcrypt --position command mkpasswd --method=bcrypt
   
   # macosspecific
   if string match -q "Darwin*" -- (uname)
@@ -258,7 +262,7 @@ if status is-interactive
             abbr --add updateall --position command apk upgrade --available \&\& fisher update
             abbr --add install   --position command apk add
             abbr --add uninstall --position command apk del
-          case *
+          case '*'
             abbr --add updateall --position command echo "Unknown Linux distribution"
             abbr --add install   --position command echo "Unknown Linux distribution"
             abbr --add uninstall --position command echo "Unknown Linux distribution"
@@ -273,7 +277,7 @@ if status is-interactive
       abbr --add updateall --position command brew update \&\& brew upgrade --no-quarantine --greedy \&\& brew cleanup --prune=all \&\& fisher update
       abbr --add install   --position command brew install --no-quarantine
       abbr --add uninstall --position command brew remove
-    case *
+    case '*'
       # unsupported
       abbr --add updateall --position command echo "Unknown operating system"
       abbr --add install   --position command echo "Unknown operating system"
