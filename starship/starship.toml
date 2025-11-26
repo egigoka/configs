@@ -28,7 +28,6 @@ $git_status\
 $hg_branch\
 $pijul_channel\
 $docker_context\
-$c\
 $cobol\
 $daml\
 $dart\
@@ -114,6 +113,7 @@ $cmake\
 $dotnet\
 $deno\
 $golang\
+$c\
 """
 
 [cmd_duration]
@@ -199,32 +199,32 @@ symbol = '󰟼'
 [python]
 symbol = ''
 style = 'bg:black fg:white'
-format = '[$symbol($version)]($style)'
+format = '[$symbol($version)]($style)'
 
 [nodejs]
 symbol = '󰎙'
 style = 'bg:black fg:white'
-format = '[$symbol($version)]($style)'
+format = '[$symbol($version)]($style)'
 
 [swift]
 symbol = ''
 style = 'bg:black fg:white'
-format = '[$symbol($version)]($style)'
+format = '[$symbol($version)]($style)'
 
 [package]
 symbol = ''
 style = 'bg:black fg:white'
-format = '[$symbol($version)]($style)'
+format = '[$symbol($version)]($style)'
 
 [rust]
 symbol = ''
 style = 'bg:black fg:white'
-format = '[$symbol($version)]($style)'
+format = '[$symbol($version)]($style)'
 
 [cmake]
 symbol = ''
 style = 'bg:black fg:white'
-format = '[$symbol($version)]($style)'
+format = '[$symbol($version)]($style)'
 
 [dotnet]
 symbol = ''
@@ -234,16 +234,22 @@ format = '[$symbol($version)(󰓾$tfm)]($style)'
 [deno]
 symbol = ''
 style = 'bg:black fg:white'
-format = '[$symbol($version)]($style)'
+format = '[$symbol($version)]($style)'
 
 [golang]
 symbol = '󰟓'
 style = 'bg:black fg:white'
-format = '[$symbol($version)(󰕳$mod_version)]($style)'
+format = '[$symbol($version)(󰕳$mod_version)]($style)'
+version_format = '${raw}'
+
+[c]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version(-$name) )]($style)'
 version_format = '${raw}'
 
 [battery]
-format ='[$symbol$percentage]($style)[](bg:black fg:white)'
+format ='[$symbol$percentage]($style)'
 [[battery.display]]
 threshold = 10
 style = 'bold bg:black fg:red'
