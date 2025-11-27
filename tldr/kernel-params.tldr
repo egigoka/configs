@@ -1,0 +1,27 @@
+# ┌────────────────────────────────────────┐
+# │ Kernel parameters and how to cook them │
+# └────────────────────────────────────────┘
+
+# READ CURRENT VALUES
+nixos-options boot.kernelParams
+cat /proc/cmdline
+
+# MAN
+man kernel-command-line
+
+# READ KERNEL MODULE PARAMETERS AND THEIR VALUES
+systool -v -m <module_name>  # systool is in package sysfsutils
+
+# LIST KERNEL MODULE PARAMETERS
+ls /sys/module/<module_name>/parameters/
+
+# KERNEL MODULE MAN
+modinfo -p <module_name>
+
+# NIXOS SET KERNEL PARAMS
+{ config, pkgs, ...}
+{
+  boot.kernelParams = [
+  	"quiet"
+  ];
+}
