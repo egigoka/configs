@@ -129,8 +129,9 @@ fi
 install_link ~/configs/mpv ~/.config/mpv
 
 # konsole
-install_link ~/configs/konsole/sessionui.rc ~/.local/share/kxmlgui5/konsole/sessionui.rc
-install_link ~/configs/konsole/konsoleui.rc ~/.local/share/kxmlgui5/konsole/konsoleui.rc
+install_link "$HOME/configs/konsole/sessionui.rc" "$HOME/.local/share/kxmlgui5/konsole/sessionui.rc"
+install_link "$HOME/configs/konsole/konsoleui.rc" "$HOME/.local/share/kxmlgui5/konsole/konsoleui.rc"
+install_link "$HOME/configs/konsole/konsolerc" "$HOME/.config/konsolerc"
 
 # micro
 install_link ~/configs/micro/bindings.json ~/.config/micro/bindings.json
