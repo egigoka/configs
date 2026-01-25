@@ -137,6 +137,9 @@ if status is-interactive
   # fastfetch
   abbr --add neofetch --position command fastfetch
 
+  # claude
+  abbr --add claude2 --position command env CLAUDE_CONFIG_DIR=~/.claude2 claude
+  
   # zellij
   # alias z in function
   abbr --add zls --position command zellij ls | grep -v "attach to resurrect"
