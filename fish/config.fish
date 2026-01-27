@@ -138,7 +138,7 @@ if status is-interactive
   abbr --add neofetch --position command fastfetch
 
   # claude
-  abbr --add claude2 --position command env CLAUDE_CONFIG_DIR=~/.claude2 claude
+  abbr --add claude2 --position command env CLAUDE_CONFIG_DIR=\$HOME/.claude2 claude
   
   # zellij
   # alias z in function
