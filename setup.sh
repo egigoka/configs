@@ -136,6 +136,7 @@ install_link "$HOME/configs/konsole/konsolerc" "$HOME/.config/konsolerc"
 # micro
 install_link ~/configs/micro/bindings.json ~/.config/micro/bindings.json
 install_link ~/configs/micro/settings.json ~/.config/micro/settings.json
+install_link ~/configs/micro/colorschemes ~/.config/micro/colorschemes
 
 # starship
 install_link ~/configs/starship/starship.toml ~/.config/starship.toml

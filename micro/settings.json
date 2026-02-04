@@ -8,6 +8,7 @@
 	"paste": true,
 	"savecursor": true,
 	"saveundo": true,
+	"colorscheme": "light",
 	"statusformatl": "$(modified)$(filename) $(overwrite)($(line),$(col)) $(status.paste)| ft:$(opt:filetype) | $(opt:fileformat) | $(opt:encoding)",
 	"#tabstospaces": true,
 	"#tabmovement": true,
