@@ -8,6 +8,9 @@ if status is-interactive
   ensure_path ~/.filen-cli/bin
   ensure_path /opt/homebrew/bin
   ensure_path /opt/homebrew/opt/llvm/bin
+  ensure_path /opt/homebrew/opt/ccache/libexec
+  ensure_path /opt/homebrew/opt/ffmpeg-full/bin
+  ensure_path /opt/homebrew/opt/imagemagick-full/bin
   ensure_path /usr/games
   ensure_path /usr/sbin
   ensure_path /usr/local/bin
