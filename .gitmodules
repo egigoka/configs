@@ -1,9 +1,36 @@
-[submodule "ZSH_CUSTOM/plugins/ZSH_CUSTOM/plugins/autoupdate"]
-	path = ZSH_CUSTOM/plugins/autoupdate
-	url = https://github.com/TamCore/autoupdate-oh-my-zsh-plugins.git
-[submodule "ZSH_CUSTOM/dircolors-solarized"]
-	path = ZSH_CUSTOM/dircolors-solarized
+[submodule "zsh/ZSH_CUSTOM/dircolors-solarized"]
+	path = zsh/ZSH_CUSTOM/dircolors-solarized
 	url = https://github.com/seebi/dircolors-solarized
+[submodule "zsh/ZSH_CUSTOM/plugins/autoupdate"]
+	path = zsh/ZSH_CUSTOM/plugins/autoupdate
+	url = https://github.com/TamCore/autoupdate-oh-my-zsh-plugins.git
+[submodule "zsh/ZSH_CUSTOM/plugins/colored-man-pages_mod"]
+	path = zsh/ZSH_CUSTOM/plugins/colored-man-pages_mod
+	url = https://github.com/zuxfoucault/colored-man-pages_mod
+[submodule "zsh/ZSH_CUSTOM/plugins/last-working-dir"]
+	path = zsh/ZSH_CUSTOM/plugins/last-working-dir
+	url = https://github.com/mdumitru/last-working-dir
+[submodule "zsh/ZSH_CUSTOM/plugins/omz-homebrew"]
+	path = zsh/ZSH_CUSTOM/plugins/omz-homebrew
+	url = https://github.com/digitalraven/omz-homebrew
+[submodule "zsh/ZSH_CUSTOM/plugins/uvenv"]
+	path = zsh/ZSH_CUSTOM/plugins/uvenv
+	url = https://github.com/vincentto13/uvenv.plugin.zsh
+[submodule "zsh/ZSH_CUSTOM/plugins/you-should-use"]
+	path = zsh/ZSH_CUSTOM/plugins/you-should-use
+	url = https://github.com/MichaelAquilina/zsh-you-should-use.git
+[submodule "zsh/ZSH_CUSTOM/plugins/zsh-autosuggestions"]
+	path = zsh/ZSH_CUSTOM/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
+[submodule "zsh/ZSH_CUSTOM/plugins/zsh-completions"]
+	path = zsh/ZSH_CUSTOM/plugins/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions
+[submodule "zsh/ZSH_CUSTOM/plugins/zsh-syntax-highlighting"]
+	path = zsh/ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "zsh/ZSH_CUSTOM/themes/powerlevel10k"]
+	path = zsh/ZSH_CUSTOM/themes/powerlevel10k
+	url = https://github.com/romkatv/powerlevel10k.git
 [submodule "gnome-language-flags"]
 	path = gnome-language-flags
 	url = https://github.com/jasursadikov/gnome-language-flags
