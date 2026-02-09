@@ -102,6 +102,10 @@ if status is-interactive
   abbr --add scls     --position command systemctl list-units --type=service --state=running
   abbr --add scfailed --position command systemctl list-units --state=failed
 
+  # gnome
+  abbr --add gnomedev --position command dbus-run-session -- gnome-shell --devkit
+  abbr --add gnomedevlog --position command G_MESSAGES_DEBUG=all MUTTER_DEBUG_DUMMY_MODE_SPECS=1366x768 dbus-run-session -- gnome-shell --devkit \|\& tee /tmp/logs.txt
+
   # idk im stupid
   abbr --add zshconfig  --position command micro ~/.zshrc
   abbr --add fishconfig --position command micro ~/.config/fish/config.fish
