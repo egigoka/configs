@@ -33,12 +33,16 @@ install_link() {
 
   dst="${dst%/}"  # strip slash at the end
 
+  # already a correct symlink — nothing to do
+  if [ -L "$dst" ] && [ "$(readlink -- "$dst")" = "$src" ]; then
+    return 0
+  fi
+
   if [ -e "$dst" ] || [ -L "$dst" ]; then
     mv -- "$dst" "$dst.preinstall" || return
   fi
 
   ln -s -- "$src" "$dst"
-  
 }
 
 # install some packages
