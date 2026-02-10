@@ -35,6 +35,11 @@ case "$(uname -s)" in
           alias install='apk add'
           alias uninstall='apk del'
           ;;
+        nixos)
+          alias updateall='echo "Use NixOS configuration to manage packages"'
+          install() { echo "  $*"; }
+          alias uninstall='echo "Use NixOS configuration to manage packages"'
+          ;;
         *)
           alias updateall='echo "Unknown Linux distribution"'
           alias install='echo "Unknown Linux distribution"'
