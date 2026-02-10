@@ -121,6 +121,7 @@ if status is-interactive
 
   # git
   abbr --add gs --position command git status
+  abbr --add gd --position command git diff
   abbr --add gpl --position command git pull
   abbr --add gc --position command git commit
   abbr --add gcm --position command --set-cursor git commit -m \"%\"
