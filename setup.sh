@@ -64,6 +64,8 @@ case "$(uname -s)" in
           install shadow # chsh
           install ncurses # tput in omz
           ;;
+        nixos)
+          ;;
         *)
          echo "Unknown Linux distribution"
          exit
@@ -83,47 +85,70 @@ case "$(uname -s)" in
     ;;
 esac
 
-# install shell
-#install zsh
-install fish
-
-# setup default shell
-case "$(uname -s)" in
-  Darwin) current_shell=$(dscl . -read /Users/$(whoami) UserShell | awk '{print $2}') ;;
-  *)      current_shell=$(getent passwd $(whoami) | cut -d: -f7) ;;
-esac
-if [ "$current_shell" != "$(which fish)" ]; then
-  echo
-  echo $(which fish)
-  echo
-  chsh $(whoami)
+is_nixos=false
+if [ -f /etc/os-release ]; then
+  . /etc/os-release
+  [ "$ID" = "nixos" ] && is_nixos=true
 fi
 
-# custom zsh plugins (still needed for dircolors-solarized)
-ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_themes_plugins.sh
+if [ "$is_nixos" = true ]; then
+  echo "Packages needed (add to your NixOS configuration):"
+  install fish
+  install pay-respects
+  install fzf
+  install coreutils # dircolors
+  install python3
+  install autojump
+  install bat
+  install lsd
+  install difftastic
+  install uv
+  install virtualfish
+  echo
+  install_link ~/configs/fish ~/.config/fish
+else
+  # install shell
+  #install zsh
+  install fish
 
-# zsh config
-#sh ~/configs/install_scripts/install_omz.sh
-#install_link ~/configs/zsh/.zshrc ~/.zshrc
-#install_link ~/configs/zsh/.p10k.zsh ~/.p10k.zsh
+  # setup default shell
+  case "$(uname -s)" in
+    Darwin) current_shell=$(dscl . -read /Users/$(whoami) UserShell | awk '{print $2}') ;;
+    *)      current_shell=$(getent passwd $(whoami) | cut -d: -f7) ;;
+  esac
+  if [ "$current_shell" != "$(which fish)" ]; then
+    echo
+    echo $(which fish)
+    echo
+    chsh $(whoami)
+  fi
 
-# install fisher
-fish -c "cat ~/configs/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher"
-install_link ~/configs/fish ~/.config/fish
+  # custom zsh plugins (still needed for dircolors-solarized)
+  ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_themes_plugins.sh
 
-# apps that used in shell config
-install pay-respects || sh ~/configs/install_scripts/install_pay_respects.sh
-install fzf
-install dircolors || install coreutils
-install python3
-install autojump || install_autojump
-install bat
-install lsd
-install difftastic
-install uv
-uv tool install virtualfish
-vf install
-# install zoxide
+  # zsh config
+  #sh ~/configs/install_scripts/install_omz.sh
+  #install_link ~/configs/zsh/.zshrc ~/.zshrc
+  #install_link ~/configs/zsh/.p10k.zsh ~/.p10k.zsh
+
+  # install fisher
+  fish -c "cat ~/configs/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher"
+  install_link ~/configs/fish ~/.config/fish
+
+  # apps that used in shell config
+  install pay-respects || sh ~/configs/install_scripts/install_pay_respects.sh
+  install fzf
+  install dircolors || install coreutils
+  install python3
+  install autojump || install_autojump
+  install bat
+  install lsd
+  install difftastic
+  install uv
+  uv tool install virtualfish
+  vf install
+  # install zoxide
+fi
 
 # my chromebook
 if [ "$product_name" = "Morphius" ]; then
