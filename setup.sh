@@ -1,9 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 
 # get product name
 product_name=$(cat /sys/class/dmi/id/product_name 2>/dev/null)
 
 # install command
+shopt -s expand_aliases
 source ~/configs/install_scripts/epm.sh
 
 # if no package
