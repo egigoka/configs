@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 #KEYBOARD_DEV="/dev/input/event13"   # Adjust as needed
 
 # Keep track of evtest processes
 #KBD_PID=""
-KBD_LIGHT="100"
+# KBD_LIGHT="100"
 
 disable_inputs() {
     echo "Disabling keyboard"
@@ -14,10 +14,11 @@ disable_inputs() {
     #KBD_PID=$!
 
 	#export KBD_LIGHT=$(/bin/ectool pwmgetkblight | awk '{print $NF}')
-	export KBD_LIGHT=$(echo /sys/class/leds/chromeos::kbd_backlight/brightness)
-	echo $KBD_LIGHT
+	# export KBD_LIGHT=$(echo /sys/class/leds/chromeos::kbd_backlight/brightness)
+	# echo $KBD_LIGHT
 	
-	/bin/ectool pwmsetkblight 0
+	# /bin/ectool pwmsetkblight 0
+	echo 0 > /sys/class/leds/chromeos::kbd_backlight/brightness
 
 	/root/.local/bin/toggle-gjs-osk-extension.sh on
 	#/root/.local/bin/toggle-gjs-osk-activation.sh on
@@ -39,9 +40,10 @@ enable_inputs() {
     #fi
 
     # /bin/ectool pwmsetkblight $KBD_LIGHT
-    echo $KBD_LIGHT > /sys/class/leds/chromeos::kbd_backlight/brightness
+    echo 100 > /sys/class/leds/chromeos::kbd_backlight/brightness
+    # echo $KBD_LIGHT > /sys/class/leds/chromeos::kbd_backlight/brightness
 
-    /root/.local/bin/toggle-gjs-osk-extension.sh off    
+    /root/.local/bin/toggle-gjs-osk-extension.sh off
     #/root/.local/bin/toggle-gjs-osk-activation.sh off
 
     mv /etc/keyd/tab.conf /etc/keyd/tab.conf.disabled
