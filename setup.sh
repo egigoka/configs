@@ -88,11 +88,16 @@ esac
 install fish
 
 # setup default shell
-echo
-#echo $(which zsh)
-echo $(which fish)
-echo
-chsh $(whoami)
+case "$(uname -s)" in
+  Darwin) current_shell=$(dscl . -read /Users/$(whoami) UserShell | awk '{print $2}') ;;
+  *)      current_shell=$(getent passwd $(whoami) | cut -d: -f7) ;;
+esac
+if [ "$current_shell" != "$(which fish)" ]; then
+  echo
+  echo $(which fish)
+  echo
+  chsh $(whoami)
+fi
 
 # custom zsh plugins (still needed for dircolors-solarized)
 ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_themes_plugins.sh
