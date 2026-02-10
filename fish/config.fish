@@ -273,7 +273,7 @@ if status is-interactive
             abbr --add install   --position command apk add
             abbr --add uninstall --position command apk del
           case nixos
-            abbr --add updateall --position command fisher update \&\& sudo nixos-rebuild switch --upgrade-all
+            abbr --add updateall --position command sudo nixos-rebuild switch --upgrade-all
             abbr --add install   --position command sudo micro /etc/nixos/packages.nix
             abbr --add uninstall --position command sudo micro /etc/nixos/packages.nix
           case '*'
