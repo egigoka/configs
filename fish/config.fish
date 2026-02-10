@@ -252,26 +252,30 @@ if status is-interactive
         set -l os_id (grep '^ID=' /etc/os-release | cut -d= -f2 | tr -d '"')
         switch $os_id
           case rocky
-            abbr --add updateall --position command sudo dnf clean all \&\& sudo dnf makecache \&\& sudo dnf upgrade -y \&\& fisher update
+            abbr --add updateall --position command fisher update \&\& sudo dnf clean all \&\& sudo dnf makecache \&\& sudo dnf upgrade -y
             abbr --add install   --position command sudo dnf install -y
             abbr --add uninstall --position command sudo dnf remove -y
           case arch
-            abbr --add updateall --position command yay -Syu --devel --timeupdate \&\& yay -Sc \&\& fisher update
+            abbr --add updateall --position command fisher update \&\& yay -Syu --devel --timeupdate \&\& yay -Sc
             abbr --add install   --position command yay -S
             abbr --add uninstall --position command yay -Rns
             abbr --add updatemirrors --position command cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak \&\& rate-mirrors arch \| sudo tee /etc/pacman.d/mirrorlist \&\& sudo pacman -Syy
           case debian ubuntu droidian
-            abbr --add updateall --position command sudo apt update \&\& sudo apt upgrade \&\& sudo apt dist-upgrade \&\& fisher update
+            abbr --add updateall --position command fisher update \&\& sudo apt update \&\& sudo apt upgrade \&\& sudo apt dist-upgrade
             abbr --add install   --position command sudo apt install
             abbr --add uninstall --position command sudo apt -y remove
           case opensuse-tumbleweed opensuse-leap
-            abbr --add updateall --position command sudo zypper refresh \&\& sudo zypper dup \&\& fisher update
+            abbr --add updateall --position command fisher update \&\& sudo zypper refresh \&\& sudo zypper dup
             abbr --add install   --position command sudo zypper -n install
             abbr --add uninstall --position command sudo zypper -n remove
           case alpine
-            abbr --add updateall --position command apk upgrade --available \&\& fisher update
+            abbr --add updateall --position command fisher update \&\& apk upgrade --available
             abbr --add install   --position command apk add
             abbr --add uninstall --position command apk del
+          case nixos
+            abbr --add updateall --position command fisher update \&\& sudo nixos-rebuild switch --upgrade-all
+            abbr --add install   --position command sudo micro /etc/nixos/packages.nix
+            abbr --add uninstall --position command sudo micro /etc/nixos/packages.nix
           case '*'
             abbr --add updateall --position command echo "Unknown Linux distribution"
             abbr --add install   --position command echo "Unknown Linux distribution"
@@ -284,7 +288,7 @@ if status is-interactive
       end
     case Darwin
       # mAcos
-      abbr --add updateall --position command brew update \&\& brew upgrade --no-quarantine --greedy \&\& brew cleanup --prune=all \&\& fisher update
+      abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --no-quarantine --greedy \&\& brew cleanup --prune=all
       abbr --add install   --position command brew install --no-quarantine
       abbr --add uninstall --position command brew remove
     case '*'
