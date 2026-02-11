@@ -7,6 +7,47 @@ product_name=$(cat /sys/class/dmi/id/product_name 2>/dev/null)
 shopt -s expand_aliases
 source ~/configs/install_scripts/epm.sh
 
+pkg_installed() {
+  local pkg=$1
+  case "$(uname -s)" in
+    Linux)
+      if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        case "$ID" in
+          rocky) rpm -q "$pkg" >/dev/null 2>&1 ;;
+          arch) pacman -Qi "$pkg" >/dev/null 2>&1 ;;
+          debian|ubuntu|droidian) dpkg -s "$pkg" >/dev/null 2>&1 ;;
+          opensuse-tumbleweed|opensuse-leap) rpm -q "$pkg" >/dev/null 2>&1 ;;
+          alpine) apk info -e "$pkg" >/dev/null 2>&1 ;;
+          nixos)
+            grep -q -F "$pkg" /etc/nixos/configuration.nix /etc/nixos/packages.nix 2>/dev/null
+            ;;
+          *) return 1 ;;
+        esac
+      else
+        return 1
+      fi
+      ;;
+    Darwin)
+      brew list --formula "$pkg" >/dev/null 2>&1 || brew list --cask "$pkg" >/dev/null 2>&1
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+install_if_missing() {
+  local pkg
+  for pkg in "$@"; do
+    if pkg_installed "$pkg"; then
+      echo "$pkg already installed, skipping"
+    else
+      install "$pkg"
+    fi
+  done
+}
+
 # if no package
 install_autojump() {
   pwd=$PWD
@@ -61,9 +102,9 @@ case "$(uname -s)" in
         opensuse-tumbleweed|opensuse-leap)
           ;;
         alpine)
-          install git
-          install shadow # chsh
-          install ncurses # tput in omz
+          install_if_missing git
+          install_if_missing shadow # chsh
+          install_if_missing ncurses # tput in omz
           ;;
         nixos)
           ;;
@@ -110,7 +151,7 @@ if [ "$is_nixos" = true ]; then
 else
   # install shell
   #install zsh
-  install fish
+  install_if_missing fish
 
   # setup default shell
   case "$(uname -s)" in
@@ -137,15 +178,15 @@ else
   install_link ~/configs/fish ~/.config/fish
 
   # apps that used in shell config
-  install pay-respects || sh ~/configs/install_scripts/install_pay_respects.sh
-  install fzf
-  install dircolors || install coreutils
-  install python3
-  install autojump || install_autojump
-  install bat
-  install lsd
-  install difftastic
-  install uv
+  install_if_missing pay-respects || sh ~/configs/install_scripts/install_pay_respects.sh
+  install_if_missing fzf
+  install_if_missing dircolors || install_if_missing coreutils
+  install_if_missing python3
+  install_if_missing autojump || install_autojump
+  install_if_missing bat
+  install_if_missing lsd
+  install_if_missing difftastic
+  install_if_missing uv
   uv tool install virtualfish
   vf install
   # install zoxide
