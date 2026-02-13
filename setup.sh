@@ -7,6 +7,17 @@ product_name=$(cat /sys/class/dmi/id/product_name 2>/dev/null)
 CONFIGS_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$CONFIGS_DIR/install_scripts/epm.sh"
 
+# detect real user when running under sudo
+if [ -n "$SUDO_USER" ]; then
+  REAL_USER="$SUDO_USER"
+  REAL_HOME="$(getent passwd "$SUDO_USER" | cut -d: -f6)"
+  as_user() { sudo -u "$REAL_USER" -- "$@"; }
+else
+  REAL_USER="$(whoami)"
+  REAL_HOME="$HOME"
+  as_user() { "$@"; }
+fi
+
 pkg_installed() {
   local pkg=$1
   case "$(uname -s)" in
@@ -55,7 +66,7 @@ install_autojump() {
   git clone https://github.com/wting/autojump.git "$CONFIGS_DIR/autojump"
   cd "$CONFIGS_DIR/autojump"
   export SHELL=/bin/zsh
-  python3 "$CONFIGS_DIR/autojump/install.py"
+  as_user python3 "$CONFIGS_DIR/autojump/install.py"
   rm -rf "$CONFIGS_DIR/autojump"
   cd "$pwd"
   export SHELL=$shell
@@ -150,7 +161,7 @@ if [ "$is_nixos" = true ]; then
   install uv
   install virtualfish
   echo
-  install_link "$CONFIGS_DIR/fish" ~/.config/fish
+  install_link "$CONFIGS_DIR/fish" "$REAL_HOME/.config/fish"
 else
   # install shell
   #install zsh
@@ -158,14 +169,14 @@ else
 
   # setup default shell
   case "$(uname -s)" in
-    Darwin) current_shell=$(dscl . -read /Users/$(whoami) UserShell | awk '{print $2}') ;;
-    *)      current_shell=$(getent passwd $(whoami) | cut -d: -f7) ;;
+    Darwin) current_shell=$(dscl . -read "/Users/$REAL_USER" UserShell | awk '{print $2}') ;;
+    *)      current_shell=$(getent passwd "$REAL_USER" | cut -d: -f7) ;;
   esac
   if [ "$current_shell" != "$(which fish)" ]; then
     echo
     echo $(which fish)
     echo
-    chsh $(whoami)
+    chsh "$REAL_USER"
   fi
 
   # custom zsh plugins (still needed for dircolors-solarized)
@@ -177,11 +188,11 @@ else
   #install_link ~/configs/zsh/.p10k.zsh ~/.p10k.zsh
 
   # install fisher
-  fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher"
-  install_link "$CONFIGS_DIR/fish" ~/.config/fish
+  as_user fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher"
+  install_link "$CONFIGS_DIR/fish" "$REAL_HOME/.config/fish"
 
   # apps that used in shell config
-  install_if_missing pay-respects || sh "$CONFIGS_DIR/install_scripts/install_pay_respects.sh"
+  command -v pay-respects >/dev/null 2>&1 || [ -x "$REAL_HOME/.local/bin/pay-respects" ] || install_if_missing pay-respects || as_user sh "$CONFIGS_DIR/install_scripts/install_pay_respects.sh"
   install_if_missing fzf
   install_if_missing dircolors || install_if_missing coreutils
   install_if_missing python3
@@ -191,8 +202,8 @@ else
   install_if_missing difftastic
   install_if_missing gh || install_if_missing github-cli
   install_if_missing uv
-  uv tool install virtualfish
-  ~/.local/bin/vf install
+  as_user uv tool install virtualfish
+  as_user "$REAL_HOME/.local/bin/vf" install
   # install zoxide
 fi
 
@@ -206,28 +217,28 @@ if [ "$product_name" = "Morphius" ]; then
 fi
 
 # mpv
-install_link "$CONFIGS_DIR/mpv" ~/.config/mpv
+install_link "$CONFIGS_DIR/mpv" "$REAL_HOME/.config/mpv"
 
 # konsole
-install_link "$CONFIGS_DIR/konsole/sessionui.rc" "$HOME/.local/share/kxmlgui5/konsole/sessionui.rc"
-install_link "$CONFIGS_DIR/konsole/konsoleui.rc" "$HOME/.local/share/kxmlgui5/konsole/konsoleui.rc"
-install_link "$CONFIGS_DIR/konsole/konsolerc" "$HOME/.config/konsolerc"
-install_link "$CONFIGS_DIR/konsole/GNOMETerminalLight.colorscheme" "$HOME/.local/share/konsole/GNOMETerminalLight.colorscheme"
-install_link "$CONFIGS_DIR/konsole/default.profile" "$HOME/.local/share/konsole/default.profile"
+install_link "$CONFIGS_DIR/konsole/sessionui.rc" "$REAL_HOME/.local/share/kxmlgui5/konsole/sessionui.rc"
+install_link "$CONFIGS_DIR/konsole/konsoleui.rc" "$REAL_HOME/.local/share/kxmlgui5/konsole/konsoleui.rc"
+install_link "$CONFIGS_DIR/konsole/konsolerc" "$REAL_HOME/.config/konsolerc"
+install_link "$CONFIGS_DIR/konsole/GNOMETerminalLight.colorscheme" "$REAL_HOME/.local/share/konsole/GNOMETerminalLight.colorscheme"
+install_link "$CONFIGS_DIR/konsole/default.profile" "$REAL_HOME/.local/share/konsole/default.profile"
 
 # micro
-install_link "$CONFIGS_DIR/micro/bindings.json" ~/.config/micro/bindings.json
-install_link "$CONFIGS_DIR/micro/settings.json" ~/.config/micro/settings.json
-install_link "$CONFIGS_DIR/micro/colorschemes" ~/.config/micro/colorschemes
+install_link "$CONFIGS_DIR/micro/bindings.json" "$REAL_HOME/.config/micro/bindings.json"
+install_link "$CONFIGS_DIR/micro/settings.json" "$REAL_HOME/.config/micro/settings.json"
+install_link "$CONFIGS_DIR/micro/colorschemes" "$REAL_HOME/.config/micro/colorschemes"
 
 # starship
-install_link "$CONFIGS_DIR/starship/starship.toml" ~/.config/starship.toml
+install_link "$CONFIGS_DIR/starship/starship.toml" "$REAL_HOME/.config/starship.toml"
 
 # lsd
-install_link "$CONFIGS_DIR/lsd" ~/.config/lsd
+install_link "$CONFIGS_DIR/lsd" "$REAL_HOME/.config/lsd"
 
 # fontconfig
-install_link "$CONFIGS_DIR/fontconfig" ~/.config/fontconfig/conf.d
+install_link "$CONFIGS_DIR/fontconfig" "$REAL_HOME/.config/fontconfig/conf.d"
 
 # launch shell
 exec fish
