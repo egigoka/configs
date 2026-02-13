@@ -4,7 +4,7 @@ Font=MesloLGSDZ Nerd Font Mono,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
 UseFontBrailleChararacters=false
 
 [General]
-Command=/run/current-system/sw/bin/fish
+Command=env fish
 Name=default
 Parent=FALLBACK/
 TerminalCenter=false
