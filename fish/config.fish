@@ -129,6 +129,7 @@ if status is-interactive
   abbr --add ga. --position command git add .
   abbr --add gcommitstoday --position command begin\; git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
   abbr --add gcommitsweek --position command begin\; git log --since=$(get_monday_iso8601) --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
+  abbr --add ga --position command git add
   
   # https://github.com/dweinstein/google-translate-cli
   abbr --add trl --position command trans
