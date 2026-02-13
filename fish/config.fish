@@ -15,6 +15,7 @@ if status is-interactive
   ensure_path /usr/sbin
   ensure_path /usr/local/bin
   ensure_path /home/linuxbrew/.linuxbrew/bin
+  ensure_path ~/.opencode/bin
 
   ### ALIASES
   # tar

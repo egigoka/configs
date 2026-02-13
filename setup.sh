@@ -237,6 +237,9 @@ install_link "$CONFIGS_DIR/micro/colorschemes" "$REAL_HOME/.config/micro/colorsc
 # starship
 install_link "$CONFIGS_DIR/starship/starship.toml" "$REAL_HOME/.config/starship.toml"
 
+# opencode
+install_link "$CONFIGS_DIR/opencode/kv.json" "$REAL_HOME/.local/state/opencode/kv.json"
+
 # lsd
 install_link "$CONFIGS_DIR/lsd" "$REAL_HOME/.config/lsd"
 
