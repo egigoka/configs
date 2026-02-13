@@ -246,5 +246,8 @@ install_link "$CONFIGS_DIR/fontconfig" "$REAL_HOME/.config/fontconfig/conf.d"
 # gnome quarter-windows keybindings
 sh ~/configs/install_scripts/set_quarterwindows_hotkeys.sh
 
+# virt-manager
+dconf write /org/virt-manager/virt-manager/console/resize-guest 1
+
 # launch shell
 exec fish
