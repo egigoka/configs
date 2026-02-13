@@ -187,9 +187,9 @@ else
   #install_link ~/configs/zsh/.zshrc ~/.zshrc
   #install_link ~/configs/zsh/.p10k.zsh ~/.p10k.zsh
 
-  # install fisher
-  as_user fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher"
+  # install fisher and fish plugins
   install_link "$CONFIGS_DIR/fish" "$REAL_HOME/.config/fish"
+  as_user fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher && fisher update"
 
   # apps that used in shell config
   command -v pay-respects >/dev/null 2>&1 || [ -x "$REAL_HOME/.local/bin/pay-respects" ] || install_if_missing pay-respects || as_user sh "$CONFIGS_DIR/install_scripts/install_pay_respects.sh"
