@@ -239,6 +239,13 @@ install_link "$CONFIGS_DIR/starship/starship.toml" "$REAL_HOME/.config/starship.
 
 # opencode
 install_link "$CONFIGS_DIR/opencode/kv.json" "$REAL_HOME/.local/state/opencode/kv.json"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$REAL_HOME/.config/opencode/AGENTS.md"
+
+# claude code
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$REAL_HOME/.claude/CLAUDE.md"
+
+# codex
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$REAL_HOME/.codex/AGENTS.md"
 
 # lsd
 install_link "$CONFIGS_DIR/lsd" "$REAL_HOME/.config/lsd"
