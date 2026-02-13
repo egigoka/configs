@@ -4,8 +4,8 @@
 product_name=$(cat /sys/class/dmi/id/product_name 2>/dev/null)
 
 # install command
-shopt -s expand_aliases
-source ~/configs/install_scripts/epm.sh
+CONFIGS_DIR="$(cd "$(dirname "$0")" && pwd)"
+source "$CONFIGS_DIR/install_scripts/epm.sh"
 
 pkg_installed() {
   local pkg=$1
@@ -52,12 +52,12 @@ install_if_missing() {
 install_autojump() {
   pwd=$PWD
   shell=$SHELL
-  git clone https://github.com/wting/autojump.git ~/configs/autojump
-  cd ~/configs/autojump
+  git clone https://github.com/wting/autojump.git "$CONFIGS_DIR/autojump"
+  cd "$CONFIGS_DIR/autojump"
   export SHELL=/bin/zsh
-  python3 ~/configs/autojump/install.py
-  rm -rf ~/configs/autojump
-  cd $pwd
+  python3 "$CONFIGS_DIR/autojump/install.py"
+  rm -rf "$CONFIGS_DIR/autojump"
+  cd "$pwd"
   export SHELL=$shell
 }
 
@@ -105,6 +105,8 @@ case "$(uname -s)" in
           install_if_missing git
           install_if_missing shadow # chsh
           install_if_missing ncurses # tput in omz
+          install_if_missing tar # GNU tar (busybox tar lacks zstd)
+          install_if_missing zstd
           ;;
         nixos)
           ;;
@@ -147,7 +149,7 @@ if [ "$is_nixos" = true ]; then
   install uv
   install virtualfish
   echo
-  install_link ~/configs/fish ~/.config/fish
+  install_link "$CONFIGS_DIR/fish" ~/.config/fish
 else
   # install shell
   #install zsh
@@ -166,7 +168,7 @@ else
   fi
 
   # custom zsh plugins (still needed for dircolors-solarized)
-  ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM" sh ~/configs/zsh/ZSH_CUSTOM/install_themes_plugins.sh
+  ZSH_CUSTOM="$CONFIGS_DIR/zsh/ZSH_CUSTOM" sh "$CONFIGS_DIR/zsh/ZSH_CUSTOM/install_themes_plugins.sh"
 
   # zsh config
   #sh ~/configs/install_scripts/install_omz.sh
@@ -174,11 +176,11 @@ else
   #install_link ~/configs/zsh/.p10k.zsh ~/.p10k.zsh
 
   # install fisher
-  fish -c "cat ~/configs/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher"
-  install_link ~/configs/fish ~/.config/fish
+  fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher"
+  install_link "$CONFIGS_DIR/fish" ~/.config/fish
 
   # apps that used in shell config
-  install_if_missing pay-respects || sh ~/configs/install_scripts/install_pay_respects.sh
+  install_if_missing pay-respects || sh "$CONFIGS_DIR/install_scripts/install_pay_respects.sh"
   install_if_missing fzf
   install_if_missing dircolors || install_if_missing coreutils
   install_if_missing python3
@@ -188,42 +190,42 @@ else
   install_if_missing difftastic
   install_if_missing uv
   uv tool install virtualfish
-  vf install
+  ~/.local/bin/vf install
   # install zoxide
 fi
 
 # my chromebook
 if [ "$product_name" = "Morphius" ]; then
-  install_link ~/configs/Morphius-chromebook/root/.local/bin/toggle-inputs.sh /root/.local/bin/toggle-inputs.sh
-  install_link ~/configs/Morphius-chromebook/root/.local/bin/toggle-gjs-osk-extension.sh /root/.local/bin/toggle-gjs-osk-extension.sh
-  install_link ~/configs/Morphius-chromebook/etc/keyd/tab.conf.disabled /etc/keyd/tab.conf.disabled
-  install_link ~/configs/Morphius-chromebook/etc/keyd/cros.conf /etc/keyd/cros.conf
-  install_link ~/configs/Morphius-chromebook/bin/ectool /bin/ectool
+  install_link "$CONFIGS_DIR/Morphius-chromebook/root/.local/bin/toggle-inputs.sh" /root/.local/bin/toggle-inputs.sh
+  install_link "$CONFIGS_DIR/Morphius-chromebook/root/.local/bin/toggle-gjs-osk-extension.sh" /root/.local/bin/toggle-gjs-osk-extension.sh
+  install_link "$CONFIGS_DIR/Morphius-chromebook/etc/keyd/tab.conf.disabled" /etc/keyd/tab.conf.disabled
+  install_link "$CONFIGS_DIR/Morphius-chromebook/etc/keyd/cros.conf" /etc/keyd/cros.conf
+  install_link "$CONFIGS_DIR/Morphius-chromebook/bin/ectool" /bin/ectool
 fi
 
 # mpv
-install_link ~/configs/mpv ~/.config/mpv
+install_link "$CONFIGS_DIR/mpv" ~/.config/mpv
 
 # konsole
-install_link "$HOME/configs/konsole/sessionui.rc" "$HOME/.local/share/kxmlgui5/konsole/sessionui.rc"
-install_link "$HOME/configs/konsole/konsoleui.rc" "$HOME/.local/share/kxmlgui5/konsole/konsoleui.rc"
-install_link "$HOME/configs/konsole/konsolerc" "$HOME/.config/konsolerc"
-install_link "$HOME/configs/konsole/GNOMETerminalLight.colorscheme" "$HOME/.local/share/konsole/GNOMETerminalLight.colorscheme"
-install_link "$HOME/configs/konsole/default.profile" "$HOME/.local/share/konsole/default.profile"
+install_link "$CONFIGS_DIR/konsole/sessionui.rc" "$HOME/.local/share/kxmlgui5/konsole/sessionui.rc"
+install_link "$CONFIGS_DIR/konsole/konsoleui.rc" "$HOME/.local/share/kxmlgui5/konsole/konsoleui.rc"
+install_link "$CONFIGS_DIR/konsole/konsolerc" "$HOME/.config/konsolerc"
+install_link "$CONFIGS_DIR/konsole/GNOMETerminalLight.colorscheme" "$HOME/.local/share/konsole/GNOMETerminalLight.colorscheme"
+install_link "$CONFIGS_DIR/konsole/default.profile" "$HOME/.local/share/konsole/default.profile"
 
 # micro
-install_link ~/configs/micro/bindings.json ~/.config/micro/bindings.json
-install_link ~/configs/micro/settings.json ~/.config/micro/settings.json
-install_link ~/configs/micro/colorschemes ~/.config/micro/colorschemes
+install_link "$CONFIGS_DIR/micro/bindings.json" ~/.config/micro/bindings.json
+install_link "$CONFIGS_DIR/micro/settings.json" ~/.config/micro/settings.json
+install_link "$CONFIGS_DIR/micro/colorschemes" ~/.config/micro/colorschemes
 
 # starship
-install_link ~/configs/starship/starship.toml ~/.config/starship.toml
+install_link "$CONFIGS_DIR/starship/starship.toml" ~/.config/starship.toml
 
 # lsd
-install_link ~/configs/lsd ~/.config/lsd
+install_link "$CONFIGS_DIR/lsd" ~/.config/lsd
 
 # fontconfig
-install_link ~/configs/fontconfig ~/.config/fontconfig/conf.d
+install_link "$CONFIGS_DIR/fontconfig" ~/.config/fontconfig/conf.d
 
 # launch shell
 exec fish
