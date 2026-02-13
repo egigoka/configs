@@ -202,9 +202,12 @@ else
   install_if_missing difftastic
   install_if_missing gh || install_if_missing github-cli
   install_if_missing uv
+
   as_user uv tool install virtualfish
   as_user "$REAL_HOME/.local/bin/vf" install
-  # install zoxide
+    
+  # git config
+  git config --global pull.rebase true
 fi
 
 # my chromebook
@@ -239,6 +242,9 @@ install_link "$CONFIGS_DIR/lsd" "$REAL_HOME/.config/lsd"
 
 # fontconfig
 install_link "$CONFIGS_DIR/fontconfig" "$REAL_HOME/.config/fontconfig/conf.d"
+
+# gnome quarter-windows keybindings
+sh ~/configs/install_scripts/set_quarterwindows_hotkeys.sh
 
 # launch shell
 exec fish
