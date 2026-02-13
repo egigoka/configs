@@ -146,6 +146,7 @@ if [ "$is_nixos" = true ]; then
   install bat
   install lsd
   install difftastic
+  install gh
   install uv
   install virtualfish
   echo
@@ -188,6 +189,7 @@ else
   install_if_missing bat
   install_if_missing lsd
   install_if_missing difftastic
+  install_if_missing gh || install_if_missing github-cli
   install_if_missing uv
   uv tool install virtualfish
   ~/.local/bin/vf install
