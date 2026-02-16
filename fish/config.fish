@@ -193,6 +193,7 @@ if status is-interactive
     # power
     abbr --add macossafereboot      --position command sudo fdesetup authrestart
     abbr --add macossaferebootlater --position command sudo fdesetup authrestart -delayminutes -1
+    abbr --add reboot --position command sudo reboot
     abbr --add macossleep --position command pmset sleepnow
 
     # keychain
