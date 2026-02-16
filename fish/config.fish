@@ -96,7 +96,6 @@ if status is-interactive
     abbr --add sc-      --position command launchctl unload
     abbr --add sc--     --position command launchctl unload -w
     abbr --add scr      --position command launchctl kickstart -k
-    abbr --add scs      --position command launchctl print
     abbr --add scls     --position command launchctl list
     abbr --add scfailed --position command launchctl blame
   else
