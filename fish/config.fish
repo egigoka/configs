@@ -232,9 +232,11 @@ if status is-interactive
     abbr --add zypper --position command sudo zypper
     abbr --add snap --position command sudo snap
     abbr --add yast --position command sudo yast
-    abbr --add reboot --position command sudo systemctl --force reboot
-    abbr --add shutdown --position command sudo /usr/sbin/shutdown now
-    abbr --add systemctl --position command sudo systemctl
+    if not string match -q "Darwin*" -- (uname)
+      abbr --add reboot --position command sudo systemctl --force reboot
+      abbr --add shutdown --position command sudo /usr/sbin/shutdown now
+      abbr --add systemctl --position command sudo systemctl
+    end
     abbr --add useradd --position command sudo useradd
     abbr --add userdel --position command sudo userdel
     abbr --add groupadd --position command sudo groupadd
