@@ -88,20 +88,31 @@ if status is-interactive
   abbr --add btrqgrouprescanstatus --position command btrfs quota rescan -s /mnt/btr
   abbr --add btrremovesnapshot     --position command btrfs subvolume delete --commit-after
 
-  # systemd
-  abbr --add sc       --position command systemctl
-  abbr --add scdr     --position command systemctl daemon-reload
-  abbr --add scrd     --position command systemctl daemon-reload
-  abbr --add sc+      --position command systemctl start
-  abbr --add sc++     --position command systemctl enable
-  abbr --add sc+++    --position command systemctl enable --now
-  abbr --add sc-      --position command systemctl stop
-  abbr --add sc--     --position command systemctl disable
-  abbr --add sc---    --position command systemctl disable --now
-  abbr --add scr      --position command systemctl restart
-  abbr --add scs      --position command systemctl status -l
-  abbr --add scls     --position command systemctl list-units --type=service --state=running
-  abbr --add scfailed --position command systemctl list-units --state=failed
+  # systemd / launchctl
+  if string match -q "Darwin*" -- (uname)
+    abbr --add sc       --position command launchctl
+    abbr --add sc+      --position command launchctl load
+    abbr --add sc++     --position command launchctl load -w
+    abbr --add sc-      --position command launchctl unload
+    abbr --add sc--     --position command launchctl unload -w
+    abbr --add scr      --position command launchctl kickstart -k
+    abbr --add scls     --position command launchctl list
+    abbr --add scfailed --position command launchctl blame
+  else
+    abbr --add sc       --position command systemctl
+    abbr --add scdr     --position command systemctl daemon-reload
+    abbr --add scrd     --position command systemctl daemon-reload
+    abbr --add sc+      --position command systemctl start
+    abbr --add sc++     --position command systemctl enable
+    abbr --add sc+++    --position command systemctl enable --now
+    abbr --add sc-      --position command systemctl stop
+    abbr --add sc--     --position command systemctl disable
+    abbr --add sc---    --position command systemctl disable --now
+    abbr --add scr      --position command systemctl restart
+    abbr --add scs      --position command systemctl status -l
+    abbr --add scls     --position command systemctl list-units --type=service --state=running
+    abbr --add scfailed --position command systemctl list-units --state=failed
+  end
 
   # gnome
   abbr --add gnomedev --position command dbus-run-session -- gnome-shell --devkit
