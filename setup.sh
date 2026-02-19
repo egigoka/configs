@@ -159,10 +159,20 @@ if [ "$is_nixos" = true ]; then
   install difftastic
   install gh
   install uv
+  install starship
   install virtualfish
   echo
   install_link "$CONFIGS_DIR/fish" "$REAL_HOME/.config/fish"
 else
+  # install micro editor
+  install_if_missing micro
+
+  # set micro as default editor on macOS (for current zsh session and persistent fish)
+  if [ "$(uname -s)" = "Darwin" ]; then
+    export EDITOR=micro
+    as_user fish -c "set -Ux EDITOR micro"
+  fi
+
   # install shell
   #install zsh
   install_if_missing fish
@@ -173,10 +183,14 @@ else
     *)      current_shell=$(getent passwd "$REAL_USER" | cut -d: -f7) ;;
   esac
   if [ "$current_shell" != "$(which fish)" ]; then
+    fish_path="$(which fish)"
     echo
-    echo $(which fish)
+    echo "$fish_path"
     echo
-    chsh "$REAL_USER"
+    if ! grep -qxF "$fish_path" /etc/shells; then
+      echo "$fish_path" | sudo tee -a /etc/shells > /dev/null
+    fi
+    chsh -s "$fish_path" "$REAL_USER"
   fi
 
   # custom zsh plugins (still needed for dircolors-solarized)
@@ -189,7 +203,9 @@ else
 
   # install fisher and fish plugins
   install_link "$CONFIGS_DIR/fish" "$REAL_HOME/.config/fish"
-  as_user fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install jorgebucaran/fisher && fisher update"
+  FISH_PLUGINS=$(grep -v '^[[:space:]]*$' "$CONFIGS_DIR/fish/fish_plugins" | tr '\n' ' ')
+  as_user fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install $FISH_PLUGINS"
+  git -C "$CONFIGS_DIR" checkout fish/fish_plugins
 
   # apps that used in shell config
   command -v pay-respects >/dev/null 2>&1 || [ -x "$REAL_HOME/.local/bin/pay-respects" ] || install_if_missing pay-respects || as_user sh "$CONFIGS_DIR/install_scripts/install_pay_respects.sh"
@@ -202,6 +218,7 @@ else
   install_if_missing difftastic
   install_if_missing gh || install_if_missing github-cli
   install_if_missing uv
+  install_if_missing starship
 
   as_user uv tool install virtualfish
   as_user "$REAL_HOME/.local/bin/vf" install
@@ -257,7 +274,7 @@ install_link "$CONFIGS_DIR/fontconfig" "$REAL_HOME/.config/fontconfig/conf.d"
 sh ~/configs/install_scripts/set_quarterwindows_hotkeys.sh
 
 # virt-manager
-dconf write /org/virt-manager/virt-manager/console/resize-guest 1
+command -v dconf >/dev/null 2>&1 && dconf write /org/virt-manager/virt-manager/console/resize-guest 1
 
 # launch shell
 exec fish
