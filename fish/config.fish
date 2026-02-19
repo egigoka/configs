@@ -135,6 +135,7 @@ if status is-interactive
   abbr --add gs --position command git status
   abbr --add gd --position command git diff
   abbr --add gpl --position command git pull
+  abbr --add gp --position command git push
   abbr --add gc --position command git commit
   abbr --add gcm --position command --set-cursor git commit -m \"%\"
   abbr --add git-download-releases --position command dra download
