@@ -1,0 +1,7 @@
+# ┌───────────┐
+# │ TAILSCALE │
+# └───────────┘
+
+# DISABLE TAILSCALE DNS
+tailscale set --accept-dns=false
+systemctl restart tailscaled

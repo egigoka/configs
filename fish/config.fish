@@ -8,10 +8,14 @@ if status is-interactive
   ensure_path ~/.filen-cli/bin
   ensure_path /opt/homebrew/bin
   ensure_path /opt/homebrew/opt/llvm/bin
+  ensure_path /opt/homebrew/opt/ccache/libexec
+  ensure_path /opt/homebrew/opt/ffmpeg-full/bin
+  ensure_path /opt/homebrew/opt/imagemagick-full/bin
   ensure_path /usr/games
   ensure_path /usr/sbin
   ensure_path /usr/local/bin
   ensure_path /home/linuxbrew/.linuxbrew/bin
+  ensure_path ~/.opencode/bin
 
   ### ALIASES
   # tar
@@ -84,20 +88,35 @@ if status is-interactive
   abbr --add btrqgrouprescanstatus --position command btrfs quota rescan -s /mnt/btr
   abbr --add btrremovesnapshot     --position command btrfs subvolume delete --commit-after
 
-  # systemd
-  abbr --add sc       --position command systemctl
-  abbr --add scdr     --position command systemctl daemon-reload
-  abbr --add scrd     --position command systemctl daemon-reload
-  abbr --add sc+      --position command systemctl start
-  abbr --add sc++     --position command systemctl enable
-  abbr --add sc+++    --position command systemctl enable --now
-  abbr --add sc-      --position command systemctl stop
-  abbr --add sc--     --position command systemctl disable
-  abbr --add sc---    --position command systemctl disable --now
-  abbr --add scr      --position command systemctl restart
-  abbr --add scs      --position command systemctl status -l
-  abbr --add scls     --position command systemctl list-units --type=service --state=running
-  abbr --add scfailed --position command systemctl list-units --state=failed
+  # systemd / launchctl
+  if string match -q "Darwin*" -- (uname)
+    abbr --add sc       --position command launchctl
+    abbr --add sc+      --position command launchctl load
+    abbr --add sc++     --position command launchctl load -w
+    abbr --add sc-      --position command launchctl unload
+    abbr --add sc--     --position command launchctl unload -w
+    abbr --add scr      --position command launchctl kickstart -k
+    abbr --add scls     --position command launchctl list
+    abbr --add scfailed --position command launchctl blame
+  else
+    abbr --add sc       --position command systemctl
+    abbr --add scdr     --position command systemctl daemon-reload
+    abbr --add scrd     --position command systemctl daemon-reload
+    abbr --add sc+      --position command systemctl start
+    abbr --add sc++     --position command systemctl enable
+    abbr --add sc+++    --position command systemctl enable --now
+    abbr --add sc-      --position command systemctl stop
+    abbr --add sc--     --position command systemctl disable
+    abbr --add sc---    --position command systemctl disable --now
+    abbr --add scr      --position command systemctl restart
+    abbr --add scs      --position command systemctl status -l
+    abbr --add scls     --position command systemctl list-units --type=service --state=running
+    abbr --add scfailed --position command systemctl list-units --state=failed
+  end
+
+  # gnome
+  abbr --add gnomedev --position command dbus-run-session -- gnome-shell --devkit
+  abbr --add gnomedevlog --position command G_MESSAGES_DEBUG=all MUTTER_DEBUG_DUMMY_MODE_SPECS=1366x768 dbus-run-session -- gnome-shell --devkit \|\& tee /tmp/logs.txt
 
   # idk im stupid
   abbr --add zshconfig  --position command micro ~/.zshrc
@@ -114,13 +133,16 @@ if status is-interactive
 
   # git
   abbr --add gs --position command git status
+  abbr --add gd --position command git diff
   abbr --add gpl --position command git pull
+  abbr --add gp --position command git push
   abbr --add gc --position command git commit
   abbr --add gcm --position command --set-cursor git commit -m \"%\"
   abbr --add git-download-releases --position command dra download
   abbr --add ga. --position command git add .
   abbr --add gcommitstoday --position command begin\; git log --since=midnight --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
   abbr --add gcommitsweek --position command begin\; git log --since=$(get_monday_iso8601) --until=now --pretty=format:\"%h - %ar - %an: %s\"\;echo \"\"\; end
+  abbr --add ga --position command git add
   
   # https://github.com/dweinstein/google-translate-cli
   abbr --add trl --position command trans
@@ -137,6 +159,9 @@ if status is-interactive
   # fastfetch
   abbr --add neofetch --position command fastfetch
 
+  # claude
+  abbr --add claude2 --position command env CLAUDE_CONFIG_DIR=\$HOME/.claude2 claude
+  
   # zellij
   # alias z in function
   abbr --add zls --position command zellij ls | grep -v "attach to resurrect"
@@ -180,6 +205,7 @@ if status is-interactive
     # power
     abbr --add macossafereboot      --position command sudo fdesetup authrestart
     abbr --add macossaferebootlater --position command sudo fdesetup authrestart -delayminutes -1
+    abbr --add reboot --position command sudo reboot
     abbr --add macossleep --position command pmset sleepnow
 
     # keychain
@@ -218,9 +244,11 @@ if status is-interactive
     abbr --add zypper --position command sudo zypper
     abbr --add snap --position command sudo snap
     abbr --add yast --position command sudo yast
-    abbr --add reboot --position command sudo systemctl --force reboot
-    abbr --add shutdown --position command sudo /usr/sbin/shutdown now
-    abbr --add systemctl --position command sudo systemctl
+    if not string match -q "Darwin*" -- (uname)
+      abbr --add reboot --position command sudo systemctl --force reboot
+      abbr --add shutdown --position command sudo /usr/sbin/shutdown now
+      abbr --add systemctl --position command sudo systemctl
+    end
     abbr --add useradd --position command sudo useradd
     abbr --add userdel --position command sudo userdel
     abbr --add groupadd --position command sudo groupadd
@@ -242,26 +270,30 @@ if status is-interactive
         set -l os_id (grep '^ID=' /etc/os-release | cut -d= -f2 | tr -d '"')
         switch $os_id
           case rocky
-            abbr --add updateall --position command sudo dnf clean all \&\& sudo dnf makecache \&\& sudo dnf upgrade -y \&\& fisher update
+            abbr --add updateall --position command fisher update \&\& sudo dnf clean all \&\& sudo dnf makecache \&\& sudo dnf upgrade -y
             abbr --add install   --position command sudo dnf install -y
             abbr --add uninstall --position command sudo dnf remove -y
           case arch
-            abbr --add updateall --position command yay -Syu --devel --timeupdate \&\& yay -Sc \&\& fisher update
+            abbr --add updateall --position command fisher update \&\& yay -Syu --devel --timeupdate \&\& yay -Sc
             abbr --add install   --position command yay -S
             abbr --add uninstall --position command yay -Rns
             abbr --add updatemirrors --position command cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak \&\& rate-mirrors arch \| sudo tee /etc/pacman.d/mirrorlist \&\& sudo pacman -Syy
           case debian ubuntu droidian
-            abbr --add updateall --position command sudo apt update \&\& sudo apt upgrade \&\& sudo apt dist-upgrade \&\& fisher update
+            abbr --add updateall --position command fisher update \&\& sudo apt update \&\& sudo apt upgrade \&\& sudo apt dist-upgrade
             abbr --add install   --position command sudo apt install
             abbr --add uninstall --position command sudo apt -y remove
           case opensuse-tumbleweed opensuse-leap
-            abbr --add updateall --position command sudo zypper refresh \&\& sudo zypper dup \&\& fisher update
+            abbr --add updateall --position command fisher update \&\& sudo zypper refresh \&\& sudo zypper dup
             abbr --add install   --position command sudo zypper -n install
             abbr --add uninstall --position command sudo zypper -n remove
           case alpine
-            abbr --add updateall --position command apk upgrade --available \&\& fisher update
+            abbr --add updateall --position command fisher update \&\& apk upgrade --available
             abbr --add install   --position command apk add
             abbr --add uninstall --position command apk del
+          case nixos
+            abbr --add updateall --position command sudo nixos-rebuild switch --upgrade-all
+            abbr --add install   --position command sudo micro /etc/nixos/packages.nix
+            abbr --add uninstall --position command sudo micro /etc/nixos/packages.nix
           case '*'
             abbr --add updateall --position command echo "Unknown Linux distribution"
             abbr --add install   --position command echo "Unknown Linux distribution"
@@ -274,7 +306,7 @@ if status is-interactive
       end
     case Darwin
       # mAcos
-      abbr --add updateall --position command brew update \&\& brew upgrade --no-quarantine --greedy \&\& brew cleanup --prune=all \&\& fisher update
+      abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --no-quarantine --greedy \&\& brew cleanup --prune=all
       abbr --add install   --position command brew install --no-quarantine
       abbr --add uninstall --position command brew remove
     case '*'
@@ -376,6 +408,18 @@ if status is-interactive
   ### EXTERNAL PROGRAMS INIT
   #zoxide init fish | source
   pay-respects fish --alias fuck | source
+
+  # extend pay-respects command-not-found with brew which-formula on macOS
+  if string match -q "Darwin*" -- (uname)
+    function fish_command_not_found --on-event fish_command_not_found
+      eval $(_PR_LAST_COMMAND="$argv" _PR_ALIAS="$(alias)" _PR_SHELL="fish" _PR_MODE="cnf" "pay-respects")
+      set -l formula (brew which-formula $argv[1] 2>/dev/null)
+      if test -n "$formula"
+        echo "fish: Found in Homebrew formula: $formula"
+        echo "  brew install $formula"
+      end
+    end
+  end
   fzf --fish | source
   if test -f $HOME/.autojump/share/autojump/autojump.fish
     source $HOME/.autojump/share/autojump/autojump.fish

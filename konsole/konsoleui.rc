@@ -96,5 +96,7 @@
  <ActionProperties scheme="Default">
   <Action iconText="𝙽𝚎𝚠 𝚝𝚊𝚋" name="new-tab"/>
   <Action iconText="𝚂𝚙𝚕𝚒𝚝 𝚟𝚒𝚎𝚠" name="split-view"/>
+  <Action name="next-tab" shortcut="; Ctrl+PgDown"/>
+  <Action name="previous-tab" shortcut="; Ctrl+PgUp"/>
  </ActionProperties>
 </gui>
