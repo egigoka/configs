@@ -1,4 +1,16 @@
-ZSH_CUSTOM/themes/powerlevel10k
+# zsh/fish plugins (cloned by install scripts)
+gnome-language-flags/
+zsh/ZSH_CUSTOM/dircolors-solarized/
+zsh/ZSH_CUSTOM/plugins/autoupdate/
+zsh/ZSH_CUSTOM/plugins/colored-man-pages_mod/
+zsh/ZSH_CUSTOM/plugins/last-working-dir/
+zsh/ZSH_CUSTOM/plugins/omz-homebrew/
+zsh/ZSH_CUSTOM/plugins/uvenv/
+zsh/ZSH_CUSTOM/plugins/you-should-use/
+zsh/ZSH_CUSTOM/plugins/zsh-autosuggestions/
+zsh/ZSH_CUSTOM/plugins/zsh-completions/
+zsh/ZSH_CUSTOM/plugins/zsh-syntax-highlighting/
+zsh/ZSH_CUSTOM/themes/powerlevel10k/
 .init
 default.profraw
 fish/fish_variables
@@ -93,3 +105,4 @@ fish/functions/unset.fish
 fish/functions/updatedb.fish
 fish/functions/fisher.fish
 fish/completions/fisher.fish
+.claude/

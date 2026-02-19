@@ -1,0 +1,25 @@
+[Desktop Entry]
+DefaultProfile=default.profile
+
+[FileLocation]
+scrollback=/tmp/
+
+[General]
+ConfigVersion=1
+
+[KFileDialog Settings]
+Recent Files[$e]=
+Recent URLs[$e]=
+
+[MainWindow]
+MenuBar=Disabled
+
+[Shortcuts]
+next-tab=none
+previous-tab=none
+
+[TabBar]
+TabBarPosition=Top
+
+[UiSettings]
+ColorScheme=

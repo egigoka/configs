@@ -1,9 +1,0 @@
-[submodule "ZSH_CUSTOM/plugins/ZSH_CUSTOM/plugins/autoupdate"]
-	path = ZSH_CUSTOM/plugins/autoupdate
-	url = https://github.com/TamCore/autoupdate-oh-my-zsh-plugins.git
-[submodule "ZSH_CUSTOM/dircolors-solarized"]
-	path = ZSH_CUSTOM/dircolors-solarized
-	url = https://github.com/seebi/dircolors-solarized
-[submodule "gnome-language-flags"]
-	path = gnome-language-flags
-	url = https://github.com/jasursadikov/gnome-language-flags
