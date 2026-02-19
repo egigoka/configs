@@ -105,3 +105,4 @@ fish/functions/unset.fish
 fish/functions/updatedb.fish
 fish/functions/fisher.fish
 fish/completions/fisher.fish
+.claude/
