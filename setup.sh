@@ -165,7 +165,7 @@ if [ "$is_nixos" = true ]; then
   install_link "$CONFIGS_DIR/fish" "$REAL_HOME/.config/fish"
 else
   # install micro editor
-  install_if_missing micro
+  install_if_missing micro || install_if_missing micro-editor
 
   # set micro as default editor on macOS (for current zsh session and persistent fish)
   if [ "$(uname -s)" = "Darwin" ]; then
