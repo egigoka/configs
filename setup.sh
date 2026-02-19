@@ -7,16 +7,7 @@ product_name=$(cat /sys/class/dmi/id/product_name 2>/dev/null)
 CONFIGS_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$CONFIGS_DIR/install_scripts/epm.sh"
 
-# detect real user when running under sudo
-if [ -n "$SUDO_USER" ]; then
-  REAL_USER="$SUDO_USER"
-  REAL_HOME="$(getent passwd "$SUDO_USER" | cut -d: -f6)"
-  as_user() { sudo -u "$REAL_USER" -- "$@"; }
-else
-  REAL_USER="$(whoami)"
-  REAL_HOME="$HOME"
-  as_user() { "$@"; }
-fi
+USER="$(whoami)"
 
 pkg_installed() {
   local pkg=$1
@@ -66,7 +57,7 @@ install_autojump() {
   git clone https://github.com/wting/autojump.git "$CONFIGS_DIR/autojump"
   cd "$CONFIGS_DIR/autojump"
   export SHELL=/bin/zsh
-  as_user python3 "$CONFIGS_DIR/autojump/install.py"
+  python3 "$CONFIGS_DIR/autojump/install.py"
   rm -rf "$CONFIGS_DIR/autojump"
   cd "$pwd"
   export SHELL=$shell
@@ -162,7 +153,7 @@ if [ "$is_nixos" = true ]; then
   install starship
   install virtualfish
   echo
-  install_link "$CONFIGS_DIR/fish" "$REAL_HOME/.config/fish"
+  install_link "$CONFIGS_DIR/fish" "$HOME/.config/fish"
 else
   # install micro editor
   install_if_missing micro || install_if_missing micro-editor
@@ -170,7 +161,7 @@ else
   # set micro as default editor on macOS (for current zsh session and persistent fish)
   if [ "$(uname -s)" = "Darwin" ]; then
     export EDITOR=micro
-    as_user fish -c "set -Ux EDITOR micro"
+    fish -c "set -Ux EDITOR micro"
   fi
 
   # install shell
@@ -179,8 +170,8 @@ else
 
   # setup default shell
   case "$(uname -s)" in
-    Darwin) current_shell=$(dscl . -read "/Users/$REAL_USER" UserShell | awk '{print $2}') ;;
-    *)      current_shell=$(getent passwd "$REAL_USER" | cut -d: -f7) ;;
+    Darwin) current_shell=$(dscl . -read "/Users/$USER" UserShell | awk '{print $2}') ;;
+    *)      current_shell=$(getent passwd "$USER" | cut -d: -f7) ;;
   esac
   if [ "$current_shell" != "$(which fish)" ]; then
     fish_path="$(which fish)"
@@ -190,7 +181,7 @@ else
     if ! grep -qxF "$fish_path" /etc/shells; then
       echo "$fish_path" | sudo tee -a /etc/shells > /dev/null
     fi
-    chsh -s "$fish_path" "$REAL_USER"
+    chsh -s "$fish_path" "$USER"
   fi
 
   # custom zsh plugins (still needed for dircolors-solarized)
@@ -202,13 +193,13 @@ else
   #install_link ~/configs/zsh/.p10k.zsh ~/.p10k.zsh
 
   # install fisher and fish plugins
-  install_link "$CONFIGS_DIR/fish" "$REAL_HOME/.config/fish"
+  install_link "$CONFIGS_DIR/fish" "$HOME/.config/fish"
   FISH_PLUGINS=$(grep -v '^[[:space:]]*$' "$CONFIGS_DIR/fish/fish_plugins" | tr '\n' ' ')
-  as_user fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install $FISH_PLUGINS"
+  fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install $FISH_PLUGINS"
   git -C "$CONFIGS_DIR" checkout fish/fish_plugins
 
   # apps that used in shell config
-  command -v pay-respects >/dev/null 2>&1 || [ -x "$REAL_HOME/.local/bin/pay-respects" ] || install_if_missing pay-respects || as_user sh "$CONFIGS_DIR/install_scripts/install_pay_respects.sh"
+  command -v pay-respects >/dev/null 2>&1 || [ -x "$HOME/.local/bin/pay-respects" ] || install_if_missing pay-respects || sh "$CONFIGS_DIR/install_scripts/install_pay_respects.sh"
   install_if_missing fzf
   install_if_missing dircolors || install_if_missing coreutils
   install_if_missing python3
@@ -220,8 +211,8 @@ else
   install_if_missing uv
   install_if_missing starship
 
-  as_user uv tool install virtualfish
-  as_user "$REAL_HOME/.local/bin/vf" install
+  uv tool install virtualfish
+  "$HOME/.local/bin/vf" install
     
   # git config
   git config --global user.name egigoka
@@ -239,45 +230,47 @@ if [ "$product_name" = "Morphius" ]; then
 fi
 
 # mpv
-install_link "$CONFIGS_DIR/mpv" "$REAL_HOME/.config/mpv"
+install_link "$CONFIGS_DIR/mpv" "$HOME/.config/mpv"
 
 # konsole
-install_link "$CONFIGS_DIR/konsole/sessionui.rc" "$REAL_HOME/.local/share/kxmlgui5/konsole/sessionui.rc"
-install_link "$CONFIGS_DIR/konsole/konsoleui.rc" "$REAL_HOME/.local/share/kxmlgui5/konsole/konsoleui.rc"
-install_link "$CONFIGS_DIR/konsole/konsolerc" "$REAL_HOME/.config/konsolerc"
-install_link "$CONFIGS_DIR/konsole/GNOMETerminalLight.colorscheme" "$REAL_HOME/.local/share/konsole/GNOMETerminalLight.colorscheme"
-install_link "$CONFIGS_DIR/konsole/default.profile" "$REAL_HOME/.local/share/konsole/default.profile"
+install_link "$CONFIGS_DIR/konsole/sessionui.rc" "$HOME/.local/share/kxmlgui5/konsole/sessionui.rc"
+install_link "$CONFIGS_DIR/konsole/konsoleui.rc" "$HOME/.local/share/kxmlgui5/konsole/konsoleui.rc"
+install_link "$CONFIGS_DIR/konsole/konsolerc" "$HOME/.config/konsolerc"
+install_link "$CONFIGS_DIR/konsole/GNOMETerminalLight.colorscheme" "$HOME/.local/share/konsole/GNOMETerminalLight.colorscheme"
+install_link "$CONFIGS_DIR/konsole/default.profile" "$HOME/.local/share/konsole/default.profile"
 
 # micro
-install_link "$CONFIGS_DIR/micro/bindings.json" "$REAL_HOME/.config/micro/bindings.json"
-install_link "$CONFIGS_DIR/micro/settings.json" "$REAL_HOME/.config/micro/settings.json"
-install_link "$CONFIGS_DIR/micro/colorschemes" "$REAL_HOME/.config/micro/colorschemes"
+install_link "$CONFIGS_DIR/micro/bindings.json" "$HOME/.config/micro/bindings.json"
+install_link "$CONFIGS_DIR/micro/settings.json" "$HOME/.config/micro/settings.json"
+install_link "$CONFIGS_DIR/micro/colorschemes" "$HOME/.config/micro/colorschemes"
 
 # starship
-install_link "$CONFIGS_DIR/starship/starship.toml" "$REAL_HOME/.config/starship.toml"
+install_link "$CONFIGS_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
 
 # opencode
-install_link "$CONFIGS_DIR/opencode/kv.json" "$REAL_HOME/.local/state/opencode/kv.json"
-install_link "$CONFIGS_DIR/opencode/opencode.json" "$REAL_HOME/.config/opencode/opencode.json"
-install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$REAL_HOME/.config/opencode/AGENTS.md"
+install_link "$CONFIGS_DIR/opencode/kv.json" "$HOME/.local/state/opencode/kv.json"
+install_link "$CONFIGS_DIR/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.config/opencode/AGENTS.md"
 
 # claude code
-install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$REAL_HOME/.claude/CLAUDE.md"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 
 # codex
-install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$REAL_HOME/.codex/AGENTS.md"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex/AGENTS.md"
 
 # lsd
-install_link "$CONFIGS_DIR/lsd" "$REAL_HOME/.config/lsd"
+install_link "$CONFIGS_DIR/lsd" "$HOME/.config/lsd"
 
 # fontconfig
-install_link "$CONFIGS_DIR/fontconfig" "$REAL_HOME/.config/fontconfig/conf.d"
+install_link "$CONFIGS_DIR/fontconfig" "$HOME/.config/fontconfig/conf.d"
 
 # gnome quarter-windows keybindings
 sh ~/configs/install_scripts/set_quarterwindows_hotkeys.sh
 
 # virt-manager
-command -v dconf >/dev/null 2>&1 && dconf write /org/virt-manager/virt-manager/console/resize-guest 1
+if command -v dconf >/dev/null 2>&1 && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; }; then
+  dconf write /org/virt-manager/virt-manager/console/resize-guest 1
+fi
 
 # launch shell
 exec fish
