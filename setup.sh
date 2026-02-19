@@ -224,6 +224,8 @@ else
   as_user "$REAL_HOME/.local/bin/vf" install
     
   # git config
+  git config --global user.name egigoka
+  git config --global user.email egigoka@gmail.com
   git config --global pull.rebase true
 fi
 
