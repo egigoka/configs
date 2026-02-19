@@ -1,6 +1,13 @@
 if status is-interactive
   # Commands to run in interactive sessions can go here
 
+  # Detect SSH even under sudo -i (SSH_TTY/SSH_CONNECTION get cleared by sudo -i)
+  # Starship hostname checks SSH_CONNECTION, fish_title checks SSH_TTY
+  if not set -q SSH_TTY; and pstree -s %self 2>/dev/null | string match -q '*sshd*'
+      set -gx SSH_TTY (tty)
+      set -gx SSH_CONNECTION "sudo-i"
+  end
+
   ### PATH
   ensure_path ~/go/bin
   ensure_path ~/.cargo/bin
