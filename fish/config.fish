@@ -408,6 +408,18 @@ if status is-interactive
   ### EXTERNAL PROGRAMS INIT
   #zoxide init fish | source
   pay-respects fish --alias fuck | source
+
+  # extend pay-respects command-not-found with brew which-formula on macOS
+  if string match -q "Darwin*" -- (uname)
+    function fish_command_not_found --on-event fish_command_not_found
+      eval $(_PR_LAST_COMMAND="$argv" _PR_ALIAS="$(alias)" _PR_SHELL="fish" _PR_MODE="cnf" "pay-respects")
+      set -l formula (brew which-formula $argv[1] 2>/dev/null)
+      if test -n "$formula"
+        echo "fish: Found in Homebrew formula: $formula"
+        echo "  brew install $formula"
+      end
+    end
+  end
   fzf --fish | source
   if test -f $HOME/.autojump/share/autojump/autojump.fish
     source $HOME/.autojump/share/autojump/autojump.fish
