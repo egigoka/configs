@@ -406,6 +406,11 @@ if status is-interactive
   set -x LC_CTYPE en_US.UTF-8
   set -x LANG en_US.UTF-8
 
+  ### SSH AGENT
+  if not set -q SSH_AUTH_SOCK
+    eval (ssh-agent -c) > /dev/null
+  end
+
   ### INIT
   if not test -f ~/configs/.init
     git config --global core.pager ""
