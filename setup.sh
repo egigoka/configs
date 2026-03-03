@@ -273,5 +273,13 @@ if command -v dconf >/dev/null 2>&1 && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DIS
   dconf write /org/virt-manager/virt-manager/console/resize-guest 1
 fi
 
+# maliit keyboard
+if command -v gsettings >/dev/null 2>&1 && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; }; then
+  export GSETTINGS_SCHEMA_DIR="$(echo /nix/store/*maliit-keyboard*/share/gsettings-schemas/*/glib-2.0/schemas)"
+  gsettings set org.maliit.keyboard.maliit enabled-languages "['en', 'ru', 'uk', 'kk', 'emoji']"
+  gsettings set org.maliit.keyboard.maliit theme "Breeze"
+  gsettings set org.maliit.keyboard.maliit device "tablet"
+fi
+
 # launch shell
 exec fish
