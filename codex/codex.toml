@@ -1,0 +1,20 @@
+personality = "pragmatic"
+model = "gpt-5.3-codex"
+model_reasoning_effort = "medium"
+[projects."/etc/nixos"]
+trust_level = "untrusted"
+
+[projects."/root/plasma-keyboard"]
+trust_level = "trusted"
+
+[projects."/root/configs"]
+trust_level = "trusted"
+
+[projects."/root"]
+trust_level = "trusted"
+
+[notice.model_migrations]
+"gpt-5.2-codex" = "gpt-5.3-codex"
+
+[features]
+multi_agent = true

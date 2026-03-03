@@ -257,6 +257,7 @@ install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 
 # codex
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex/AGENTS.md"
+install_link "$CONFIGS_DIR/codex/codex.toml" "$HOME/.codex/config.toml"
 
 # lsd
 install_link "$CONFIGS_DIR/lsd" "$HOME/.config/lsd"
