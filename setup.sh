@@ -281,5 +281,12 @@ if command -v gsettings >/dev/null 2>&1 && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND
   gsettings set org.maliit.keyboard.maliit device "tablet"
 fi
 
+# plasma keyboard (mapped from maliit settings)
+if command -v kwriteconfig6 >/dev/null 2>&1; then
+  # Plasma Keyboard uses locale IDs and does not provide kk/emoji layouts here.
+  kwriteconfig6 --file plasmakeyboardrc --group General --key enabledLocales "en_US,ru_RU,uk_UA"
+  kwriteconfig6 --file plasmakeyboardrc --group General --key panelFillScreenWidth false
+fi
+
 # launch shell
 exec fish
