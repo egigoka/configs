@@ -281,11 +281,24 @@ if command -v gsettings >/dev/null 2>&1 && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND
   gsettings set org.maliit.keyboard.maliit device "tablet"
 fi
 
+# kde kwin scripts
+if command -v kwriteconfig6 >/dev/null 2>&1; then
+  for script_dir in "$CONFIGS_DIR"/kde-scripts/*/; do
+    script_name=$(basename "$script_dir")
+    # remove existing and install fresh
+    kpackagetool6 -t KWin/Script -r "$script_name" 2>/dev/null
+    rm -rf "$HOME/.local/share/kwin/scripts/$script_name"
+    cp -r "$script_dir" "$HOME/.local/share/kwin/scripts/$script_name"
+    kwriteconfig6 --file kwinrc --group Plugins --key "${script_name}Enabled" true
+  done
+  qdbus org.kde.KWin /KWin reconfigure 2>/dev/null
+fi
+
 # plasma keyboard (mapped from maliit settings)
 if command -v kwriteconfig6 >/dev/null 2>&1; then
   # Plasma Keyboard uses locale IDs and does not provide kk/emoji layouts here.
   kwriteconfig6 --file plasmakeyboardrc --group General --key enabledLocales "en_US,ru_RU,uk_UA"
-  kwriteconfig6 --file plasmakeyboardrc --group General --key panelFillScreenWidth false
+  kwriteconfig6 --file plasmakeyboardrc --group General --key panelFillScreenWidth true
 fi
 
 # launch shell
