@@ -285,10 +285,8 @@ fi
 if command -v kwriteconfig6 >/dev/null 2>&1; then
   for script_dir in "$CONFIGS_DIR"/kde-scripts/*/; do
     script_name=$(basename "$script_dir")
-    # remove existing and install fresh
     kpackagetool6 -t KWin/Script -r "$script_name" 2>/dev/null
-    rm -rf "$HOME/.local/share/kwin/scripts/$script_name"
-    cp -r "$script_dir" "$HOME/.local/share/kwin/scripts/$script_name"
+    install_link "$CONFIGS_DIR/kde-scripts/$script_name" "$HOME/.local/share/kwin/scripts/$script_name"
     kwriteconfig6 --file kwinrc --group Plugins --key "${script_name}Enabled" true
   done
   qdbus org.kde.KWin /KWin reconfigure 2>/dev/null
