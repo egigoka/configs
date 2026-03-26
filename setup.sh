@@ -16,7 +16,7 @@ pkg_installed() {
       if [ -f /etc/os-release ]; then
         . /etc/os-release
         case "$ID" in
-          rocky) rpm -q "$pkg" >/dev/null 2>&1 ;;
+          rocky) rpm -q "$pkg" >/dev/null 2>&1 || command -v "$pkg" >/dev/null 2>&1 ;;
           arch) pacman -Qi "$pkg" >/dev/null 2>&1 ;;
           debian|ubuntu|droidian) dpkg -s "$pkg" >/dev/null 2>&1 ;;
           opensuse-tumbleweed|opensuse-leap) rpm -q "$pkg" >/dev/null 2>&1 ;;
@@ -208,7 +208,7 @@ else
   install_if_missing lsd
   install_if_missing difftastic
   install_if_missing gh || install_if_missing github-cli
-  install_if_missing uv
+  install_if_missing uv || sh "$CONFIGS_DIR/install_scripts/install_uv.sh"
   install_if_missing starship
 
   uv tool install virtualfish
