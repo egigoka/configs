@@ -313,8 +313,8 @@ if status is-interactive
       end
     case Darwin
       # mAcos
-      abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --no-quarantine --greedy \&\& brew cleanup --prune=all
-      abbr --add install   --position command brew install --no-quarantine
+      abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all
+      abbr --add install   --position command brew install
       abbr --add uninstall --position command brew remove
     case '*'
       # unsupported
