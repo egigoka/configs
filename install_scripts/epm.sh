@@ -7,9 +7,9 @@ case "$(uname -s)" in
       . /etc/os-release
       case "$ID" in
         rocky)
-          updateall() { dnf clean all && dnf makecache && dnf upgrade -y; }
-          install() { dnf install -y "$@"; }
-          uninstall() { dnf remove -y "$@"; }
+          updateall() { sudo dnf clean all && sudo dnf makecache && sudo dnf upgrade -y; }
+          install() { sudo dnf install -y "$@"; }
+          uninstall() { sudo dnf remove -y "$@"; }
           ;;
         arch)
           updateall() { yay -Syu --devel --timeupdate; yay -Sc; }
