@@ -55,8 +55,8 @@ case "$(uname -s)" in
     fi
     ;;
   Darwin)
-    updateall() { brew update; brew upgrade --no-quarantine --greedy; brew cleanup --prune=all; }
-    install() { brew install --no-quarantine "$@"; }
+    updateall() { brew update; brew upgrade --greedy; brew cleanup --prune=all; }
+    install() { brew install "$@"; }
     uninstall() { brew remove "$@"; }
     ;;
   *)
