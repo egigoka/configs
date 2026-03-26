@@ -18,9 +18,9 @@ case "$(uname -s)" in
           updatemirrors() { cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak; rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; sudo pacman -Syy; }
           ;;
         debian|ubuntu|droidian)
-          updateall() { apt update && apt upgrade && apt dist-upgrade; }
-          install() { apt install "$@"; }
-          uninstall() { apt -y remove "$@"; }
+          updateall() { sudo apt update && sudo apt upgrade && sudo apt dist-upgrade; }
+          install() { sudo apt install "$@"; }
+          uninstall() { sudo apt -y remove "$@"; }
           ;;
         opensuse-tumbleweed|opensuse-leap)
           if [[ $UID != 0 && $EUID != 0 ]]; then
