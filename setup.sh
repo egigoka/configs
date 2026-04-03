@@ -191,6 +191,11 @@ else
     chsh -s "$fish_path" "$USER"
   fi
 
+  # add homebrew to fish path on macOS
+  if [ -d /opt/homebrew/bin ]; then
+    fish -c "set -U fish_user_paths /opt/homebrew/bin \$fish_user_paths"
+  fi
+
   # custom zsh plugins (still needed for dircolors-solarized)
   ZSH_CUSTOM="$CONFIGS_DIR/zsh/ZSH_CUSTOM" sh "$CONFIGS_DIR/zsh/ZSH_CUSTOM/install_themes_plugins.sh"
 
@@ -261,6 +266,9 @@ install_link "$CONFIGS_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
 install_link "$CONFIGS_DIR/opencode/kv.json" "$HOME/.local/state/opencode/kv.json"
 install_link "$CONFIGS_DIR/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.config/opencode/AGENTS.md"
+
+# forgecode
+install_link "$CONFIGS_DIR/forgecode/permissions.yaml" "$HOME/.config/forge/permissions.yaml"
 
 # claude code
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
