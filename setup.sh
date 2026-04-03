@@ -164,6 +164,9 @@ else
     fish -c "set -Ux EDITOR micro"
   fi
 
+  # sponge: only purge history on shell exit (not after each command)
+  fish -c "set -Ux sponge_purge_only_on_exit true"
+
   # install shell
   #install zsh
   install_if_missing fish
