@@ -260,8 +260,14 @@ install_link "$CONFIGS_DIR/claude/settings.json" "$HOME/.claude/settings.json"
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex/AGENTS.md"
 install_link "$CONFIGS_DIR/codex/codex.toml" "$HOME/.codex/config.toml"
 
-# forge
-install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/forge/AGENTS.md"
+# forge (two-account setup: ~/forge1 + ~/forge2, symlinked via ~/forge)
+if [ -d "$HOME/forge" ] && [ ! -L "$HOME/forge" ]; then
+  mv "$HOME/forge" "$HOME/forge1"
+fi
+mkdir -p "$HOME/forge1" "$HOME/forge2"
+install_link "$HOME/forge1" "$HOME/forge"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/forge1/AGENTS.md"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/forge2/AGENTS.md"
 
 # lsd
 install_link "$CONFIGS_DIR/lsd" "$HOME/.config/lsd"

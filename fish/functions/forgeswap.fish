@@ -3,23 +3,9 @@ function forgeswap --description "Swap between Forge accounts (~/forge1 and ~/fo
     set -l forge1 "$HOME/forge1"
     set -l forge2 "$HOME/forge2"
 
-    # First-time setup: migrate real directory to forge1 + create symlink
-    if test -d "$forge_link" -a ! -L "$forge_link"
-        echo "First-time setup: migrating ~/forge -> ~/forge1"
-        mv "$forge_link" "$forge1"
-        mkdir -p "$forge2"
-        ln -s "$forge1" "$forge_link"
-        echo "Created ~/forge1 (your current account)"
-        echo "Created ~/forge2 (empty, for second account)"
-        echo "Symlinked ~/forge -> ~/forge1"
-        echo ""
-        echo "Run 'forgeswap' again to switch to account 2."
-        return 0
-    end
-
-    # Verify symlink exists
+    # Verify symlink exists (setup.sh handles initial migration)
     if not test -L "$forge_link"
-        echo "Error: ~/forge is not a symlink. Cannot swap."
+        echo "Error: ~/forge is not a symlink. Run setup.sh first."
         return 1
     end
 
