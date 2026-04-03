@@ -83,7 +83,11 @@ install_link() {
   fi
 
   if [ -e "$dst" ] || [ -L "$dst" ]; then
-    mv -- "$dst" "$dst.preinstall" || return
+    if [ -e "$dst.preinstall" ]; then
+      rm -rf "$dst"
+    else
+      mv -- "$dst" "$dst.preinstall" || return
+    fi
   fi
 
   ln -s -- "$src" "$dst"
