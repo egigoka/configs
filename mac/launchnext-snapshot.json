@@ -1,0 +1,2267 @@
+{
+  "exportedAt" : "2026-04-03T05:06:43Z",
+  "hiddenAppPaths" : [
+
+  ],
+  "items" : [
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "RapidAPI",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/RapidAPI.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Postman",
+          "path" : "\/Applications\/Postman.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Mockoon",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Mockoon.app"
+        }
+      ],
+      "globalIndex" : 0,
+      "id" : "BFA71BA0-6845-4D76-82FE-53BFCFCB4804",
+      "kind" : "folder",
+      "name" : "API Tools",
+      "pageIndex" : 0,
+      "position" : 0
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "App Store",
+          "path" : "\/System\/Applications\/App Store.app"
+        },
+        {
+          "index" : 1,
+          "name" : "AppCleaner",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/AppCleaner.app"
+        },
+        {
+          "index" : 2,
+          "name" : "App Tamer",
+          "path" : "\/Applications\/App Tamer.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Dolphin Updater",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Dolphin Updater.app"
+        },
+        {
+          "index" : 4,
+          "name" : "MyApplications",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/MyApplications.app"
+        },
+        {
+          "index" : 5,
+          "name" : "TestFlight",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/TestFlight.app"
+        },
+        {
+          "index" : 6,
+          "name" : "BresinkSoftwareUpdater",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/BresinkSoftwareUpdater.app"
+        }
+      ],
+      "globalIndex" : 1,
+      "id" : "0A59A869-5E18-4D34-97B1-2914DC2064D8",
+      "kind" : "folder",
+      "name" : "App management",
+      "pageIndex" : 0,
+      "position" : 1
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Automator",
+          "path" : "\/System\/Applications\/Automator.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Shortcuts",
+          "path" : "\/System\/Applications\/Shortcuts.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Hammerspoon",
+          "path" : "\/Applications\/Hammerspoon.app"
+        }
+      ],
+      "globalIndex" : 2,
+      "id" : "688E527E-4483-4248-8D29-AFB7ADE0AC8B",
+      "kind" : "folder",
+      "name" : "Automation",
+      "pageIndex" : 0,
+      "position" : 2
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Time Machine",
+          "path" : "\/System\/Applications\/Time Machine.app"
+        },
+        {
+          "index" : 1,
+          "name" : "TimeMachineEditor",
+          "path" : "\/Applications\/TimeMachineEditor.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Duplicati",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Duplicati.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Exporter",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Exporter.app"
+        }
+      ],
+      "globalIndex" : 3,
+      "id" : "BBA32A66-DA33-47FA-B99C-F56660E1223F",
+      "kind" : "folder",
+      "name" : "Backup",
+      "pageIndex" : 0,
+      "position" : 3
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Firefox",
+          "path" : "\/Applications\/Firefox.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Brave Browser",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Brave Browser.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Chromium",
+          "path" : "\/Applications\/Chromium.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Vivaldi",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Vivaldi.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Tor Browser",
+          "path" : "\/Users\/egigoka\/Library\/Application Support\/TorBrowser-Data\/UpdateInfo\/Applications\/Tor Browser\/updates\/0\/Updated.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Orion",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Orion.app"
+        },
+        {
+          "index" : 6,
+          "name" : "MagnumGO",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/MagnumGO.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Safari",
+          "path" : "\/System\/Volumes\/Preboot\/Cryptexes\/App\/System\/Applications\/Safari.app"
+        }
+      ],
+      "globalIndex" : 4,
+      "id" : "9B21D4D6-0B0E-4729-8638-18E9B8FD2AA3",
+      "kind" : "folder",
+      "name" : "Browsers",
+      "pageIndex" : 0,
+      "position" : 4
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "iPhone Mirroring",
+          "path" : "\/System\/Applications\/iPhone Mirroring.app"
+        },
+        {
+          "index" : 1,
+          "name" : "iOS App Signer",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/iOS App Signer.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Xcodes",
+          "path" : "\/Applications\/Xcodes.app"
+        },
+        {
+          "index" : 3,
+          "name" : "RocketSim",
+          "path" : "\/Applications\/RocketSim.app"
+        },
+        {
+          "index" : 4,
+          "name" : "DevCleaner",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/DevCleaner.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Developer",
+          "path" : "\/Applications\/Developer.app"
+        },
+        {
+          "index" : 6,
+          "name" : "App Icon Generator",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/App Icon Generator.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Start Android emulator",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Start Android emulator.app"
+        },
+        {
+          "index" : 8,
+          "name" : "Genymotion",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Genymotion.app"
+        },
+        {
+          "index" : 9,
+          "name" : "Android Studio",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Android Studio.app"
+        },
+        {
+          "index" : 10,
+          "name" : "Genymotion Shell",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Genymotion Shell.app"
+        },
+        {
+          "index" : 11,
+          "name" : "Xcode-26.4.0",
+          "path" : "\/Applications\/Xcode-26.4.0.app"
+        },
+        {
+          "index" : 12,
+          "name" : "SF Symbols",
+          "path" : "\/Applications\/SF Symbols.app"
+        },
+        {
+          "index" : 13,
+          "name" : "Semantic SF",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Semantic SF.app"
+        }
+      ],
+      "globalIndex" : 5,
+      "id" : "C6442FE6-4D82-43BA-8856-0BAAC2383922",
+      "kind" : "folder",
+      "name" : "Development iOS",
+      "pageIndex" : 0,
+      "position" : 5
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Beyond Compare",
+          "path" : "\/Applications\/Beyond Compare.app"
+        },
+        {
+          "index" : 1,
+          "name" : "PyCharm CE",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/PyCharm CE.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Sourcetree",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Sourcetree.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Sublime Merge",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Sublime Merge.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Sublime Text",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Sublime Text.app"
+        },
+        {
+          "index" : 5,
+          "name" : "TextMate",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/TextMate.app"
+        },
+        {
+          "index" : 6,
+          "name" : "VSCodium",
+          "path" : "\/Applications\/VSCodium.app"
+        },
+        {
+          "index" : 7,
+          "name" : "kdiff3",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/kdiff3.app"
+        },
+        {
+          "index" : 8,
+          "name" : "Cursor",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Cursor.app"
+        },
+        {
+          "index" : 9,
+          "name" : "Regextor",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Regextor.app"
+        },
+        {
+          "index" : 10,
+          "name" : "Anki",
+          "path" : "\/Applications\/Anki.app"
+        },
+        {
+          "index" : 11,
+          "name" : "WebStorm",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/WebStorm.app"
+        }
+      ],
+      "globalIndex" : 6,
+      "id" : "BF1C6A5D-3791-4D6A-9FDF-49A7D64C8616",
+      "kind" : "folder",
+      "name" : "Development other",
+      "pageIndex" : 0,
+      "position" : 6
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "PixelsTester",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/MonitorDetector.app"
+        },
+        {
+          "index" : 1,
+          "name" : "BetterDisplay",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/BetterDisplay.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Displaperture",
+          "path" : "\/Applications\/Displaperture.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Aerial Companion",
+          "path" : "\/Applications\/Aerial Companion.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Lunar",
+          "path" : "\/Applications\/Lunar.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Greenshot",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Greenshot.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Kap",
+          "path" : "\/Applications\/Kap.app"
+        },
+        {
+          "index" : 7,
+          "name" : "TextSniper",
+          "path" : "\/Applications\/TextSniper.app"
+        }
+      ],
+      "globalIndex" : 7,
+      "id" : "B71E0DC1-1C15-4498-972B-4D453E6639F9",
+      "kind" : "folder",
+      "name" : "Display Tools",
+      "pageIndex" : 0,
+      "position" : 7
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Podcasts",
+          "path" : "\/System\/Applications\/Podcasts.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Books",
+          "path" : "\/System\/Applications\/Books.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Plexamp",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Plexamp.app"
+        },
+        {
+          "index" : 3,
+          "name" : "AirServer",
+          "path" : "\/Applications\/AirServer.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Broadcasts",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Broadcasts.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Elpy",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Elpy.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Friendly Streaming",
+          "path" : "\/Applications\/Friendly Streaming.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Infuse",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Infuse.app"
+        },
+        {
+          "index" : 8,
+          "name" : "IINA",
+          "path" : "\/Applications\/IINA.app"
+        },
+        {
+          "index" : 9,
+          "name" : "Movist Pro",
+          "path" : "\/Applications\/Movist Pro.app"
+        },
+        {
+          "index" : 10,
+          "name" : "MyShows",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/MyShows.app"
+        },
+        {
+          "index" : 11,
+          "name" : "Plex",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Plex.app"
+        },
+        {
+          "index" : 12,
+          "name" : "Shazam",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Shazam.app"
+        },
+        {
+          "index" : 13,
+          "name" : "Spotify",
+          "path" : "\/Applications\/Spotify.app"
+        },
+        {
+          "index" : 14,
+          "name" : "calibre",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/calibre.app"
+        },
+        {
+          "index" : 15,
+          "name" : "KinoPub",
+          "path" : "\/Volumes\/sharge2k\/linked\/Users\/egigoka\/Applications\/PlayCover\/KinoPub.app"
+        }
+      ],
+      "globalIndex" : 8,
+      "id" : "51660488-276F-43C8-97DE-7ECA8A90978E",
+      "kind" : "folder",
+      "name" : "Entertainment",
+      "pageIndex" : 0,
+      "position" : 8
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "DaisyDisk",
+          "path" : "\/Applications\/DaisyDisk.app"
+        },
+        {
+          "index" : 1,
+          "name" : "EasyFind",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/EasyFind.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Blackmagic Disk Speed Test",
+          "path" : "\/Applications\/Blackmagic Disk Speed Test.app"
+        },
+        {
+          "index" : 3,
+          "name" : "CPDT",
+          "path" : "\/Applications\/CPDT.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Command X",
+          "path" : "\/Applications\/Command X.app"
+        },
+        {
+          "index" : 5,
+          "name" : "DriveDx",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/DriveDx.app"
+        },
+        {
+          "index" : 6,
+          "name" : "HoudahSpot",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/HoudahSpot.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Mountain Duck",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Mountain Duck.app"
+        },
+        {
+          "index" : 8,
+          "name" : "Nextcloud",
+          "path" : "\/Applications\/Nextcloud.app"
+        },
+        {
+          "index" : 9,
+          "name" : "Transmit",
+          "path" : "\/Applications\/Transmit.app"
+        },
+        {
+          "index" : 10,
+          "name" : "dupeguru",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/dupeguru.app"
+        },
+        {
+          "index" : 11,
+          "name" : "Resilio Sync",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Resilio Sync.app"
+        },
+        {
+          "index" : 12,
+          "name" : "CloudMounter",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/CloudMounter.app"
+        },
+        {
+          "index" : 13,
+          "name" : "LocalSend",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/LocalSend.app"
+        }
+      ],
+      "globalIndex" : 9,
+      "id" : "60720FCD-0BE0-4327-824A-2E247B6D5016",
+      "kind" : "folder",
+      "name" : "File management",
+      "pageIndex" : 0,
+      "position" : 9
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "МиГ",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/МиГ.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Korona",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Korona.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Subtrack",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Subtrack.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Sber KZ",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Sber KZ.app"
+        },
+        {
+          "index" : 4,
+          "name" : "СберБанк",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/СберБанк.app"
+        }
+      ],
+      "globalIndex" : 10,
+      "id" : "6125F03E-82DF-48E2-8C48-79133C3B7C9A",
+      "kind" : "folder",
+      "name" : "Finance",
+      "pageIndex" : 0,
+      "position" : 10
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Chess",
+          "path" : "\/System\/Applications\/Chess.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Dolphin",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Dolphin.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Minecraft",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Minecraft.app"
+        },
+        {
+          "index" : 3,
+          "name" : "mpv",
+          "path" : "\/Applications\/mpv.app"
+        },
+        {
+          "index" : 4,
+          "name" : "OpenEmu",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/OpenEmu.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Ryujinx",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Ryujinx.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Steam",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Steam.app"
+        },
+        {
+          "index" : 7,
+          "name" : "PlayCover",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/PlayCover.app"
+        },
+        {
+          "index" : 8,
+          "name" : "Mythic",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Mythic.app"
+        },
+        {
+          "index" : 9,
+          "name" : "Prism Launcher",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Prism Launcher.app"
+        }
+      ],
+      "globalIndex" : 11,
+      "id" : "F36328E7-72F2-4AB7-B269-96123CC78907",
+      "kind" : "folder",
+      "name" : "Games",
+      "pageIndex" : 0,
+      "position" : 11
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "SaneSideButtons",
+          "path" : "\/Applications\/SaneSideButtons.app"
+        },
+        {
+          "index" : 1,
+          "name" : "BetterMouse",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/BetterMouse.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Mousecape",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Mousecape.app"
+        },
+        {
+          "index" : 3,
+          "name" : "BetterTouchTool",
+          "path" : "\/Applications\/BetterTouchTool.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Karabiner-Elements",
+          "path" : "\/Applications\/Karabiner-Elements.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Karabiner-EventViewer",
+          "path" : "\/Applications\/Karabiner-EventViewer.app"
+        },
+        {
+          "index" : 6,
+          "name" : "KeyClu",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/KeyClu.app"
+        },
+        {
+          "index" : 7,
+          "name" : "CustomShortcuts",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/CustomShortcuts.app"
+        },
+        {
+          "index" : 8,
+          "name" : "Multitouch",
+          "path" : "\/Applications\/Multitouch.app"
+        },
+        {
+          "index" : 9,
+          "name" : "Smart Scroll",
+          "path" : "\/Applications\/Smart Scroll.app"
+        }
+      ],
+      "globalIndex" : 12,
+      "id" : "6DC4B9C3-1957-4C4D-A86B-F491D4C7E646",
+      "kind" : "folder",
+      "name" : "Input",
+      "pageIndex" : 0,
+      "position" : 12
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Image Playground",
+          "path" : "\/System\/Applications\/Image Playground.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Machato",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Machato.app"
+        },
+        {
+          "index" : 2,
+          "name" : "DiffusionBee",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/DiffusionBee.app"
+        },
+        {
+          "index" : 3,
+          "name" : "LM Studio",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/LM Studio.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Claude",
+          "path" : "\/Applications\/Claude.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Perplexity",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Perplexity.app"
+        },
+        {
+          "index" : 6,
+          "name" : "ChatGPT",
+          "path" : "\/Applications\/ChatGPT.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Copilot",
+          "path" : "\/Volumes\/sharge2k\/linked\/Users\/egigoka\/Applications\/Copilot.app"
+        },
+        {
+          "index" : 8,
+          "name" : "ChatGPT",
+          "path" : "\/Users\/egigoka\/Applications\/ChatGPT.app"
+        }
+      ],
+      "globalIndex" : 13,
+      "id" : "C7354A5A-85C6-4A2E-A64B-A96677F61520",
+      "kind" : "folder",
+      "name" : "LLMs",
+      "pageIndex" : 0,
+      "position" : 13
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "2GIS (wine)",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/2GIS (wine).app"
+        }
+      ],
+      "globalIndex" : 14,
+      "id" : "1FF71DF2-E317-4E17-9C8C-31803FDF088F",
+      "kind" : "folder",
+      "name" : "Maps",
+      "pageIndex" : 0,
+      "position" : 14
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Mail",
+          "path" : "\/System\/Applications\/Mail.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Contacts",
+          "path" : "\/System\/Applications\/Contacts.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Messages",
+          "path" : "\/System\/Applications\/Messages.app"
+        },
+        {
+          "index" : 3,
+          "name" : "FaceTime",
+          "path" : "\/System\/Applications\/FaceTime.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Element",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Element.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Discord",
+          "path" : "\/Applications\/Discord.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Ripcord",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Ripcord.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Telegram",
+          "path" : "\/Applications\/Telegram.app"
+        },
+        {
+          "index" : 8,
+          "name" : "Signal",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Signal.app"
+        },
+        {
+          "index" : 9,
+          "name" : "VencordInstaller",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/VencordInstaller.app"
+        },
+        {
+          "index" : 10,
+          "name" : "‎WhatsApp",
+          "path" : "\/Applications\/WhatsApp.app"
+        },
+        {
+          "index" : 11,
+          "name" : "Telegram",
+          "path" : "\/Users\/egigoka\/Library\/Application Support\/Telegram Desktop\/tupdates\/temp\/Telegram.app"
+        }
+      ],
+      "globalIndex" : 15,
+      "id" : "BD002591-322A-4D0F-8615-7FFA706248E9",
+      "kind" : "folder",
+      "name" : "Messengers",
+      "pageIndex" : 0,
+      "position" : 15
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Find My",
+          "path" : "\/System\/Applications\/FindMy.app"
+        },
+        {
+          "index" : 1,
+          "name" : "ubports-installer",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/ubports-installer.app"
+        },
+        {
+          "index" : 2,
+          "name" : "droidian-installer",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/droidian-installer.app"
+        },
+        {
+          "index" : 3,
+          "name" : "AltServer",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/AltServer.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Apple Configurator",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Apple Configurator.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Sideloadly",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Sideloadly.app"
+        },
+        {
+          "index" : 6,
+          "name" : "WALTR PRO",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/WALTR PRO.app"
+        },
+        {
+          "index" : 7,
+          "name" : "OpenMTP",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/OpenMTP.app"
+        },
+        {
+          "index" : 8,
+          "name" : "NearDrop",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/NearDrop.app"
+        },
+        {
+          "index" : 9,
+          "name" : "Waltr 2",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Waltr 2.app"
+        },
+        {
+          "index" : 10,
+          "name" : "checkra1n",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/checkra1n.app"
+        },
+        {
+          "index" : 11,
+          "name" : "iBetterCharge",
+          "path" : "\/Applications\/iBetterCharge.app"
+        },
+        {
+          "index" : 12,
+          "name" : "iMazing",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/iMazing.app"
+        },
+        {
+          "index" : 13,
+          "name" : "heimdall-frontend",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/heimdall-frontend.app"
+        }
+      ],
+      "globalIndex" : 16,
+      "id" : "5A0E6CBB-803D-4869-98FA-D9B6F28E917E",
+      "kind" : "folder",
+      "name" : "Mobile device managements",
+      "pageIndex" : 0,
+      "position" : 16
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Photos",
+          "path" : "\/System\/Applications\/Photos.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Photo Booth",
+          "path" : "\/System\/Applications\/Photo Booth.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Audio Hijack",
+          "path" : "\/Applications\/Audio Hijack.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Camo Studio",
+          "path" : "\/Applications\/Camo Studio.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Final Cut Pro",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Final Cut Pro.app"
+        },
+        {
+          "index" : 5,
+          "name" : "HandBrake",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/HandBrake.app"
+        },
+        {
+          "index" : 6,
+          "name" : "ImageOptim",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/ImageOptim.app"
+        },
+        {
+          "index" : 7,
+          "name" : "OBS",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/OBS.app"
+        },
+        {
+          "index" : 8,
+          "name" : "PDF Squeezer",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/PDF Squeezer.app"
+        },
+        {
+          "index" : 9,
+          "name" : "Permute 3",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Permute 3.app"
+        },
+        {
+          "index" : 10,
+          "name" : "Pixelmator Pro_2_3_6",
+          "path" : "\/Applications\/Pixelmator Pro_2_3_6.app"
+        },
+        {
+          "index" : 11,
+          "name" : "SoundSource",
+          "path" : "\/Applications\/SoundSource.app"
+        },
+        {
+          "index" : 12,
+          "name" : "krita",
+          "path" : "\/Applications\/krita.app"
+        },
+        {
+          "index" : 13,
+          "name" : "Get Sauce",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Get Sauce.app"
+        },
+        {
+          "index" : 14,
+          "name" : "LosslessCut",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/LosslessCut.app"
+        },
+        {
+          "index" : 15,
+          "name" : "Reversee",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Reversee.app"
+        },
+        {
+          "index" : 16,
+          "name" : "Downie 4 (from backup)",
+          "path" : "\/Users\/egigoka\/Documents\/apps backups\/Downie 4 (from backup).app"
+        }
+      ],
+      "globalIndex" : 17,
+      "id" : "2A04EF9D-346F-4EE7-B209-35DFB420F864",
+      "kind" : "folder",
+      "name" : "Multimedia production",
+      "pageIndex" : 0,
+      "position" : 17
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "qbittorrent",
+          "path" : "\/Applications\/MacPorts\/qbittorrent.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Speedtest",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Speedtest.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Transmission",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Transmission.app"
+        },
+        {
+          "index" : 3,
+          "name" : "UniFi Network Server",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/UniFi.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Fing",
+          "path" : "\/Applications\/Fing.app"
+        },
+        {
+          "index" : 5,
+          "name" : "My Links",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/My Links.app"
+        }
+      ],
+      "globalIndex" : 18,
+      "id" : "C0F31598-D463-4E5E-9A87-0A6EDC2708A9",
+      "kind" : "folder",
+      "name" : "Network tools",
+      "pageIndex" : 0,
+      "position" : 18
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Reminders",
+          "path" : "\/System\/Applications\/Reminders.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Calendar",
+          "path" : "\/System\/Applications\/Calendar.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Clock",
+          "path" : "\/System\/Applications\/Clock.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Weather",
+          "path" : "\/System\/Applications\/Weather.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Notes",
+          "path" : "\/System\/Applications\/Notes.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Pages",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Pages.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Numbers",
+          "path" : "\/Applications\/Numbers Creator Studio.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Keynote",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Keynote.app"
+        },
+        {
+          "index" : 8,
+          "name" : "Cloud Outliner",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Cloud Outliner.app"
+        },
+        {
+          "index" : 9,
+          "name" : "Dynalist",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Dynalist.app"
+        },
+        {
+          "index" : 10,
+          "name" : "QuikFlow",
+          "path" : "\/Applications\/QuikFlow.app"
+        },
+        {
+          "index" : 11,
+          "name" : "Soulver 3",
+          "path" : "\/Applications\/Soulver 3.app"
+        },
+        {
+          "index" : 12,
+          "name" : "Trello",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Trello.app"
+        },
+        {
+          "index" : 13,
+          "name" : "Tydlig",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Tydlig.app"
+        },
+        {
+          "index" : 14,
+          "name" : "Be Focused Pro",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Be Focused Pro.app"
+        },
+        {
+          "index" : 15,
+          "name" : "Focus",
+          "path" : "\/Applications\/Focus.app"
+        },
+        {
+          "index" : 16,
+          "name" : "JobSnail",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/JobSnail.app"
+        },
+        {
+          "index" : 17,
+          "name" : "Progress",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Progress.app"
+        },
+        {
+          "index" : 18,
+          "name" : "Todoist",
+          "path" : "\/Applications\/Todoist.app"
+        },
+        {
+          "index" : 19,
+          "name" : "aTimeLogger",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/aTimeLogger.app"
+        },
+        {
+          "index" : 20,
+          "name" : "aTimeLogger Pro",
+          "path" : "\/Applications\/aTimeLogger Pro.app"
+        },
+        {
+          "index" : 21,
+          "name" : "LibreOffice",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/LibreOffice.app"
+        }
+      ],
+      "globalIndex" : 19,
+      "id" : "DCCAEC61-9D94-4F38-B872-68ED3DF7404C",
+      "kind" : "folder",
+      "name" : "Notes\/Organizers",
+      "pageIndex" : 0,
+      "position" : 19
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Windows App",
+          "path" : "\/Applications\/Windows App.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Parsec",
+          "path" : "\/Applications\/Parsec.app"
+        },
+        {
+          "index" : 2,
+          "name" : "AnyDesk",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/AnyDesk.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Barrier",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Barrier.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Remote for Mac",
+          "path" : "\/Applications\/Remote for Mac.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Royal TSX",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Royal TSX.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Screens 5",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Screens 5.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Vine Server",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Vine Server.app"
+        },
+        {
+          "index" : 8,
+          "name" : "VNC Viewer",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/VNC Viewer.app"
+        },
+        {
+          "index" : 9,
+          "name" : "RealVNC Server",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/RealVNC\/RealVNC Server.app"
+        },
+        {
+          "index" : 10,
+          "name" : "Deskflow",
+          "path" : "\/Applications\/Deskflow.app"
+        }
+      ],
+      "globalIndex" : 20,
+      "id" : "75F28FA4-00F4-4C0A-A969-1F222A7CD2D8",
+      "kind" : "folder",
+      "name" : "Remote access",
+      "pageIndex" : 0,
+      "position" : 20
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Passwords",
+          "path" : "\/System\/Applications\/Passwords.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Bitwarden",
+          "path" : "\/Applications\/Bitwarden.app"
+        },
+        {
+          "index" : 2,
+          "name" : "BlockBlock Helper",
+          "path" : "\/Applications\/BlockBlock Helper.app"
+        },
+        {
+          "index" : 3,
+          "name" : "KnockKnock",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/KnockKnock.app"
+        },
+        {
+          "index" : 4,
+          "name" : "DHS",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/DHS.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Malwarebytes",
+          "path" : "\/Applications\/Malwarebytes.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Little Snitch",
+          "path" : "\/Applications\/Little Snitch.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Netiquette",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Netiquette.app"
+        },
+        {
+          "index" : 8,
+          "name" : "OverSight",
+          "path" : "\/Applications\/OverSight.app"
+        },
+        {
+          "index" : 9,
+          "name" : "ReiKey",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/ReiKey.app"
+        },
+        {
+          "index" : 10,
+          "name" : "SpyBuster",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/SpyBuster.app"
+        },
+        {
+          "index" : 11,
+          "name" : "TaskExplorer",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/TaskExplorer.app"
+        },
+        {
+          "index" : 12,
+          "name" : "VirusTotalUploader",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/VirusTotalUploader.app"
+        },
+        {
+          "index" : 13,
+          "name" : "Wireshark",
+          "path" : "\/Applications\/Wireshark.app"
+        },
+        {
+          "index" : 14,
+          "name" : "Zenmap",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Zenmap.app"
+        },
+        {
+          "index" : 15,
+          "name" : "RansomWhere_Installer",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/RansomWhere_Installer.app"
+        },
+        {
+          "index" : 16,
+          "name" : "Raivo",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Raivo.app"
+        }
+      ],
+      "globalIndex" : 21,
+      "id" : "71CDE72D-B627-4176-B5AD-98A8DEA4E192",
+      "kind" : "folder",
+      "name" : "Security",
+      "pageIndex" : 0,
+      "position" : 21
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Voice Memos",
+          "path" : "\/System\/Applications\/VoiceMemos.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Siri",
+          "path" : "\/System\/Applications\/Siri.app"
+        },
+        {
+          "index" : 2,
+          "name" : "WhisperNotes",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/WhisperNotes.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Speechify",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Speechify.app"
+        }
+      ],
+      "globalIndex" : 22,
+      "id" : "A3E10315-D97A-48F6-832B-5DC82A9255AC",
+      "kind" : "folder",
+      "name" : "Speech",
+      "pageIndex" : 0,
+      "position" : 22
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "System Settings",
+          "path" : "\/System\/Applications\/System Settings.app"
+        },
+        {
+          "index" : 1,
+          "name" : "CleanMyMac",
+          "path" : "\/Applications\/CleanMyMac_5_4_0.app"
+        },
+        {
+          "index" : 2,
+          "name" : "TinkerTool",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/TinkerTool.app"
+        },
+        {
+          "index" : 3,
+          "name" : "TinkerTool System",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/TinkerTool System.app"
+        },
+        {
+          "index" : 4,
+          "name" : "OnyX",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/OnyX.app"
+        },
+        {
+          "index" : 5,
+          "name" : "LaunchControl",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/LaunchControl.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Deeper",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Deeper.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Geekbench 6",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Geekbench 6.app"
+        },
+        {
+          "index" : 8,
+          "name" : "Raycast",
+          "path" : "\/Applications\/Raycast.app"
+        },
+        {
+          "index" : 9,
+          "name" : "coconutBattery",
+          "path" : "\/Applications\/coconutBattery.app"
+        },
+        {
+          "index" : 10,
+          "name" : "AlDente",
+          "path" : "\/Applications\/AlDente.app"
+        },
+        {
+          "index" : 11,
+          "name" : "Kill All Apps",
+          "path" : "\/Applications\/Kill All Apps.app"
+        },
+        {
+          "index" : 12,
+          "name" : "Launchpad Manager",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Launchpad Manager.app"
+        },
+        {
+          "index" : 13,
+          "name" : "Console",
+          "path" : "\/System\/Applications\/Utilities\/Console.app"
+        },
+        {
+          "index" : 14,
+          "name" : "Activity Monitor",
+          "path" : "\/System\/Applications\/Utilities\/Activity Monitor.app"
+        }
+      ],
+      "globalIndex" : 23,
+      "id" : "15C85BE7-9F7E-4906-A996-B5884FE1F729",
+      "kind" : "folder",
+      "name" : "System utilities",
+      "pageIndex" : 0,
+      "position" : 23
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "iTerm",
+          "path" : "\/Applications\/iTerm.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Alacritty",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Alacritty.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Ghostty",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Ghostty.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Terminal",
+          "path" : "\/System\/Applications\/Utilities\/Terminal.app"
+        }
+      ],
+      "globalIndex" : 24,
+      "id" : "E7F1025A-1965-4A8D-B412-84FF48D97C9A",
+      "kind" : "folder",
+      "name" : "Terminal emulators",
+      "pageIndex" : 0,
+      "position" : 24
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "VirtualBuddy",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/VirtualBuddy.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Parallels Desktop",
+          "path" : "\/Applications\/Parallels Desktop.app"
+        },
+        {
+          "index" : 2,
+          "name" : "VirtualBox",
+          "path" : "\/Applications\/VirtualBox.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Viable",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Viable.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Liviable",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Liviable.app"
+        },
+        {
+          "index" : 5,
+          "name" : "OrbStack",
+          "path" : "\/Applications\/OrbStack.app"
+        }
+      ],
+      "globalIndex" : 25,
+      "id" : "2F27D61C-B030-42FE-8E57-4A5563902C9D",
+      "kind" : "folder",
+      "name" : "VM",
+      "pageIndex" : 0,
+      "position" : 25
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Proton VPN",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/ProtonVPN.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Psiphon",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Psiphon.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Outline",
+          "path" : "\/Applications\/Outline.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Lantern",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Lantern.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Tunnelblick",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Tunnelblick.app"
+        },
+        {
+          "index" : 5,
+          "name" : "WireGuard",
+          "path" : "\/Applications\/WireGuard.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Eddie",
+          "path" : "\/Applications\/Eddie.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Liberty_macOS",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Liberty_macOS.app"
+        },
+        {
+          "index" : 8,
+          "name" : "ColorSync Utility",
+          "path" : "\/System\/Applications\/Utilities\/ColorSync Utility.app"
+        }
+      ],
+      "globalIndex" : 26,
+      "id" : "2EE3EC86-9460-4D9E-8F37-82192BC63254",
+      "kind" : "folder",
+      "name" : "VPN",
+      "pageIndex" : 0,
+      "position" : 26
+    },
+    {
+      "globalIndex" : 27,
+      "kind" : "empty",
+      "pageIndex" : 0,
+      "position" : 27,
+      "token" : "813354A4-F791-4C7A-92BA-02F35B80CF9B"
+    },
+    {
+      "globalIndex" : 28,
+      "kind" : "empty",
+      "pageIndex" : 0,
+      "position" : 28,
+      "token" : "61AB3340-D098-473B-BF7F-24FA39B09B6E"
+    },
+    {
+      "globalIndex" : 29,
+      "kind" : "empty",
+      "pageIndex" : 0,
+      "position" : 29,
+      "token" : "FC22A778-CC7C-4D5F-96E2-E4436FDAFED1"
+    },
+    {
+      "globalIndex" : 30,
+      "kind" : "empty",
+      "pageIndex" : 0,
+      "position" : 30,
+      "token" : "0E1F17D1-D2D6-42EA-AC72-1297C55320CD"
+    },
+    {
+      "globalIndex" : 31,
+      "kind" : "empty",
+      "pageIndex" : 0,
+      "position" : 31,
+      "token" : "63C82746-2391-474C-A867-042B7CB719F4"
+    },
+    {
+      "globalIndex" : 32,
+      "kind" : "empty",
+      "pageIndex" : 0,
+      "position" : 32,
+      "token" : "749215D1-42C8-47A9-A06E-254E1B4B5347"
+    },
+    {
+      "globalIndex" : 33,
+      "kind" : "empty",
+      "pageIndex" : 0,
+      "position" : 33,
+      "token" : "8BD174BD-0D0E-4DF1-B086-2989040C1105"
+    },
+    {
+      "globalIndex" : 34,
+      "kind" : "empty",
+      "pageIndex" : 0,
+      "position" : 34,
+      "token" : "F14C5D9A-04E1-4AB2-B2CC-47B74C3954B8"
+    },
+    {
+      "globalIndex" : 35,
+      "kind" : "empty",
+      "pageIndex" : 0,
+      "position" : 35,
+      "token" : "71896055-DCC1-44B6-82C0-304227E21393"
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "TV",
+          "path" : "\/System\/Applications\/TV.app"
+        },
+        {
+          "index" : 1,
+          "name" : "News",
+          "path" : "\/System\/Applications\/News.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Stocks",
+          "path" : "\/System\/Applications\/Stocks.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Mission Control",
+          "path" : "\/System\/Applications\/Mission Control.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Dictionary",
+          "path" : "\/System\/Applications\/Dictionary.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Music",
+          "path" : "\/System\/Applications\/Music.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Preview",
+          "path" : "\/System\/Applications\/Preview.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Home",
+          "path" : "\/System\/Applications\/Home.app"
+        },
+        {
+          "index" : 8,
+          "name" : "Freeform",
+          "path" : "\/System\/Applications\/Freeform.app"
+        },
+        {
+          "index" : 9,
+          "name" : "Calculator",
+          "path" : "\/System\/Applications\/Calculator.app"
+        },
+        {
+          "index" : 10,
+          "name" : "Image Capture",
+          "path" : "\/System\/Applications\/Image Capture.app"
+        },
+        {
+          "index" : 11,
+          "name" : "TextEdit",
+          "path" : "\/System\/Applications\/TextEdit.app"
+        },
+        {
+          "index" : 12,
+          "name" : "Font Book",
+          "path" : "\/System\/Applications\/Font Book.app"
+        },
+        {
+          "index" : 13,
+          "name" : "Maps",
+          "path" : "\/System\/Applications\/Maps.app"
+        },
+        {
+          "index" : 14,
+          "name" : "Stickies",
+          "path" : "\/System\/Applications\/Stickies.app"
+        },
+        {
+          "index" : 15,
+          "name" : "Tips",
+          "path" : "\/System\/Applications\/Tips.app"
+        },
+        {
+          "index" : 16,
+          "name" : "QuickTime Player",
+          "path" : "\/System\/Applications\/QuickTime Player.app"
+        },
+        {
+          "index" : 17,
+          "name" : "QuickLook Video",
+          "path" : "\/Applications\/QuickLook Video.app"
+        },
+        {
+          "index" : 18,
+          "name" : "Disk Utility",
+          "path" : "\/System\/Applications\/Utilities\/Disk Utility.app"
+        },
+        {
+          "index" : 19,
+          "name" : "Bluetooth File Exchange",
+          "path" : "\/System\/Applications\/Utilities\/Bluetooth File Exchange.app"
+        },
+        {
+          "index" : 20,
+          "name" : "Screen Sharing",
+          "path" : "\/System\/Applications\/Utilities\/Screen Sharing.app"
+        },
+        {
+          "index" : 21,
+          "name" : "System Information",
+          "path" : "\/System\/Applications\/Utilities\/System Information.app"
+        },
+        {
+          "index" : 22,
+          "name" : "Grapher",
+          "path" : "\/System\/Applications\/Utilities\/Grapher.app"
+        },
+        {
+          "index" : 23,
+          "name" : "AirPort Utility",
+          "path" : "\/System\/Applications\/Utilities\/AirPort Utility.app"
+        },
+        {
+          "index" : 24,
+          "name" : "Migration Assistant",
+          "path" : "\/System\/Applications\/Utilities\/Migration Assistant.app"
+        },
+        {
+          "index" : 25,
+          "name" : "Screenshot",
+          "path" : "\/System\/Applications\/Utilities\/Screenshot.app"
+        },
+        {
+          "index" : 26,
+          "name" : "Print Center",
+          "path" : "\/System\/Applications\/Utilities\/Print Center.app"
+        },
+        {
+          "index" : 27,
+          "name" : "Digital Color Meter",
+          "path" : "\/System\/Applications\/Utilities\/Digital Color Meter.app"
+        },
+        {
+          "index" : 28,
+          "name" : "VoiceOver Utility",
+          "path" : "\/System\/Applications\/Utilities\/VoiceOver Utility.app"
+        },
+        {
+          "index" : 29,
+          "name" : "Audio MIDI Setup",
+          "path" : "\/System\/Applications\/Utilities\/Audio MIDI Setup.app"
+        },
+        {
+          "index" : 30,
+          "name" : "Script Editor",
+          "path" : "\/System\/Applications\/Utilities\/Script Editor.app"
+        }
+      ],
+      "globalIndex" : 36,
+      "id" : "D0D07319-D28A-4A99-BDA8-8168B8AEEEA6",
+      "kind" : "folder",
+      "name" : "Bullshit",
+      "pageIndex" : 1,
+      "position" : 0
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "PiPifier",
+          "path" : "\/Applications\/PiPifier.app"
+        },
+        {
+          "index" : 1,
+          "name" : "AdBlock",
+          "path" : "\/Applications\/AdBlock.app"
+        },
+        {
+          "index" : 2,
+          "name" : "DuckDuckGo Privacy for Safari",
+          "path" : "\/Applications\/DuckDuckGo Privacy for Safari.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Adblock Plus",
+          "path" : "\/Applications\/Adblock Plus.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Ghostery Privacy Ad Blocker",
+          "path" : "\/Applications\/Ghostery Privacy Ad Blocker.app"
+        },
+        {
+          "index" : 5,
+          "name" : "Hush",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Hush.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Turn Off the Lights for Safari",
+          "path" : "\/Applications\/Turn Off the Lights for Safari.app"
+        },
+        {
+          "index" : 7,
+          "name" : "PiPer",
+          "path" : "\/Applications\/PiPer.app"
+        },
+        {
+          "index" : 8,
+          "name" : "Dark Mode for Safari",
+          "path" : "\/Applications\/Dark Mode for Safari.app"
+        },
+        {
+          "index" : 9,
+          "name" : "AdBlock Pro",
+          "path" : "\/Applications\/AdBlock Pro.app"
+        },
+        {
+          "index" : 10,
+          "name" : "Dark Reader for Safari",
+          "path" : "\/Applications\/Dark Reader for Safari.app"
+        },
+        {
+          "index" : 11,
+          "name" : "Dislikes Democratized Desktop",
+          "path" : "\/Applications\/Dislikes Democratized Desktop.app"
+        },
+        {
+          "index" : 12,
+          "name" : "Right Click",
+          "path" : "\/Applications\/Right Click.app"
+        },
+        {
+          "index" : 13,
+          "name" : "Super Agent",
+          "path" : "\/Applications\/Super Agent.app"
+        },
+        {
+          "index" : 14,
+          "name" : "SponsorBlock",
+          "path" : "\/Applications\/SponsorBlock.app"
+        },
+        {
+          "index" : 15,
+          "name" : "WOT for Safari",
+          "path" : "\/Applications\/WOT for Safari.app"
+        },
+        {
+          "index" : 16,
+          "name" : "Tampermonkey Classic",
+          "path" : "\/Applications\/Tampermonkey Classic.app"
+        },
+        {
+          "index" : 17,
+          "name" : "Kagi for Safari",
+          "path" : "\/Applications\/Kagi for Safari.app"
+        },
+        {
+          "index" : 18,
+          "name" : "Wipr",
+          "path" : "\/Applications\/Wipr.app"
+        }
+      ],
+      "globalIndex" : 37,
+      "id" : "9B3A075F-9DBE-4FFC-BD84-B178703642FF",
+      "kind" : "folder",
+      "name" : "Safari Extensions",
+      "pageIndex" : 1,
+      "position" : 1
+    },
+    {
+      "apps" : [
+        {
+          "index" : 0,
+          "name" : "Amphetamine",
+          "path" : "\/Applications\/Amphetamine.app"
+        },
+        {
+          "index" : 1,
+          "name" : "Amphetamine Enhancer",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Amphetamine Enhancer.app"
+        },
+        {
+          "index" : 2,
+          "name" : "Hand Mirror",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Hand Mirror.app"
+        },
+        {
+          "index" : 3,
+          "name" : "Menu Bar Spacing",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Menu Bar Spacing.app"
+        },
+        {
+          "index" : 4,
+          "name" : "Pippo",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Pippo.app"
+        },
+        {
+          "index" : 5,
+          "name" : "AirBuddy",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/AirBuddy.app"
+        },
+        {
+          "index" : 6,
+          "name" : "Better Window Manager",
+          "path" : "\/Applications\/Better Window Manager.app"
+        },
+        {
+          "index" : 7,
+          "name" : "Dropover",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Dropover.app"
+        },
+        {
+          "index" : 8,
+          "name" : "Gestimer",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Gestimer.app"
+        },
+        {
+          "index" : 9,
+          "name" : "Maccy",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Maccy.app"
+        },
+        {
+          "index" : 10,
+          "name" : "Mic Drop",
+          "path" : "\/Applications\/Mic Drop.app"
+        },
+        {
+          "index" : 11,
+          "name" : "Mission Control Plus",
+          "path" : "\/Applications\/Mission Control Plus.app"
+        },
+        {
+          "index" : 12,
+          "name" : "ScreenshotMenu",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/ScreenshotMenu.app"
+        },
+        {
+          "index" : 13,
+          "name" : "Shareful",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Shareful.app"
+        },
+        {
+          "index" : 14,
+          "name" : "TinyStopwatch",
+          "path" : "\/Applications\/TinyStopwatch.app"
+        },
+        {
+          "index" : 15,
+          "name" : "iStat Menus",
+          "path" : "\/Applications\/iStat Menus.app"
+        },
+        {
+          "index" : 16,
+          "name" : "noTunes",
+          "path" : "\/Applications\/noTunes.app"
+        },
+        {
+          "index" : 17,
+          "name" : "MenubarPing",
+          "path" : "\/Applications\/MenubarPing.app"
+        },
+        {
+          "index" : 18,
+          "name" : "Lickable Menu Bar",
+          "path" : "\/Applications\/Lickable Menu Bar.app"
+        },
+        {
+          "index" : 19,
+          "name" : "Alarm",
+          "path" : "\/Volumes\/sharge2k\/linked\/Applications\/Alarm.app"
+        }
+      ],
+      "globalIndex" : 38,
+      "id" : "E1453F87-3F96-480D-B822-EA33A95B4334",
+      "kind" : "folder",
+      "name" : "Menubar apps",
+      "pageIndex" : 1,
+      "position" : 2
+    },
+    {
+      "globalIndex" : 39,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 3,
+      "token" : "5BA7D9FD-14C3-491A-B809-D3375CB528D1"
+    },
+    {
+      "globalIndex" : 40,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 4,
+      "token" : "343BD921-5263-4913-87C8-08F067CABAF6"
+    },
+    {
+      "globalIndex" : 41,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 5,
+      "token" : "1855D47D-7C5F-4A8A-B15A-F1EA8ED95E4E"
+    },
+    {
+      "globalIndex" : 42,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 6,
+      "token" : "32D1E8A8-9AD3-4FF5-80EE-ACA714B7291C"
+    },
+    {
+      "globalIndex" : 43,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 7,
+      "token" : "DFCBED28-236B-4104-83AE-B9AC741ABC40"
+    },
+    {
+      "globalIndex" : 44,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 8,
+      "token" : "2804E032-819E-42D0-BAE0-D76E2AE15315"
+    },
+    {
+      "globalIndex" : 45,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 9,
+      "token" : "F3729FEB-3EF6-4443-99C4-8C05EC48705B"
+    },
+    {
+      "globalIndex" : 46,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 10,
+      "token" : "FC5960CE-FAB4-4ACB-88AA-55C3951376B9"
+    },
+    {
+      "globalIndex" : 47,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 11,
+      "token" : "A2C748B7-B217-4725-A899-04C0A1AD34BB"
+    },
+    {
+      "globalIndex" : 48,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 12,
+      "token" : "92C59FD3-79B7-45FC-993F-8D95E8DD02E7"
+    },
+    {
+      "globalIndex" : 49,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 13,
+      "token" : "5591E67A-20C0-464E-9BC6-1C7302176212"
+    },
+    {
+      "globalIndex" : 50,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 14,
+      "token" : "FD46ED6C-B227-4A4E-A5F9-46C9FA8ACD02"
+    },
+    {
+      "globalIndex" : 51,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 15,
+      "token" : "B54C0A28-4F4F-40F0-BBFD-868BE71F2167"
+    },
+    {
+      "globalIndex" : 52,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 16,
+      "token" : "21DA26FA-F0A2-4DDA-9DA5-C132D4939B7A"
+    },
+    {
+      "globalIndex" : 53,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 17,
+      "token" : "F0D1563A-F430-4515-A864-3391DD8806A9"
+    },
+    {
+      "globalIndex" : 54,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 18,
+      "token" : "1CD86AEC-9609-4323-BC8C-AF13F66E35A6"
+    },
+    {
+      "globalIndex" : 55,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 19,
+      "token" : "20508184-30A0-4C00-B96E-98218AADD3D2"
+    },
+    {
+      "globalIndex" : 56,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 20,
+      "token" : "BC3E7752-81FD-4656-AB33-B817A618BF29"
+    },
+    {
+      "globalIndex" : 57,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 21,
+      "token" : "CAB63A45-1D38-45BE-8A90-9F3706C5F5F9"
+    },
+    {
+      "globalIndex" : 58,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 22,
+      "token" : "75D283B5-1129-4932-B9AA-BA8579BD8C9D"
+    },
+    {
+      "globalIndex" : 59,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 23,
+      "token" : "3C54FCBB-874E-45D5-B301-E2CE48F3D390"
+    },
+    {
+      "globalIndex" : 60,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 24,
+      "token" : "1E45DE90-43DC-4328-AC66-91682697BB7C"
+    },
+    {
+      "globalIndex" : 61,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 25,
+      "token" : "4B314BE2-509D-4183-82DA-8DD18E02CF74"
+    },
+    {
+      "globalIndex" : 62,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 26,
+      "token" : "F8A87A53-AE32-4A73-A658-603B811BA040"
+    },
+    {
+      "globalIndex" : 63,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 27,
+      "token" : "4E0DAD5A-4263-4E6B-8930-D69E177FAFAF"
+    },
+    {
+      "globalIndex" : 64,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 28,
+      "token" : "1EE47C0A-F85C-483B-9DB2-35223B07AE33"
+    },
+    {
+      "globalIndex" : 65,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 29,
+      "token" : "27112E5F-DAC9-44B0-B795-29F7A2BF986B"
+    },
+    {
+      "globalIndex" : 66,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 30,
+      "token" : "76EE0AAD-AF93-409E-9A1E-01B046C1F3FF"
+    },
+    {
+      "globalIndex" : 67,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 31,
+      "token" : "0F4E943F-497A-4F20-A620-5191523F77E6"
+    },
+    {
+      "globalIndex" : 68,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 32,
+      "token" : "375DA719-A115-4800-9DB2-89BA453C4827"
+    },
+    {
+      "globalIndex" : 69,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 33,
+      "token" : "8B2A7A83-C865-4B15-8EDE-6145DC0994A9"
+    },
+    {
+      "globalIndex" : 70,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 34,
+      "token" : "E6B97EE6-C135-47E8-B08E-67006F5C8FE9"
+    },
+    {
+      "globalIndex" : 71,
+      "kind" : "empty",
+      "pageIndex" : 1,
+      "position" : 35,
+      "token" : "EEB8FD1E-C94B-4CEF-98A4-F943C8A7E7ED"
+    }
+  ],
+  "layout" : {
+    "columnsPerPage" : 9,
+    "currentPage" : 0,
+    "fullscreenMode" : true,
+    "itemsPerPage" : 36,
+    "rowsPerPage" : 4,
+    "totalItems" : 72,
+    "totalPages" : 2
+  },
+  "snapshotType" : "launchNext.layout"
+}
