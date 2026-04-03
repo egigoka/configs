@@ -254,6 +254,7 @@ install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.config/opencode/AGENTS.md"
 
 # claude code
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+install_link "$CONFIGS_DIR/claude/settings.json" "$HOME/.claude/settings.json"
 
 # codex
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex/AGENTS.md"
