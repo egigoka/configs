@@ -260,6 +260,9 @@ install_link "$CONFIGS_DIR/claude/settings.json" "$HOME/.claude/settings.json"
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex/AGENTS.md"
 install_link "$CONFIGS_DIR/codex/codex.toml" "$HOME/.codex/config.toml"
 
+# forge
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/forge/AGENTS.md"
+
 # lsd
 install_link "$CONFIGS_DIR/lsd" "$HOME/.config/lsd"
 
