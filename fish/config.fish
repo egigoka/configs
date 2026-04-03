@@ -14,10 +14,13 @@ if status is-interactive
   ensure_path ~/.local/bin
   ensure_path ~/.filen-cli/bin
   ensure_path /opt/homebrew/bin
+  ensure_path /opt/homebrew/sbin
   ensure_path /opt/homebrew/opt/llvm/bin
   ensure_path /opt/homebrew/opt/ccache/libexec
   ensure_path /opt/homebrew/opt/ffmpeg-full/bin
   ensure_path /opt/homebrew/opt/imagemagick-full/bin
+  ensure_path /opt/local/bin
+  ensure_path /opt/local/sbin
   ensure_path /usr/games
   ensure_path /usr/sbin
   ensure_path /usr/local/bin
@@ -314,7 +317,7 @@ if status is-interactive
       end
     case Darwin
       # mAcos
-      abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all
+      abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo port upgrade outdated \&\& sudo port reclaim --enable-reminders
       abbr --add install   --position command brew install
       abbr --add uninstall --position command brew remove
     case '*'
