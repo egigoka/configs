@@ -187,6 +187,9 @@ else
   # custom zsh plugins (still needed for dircolors-solarized)
   ZSH_CUSTOM="$CONFIGS_DIR/zsh/ZSH_CUSTOM" sh "$CONFIGS_DIR/zsh/ZSH_CUSTOM/install_themes_plugins.sh"
 
+  # dircolors-solarized
+  [ -d "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized" ] || git clone https://github.com/seebi/dircolors-solarized "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized"
+
   # zsh config
   #sh ~/configs/install_scripts/install_omz.sh
   #install_link ~/configs/zsh/.zshrc ~/.zshrc
