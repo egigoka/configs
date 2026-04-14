@@ -238,6 +238,9 @@ if status is-interactive
     #For pkg-config to find openssl@3 you may need to set:
     set -x PKG_CONFIG_PATH "/opt/homebrew/opt/openssl@3/lib/pkgconfig"
 
+    # VapourSynth plugin autoload path
+    set -x VAPOURSYNTH_EXTRA_PLUGIN_PATH "/opt/homebrew/lib/vapoursynth"
+
     # orbstack
     source ~/.orbstack/shell/init2.fish 2>/dev/null || :
   end
