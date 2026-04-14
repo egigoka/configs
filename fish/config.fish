@@ -451,3 +451,5 @@ if status is-interactive
   starship init fish | source
   # enable_transience  # enabling transient shell in starship
 end
+
+test -e /Users/egigoka/.iterm2_shell_integration.fish ; and source /Users/egigoka/.iterm2_shell_integration.fish ; or true
