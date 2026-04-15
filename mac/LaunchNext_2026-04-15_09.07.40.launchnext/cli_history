@@ -1,0 +1,200 @@
+move --source normal-app --path /Applications/noTunes.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Applications/MenubarPing.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path "/Applications/Lickable Menu Bar.app" --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Applications/DockDoor.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Applications/Thaw.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Applications/BetterDisplay.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/AirBuddy.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/Amphetamine Enhancer.app" --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Dropover.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Gestimer.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/Hand Mirror.app" --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Maccy.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/Menu Bar Spacing.app" --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Pippo.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/ScreenshotMenu.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Shareful.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/espansoGUI.app --to folder-append --target-folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97
+snapshot
+move --source normal-app --path /System/Applications/Stocks.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/System/Applications/Mission Control.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/Dictionary.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/Music.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/Preview.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/Home.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/Freeform.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/Calculator.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/System/Applications/Image Capture.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/TextEdit.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/System/Applications/Font Book.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/Maps.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/Stickies.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/Tips.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/System/Applications/QuickTime Player.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/Applications/QuickLook Video.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/System/Applications/Utilities/Disk Utility.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/System/Applications/Utilities/Bluetooth File Exchange.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/System/Applications/Utilities/Screen Sharing.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/System/Applications/Utilities/System Information.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/Utilities/Grapher.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/System/Applications/Utilities/AirPort Utility.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/System/Applications/Utilities/Migration Assistant.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path /System/Applications/Utilities/Screenshot.app --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+move --source normal-app --path "/System/Applications/Utilities/Print Center.app" --to folder-append --target-folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path /Applications/PiPifier.app --to normal-index --index 432
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path /Applications/AdBlock.app --to normal-index --index 468
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/DuckDuckGo Privacy for Safari.app" --to normal-index --index 504
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/Adblock Plus.app" --to normal-index --index 540
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/Ghostery Privacy Ad Blocker.app" --to normal-index --index 576
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/Turn Off the Lights for Safari.app" --to normal-index --index 612
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path /Applications/PiPer.app --to normal-index --index 648
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/Dark Mode for Safari.app" --to normal-index --index 684
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/AdBlock Pro.app" --to normal-index --index 720
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/Dark Reader for Safari.app" --to normal-index --index 756
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/Dislikes Democratized Desktop.app" --to normal-index --index 792
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/Right Click.app" --to normal-index --index 828
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/Super Agent.app" --to normal-index --index 864
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path /Applications/SponsorBlock.app --to normal-index --index 900
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/WOT for Safari.app" --to normal-index --index 936
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/Tampermonkey Classic.app" --to normal-index --index 972
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path "/Applications/Kagi for Safari.app" --to normal-index --index 1008
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path /Applications/Wipr.app --to normal-index --index 1044
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path /Applications/wBlock.app --to normal-index --index 1080
+snapshot
+move --source folder-app --folder-id 0553954C-AC82-459F-8C62-2B44DA568146 --path /Volumes/sharge2k/linked/Applications/Hush.app --to normal-index --index 1116
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Applications/Amphetamine.app --to normal-index --index 1152
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path "/Applications/Better Window Manager.app" --to normal-index --index 1188
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path "/Applications/Mic Drop.app" --to normal-index --index 1224
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path "/Applications/Mission Control Plus.app" --to normal-index --index 1260
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Applications/TinyStopwatch.app --to normal-index --index 1296
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path "/Applications/iStat Menus.app" --to normal-index --index 1332
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Applications/noTunes.app --to normal-index --index 1368
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Applications/MenubarPing.app --to normal-index --index 1404
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path "/Applications/Lickable Menu Bar.app" --to normal-index --index 1440
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Applications/DockDoor.app --to normal-index --index 1476
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Applications/Thaw.app --to normal-index --index 1512
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Applications/BetterDisplay.app --to normal-index --index 1548
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Volumes/sharge2k/linked/Applications/AirBuddy.app --to normal-index --index 1584
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path "/Volumes/sharge2k/linked/Applications/Amphetamine Enhancer.app" --to normal-index --index 1620
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Volumes/sharge2k/linked/Applications/Dropover.app --to normal-index --index 1656
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Volumes/sharge2k/linked/Applications/Gestimer.app --to normal-index --index 1692
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path "/Volumes/sharge2k/linked/Applications/Hand Mirror.app" --to normal-index --index 1728
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Volumes/sharge2k/linked/Applications/Maccy.app --to normal-index --index 1764
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path "/Volumes/sharge2k/linked/Applications/Menu Bar Spacing.app" --to normal-index --index 1800
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Volumes/sharge2k/linked/Applications/Pippo.app --to normal-index --index 1836
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Volumes/sharge2k/linked/Applications/ScreenshotMenu.app --to normal-index --index 1872
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Volumes/sharge2k/linked/Applications/Shareful.app --to normal-index --index 1908
+snapshot
+move --source folder-app --folder-id AF7BA96B-159D-4763-9DD4-0B8F2A092E97 --path /Volumes/sharge2k/linked/Applications/espansoGUI.app --to normal-index --index 1944
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/TV.app --to normal-index --index 1980
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/News.app --to normal-index --index 2016
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Stocks.app --to normal-index --index 2052
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Stocks.app --to normal-index --index 2052
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/System/Applications/Mission Control.app" --to normal-index --index 2088
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Dictionary.app --to normal-index --index 2124
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Music.app --to normal-index --index 2160
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Preview.app --to normal-index --index 2196
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Home.app --to normal-index --index 2232
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Freeform.app --to normal-index --index 2268
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Calculator.app --to normal-index --index 2304
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/System/Applications/Image Capture.app" --to normal-index --index 2340
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/TextEdit.app --to normal-index --index 2376
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/System/Applications/Font Book.app" --to normal-index --index 2412
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Maps.app --to normal-index --index 2448
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Stickies.app --to normal-index --index 2484
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Tips.app --to normal-index --index 2520
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/System/Applications/QuickTime Player.app" --to normal-index --index 2556
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/Applications/QuickLook Video.app" --to normal-index --index 2592
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/System/Applications/Utilities/Disk Utility.app" --to normal-index --index 2628
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/System/Applications/Utilities/Bluetooth File Exchange.app" --to normal-index --index 2664
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/System/Applications/Utilities/Screen Sharing.app" --to normal-index --index 2700
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/System/Applications/Utilities/System Information.app" --to normal-index --index 2736
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Utilities/Grapher.app --to normal-index --index 2772
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/System/Applications/Utilities/AirPort Utility.app" --to normal-index --index 2808
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/System/Applications/Utilities/Migration Assistant.app" --to normal-index --index 2844
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path /System/Applications/Utilities/Screenshot.app --to normal-index --index 2880
+snapshot
+move --source folder-app --folder-id C6CE7128-39D4-470C-B0CE-1A109B8B564B --path "/System/Applications/Utilities/Print Center.app" --to normal-index --index 2916
+snapshot
+move --source folder-app --folder-id ECBB34C3-7D3E-40C5-ADBB-E2245EECAEEA --path /Applications/Firefox.app --to normal-index --index 2952
+snapshot
+move --source folder-app --folder-id ECBB34C3-7D3E-40C5-ADBB-E2245EECAEEA --path /Applications/Chromium.app --to normal-index --index 2988
+snapshot
+move --source folder-app --folder-id E2D31AE3-8E25-4EFE-8BB7-24A803453774 --path "/System/Applications/iPhone Mirroring.app" --to normal-index --index 3024
+snapshot
+move --source folder-app --folder-id E2D31AE3-8E25-4EFE-8BB7-24A803453774 --path /Applications/Xcodes.app --to normal-index --index 3060
+snapshot
+move --source folder-app --folder-id 07804A51-1CB4-473F-91A8-D013173707D7 --path "/Applications/Beyond Compare.app" --to normal-index --index 3096
+snapshot
+move --source folder-app --folder-id 07804A51-1CB4-473F-91A8-D013173707D7 --path /Applications/VSCodium.app --to normal-index --index 3132
+snapshot
+ping
+snapshot
