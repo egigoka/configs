@@ -1,11 +1,32 @@
 {
   "model": "opus",
-  "skipDangerousModePermissionPrompt": true,
   "enabledPlugins": {
     "swift-lsp@claude-plugins-official": true
   },
   "spinnerVerbs": {
     "mode": "replace",
-    "verbs": ["Mewing", "Gooning", "Skibidi", "Rizzing", "Gyatting", "Fanum taxing", "Sigma grinding", "Ohio vibing", "Edging", "Mogging", "Looksmaxxing", "Aura farming", "Glazing", "Yapping", "Ick checking", "NPC walking", "Delulu manifesting", "Slay queening", "Bussin", "No capping"]
-  }
+    "verbs": [
+      "Mewing",
+      "Gooning",
+      "Skibidi",
+      "Rizzing",
+      "Gyatting",
+      "Fanum taxing",
+      "Sigma grinding",
+      "Ohio vibing",
+      "Edging",
+      "Mogging",
+      "Looksmaxxing",
+      "Aura farming",
+      "Glazing",
+      "Yapping",
+      "Ick checking",
+      "NPC walking",
+      "Delulu manifesting",
+      "Slay queening",
+      "Bussin",
+      "No capping"
+    ]
+  },
+  "skipDangerousModePermissionPrompt": true
 }

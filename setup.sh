@@ -155,9 +155,15 @@ if [ "$is_nixos" = true ]; then
   install gh
   install uv
   install starship
-  install virtualfish
+  install pstree
   echo
   install_link "$CONFIGS_DIR/fish" "$HOME/.config/fish"
+
+  # dircolors-solarized
+  [ -d "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized" ] || git clone https://github.com/seebi/dircolors-solarized "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized"
+
+  uv tool install --force virtualfish
+  "$HOME/.local/bin/vf" install
 else
   # install micro editor
   install_if_missing micro || install_if_missing micro-editor
@@ -223,6 +229,7 @@ else
   install_if_missing gh || install_if_missing github-cli
   install_if_missing uv || sh "$CONFIGS_DIR/install_scripts/install_uv.sh"
   install_if_missing starship
+  install_if_missing pstree
 
   uv tool install --force virtualfish
   "$HOME/.local/bin/vf" install
