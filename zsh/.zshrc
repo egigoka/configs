@@ -179,7 +179,7 @@
             fi
             ;;
         Darwin)
-            alias updateall='brew update; brew upgrade --no-quarantine --greedy; brew cleanup --prune=all'
+            alias updateall='brew update; brew upgrade --no-quarantine --greedy; brew cleanup --prune=all; sudo git -C /opt/macports-wine pull; sudo port selfupdate; sudo port upgrade outdated; sudo port reclaim --enable-reminders; ~/configs/install_scripts/autopatch_qbittorrent_macports.sh'
             alias install='brew install --no-quarantine'
             alias uninstall='brew remove'
             ;;

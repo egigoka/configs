@@ -83,7 +83,11 @@ install_link() {
   fi
 
   if [ -e "$dst" ] || [ -L "$dst" ]; then
-    mv -- "$dst" "$dst.preinstall" || return
+    if [ -e "$dst.preinstall" ]; then
+      rm -rf "$dst"
+    else
+      mv -- "$dst" "$dst.preinstall" || return
+    fi
   fi
 
   ln -s -- "$src" "$dst"
@@ -151,9 +155,15 @@ if [ "$is_nixos" = true ]; then
   install gh
   install uv
   install starship
-  install virtualfish
+  install pstree
   echo
   install_link "$CONFIGS_DIR/fish" "$HOME/.config/fish"
+
+  # dircolors-solarized
+  [ -d "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized" ] || git clone https://github.com/seebi/dircolors-solarized "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized"
+
+  uv tool install --force virtualfish
+  "$HOME/.local/bin/vf" install
 else
   # install micro editor
   install_if_missing micro || install_if_missing micro-editor
@@ -164,6 +174,8 @@ else
     fish -c "set -Ux EDITOR micro"
   fi
 
+  # sponge: only purge history on shell exit (not after each command)
+  fish -c "set -Ux sponge_purge_only_on_exit true"
   # install shell
   #install zsh
   install_if_missing fish
@@ -184,9 +196,16 @@ else
     chsh -s "$fish_path" "$USER"
   fi
 
+  # add homebrew to fish path on macOS
+  if [ -d /opt/homebrew/bin ]; then
+    fish -c "set -U fish_user_paths /opt/homebrew/bin \$fish_user_paths"
+  fi
+
   # custom zsh plugins (still needed for dircolors-solarized)
   ZSH_CUSTOM="$CONFIGS_DIR/zsh/ZSH_CUSTOM" sh "$CONFIGS_DIR/zsh/ZSH_CUSTOM/install_themes_plugins.sh"
 
+  # dircolors-solarized
+  [ -d "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized" ] || git clone https://github.com/seebi/dircolors-solarized "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized"
   # zsh config
   #sh ~/configs/install_scripts/install_omz.sh
   #install_link ~/configs/zsh/.zshrc ~/.zshrc
@@ -210,6 +229,7 @@ else
   install_if_missing gh || install_if_missing github-cli
   install_if_missing uv || sh "$CONFIGS_DIR/install_scripts/install_uv.sh"
   install_if_missing starship
+  install_if_missing pstree
 
   uv tool install --force virtualfish
   "$HOME/.local/bin/vf" install
@@ -252,13 +272,25 @@ install_link "$CONFIGS_DIR/opencode/kv.json" "$HOME/.local/state/opencode/kv.jso
 install_link "$CONFIGS_DIR/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.config/opencode/AGENTS.md"
 
+# forgecode
+install_link "$CONFIGS_DIR/forgecode/permissions.yaml" "$HOME/.config/forge/permissions.yaml"
+
 # claude code
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+install_link "$CONFIGS_DIR/claude/settings.json" "$HOME/.claude/settings.json"
 
 # codex
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex/AGENTS.md"
 install_link "$CONFIGS_DIR/codex/codex.toml" "$HOME/.codex/config.toml"
 
+# forge (two-account setup: ~/forge1 + ~/forge2, symlinked via ~/forge)
+if [ -d "$HOME/forge" ] && [ ! -L "$HOME/forge" ]; then
+  mv "$HOME/forge" "$HOME/forge1"
+fi
+mkdir -p "$HOME/forge1" "$HOME/forge2"
+install_link "$HOME/forge1" "$HOME/forge"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/forge1/AGENTS.md"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/forge2/AGENTS.md"
 # lsd
 install_link "$CONFIGS_DIR/lsd" "$HOME/.config/lsd"
 
