@@ -14,15 +14,19 @@ if status is-interactive
   ensure_path ~/.local/bin
   ensure_path ~/.filen-cli/bin
   ensure_path /opt/homebrew/bin
+  ensure_path /opt/homebrew/sbin
   ensure_path /opt/homebrew/opt/llvm/bin
   ensure_path /opt/homebrew/opt/ccache/libexec
   ensure_path /opt/homebrew/opt/ffmpeg-full/bin
   ensure_path /opt/homebrew/opt/imagemagick-full/bin
+  ensure_path /opt/local/bin
+  ensure_path /opt/local/sbin
   ensure_path /usr/games
   ensure_path /usr/sbin
   ensure_path /usr/local/bin
   ensure_path /home/linuxbrew/.linuxbrew/bin
   ensure_path ~/.opencode/bin
+  ensure_path ~/node_modules/.bin
 
   ### ALIASES
   # tar
@@ -235,6 +239,9 @@ if status is-interactive
     #For pkg-config to find openssl@3 you may need to set:
     set -x PKG_CONFIG_PATH "/opt/homebrew/opt/openssl@3/lib/pkgconfig"
 
+    # VapourSynth plugin autoload path
+    set -x VAPOURSYNTH_EXTRA_PLUGIN_PATH "/opt/homebrew/lib/vapoursynth"
+
     # orbstack
     source ~/.orbstack/shell/init2.fish 2>/dev/null || :
   end
@@ -314,7 +321,7 @@ if status is-interactive
       end
     case Darwin
       # mAcos
-      abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all
+      abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo port upgrade outdated \&\& sudo port reclaim --enable-reminders \&\& ~/configs/install_scripts/autopatch_qbittorrent_macports.sh
       abbr --add install   --position command brew install
       abbr --add uninstall --position command brew remove
     case '*'
@@ -445,3 +452,5 @@ if status is-interactive
   starship init fish | source
   # enable_transience  # enabling transient shell in starship
 end
+
+test -e /Users/egigoka/.iterm2_shell_integration.fish ; and source /Users/egigoka/.iterm2_shell_integration.fish ; or true
