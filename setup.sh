@@ -227,7 +227,7 @@ else
   install_if_missing lsd
   command -v difft >/dev/null 2>&1 || [ -x "$HOME/.local/bin/difft" ] || install_if_missing difftastic || sh "$CONFIGS_DIR/install_scripts/install_difftastic.sh"
   install_if_missing gh || install_if_missing github-cli
-  install_if_missing uv || sh "$CONFIGS_DIR/install_scripts/install_uv.sh"
+  command -v uv >/dev/null 2>&1 || install_if_missing uv || sh "$CONFIGS_DIR/install_scripts/install_uv.sh"
   install_if_missing starship
   install_if_missing pstree
 
