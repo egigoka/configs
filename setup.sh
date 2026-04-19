@@ -249,6 +249,16 @@ if [ "$product_name" = "Morphius" ]; then
   install_link "$CONFIGS_DIR/Morphius-chromebook/bin/ectool" /bin/ectool
 fi
 
+# disable mobile-power-saver on droidian
+if [ -f /etc/os-release ]; then
+  . /etc/os-release
+  if [ "$ID" = "droidian" ]; then
+    sudo ln -sf "$CONFIGS_DIR/systemd/disable-mobile-power-saver.service" /etc/systemd/system/disable-mobile-power-saver.service
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now disable-mobile-power-saver.service
+  fi
+fi
+
 # mpv
 install_link "$CONFIGS_DIR/mpv" "$HOME/.config/mpv"
 
