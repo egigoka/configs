@@ -1,5 +1,30 @@
 {
   "model": "opus",
+  "skipDangerousModePermissionPrompt": true,
+  "permissions": {
+    "allow": [
+      "Bash(basename:*)",
+      "Bash(date:*)",
+      "Bash(dirname:*)",
+      "Bash(false:*)",
+      "Bash(file:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(git status:*)",
+      "Bash(id:*)",
+      "Bash(printf:*)",
+      "Bash(pwd:*)",
+      "Bash(realpath:*)",
+      "Bash(rg:*)",
+      "Bash(ripgrep:*)",
+      "Bash(true:*)",
+      "Bash(uname:*)",
+      "Bash(wc:*)",
+      "Bash(which:*)",
+      "Bash(whoami:*)",
+      "Bash(python3 -m py_compile:*)"
+    ]
+  },
   "enabledPlugins": {
     "swift-lsp@claude-plugins-official": true
   },
@@ -27,6 +52,5 @@
       "Bussin",
       "No capping"
     ]
-  },
-  "skipDangerousModePermissionPrompt": true
+  }
 }
