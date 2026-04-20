@@ -9,6 +9,7 @@
       "false": "allow",
       "file": "allow",
       "find": "allow",
+      "git status": "allow",
       "rg": "allow",
       "ripgrep": "allow",
       "grep": "allow",
