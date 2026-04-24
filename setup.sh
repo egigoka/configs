@@ -238,6 +238,7 @@ else
   git config --global user.name egigoka
   git config --global user.email egigoka@gmail.com
   git config --global pull.rebase true
+  git -C "$CONFIGS_DIR" config core.hooksPath hooks
 fi
 
 # my chromebook
