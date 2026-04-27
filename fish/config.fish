@@ -289,7 +289,7 @@ if status is-interactive
             abbr --add install   --position command sudo dnf install -y
             abbr --add uninstall --position command sudo dnf remove -y
           case arch
-            abbr --add updateall --position command fisher update \&\& yay -Syu --devel --timeupdate \&\& yay -Sc
+            abbr --add updateall --position command fisher update \&\& yay -Syu --devel \&\& yay -Sc
             abbr --add install   --position command yay -S
             abbr --add uninstall --position command yay -Rns
             abbr --add updatemirrors --position command cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak \&\& rate-mirrors arch \| sudo tee /etc/pacman.d/mirrorlist \&\& sudo pacman -Syy
