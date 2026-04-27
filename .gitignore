@@ -107,3 +107,4 @@ fish/functions/fisher.fish
 fish/completions/fisher.fish
 .claude/
 .codex
+__pycache__/
