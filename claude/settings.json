@@ -1,4 +1,32 @@
 {
+  "env": {
+    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(basename:*)",
+      "Bash(date:*)",
+      "Bash(dirname:*)",
+      "Bash(false:*)",
+      "Bash(file:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(git status:*)",
+      "Bash(id:*)",
+      "Bash(printf:*)",
+      "Bash(pwd:*)",
+      "Bash(realpath:*)",
+      "Bash(rg:*)",
+      "Bash(ripgrep:*)",
+      "Bash(true:*)",
+      "Bash(uname:*)",
+      "Bash(wc:*)",
+      "Bash(which:*)",
+      "Bash(whoami:*)",
+      "Bash(python3 -m py_compile:*)"
+    ]
+  },
   "model": "opus",
   "enabledPlugins": {
     "swift-lsp@claude-plugins-official": true
@@ -28,5 +56,7 @@
       "No capping"
     ]
   },
-  "skipDangerousModePermissionPrompt": true
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "light"
 }

@@ -16,6 +16,7 @@ MenuBar=Disabled
 
 [Notification Messages]
 CloseAllTabs=true
+CloseSingleTab=true
 
 [Shortcuts]
 next-tab=none

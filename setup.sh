@@ -227,7 +227,7 @@ else
   install_if_missing lsd
   command -v difft >/dev/null 2>&1 || [ -x "$HOME/.local/bin/difft" ] || install_if_missing difftastic || sh "$CONFIGS_DIR/install_scripts/install_difftastic.sh"
   install_if_missing gh || install_if_missing github-cli
-  install_if_missing uv || sh "$CONFIGS_DIR/install_scripts/install_uv.sh"
+  command -v uv >/dev/null 2>&1 || install_if_missing uv || sh "$CONFIGS_DIR/install_scripts/install_uv.sh"
   install_if_missing starship
   install_if_missing pstree
 
@@ -238,6 +238,7 @@ else
   git config --global user.name egigoka
   git config --global user.email egigoka@gmail.com
   git config --global pull.rebase true
+  git -C "$CONFIGS_DIR" config core.hooksPath hooks
 fi
 
 # my chromebook
@@ -247,6 +248,16 @@ if [ "$product_name" = "Morphius" ]; then
   install_link "$CONFIGS_DIR/Morphius-chromebook/etc/keyd/tab.conf.disabled" /etc/keyd/tab.conf.disabled
   install_link "$CONFIGS_DIR/Morphius-chromebook/etc/keyd/cros.conf" /etc/keyd/cros.conf
   install_link "$CONFIGS_DIR/Morphius-chromebook/bin/ectool" /bin/ectool
+fi
+
+# disable mobile-power-saver on droidian
+if [ -f /etc/os-release ]; then
+  . /etc/os-release
+  if [ "$ID" = "droidian" ]; then
+    sudo ln -sf "$CONFIGS_DIR/systemd/disable-mobile-power-saver.service" /etc/systemd/system/disable-mobile-power-saver.service
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now disable-mobile-power-saver.service
+  fi
 fi
 
 # mpv
@@ -305,26 +316,18 @@ if command -v dconf >/dev/null 2>&1 && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DIS
   dconf write /org/virt-manager/virt-manager/console/resize-guest 1
 fi
 
-# maliit keyboard
-if command -v gsettings >/dev/null 2>&1 && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; }; then
-  export GSETTINGS_SCHEMA_DIR="$(echo /nix/store/*maliit-keyboard*/share/gsettings-schemas/*/glib-2.0/schemas)"
-  gsettings set org.maliit.keyboard.maliit enabled-languages "['en', 'ru', 'uk', 'kk', 'emoji']"
-  gsettings set org.maliit.keyboard.maliit theme "Breeze"
-  gsettings set org.maliit.keyboard.maliit device "tablet"
-fi
-
 # kde kwin scripts
 if command -v kwriteconfig6 >/dev/null 2>&1; then
   for script_dir in "$CONFIGS_DIR"/kde-scripts/*/; do
     script_name=$(basename "$script_dir")
-    kpackagetool6 -t KWin/Script -r "$script_name" 2>/dev/null
     install_link "$CONFIGS_DIR/kde-scripts/$script_name" "$HOME/.local/share/kwin/scripts/$script_name"
     kwriteconfig6 --file kwinrc --group Plugins --key "${script_name}Enabled" true
   done
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key TileWindowMaximize "Meta+Ctrl+Alt+Shift+S,none,Maximize Window Without Toggling"
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key "Window Maximize" "none,Meta+PgUp,Maximize Window"
   qdbus org.kde.KWin /KWin reconfigure 2>/dev/null
 fi
 
-# plasma keyboard (mapped from maliit settings)
 if command -v kwriteconfig6 >/dev/null 2>&1; then
   # Plasma Keyboard uses locale IDs and does not provide kk/emoji layouts here.
   kwriteconfig6 --file plasmakeyboardrc --group General --key enabledLocales "en_US,ru_RU,uk_UA"

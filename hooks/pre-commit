@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+FILE="codex/codex.toml"
+
+if ! git diff --cached --name-only --diff-filter=ACMR | grep -qx "$FILE"; then
+    exit 0
+fi
+
+current_blob=$(git ls-files --stage -- "$FILE" | awk '{print $2}')
+if [[ -z "$current_blob" ]]; then
+    exit 0
+fi
+
+cleaned_blob=$(git cat-file -p "$current_blob" | python3 -c '
+import sys
+lines = sys.stdin.read().splitlines()
+out = []
+in_projects = False
+for line in lines:
+    stripped = line.lstrip()
+    if stripped.startswith("[") and not stripped.startswith("[["):
+        in_projects = stripped.startswith("[projects.")
+        if in_projects:
+            while out and out[-1].strip() == "":
+                out.pop()
+            continue
+    if in_projects:
+        continue
+    if stripped.startswith("trust_level"):
+        continue
+    out.append(line)
+while out and out[-1].strip() == "":
+    out.pop()
+sys.stdout.write("\n".join(out) + "\n")
+' | git hash-object -w --stdin)
+
+if [[ "$current_blob" != "$cleaned_blob" ]]; then
+    git update-index --cacheinfo "100644,$cleaned_blob,$FILE"
+    echo "pre-commit: stripped [projects.*] and trust_level entries from $FILE"
+fi

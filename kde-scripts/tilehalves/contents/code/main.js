@@ -3,6 +3,9 @@ function tileWindow(side) {
     if (!win || !win.moveable || !win.resizeable) return;
 
     win.tile = null;
+    if (win.maximizable) {
+        win.setMaximize(false, false);
+    }
 
     // full screen for split calculations, work area for panel clamping
     var full = win.output.geometry;
@@ -31,7 +34,16 @@ function tileWindow(side) {
     win.frameGeometry = geo;
 }
 
+function maximizeWindow() {
+    const win = workspace.activeWindow;
+    if (!win || !win.maximizable) return;
+
+    win.tile = null;
+    win.setMaximize(true, true);
+}
+
 registerShortcut("TileWindowRightHalf", "Tile Window to Right Half", "Meta+D", function() { tileWindow("right"); });
 registerShortcut("TileWindowLeftHalf", "Tile Window to Left Half", "Meta+A", function() { tileWindow("left"); });
 registerShortcut("TileWindowTopHalf", "Tile Window to Top Half", "Meta+W", function() { tileWindow("top"); });
 registerShortcut("TileWindowBottomHalf", "Tile Window to Bottom Half", "Meta+X", function() { tileWindow("bottom"); });
+registerShortcut("TileWindowMaximize", "Maximize Window Without Toggling", "Meta+S", function() { maximizeWindow(); });
