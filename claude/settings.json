@@ -1,7 +1,4 @@
 {
-  "model": "opus",
-  "effortLevel": "xhigh",
-  "skipDangerousModePermissionPrompt": true,
   "env": {
     "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
@@ -30,6 +27,7 @@
       "Bash(python3 -m py_compile:*)"
     ]
   },
+  "model": "opus",
   "enabledPlugins": {
     "swift-lsp@claude-plugins-official": true
   },
@@ -57,5 +55,8 @@
       "Bussin",
       "No capping"
     ]
-  }
+  },
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "light"
 }
