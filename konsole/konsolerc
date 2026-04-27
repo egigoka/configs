@@ -14,6 +14,10 @@ Recent URLs[$e]=
 [MainWindow]
 MenuBar=Disabled
 
+[Notification Messages]
+CloseAllTabs=true
+CloseSingleTab=true
+
 [Shortcuts]
 next-tab=none
 previous-tab=none
