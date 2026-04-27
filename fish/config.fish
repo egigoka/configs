@@ -14,15 +14,19 @@ if status is-interactive
   ensure_path ~/.local/bin
   ensure_path ~/.filen-cli/bin
   ensure_path /opt/homebrew/bin
+  ensure_path /opt/homebrew/sbin
   ensure_path /opt/homebrew/opt/llvm/bin
   ensure_path /opt/homebrew/opt/ccache/libexec
   ensure_path /opt/homebrew/opt/ffmpeg-full/bin
   ensure_path /opt/homebrew/opt/imagemagick-full/bin
+  ensure_path /opt/local/bin
+  ensure_path /opt/local/sbin
   ensure_path /usr/games
   ensure_path /usr/sbin
   ensure_path /usr/local/bin
   ensure_path /home/linuxbrew/.linuxbrew/bin
   ensure_path ~/.opencode/bin
+  ensure_path ~/node_modules/.bin
 
   ### ALIASES
   # tar
@@ -157,12 +161,12 @@ if status is-interactive
   abbr --add переведи --position command trans
   
   # yd-dlp
-  abbr --add ytdl-audio --position command yt-dlp -f \'ba\' -x
-  abbr --add ytdl-video --position command yt-dlp --embed-subs --sub-langs all --ppa \'EmbedSubtitle:-disposition:s:0 0\' -f \'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best\' --prefer-ffmpeg --merge-output-format mp4 -o \'Videos/%\(upload_date\>%Y-%m-%d\)s - %\(title\).197B \[\%\(id\)s\].%\(ext\)s\' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive \'archive.ytdlp\'
-  abbr --add ytdl-video-meta --position command yt-dlp --write-info-json --write-comments --add-metadata --parse-metadata \'\%\(title\)s:%\(meta_title\)s\' --parse-metadata \'\%\(uploader\)s\:\%\(meta_artist\)s\' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --ppa \'EmbedSubtitle\:\-disposition\:s\:0\ 0\' -f \'bv\[ext=mp4\] +ba\[ext=m4a\]/best\[ext=mp4\]/best\' --prefer-ffmpeg --merge-output-format mp4 -o \'Videos/\%\(upload_date\>%Y-%m-%d\)s - \%\(title\).197B \[\%\(id\)s\].\%\(ext\)s\' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive \'archive.ytdlp\'
-  abbr --add ytdl-list --position command yt-dlp --flat-playlist --print id
-  abbr --add twitch-download --position command yt-dlp --downloader aria2c --downloader-args aria2c\:\'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true\'
-  abbr --add soundcloud-download --position command yt-dlp --match-filter \'format_id \!\*\= preview\'
+  abbr --add ytdl-audio --position command yt-dlp --remote-components ejs:github -f \'ba\' -x
+  abbr --add ytdl-video --position command yt-dlp --remote-components ejs:github --embed-subs --sub-langs all --ppa \'EmbedSubtitle:-disposition:s:0 0\' -f \'bv[ext=mp4] +ba[ext=m4a]/best[ext=mp4]/best\' --prefer-ffmpeg --merge-output-format mp4 -o \'Videos/%\(upload_date\>%Y-%m-%d\)s - %\(title\).197B \[\%\(id\)s\].%\(ext\)s\' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive \'archive.ytdlp\'
+  abbr --add ytdl-video-meta --position command yt-dlp --remote-components ejs:github --write-info-json --write-comments --add-metadata --parse-metadata \'\%\(title\)s:%\(meta_title\)s\' --parse-metadata \'\%\(uploader\)s\:\%\(meta_artist\)s\' --write-description --write-thumbnail --embed-thumbnail --write-annotations --write-playlist-metafiles --write-all-thumbnails --write-url-link --embed-subs --sub-langs all --ppa \'EmbedSubtitle\:\-disposition\:s\:0\ 0\' -f \'bv\[ext=mp4\] +ba\[ext=m4a\]/best\[ext=mp4\]/best\' --prefer-ffmpeg --merge-output-format mp4 -o \'Videos/\%\(upload_date\>%Y-%m-%d\)s - \%\(title\).197B \[\%\(id\)s\].\%\(ext\)s\' --retries 100000 --fragment-retries 100000 --file-access-retries 100000 --extractor-retries 100000 --limit-rate 40M --retry-sleep fragment:exp=1:8 --sponsorblock-mark default --download-archive \'archive.ytdlp\'
+  abbr --add ytdl-list --position command yt-dlp --remote-components ejs:github --flat-playlist --print id
+  abbr --add twitch-download --position command yt-dlp --remote-components ejs:github --downloader aria2c --downloader-args aria2c\:\'-c -j 32 -s 32 -x 16 --file-allocation=none --optimize-concurrent-downloads=true --http-accept-gzip=true\'
+  abbr --add soundcloud-download --position command yt-dlp --remote-components ejs:github --match-filter \'format_id \!\*\= preview\'
   
   # fastfetch
   abbr --add neofetch --position command fastfetch
@@ -234,6 +238,9 @@ if status is-interactive
 
     #For pkg-config to find openssl@3 you may need to set:
     set -x PKG_CONFIG_PATH "/opt/homebrew/opt/openssl@3/lib/pkgconfig"
+
+    # VapourSynth plugin autoload path
+    set -x VAPOURSYNTH_EXTRA_PLUGIN_PATH "/opt/homebrew/lib/vapoursynth"
 
     # orbstack
     source ~/.orbstack/shell/init2.fish 2>/dev/null || :
@@ -314,8 +321,8 @@ if status is-interactive
       end
     case Darwin
       # mAcos
-      abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --no-quarantine --greedy \&\& brew cleanup --prune=all
-      abbr --add install   --position command brew install --no-quarantine
+      abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh \&\& sudo port upgrade outdated \&\& sudo port reclaim --enable-reminders
+      abbr --add install   --position command brew install
       abbr --add uninstall --position command brew remove
     case '*'
       # unsupported
@@ -445,3 +452,5 @@ if status is-interactive
   starship init fish | source
   # enable_transience  # enabling transient shell in starship
 end
+
+test -e /Users/egigoka/.iterm2_shell_integration.fish ; and source /Users/egigoka/.iterm2_shell_integration.fish ; or true

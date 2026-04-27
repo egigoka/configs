@@ -1,0 +1,61 @@
+{
+  "model": "opus",
+  "effortLevel": "xhigh",
+  "skipDangerousModePermissionPrompt": true,
+  "env": {
+    "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Bash(basename:*)",
+      "Bash(date:*)",
+      "Bash(dirname:*)",
+      "Bash(false:*)",
+      "Bash(file:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)",
+      "Bash(git status:*)",
+      "Bash(id:*)",
+      "Bash(printf:*)",
+      "Bash(pwd:*)",
+      "Bash(realpath:*)",
+      "Bash(rg:*)",
+      "Bash(ripgrep:*)",
+      "Bash(true:*)",
+      "Bash(uname:*)",
+      "Bash(wc:*)",
+      "Bash(which:*)",
+      "Bash(whoami:*)",
+      "Bash(python3 -m py_compile:*)"
+    ]
+  },
+  "enabledPlugins": {
+    "swift-lsp@claude-plugins-official": true
+  },
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": [
+      "Mewing",
+      "Gooning",
+      "Skibidi",
+      "Rizzing",
+      "Gyatting",
+      "Fanum taxing",
+      "Sigma grinding",
+      "Ohio vibing",
+      "Edging",
+      "Mogging",
+      "Looksmaxxing",
+      "Aura farming",
+      "Glazing",
+      "Yapping",
+      "Ick checking",
+      "NPC walking",
+      "Delulu manifesting",
+      "Slay queening",
+      "Bussin",
+      "No capping"
+    ]
+  }
+}

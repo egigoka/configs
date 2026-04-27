@@ -1,3 +1,7 @@
+if [ -z "$ZSH_CUSTOM" ]; then
+  export ZSH_CUSTOM="$HOME/configs/zsh/ZSH_CUSTOM"
+fi
+
 clone_if_missing() {
   local repo=$1 dest=$2
   if [ -d "$dest" ]; then

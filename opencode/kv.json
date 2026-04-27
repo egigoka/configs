@@ -7,5 +7,9 @@
   "scrollbar_visible": true,
   "header_visible": false,
   "diff_wrap_mode": "word",
-  "animations_enabled": true
+  "animations_enabled": true,
+  "generic_tool_output_visibility": false,
+  "theme": "opencode",
+  "theme_mode": "light",
+  "dismissed_getting_started": true
 }

@@ -16,7 +16,7 @@ pkg_installed() {
       if [ -f /etc/os-release ]; then
         . /etc/os-release
         case "$ID" in
-          rocky) rpm -q "$pkg" >/dev/null 2>&1 ;;
+          rocky) rpm -q "$pkg" >/dev/null 2>&1 || command -v "$pkg" >/dev/null 2>&1 ;;
           arch) pacman -Qi "$pkg" >/dev/null 2>&1 ;;
           debian|ubuntu|droidian) dpkg -s "$pkg" >/dev/null 2>&1 ;;
           opensuse-tumbleweed|opensuse-leap) rpm -q "$pkg" >/dev/null 2>&1 ;;
@@ -83,7 +83,11 @@ install_link() {
   fi
 
   if [ -e "$dst" ] || [ -L "$dst" ]; then
-    mv -- "$dst" "$dst.preinstall" || return
+    if [ -e "$dst.preinstall" ]; then
+      rm -rf "$dst"
+    else
+      mv -- "$dst" "$dst.preinstall" || return
+    fi
   fi
 
   ln -s -- "$src" "$dst"
@@ -151,9 +155,15 @@ if [ "$is_nixos" = true ]; then
   install gh
   install uv
   install starship
-  install virtualfish
+  install pstree
   echo
   install_link "$CONFIGS_DIR/fish" "$HOME/.config/fish"
+
+  # dircolors-solarized
+  [ -d "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized" ] || git clone https://github.com/seebi/dircolors-solarized "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized"
+
+  uv tool install --force virtualfish
+  "$HOME/.local/bin/vf" install
 else
   # install micro editor
   install_if_missing micro || install_if_missing micro-editor
@@ -164,6 +174,8 @@ else
     fish -c "set -Ux EDITOR micro"
   fi
 
+  # sponge: only purge history on shell exit (not after each command)
+  fish -c "set -Ux sponge_purge_only_on_exit true"
   # install shell
   #install zsh
   install_if_missing fish
@@ -184,9 +196,16 @@ else
     chsh -s "$fish_path" "$USER"
   fi
 
+  # add homebrew to fish path on macOS
+  if [ -d /opt/homebrew/bin ]; then
+    fish -c "set -U fish_user_paths /opt/homebrew/bin \$fish_user_paths"
+  fi
+
   # custom zsh plugins (still needed for dircolors-solarized)
   ZSH_CUSTOM="$CONFIGS_DIR/zsh/ZSH_CUSTOM" sh "$CONFIGS_DIR/zsh/ZSH_CUSTOM/install_themes_plugins.sh"
 
+  # dircolors-solarized
+  [ -d "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized" ] || git clone https://github.com/seebi/dircolors-solarized "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized"
   # zsh config
   #sh ~/configs/install_scripts/install_omz.sh
   #install_link ~/configs/zsh/.zshrc ~/.zshrc
@@ -206,18 +225,20 @@ else
   install_if_missing autojump || install_autojump
   install_if_missing bat
   install_if_missing lsd
-  install_if_missing difftastic
+  command -v difft >/dev/null 2>&1 || [ -x "$HOME/.local/bin/difft" ] || install_if_missing difftastic || sh "$CONFIGS_DIR/install_scripts/install_difftastic.sh"
   install_if_missing gh || install_if_missing github-cli
-  install_if_missing uv
+  command -v uv >/dev/null 2>&1 || install_if_missing uv || sh "$CONFIGS_DIR/install_scripts/install_uv.sh"
   install_if_missing starship
+  install_if_missing pstree
 
-  uv tool install virtualfish
+  uv tool install --force virtualfish
   "$HOME/.local/bin/vf" install
     
   # git config
   git config --global user.name egigoka
   git config --global user.email egigoka@gmail.com
   git config --global pull.rebase true
+  git -C "$CONFIGS_DIR" config core.hooksPath hooks
 fi
 
 # my chromebook
@@ -227,6 +248,16 @@ if [ "$product_name" = "Morphius" ]; then
   install_link "$CONFIGS_DIR/Morphius-chromebook/etc/keyd/tab.conf.disabled" /etc/keyd/tab.conf.disabled
   install_link "$CONFIGS_DIR/Morphius-chromebook/etc/keyd/cros.conf" /etc/keyd/cros.conf
   install_link "$CONFIGS_DIR/Morphius-chromebook/bin/ectool" /bin/ectool
+fi
+
+# disable mobile-power-saver on droidian
+if [ -f /etc/os-release ]; then
+  . /etc/os-release
+  if [ "$ID" = "droidian" ]; then
+    sudo ln -sf "$CONFIGS_DIR/systemd/disable-mobile-power-saver.service" /etc/systemd/system/disable-mobile-power-saver.service
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now disable-mobile-power-saver.service
+  fi
 fi
 
 # mpv
@@ -252,13 +283,25 @@ install_link "$CONFIGS_DIR/opencode/kv.json" "$HOME/.local/state/opencode/kv.jso
 install_link "$CONFIGS_DIR/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.config/opencode/AGENTS.md"
 
+# forgecode
+install_link "$CONFIGS_DIR/forgecode/permissions.yaml" "$HOME/.config/forge/permissions.yaml"
+
 # claude code
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+install_link "$CONFIGS_DIR/claude/settings.json" "$HOME/.claude/settings.json"
 
 # codex
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex/AGENTS.md"
 install_link "$CONFIGS_DIR/codex/codex.toml" "$HOME/.codex/config.toml"
 
+# forge (two-account setup: ~/forge1 + ~/forge2, symlinked via ~/forge)
+if [ -d "$HOME/forge" ] && [ ! -L "$HOME/forge" ]; then
+  mv "$HOME/forge" "$HOME/forge1"
+fi
+mkdir -p "$HOME/forge1" "$HOME/forge2"
+install_link "$HOME/forge1" "$HOME/forge"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/forge1/AGENTS.md"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/forge2/AGENTS.md"
 # lsd
 install_link "$CONFIGS_DIR/lsd" "$HOME/.config/lsd"
 
@@ -273,26 +316,18 @@ if command -v dconf >/dev/null 2>&1 && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DIS
   dconf write /org/virt-manager/virt-manager/console/resize-guest 1
 fi
 
-# maliit keyboard
-if command -v gsettings >/dev/null 2>&1 && { [ -n "$DISPLAY" ] || [ -n "$WAYLAND_DISPLAY" ]; }; then
-  export GSETTINGS_SCHEMA_DIR="$(echo /nix/store/*maliit-keyboard*/share/gsettings-schemas/*/glib-2.0/schemas)"
-  gsettings set org.maliit.keyboard.maliit enabled-languages "['en', 'ru', 'uk', 'kk', 'emoji']"
-  gsettings set org.maliit.keyboard.maliit theme "Breeze"
-  gsettings set org.maliit.keyboard.maliit device "tablet"
-fi
-
 # kde kwin scripts
 if command -v kwriteconfig6 >/dev/null 2>&1; then
   for script_dir in "$CONFIGS_DIR"/kde-scripts/*/; do
     script_name=$(basename "$script_dir")
-    kpackagetool6 -t KWin/Script -r "$script_name" 2>/dev/null
     install_link "$CONFIGS_DIR/kde-scripts/$script_name" "$HOME/.local/share/kwin/scripts/$script_name"
     kwriteconfig6 --file kwinrc --group Plugins --key "${script_name}Enabled" true
   done
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key TileWindowMaximize "Meta+Ctrl+Alt+Shift+S,none,Maximize Window Without Toggling"
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key "Window Maximize" "none,Meta+PgUp,Maximize Window"
   qdbus org.kde.KWin /KWin reconfigure 2>/dev/null
 fi
 
-# plasma keyboard (mapped from maliit settings)
 if command -v kwriteconfig6 >/dev/null 2>&1; then
   # Plasma Keyboard uses locale IDs and does not provide kk/emoji layouts here.
   kwriteconfig6 --file plasmakeyboardrc --group General --key enabledLocales "en_US,ru_RU,uk_UA"
