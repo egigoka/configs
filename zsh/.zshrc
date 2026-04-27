@@ -15,6 +15,19 @@
 		touch ~/configs/.init
 	fi
 
+### functions (must be before PATH section)
+	contains()
+	        {
+	        string="$1"
+	        substring="$2"
+	        if test "${string#*$substring}" != "$string"
+	        then
+	                return 0    # $substring is in $string
+	        else
+	                return 1    # $substring is not in $string
+	        fi
+	        }
+
 ### PATH
 	contains $PATH ~/bin || export PATH=$PATH:~/bin
 	contains $PATH ~/go/bin/ || export PATH=$PATH:~/go/bin/
@@ -390,18 +403,6 @@
 	    printf "\033]52;c;$(echo -n "$input" | base64 | tr -d '\n')\a"
 	}
 	
-	contains()
-	        {
-	        string="$1"
-	        substring="$2"
-	        if test "${string#*$substring}" != "$string"
-	        then
-	                return 0    # $substring is in $string
-	        else
-	                return 1    # $substring is not in $string
-	        fi
-	        }
-
 	function sudoz ()
 	        {
 	        args="$@"
