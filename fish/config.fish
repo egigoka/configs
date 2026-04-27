@@ -324,7 +324,7 @@ if status is-interactive
       if test (id -u) -eq 0
         abbr --add updateall --position command fisher update \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo port upgrade outdated \&\& sudo port reclaim --enable-reminders \&\& ~/configs/install_scripts/autopatch_qbittorrent_macports.sh
       else
-        abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo port upgrade outdated \&\& sudo port reclaim --enable-reminders \&\& ~/configs/install_scripts/autopatch_qbittorrent_macports.sh
+        abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo port upgrade outdated \&\& sudo port reclaim --enable-reminders \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh
       end
       abbr --add install   --position command brew install
       abbr --add uninstall --position command brew remove
