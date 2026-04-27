@@ -1,0 +1,12 @@
+[Unit]
+Description=Disable mobile-power-saver
+ConditionPathExists=/usr/lib/systemd/user/mobile-power-saver.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStartPre=/usr/bin/mkdir -p /etc/systemd/user
+ExecStart=/usr/bin/ln -sf /dev/null /etc/systemd/user/mobile-power-saver.service
+
+[Install]
+WantedBy=multi-user.target
