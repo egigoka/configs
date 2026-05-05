@@ -157,6 +157,11 @@ symbol=''
 format='[$symbol$branch(:$remote_branch)]($style)'
 style='bg:black fg:white'
 
+[git_commit]
+only_detached=false
+format='[$hash]($style)'
+style='bg:black fg:white'
+
 [docker_context]
 disabled=false
 symbol='󰡨'
