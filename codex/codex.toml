@@ -2,18 +2,6 @@ personality = "pragmatic"
 model = "gpt-5.5"
 model_reasoning_effort = "xhigh"
 
-[projects."/etc/nixos"]
-trust_level = "untrusted"
-
-[projects."/root/plasma-keyboard"]
-trust_level = "trusted"
-
-[projects."/root/configs"]
-trust_level = "trusted"
-
-[projects."/root"]
-trust_level = "trusted"
-
 [notice.model_migrations]
 "gpt-5.2-codex" = "gpt-5.3-codex"
 "gpt-5.3-codex" = "gpt-5.4"
@@ -22,4 +10,4 @@ trust_level = "trusted"
 multi_agent = true
 
 [tui.model_availability_nux]
-"gpt-5.5" = 2
+"gpt-5.5" = 4
