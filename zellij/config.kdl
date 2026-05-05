@@ -19,7 +19,6 @@ keybinds clear-defaults=true {
         bind "r" { NewPane "right"; SwitchToMode "normal"; }
         bind "w" { ToggleFloatingPanes; SwitchToMode "normal"; }
         bind "z" { TogglePaneFrames; SwitchToMode "normal"; }
-        bind "q" { CloseFocus; SwitchToMode "normal"; }
     }
     tab {
         bind "left" { GoToPreviousTab; }
@@ -92,6 +91,7 @@ keybinds clear-defaults=true {
     }
     session {
         bind "d" { Detach; }
+        bind "q" { Quit; }
         bind "Alt d" { SwitchToMode "scroll"; }
         bind "Alt o" { SwitchToMode "normal"; }
         bind "Alt q" { Quit; }
@@ -117,6 +117,7 @@ keybinds clear-defaults=true {
         bind "Alt l" { SwitchToMode "locked"; }
         bind "Alt n" { NewPane; }
         bind "Alt o" { MoveTab "Right"; }
+        bind "Alt f" { ToggleFocusFullscreen; }
     }
     shared_except "locked" "move" {
         bind "Alt m" { SwitchToMode "move"; }
@@ -226,7 +227,7 @@ theme "catppuccin-latte"
 // The name of the default layout to load on startup
 // Default: "default"
 // 
-// default_layout "compact"
+default_layout "grid"
  
 // The folder in which Zellij will look for layouts
 // (Requires restart)
@@ -328,7 +329,7 @@ scroll_buffer_size 100000
 //   - true (default)
 //   - false
 // 
-// auto_layout false
+auto_layout true
  
 // Whether sessions should be serialized to the cache folder (including their tabs/panes, cwds and running commands) so that they can later be resurrected
 // Options:
@@ -377,7 +378,7 @@ session_serialization false
 // Whether to stack panes when resizing beyond a certain size
 // Default: true
 // 
-// stacked_resize false
+stacked_resize false
  
 // Whether to show tips on startup
 // Default: true

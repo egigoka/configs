@@ -1,0 +1,179 @@
+tab_template name="ui" {
+    pane size=1 borderless=true {
+        plugin location="tab-bar"
+    }
+    children
+    pane size=1 borderless=true {
+        plugin location="status-bar"
+    }
+}
+
+swap_tiled_layout name="grid" {
+    // 2-3 panes: left pane + right pane split top/bottom
+    ui max_panes=5 {
+        pane split_direction="vertical" {
+            pane
+            pane { children; }
+        }
+    }
+    // 4 panes: 2x2
+    ui max_panes=6 {
+        pane split_direction="vertical" {
+            pane {
+                pane { children; }
+                pane
+            }
+            pane {
+                pane
+                pane
+            }
+        }
+    }
+    // 5-6 panes: 3 cols x 2 rows
+    ui max_panes=8 {
+        pane split_direction="vertical" {
+            pane {
+                pane { children; }
+                pane
+            }
+            pane {
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+            }
+        }
+    }
+    // 7-8 panes: 4 cols x 2 rows
+    ui max_panes=10 {
+        pane split_direction="vertical" {
+            pane {
+                pane { children; }
+                pane
+            }
+            pane {
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+            }
+        }
+    }
+    // 9 panes: 3x3
+    ui max_panes=11 {
+        pane split_direction="vertical" {
+            pane {
+                pane { children; }
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+            }
+        }
+    }
+    // 10-12 panes: 4 cols x 3 rows
+    ui max_panes=14 {
+        pane split_direction="vertical" {
+            pane {
+                pane { children; }
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+            }
+        }
+    }
+    // 13-16 panes: 4x4
+    ui max_panes=18 {
+        pane split_direction="vertical" {
+            pane {
+                pane { children; }
+                pane
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+                pane
+            }
+        }
+    }
+    // 17-20 panes: 5 cols x 4 rows
+    ui max_panes=22 {
+        pane split_direction="vertical" {
+            pane {
+                pane { children; }
+                pane
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+                pane
+            }
+            pane {
+                pane
+                pane
+                pane
+                pane
+            }
+        }
+    }
+}
