@@ -343,9 +343,6 @@ if status is-interactive
   abbr --add where --position command whereis
 
   ### ENVIRONMENT
-  # zellij
-  set -x ZELLIJ_CONFIG_FILE "$HOME/configs/zellij/zellij.kdl"
-
   # you-should-use
   set -x YSU__MESSAGE_POSITION "after"
   set -x YSU__HARDCORE_MODE false

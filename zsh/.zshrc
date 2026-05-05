@@ -465,9 +465,6 @@
 	    sed -e "s@${secret//@/\\@}@${replacement//@/\\@}@g"
 	}
 
-### zellij
-	export ZELLIJ_CONFIG_FILE="$HOME/configs/zellij/zellij.kdl"
-
 ### you-should-use
 	export YSU_MESSAGE_FORMAT="$(tput setaf 1)Hey! I found %alias_type for \"%command\": \"%alias\"$(tput sgr0)"
 	export YSU_MESSAGE_POSITION="after"

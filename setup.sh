@@ -260,6 +260,9 @@ if [ -f /etc/os-release ]; then
   fi
 fi
 
+# zellij
+install_link "$CONFIGS_DIR/zellij" "$HOME/.config/zellij"
+
 # mpv
 install_link "$CONFIGS_DIR/mpv" "$HOME/.config/mpv"
 
