@@ -233,21 +233,12 @@ else
 
   uv tool install --force virtualfish
   "$HOME/.local/bin/vf" install
-    
+  
   # git config
   git config --global user.name egigoka
   git config --global user.email egigoka@gmail.com
   git config --global pull.rebase true
   git -C "$CONFIGS_DIR" config core.hooksPath hooks
-fi
-
-# my chromebook
-if [ "$product_name" = "Morphius" ]; then
-  install_link "$CONFIGS_DIR/Morphius-chromebook/root/.local/bin/toggle-inputs.sh" /root/.local/bin/toggle-inputs.sh
-  install_link "$CONFIGS_DIR/Morphius-chromebook/root/.local/bin/toggle-gjs-osk-extension.sh" /root/.local/bin/toggle-gjs-osk-extension.sh
-  install_link "$CONFIGS_DIR/Morphius-chromebook/etc/keyd/tab.conf.disabled" /etc/keyd/tab.conf.disabled
-  install_link "$CONFIGS_DIR/Morphius-chromebook/etc/keyd/cros.conf" /etc/keyd/cros.conf
-  install_link "$CONFIGS_DIR/Morphius-chromebook/bin/ectool" /bin/ectool
 fi
 
 # disable mobile-power-saver on droidian
