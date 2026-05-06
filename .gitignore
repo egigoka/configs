@@ -16,6 +16,7 @@ default.profraw
 fish/fish_variables
 fish/conf.d/00_fig_pre.fish
 fish/conf.d/99_fig_post.fish
+fish/conf.d/uv.env.fish
 # platform specific
 fish/conf.d/virtualfish-loader.fish
 # fish plugins
