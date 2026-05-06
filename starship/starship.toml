@@ -172,6 +172,11 @@ detect_extensions=[]
 detect_files=['docker-compose.yml', 'docker-compose.yaml', 'Dockerfile']
 detect_folders=[]
 
+[container]
+symbol='󰡨'
+style='bold bg:black fg:white'
+format='[$symbol$name]($style)'
+
 [git_status]
 format='([$all_status$ahead_behind]($style)[](bg:black fg:white))'
 style='bold bg:black fg:white'
