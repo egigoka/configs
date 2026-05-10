@@ -209,4 +209,4 @@ mp.register_script_message('uosc-version', function(version)
     uosc = version and version >= 400
     if uosc then osd_pref = 'no-osd' end
 end)
-mp.commandv('script-message-to', 'uosc', 'get-version', mp.get_script_name())
+-- mp.commandv('script-message-to', 'uosc', 'get-version', mp.get_script_name())
