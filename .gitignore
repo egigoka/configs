@@ -109,3 +109,4 @@ fish/completions/fisher.fish
 .claude/
 .codex
 __pycache__/
+mpv/scripts/uosc/

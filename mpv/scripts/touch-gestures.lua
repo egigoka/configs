@@ -209,4 +209,7 @@ mp.register_script_message('uosc-version', function(version)
     uosc = version and version >= 400
     if uosc then osd_pref = 'no-osd' end
 end)
+-- uosc probe disabled: we use uosc only for its menu, not its OSD overlays.
+-- Keeping this commented makes osd_pref stay as 'osd-auto' so native mpv OSD
+-- shows volume/speed/seek feedback on touch gestures.
 -- mp.commandv('script-message-to', 'uosc', 'get-version', mp.get_script_name())

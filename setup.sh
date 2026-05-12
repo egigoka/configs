@@ -256,6 +256,9 @@ install_link "$CONFIGS_DIR/zellij" "$HOME/.config/zellij"
 
 # mpv
 install_link "$CONFIGS_DIR/mpv" "$HOME/.config/mpv"
+[ -d "$HOME/.config/mpv/scripts/uosc" ] || bash "$CONFIGS_DIR/install_scripts/install_uosc.sh"
+# patch uosc to not disable mpv's native OSC (we use uosc only for its menu)
+[ -f "$HOME/.config/mpv/scripts/uosc/main.lua" ] && sed -i "s|^mp\.set_property('osc', 'no')|-- & -- patched: keep native OSC|" "$HOME/.config/mpv/scripts/uosc/main.lua"
 
 # konsole
 install_link "$CONFIGS_DIR/konsole/sessionui.rc" "$HOME/.local/share/kxmlgui5/konsole/sessionui.rc"
