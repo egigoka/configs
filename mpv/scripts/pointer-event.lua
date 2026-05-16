@@ -20,18 +20,21 @@ local opts = {
 	ignore_left_single_long_while_window_dragging = true,
 	left_single = '',
 	left_double = '',
+	left_multi = '',
 	left_long = '',
 	left_drag_start = '',
 	left_drag_end = '',
 	left_drag = '',
 	right_single = '',
 	right_double = '',
+	right_multi = '',
 	right_long = '',
 	right_drag_start = '',
 	right_drag_end = '',
 	right_drag = '',
 	mid_single = '',
 	mid_double = '',
+	mid_multi = '',
 	mid_long = '',
 	mid_drag_start = '',
 	mid_drag_end = '',
@@ -78,6 +81,7 @@ local function analyze_mouse(key)
 	local mbtn = key:match('_(.+)$')
 	local cmd_single = opts[mbtn .. '_single']
 	local cmd_double = opts[mbtn .. '_double']
+	local cmd_multi = opts[mbtn .. '_multi']
 	local cmd_long = opts[mbtn .. '_long']
 	local cmd_drag_start = opts[mbtn .. '_drag_start']
 	local cmd_drag_end = opts[mbtn .. '_drag_end']
@@ -85,6 +89,7 @@ local function analyze_mouse(key)
 
 	if not cmd_single and
 		not cmd_double and
+		not cmd_multi and
 		not cmd_long and
 		not cmd_drag_start and
 		not cmd_drag_end and
@@ -100,6 +105,11 @@ local function analyze_mouse(key)
 	local double_click = cmd_double and function()
 		msg.verbose('double_click')
 		mp.command(cmd_double)
+	end or nop
+	-- multi_click fires once a streak of n consecutive clicks ends, with n appended
+	local multi_click = cmd_multi and function(count)
+		msg.verbose('multi_click', count)
+		mp.command(cmd_multi .. ' ' .. count)
 	end or nop
 	local long_click = cmd_long and function()
 		msg.verbose('long_click')
@@ -128,6 +138,7 @@ local function analyze_mouse(key)
 	local last_down_x = 0
 	local last_down_y = 0
 	local down_start = nil
+	local click_count = 0
 
 	local function recognized_event(fun, dx, dy)
 		if (fun == single_click or fun == long_click)
@@ -144,18 +155,38 @@ local function analyze_mouse(key)
 	local long_click_timeout = mp.add_timeout(opts.long_click_time, function()
 		recognized_event(long_click)
 		drag_possible = false
+		click_count = 0
 	end)
 	long_click_timeout:kill()
 
 	local double_click_timeout = mp.add_timeout(double_time, function()
 		if down_start then return end
-		recognized_event(single_click)
+		if cmd_multi then
+			-- streak ended; a lone tap fires its action now, while
+			-- multi-tap streaks already fired per click (see btn_up)
+			if click_count == 1 then
+				recognized_event(multi_click, 1)
+			end
+			click_count = 0
+		else
+			recognized_event(single_click)
+		end
 	end)
 	double_click_timeout:kill()
 
 	local function btn_down(x, y)
 		msg.debug('btn_down', x, y)
-		if double_click_timeout:is_enabled() then
+		if cmd_multi then
+			-- count this click and (re)arm the streak timer; it fires once
+			-- double_time passes with no further click (see btn_up too)
+			click_count = click_count + 1
+			double_click_timeout:kill()
+			double_click_timeout.timeout = double_time
+			double_click_timeout:resume()
+			long_click_timeout:kill()
+			long_click_timeout:resume()
+			drag_possible = true
+		elseif double_click_timeout:is_enabled() then
 			double_click_timeout:kill()
 			long_click_timeout:kill()
 			recognized_event(double_click)
@@ -173,7 +204,19 @@ local function analyze_mouse(key)
 	end
 	local function btn_up()
 		msg.debug('btn_up')
-		if not double_click_timeout:is_enabled() and long_click_timeout:is_enabled() and
+		if cmd_multi then
+			if not dragging and drag_possible and click_count > 0 then
+				-- fire every click past the first the moment it lands
+				if click_count >= 2 then
+					recognized_event(multi_click, click_count)
+				end
+				-- restart the streak timer from finger lift so a lone
+				-- tap settles double_time after release (see callback)
+				double_click_timeout:kill()
+				double_click_timeout.timeout = double_time
+				double_click_timeout:resume()
+			end
+		elseif not double_click_timeout:is_enabled() and long_click_timeout:is_enabled() and
 			not dragging and drag_possible then
 			recognized_event(single_click)
 		end
@@ -193,6 +236,7 @@ local function analyze_mouse(key)
 			if drag_possible and sq_dist >= drag_distance_sq * scale_sq then
 				double_click_timeout:kill()
 				long_click_timeout:kill()
+				click_count = 0
 				recognized_event(drag_start)
 				recognized_event(drag, dx, dy)
 				dragging = true
@@ -215,9 +259,10 @@ local function analyze_mouse(key)
 		if down_start then drag_to(mouse.x, mouse.y) end
 		mouse_x, mouse_y = mouse.x, mouse.y
 	end)
-	if cmd_double then
+	if cmd_double or cmd_multi then
 		mp.add_key_binding(key .. '_dbl', 'pe_' .. mbtn .. '_dbl', function()
-			-- to prevent warning about double click not being assigned
+			-- swallow the _dbl event so mpv's built-in double-click
+			-- binding (MBTN_LEFT_DBL cycle fullscreen) doesn't also fire
 		end)
 	end
 end

@@ -185,14 +185,22 @@ local function drag_end()
     osd:update()
 end
 
-local function double()
+-- fired once per tap: count 1 = toggle pause, every tap past the first
+-- jumps 10 s (left third rewinds, right third forwards, middle double-tap
+-- toggles fullscreen)
+local function multi_tap(count)
+    count = tonumber(count) or 1
+    if count <= 1 then
+        mp.commandv('cycle', 'pause')
+        return
+    end
     w, _, _ = mp.get_osd_size()
     local mouse = mp.get_property_native('mouse-pos')
-    if mouse.x < w / 3  then
+    if mouse.x < w / 3 then
         mp.commandv(osd_pref, 'seek', -10, 'relative+exact')
         if uosc then mp.commandv('script-binding', 'uosc/flash-timeline') end
     elseif mouse.x < w * 2 / 3 then
-        mp.commandv('cycle', 'fullscreen')
+        if count == 2 then mp.commandv('cycle', 'fullscreen') end
     else
         mp.commandv(osd_pref, 'seek', 10, 'relative+exact')
         if uosc then mp.commandv('script-binding', 'uosc/flash-timeline') end
@@ -202,7 +210,7 @@ end
 mp.register_script_message('drag', drag)
 mp.register_script_message('drag_start', drag_start)
 mp.register_script_message('drag_end', drag_end)
-mp.register_script_message('double', double)
+mp.register_script_message('multi_tap', multi_tap)
 
 -- uosc OSD detection intentionally NOT wired up.
 -- uosc is installed for its menu only; every visual element is disabled in
