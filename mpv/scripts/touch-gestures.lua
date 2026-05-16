@@ -119,16 +119,18 @@ end
 
 local function drag_volume(dy)
     drag_total = drag_total + dy
-    local vol = math.floor(-drag_total / ds_h * 100 + ds_vol + 0.5)
-    mp.commandv(osd_pref, 'set', 'volume', math.max(math.min(vol, ds_vol_max), 0))
-    if uosc then mp.commandv('script-binding', 'uosc/flash-volume') end
+    local vol = math.max(math.min(math.floor(-drag_total / ds_h * 100 + ds_vol + 0.5), ds_vol_max), 0)
+    mp.commandv(osd_pref, 'set', 'volume', vol)
+    if uosc then mp.commandv('script-binding', 'uosc/flash-volume')
+    else mp.osd_message(string.format('Volume: %d%%', vol), 1.5) end
 end
 
 local function drag_speed(dy)
     drag_total = drag_total + dy
-    local speed = math.floor((-drag_total / ds_h * 3 + ds_speed) * 10 + 0.5) / 10
-    mp.commandv(osd_pref, 'set', 'speed', math.max(math.min(speed, 5), 0.1))
-    if uosc then mp.commandv('script-binding', 'uosc/flash-speed') end
+    local speed = math.max(math.min(math.floor((-drag_total / ds_h * 3 + ds_speed) * 10 + 0.5) / 10, 5), 0.1)
+    mp.commandv(osd_pref, 'set', 'speed', speed)
+    if uosc then mp.commandv('script-binding', 'uosc/flash-speed')
+    else mp.osd_message(string.format('Speed: %.1fx', speed), 1.5) end
 end
 
 local function drag_init(dx, dy)
@@ -202,14 +204,10 @@ mp.register_script_message('drag_start', drag_start)
 mp.register_script_message('drag_end', drag_end)
 mp.register_script_message('double', double)
 
--- check if uosc is running
-mp.register_script_message('uosc-version', function(version)
-    version = tonumber((version:gsub('%.', '')))
-    ---@diagnostic disable-next-line: cast-local-type
-    uosc = version and version >= 400
-    if uosc then osd_pref = 'no-osd' end
-end)
--- uosc probe disabled: we use uosc only for its menu, not its OSD overlays.
--- Keeping this commented makes osd_pref stay as 'osd-auto' so native mpv OSD
--- shows volume/speed/seek feedback on touch gestures.
--- mp.commandv('script-message-to', 'uosc', 'get-version', mp.get_script_name())
+-- uosc OSD detection intentionally NOT wired up.
+-- uosc is installed for its menu only; every visual element is disabled in
+-- script-opts/uosc.conf (volume=none, timeline_size=0, controls=never), so its
+-- flash-volume/flash-speed/flash-timeline overlays render nothing.
+-- uosc broadcasts 'uosc-version' to all scripts on startup (see uosc/main.lua),
+-- so listening for it would set uosc=true and silently route OSD into those
+-- invisible overlays. Keeping uosc=false makes the script draw native mpv OSD.
