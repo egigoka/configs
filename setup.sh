@@ -116,6 +116,9 @@ case "$(uname -s)" in
           ;;
         nixos)
           ;;
+        steamos)
+          # Packages handled below via Nix + home-manager (read-only root).
+          ;;
         *)
          echo "Unknown Linux distribution"
          exit
@@ -136,12 +139,129 @@ case "$(uname -s)" in
 esac
 
 is_nixos=false
+is_steamos=false
 if [ -f /etc/os-release ]; then
   . /etc/os-release
   [ "$ID" = "nixos" ] && is_nixos=true
+  [ "$ID" = "steamos" ] && is_steamos=true
 fi
 
-if [ "$is_nixos" = true ]; then
+# Source the nix profile into the current shell, if nix is installed.
+source_nix() {
+  if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+    . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+  fi
+  if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then
+    . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+  fi
+}
+
+if [ "$is_steamos" = true ]; then
+  # SteamOS (Steam Deck): the root filesystem is read-only/immutable and gets
+  # wiped on every OS update, so pacman is unusable for persistent packages and
+  # chsh / /etc edits don't stick. Install all console packages with Nix +
+  # home-manager. The Determinate Systems "steam-deck" planner keeps the store
+  # under /home (bind-mounted to /nix) so it survives OS updates.
+
+  source_nix
+  if ! command -v nix >/dev/null 2>&1; then
+    echo "Installing upstream Nix (steam-deck planner, store under /home/nix)..."
+    # The steam-deck planner installs "Determinate Nix" by DEFAULT, which
+    # provisions determinate-nixd into /usr/local/bin -> fails on SteamOS's
+    # read-only root. --prefer-upstream-nix forces plain upstream Nix instead,
+    # which needs no /usr writes. The planner persists the store via SteamOS's
+    # offload mechanism (/home/.steamos/offload/nix bind-mounted to /nix), so it
+    # survives OS updates.
+    nix_installer="$(mktemp)"
+    curl --proto '=https' --tlsv1.2 -sSf -L \
+      https://github.com/DeterminateSystems/nix-installer/releases/latest/download/nix-installer-x86_64-linux \
+      -o "$nix_installer"
+    chmod +x "$nix_installer"
+    "$nix_installer" install steam-deck --no-confirm --prefer-upstream-nix
+    rm -f "$nix_installer"
+    source_nix
+  fi
+
+  if ! command -v nix >/dev/null 2>&1; then
+    echo "Nix install failed or not on PATH; open a new shell and re-run setup.sh." >&2
+    exit 1
+  fi
+
+  export NIX_CONFIG="experimental-features = nix-command flakes"
+
+  # home-manager reads the flake at ~/.config/home-manager
+  install_link "$CONFIGS_DIR/nix" "$HOME/.config/home-manager"
+
+  # Nix flakes only evaluate git-tracked files; stage the flake dir so it's
+  # visible even on a dirty/freshly-edited checkout (no-op once committed).
+  git -C "$CONFIGS_DIR" add nix >/dev/null 2>&1 || true
+
+  echo "Installing console packages via home-manager..."
+  # --impure so the flake can read $USER/$HOME via builtins.getEnv.
+  # -b backup so home-manager moves any pre-existing files out of the way.
+  nix run --impure home-manager/release-26.05 -- switch --impure -b backup \
+    --flake "$CONFIGS_DIR/nix#default"
+
+  source_nix
+  fish -c "fish_add_path -g ~/.nix-profile/bin ~/.local/state/nix/profile/bin /nix/var/nix/profiles/default/bin" 2>/dev/null
+
+  # sponge: only purge history on shell exit (not after each command)
+  fish -c "set -Ux sponge_purge_only_on_exit true"
+
+  # fish config + plugins
+  install_link "$CONFIGS_DIR/fish" "$HOME/.config/fish"
+  FISH_PLUGINS=$(grep -v '^[[:space:]]*$' "$CONFIGS_DIR/fish/fish_plugins" | tr '\n' ' ')
+  fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install $FISH_PLUGINS"
+  git -C "$CONFIGS_DIR" checkout fish/fish_plugins
+
+  # dircolors-solarized
+  [ -d "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized" ] || git clone https://github.com/seebi/dircolors-solarized "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized"
+
+  uv tool install --force virtualfish
+  "$HOME/.local/bin/vf" install
+
+  # git config
+  git config --global user.name egigoka
+  git config --global user.email egigoka@gmail.com
+  git config --global pull.rebase true
+  git -C "$CONFIGS_DIR" config core.hooksPath hooks
+
+  # Default shell: /etc is read-only so chsh / /etc/shells don't work. Instead,
+  # source nix and hand off to fish from an interactive login bash (idempotent).
+  bashrc="$HOME/.bashrc"
+  if ! grep -q "configs: launch fish" "$bashrc" 2>/dev/null; then
+    cat >> "$bashrc" <<'EOF'
+
+# >>> configs: launch fish >>>
+# SteamOS can't chsh (read-only /etc); source nix and exec fish for interactive shells.
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
+if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh; fi
+if [[ $- == *i* ]] && command -v fish >/dev/null 2>&1 && [[ $(ps -o comm= -p $PPID 2>/dev/null) != fish ]]; then
+  exec fish
+fi
+# <<< configs: launch fish <<<
+EOF
+  fi
+
+  # SteamOS's /etc/profile.d/gpm.sh and /etc/bash.bashrc call `tty` without
+  # redirecting stderr; in pty-less/SSH sessions that leaks "tty: ttyname error:
+  # No such device" on every bash login (before exec fish). Both calls are no-ops
+  # on a Deck. Redirect their stderr. /etc is read-only and OS updates may revert
+  # this, so it re-applies on every setup.sh run (idempotent).
+  patch_tty_stderr() {
+    local f=$1 pat=$2 repl=$3
+    [ -f "$f" ] || return 0
+    grep -qF "$repl" "$f" 2>/dev/null && return 0   # already patched
+    grep -qF "$pat" "$f" 2>/dev/null || return 0    # pattern not present
+    echo "Silencing tty stderr in $f"
+    local ro; ro=$(steamos-readonly status 2>/dev/null)
+    [ "$ro" = enabled ] && sudo steamos-readonly disable
+    sudo sed -i "s|$pat|$repl|g" "$f"
+    [ "$ro" = enabled ] && sudo steamos-readonly enable
+  }
+  patch_tty_stderr /etc/profile.d/gpm.sh ' /usr/bin/tty ' ' /usr/bin/tty 2>/dev/null '
+  patch_tty_stderr /etc/bash.bashrc '$(tty)' '$(tty 2>/dev/null)'
+elif [ "$is_nixos" = true ]; then
   echo "Packages needed (add to your NixOS configuration):"
   install fish
   install pay-respects

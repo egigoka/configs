@@ -4,11 +4,18 @@ if status is-interactive
   # Detect SSH even under sudo -i (SSH_TTY/SSH_CONNECTION get cleared by sudo -i)
   # Starship hostname checks SSH_CONNECTION, fish_title checks SSH_TTY
   if not set -q SSH_TTY; and pstree -s %self 2>/dev/null | string match -q '*sshd*'
-      set -gx SSH_TTY (tty)
-      set -gx SSH_CONNECTION "sudo-i"
+      set -l _ssh_tty (tty 2>/dev/null)
+      if test -n "$_ssh_tty"
+          set -gx SSH_TTY $_ssh_tty
+          set -gx SSH_CONNECTION "sudo-i"
+      end
   end
 
   ### PATH
+  # nix (home-manager packages live here on SteamOS / nix hosts)
+  ensure_path /nix/var/nix/profiles/default/bin
+  ensure_path ~/.local/state/nix/profile/bin
+  ensure_path ~/.nix-profile/bin
   ensure_path ~/go/bin
   ensure_path ~/.cargo/bin
   ensure_path ~/.local/bin

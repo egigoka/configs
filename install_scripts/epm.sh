@@ -42,6 +42,15 @@ case "$(uname -s)" in
           install() { echo "  $*"; }
           uninstall() { echo "Use NixOS configuration to manage packages"; }
           ;;
+        steamos)
+          # SteamOS root is read-only/immutable and wiped on OS updates, so pacman
+          # is unusable for persistent packages. Use Nix instead. Declarative
+          # packages live in configs/nix (home-manager); these are a fallback for
+          # ad-hoc imperative installs.
+          updateall() { nix profile upgrade --all; }
+          install() { for p in "$@"; do nix profile install "nixpkgs#$p"; done; }
+          uninstall() { nix profile remove "$@"; }
+          ;;
         *)
           updateall() { echo "Unknown Linux distribution"; }
           install() { echo "Unknown Linux distribution"; }
