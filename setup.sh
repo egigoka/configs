@@ -261,6 +261,19 @@ EOF
   }
   patch_tty_stderr /etc/profile.d/gpm.sh ' /usr/bin/tty ' ' /usr/bin/tty 2>/dev/null '
   patch_tty_stderr /etc/bash.bashrc '$(tty)' '$(tty 2>/dev/null)'
+
+  # mpv on SteamOS is the io.mpv.Mpv Flatpak. Its sandbox overrides
+  # XDG_CONFIG_HOME to ~/.var/app/io.mpv.Mpv/config, so it never reads the
+  # ~/.config/mpv symlink the common section sets up below. Point the Flatpak's
+  # own config dir at the repo and grant the sandbox access to the link target
+  # (a path outside ~/.var/app is invisible inside the sandbox, so the symlink
+  # would otherwise dangle). install_link creates ~/.var/app/io.mpv.Mpv/config,
+  # which is also what makes the later install_uosc.sh detect the Flatpak and
+  # write uosc through this symlink into the repo (uosc is gitignored).
+  if command -v flatpak >/dev/null 2>&1; then
+    flatpak override --user io.mpv.Mpv --filesystem="$CONFIGS_DIR/mpv"
+    install_link "$CONFIGS_DIR/mpv" "$HOME/.var/app/io.mpv.Mpv/config/mpv"
+  fi
 elif [ "$is_nixos" = true ]; then
   echo "Packages needed (add to your NixOS configuration):"
   install fish
