@@ -157,21 +157,10 @@ source_nix() {
 }
 
 if [ "$is_steamos" = true ]; then
-  # SteamOS (Steam Deck): the root filesystem is read-only/immutable and gets
-  # wiped on every OS update, so pacman is unusable for persistent packages and
-  # chsh / /etc edits don't stick. Install all console packages with Nix +
-  # home-manager. The Determinate Systems "steam-deck" planner keeps the store
-  # under /home (bind-mounted to /nix) so it survives OS updates.
 
   source_nix
   if ! command -v nix >/dev/null 2>&1; then
     echo "Installing upstream Nix (steam-deck planner, store under /home/nix)..."
-    # The steam-deck planner installs "Determinate Nix" by DEFAULT, which
-    # provisions determinate-nixd into /usr/local/bin -> fails on SteamOS's
-    # read-only root. --prefer-upstream-nix forces plain upstream Nix instead,
-    # which needs no /usr writes. The planner persists the store via SteamOS's
-    # offload mechanism (/home/.steamos/offload/nix bind-mounted to /nix), so it
-    # survives OS updates.
     nix_installer="$(mktemp)"
     curl --proto '=https' --tlsv1.2 -sSf -L \
       https://github.com/DeterminateSystems/nix-installer/releases/latest/download/nix-installer-x86_64-linux \
@@ -197,8 +186,6 @@ if [ "$is_steamos" = true ]; then
   git -C "$CONFIGS_DIR" add nix >/dev/null 2>&1 || true
 
   echo "Installing console packages via home-manager..."
-  # --impure so the flake can read $USER/$HOME via builtins.getEnv.
-  # -b backup so home-manager moves any pre-existing files out of the way.
   nix run --impure home-manager/release-26.05 -- switch --impure -b backup \
     --flake "$CONFIGS_DIR/nix#default"
 
@@ -226,28 +213,54 @@ if [ "$is_steamos" = true ]; then
   git config --global pull.rebase true
   git -C "$CONFIGS_DIR" config core.hooksPath hooks
 
-  # Default shell: /etc is read-only so chsh / /etc/shells don't work. Instead,
-  # source nix and hand off to fish from an interactive login bash (idempotent).
-  bashrc="$HOME/.bashrc"
-  if ! grep -q "configs: launch fish" "$bashrc" 2>/dev/null; then
-    cat >> "$bashrc" <<'EOF'
+  fish_launch_snippet() {
+    cat <<'EOF'
 
 # >>> configs: launch fish >>>
-# SteamOS can't chsh (read-only /etc); source nix and exec fish for interactive shells.
 if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then . "$HOME/.nix-profile/etc/profile.d/nix.sh"; fi
 if [ -e /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]; then . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh; fi
-if [[ $- == *i* ]] && command -v fish >/dev/null 2>&1 && [[ $(ps -o comm= -p $PPID 2>/dev/null) != fish ]]; then
+if [[ $- == *i* ]] && [ -t 0 ] && command -v fish >/dev/null 2>&1 && [[ $(ps -o comm= -p $PPID 2>/dev/null) != fish ]]; then
   exec fish
 fi
 # <<< configs: launch fish <<<
 EOF
-  fi
+  }
 
-  # SteamOS's /etc/profile.d/gpm.sh and /etc/bash.bashrc call `tty` without
-  # redirecting stderr; in pty-less/SSH sessions that leaks "tty: ttyname error:
-  # No such device" on every bash login (before exec fish). Both calls are no-ops
-  # on a Deck. Redirect their stderr. /etc is read-only and OS updates may revert
-  # this, so it re-applies on every setup.sh run (idempotent).
+  append_fish_launch() {
+    local file=$1 owner=$2
+    grep -q "configs: launch fish" "$file" 2>/dev/null && return 0
+    if [ "$(id -un)" = "$owner" ]; then
+      fish_launch_snippet >> "$file"
+    elif [ "$(id -u)" -eq 0 ]; then
+      # write as the target user so the file stays owned by them
+      fish_launch_snippet | sudo -u "$owner" tee -a "$file" >/dev/null
+    else
+      return 0   # another user's dotfiles need root
+    fi
+    echo "Added fish launch to $file"
+  }
+
+  add_fish_launch() {
+    local home=$1 owner=$2 login_rc
+    [ -d "$home" ] || return 0
+    append_fish_launch "$home/.bashrc" "$owner"
+    for login_rc in "$home/.bash_profile" "$home/.bash_login" "$home/.profile"; do
+      if [ -f "$login_rc" ]; then
+        append_fish_launch "$login_rc" "$owner"
+        return 0
+      fi
+    done
+    append_fish_launch "$home/.bash_profile" "$owner"
+  }
+
+  add_fish_launch "$HOME" "$(id -un)"
+  while IFS=: read -r u _ uid _ _ home shell; do
+    [ "$home" = "$HOME" ] && continue
+    case "$shell" in */nologin|*/false|"") continue ;; esac
+    { [ "$uid" -eq 0 ] || [ "$uid" -ge 1000 ]; } || continue
+    add_fish_launch "$home" "$u"
+  done < <(getent passwd)
+
   patch_tty_stderr() {
     local f=$1 pat=$2 repl=$3
     [ -f "$f" ] || return 0
@@ -262,14 +275,128 @@ EOF
   patch_tty_stderr /etc/profile.d/gpm.sh ' /usr/bin/tty ' ' /usr/bin/tty 2>/dev/null '
   patch_tty_stderr /etc/bash.bashrc '$(tty)' '$(tty 2>/dev/null)'
 
-  # mpv on SteamOS is the io.mpv.Mpv Flatpak. Its sandbox overrides
-  # XDG_CONFIG_HOME to ~/.var/app/io.mpv.Mpv/config, so it never reads the
-  # ~/.config/mpv symlink the common section sets up below. Point the Flatpak's
-  # own config dir at the repo and grant the sandbox access to the link target
-  # (a path outside ~/.var/app is invisible inside the sandbox, so the symlink
-  # would otherwise dangle). install_link creates ~/.var/app/io.mpv.Mpv/config,
-  # which is also what makes the later install_uosc.sh detect the Flatpak and
-  # write uosc through this symlink into the repo (uosc is gitignored).
+  if [ "$(id -u)" -eq 0 ]; then
+    sshd_bin=$(command -v sshd || echo /usr/bin/sshd)
+    sudo_user="${SUDO_USER:-deck}"
+    sudoers_file="/etc/sudoers.d/zzz-sshd-test"
+    sudoers_line="$sudo_user ALL=(root) NOPASSWD: $sshd_bin -T"
+    if [ "$(cat "$sudoers_file" 2>/dev/null)" != "$sudoers_line" ]; then
+      echo "Granting $sudo_user passwordless 'sudo sshd -T' via $sudoers_file"
+      ro=$(steamos-readonly status 2>/dev/null)
+      [ "$ro" = enabled ] && steamos-readonly disable
+      tmp=$(mktemp)
+      printf '%s\n' "$sudoers_line" > "$tmp"
+      if visudo -cf "$tmp" >/dev/null 2>&1; then
+        command install -m 0440 "$tmp" "$sudoers_file"
+      else
+        echo "Generated sudoers line failed validation, not installing:" >&2
+        echo "  $sudoers_line" >&2
+      fi
+      rm -f "$tmp"
+      [ "$ro" = enabled ] && steamos-readonly enable
+    fi
+  fi
+
+  if [ "$(id -u)" -eq 0 ]; then
+    sshd_conf_dir="/etc/ssh/sshd_config.d"
+    sshd_settings=(
+      "PermitRootLogin no"
+      "KbdInteractiveAuthentication yes"
+      "PasswordAuthentication no"
+      "AllowAgentForwarding no"
+      "MaxAuthTries 3"
+      "LoginGraceTime 60s"
+      "MaxSessions 5"
+      "MaxStartups 10:30:60"
+      "ClientAliveInterval 300"
+      "ClientAliveCountMax 36"
+      "AuthenticationMethods publickey keyboard-interactive"
+    )
+    ro=$(steamos-readonly status 2>/dev/null)
+    sshd_changed=false
+    for setting in "${sshd_settings[@]}"; do
+      key=${setting%% *}
+      file="$sshd_conf_dir/01-$key.conf"
+      [ "$(cat "$file" 2>/dev/null)" = "$setting" ] && continue
+      if [ "$ro" = enabled ] && [ "$sshd_changed" = false ]; then
+        steamos-readonly disable
+      fi
+      sshd_changed=true
+      mkdir -p "$sshd_conf_dir"
+      printf '%s\n' "$setting" > "$file"
+      chmod 0644 "$file"
+      echo "Set sshd: $setting"
+    done
+    if [ "$sshd_changed" = true ]; then
+      if sshd -t 2>/dev/null; then
+        systemctl reload sshd 2>/dev/null \
+          || systemctl reload sshd.service 2>/dev/null || true
+      else
+        echo "sshd config validation failed; not reloading sshd" >&2
+      fi
+      [ "$ro" = enabled ] && steamos-readonly enable
+    fi
+  fi
+
+  if [ "$(id -u)" -eq 0 ]; then
+    login_user="${SUDO_USER:-deck}"
+    hm_path=$(nix eval --raw --impure \
+              "$CONFIGS_DIR/nix#homeConfigurations.default.config.home.path" 2>/dev/null)
+    ga_so="$hm_path/lib/security/pam_google_authenticator.so"
+    pam_sshd="/etc/pam.d/sshd"
+    dest_so="/usr/lib/security/pam_google_authenticator.so"
+    pam_line="auth required $dest_so"
+    if [ -z "$hm_path" ] || [ ! -f "$ga_so" ]; then
+      echo "google-authenticator PAM module not resolvable from the flake ($CONFIGS_DIR/nix);" >&2
+      echo "skipping SSH 2FA wiring (is it in nix/home.nix and did home-manager run?)." >&2
+    else
+      mod_glibc=$(LC_ALL=C tr -c '[:print:]' '\n' < "$ga_so" \
+                  | grep -oE 'GLIBC_[0-9]+\.[0-9]+' | sed 's/GLIBC_//' | sort -V | tail -n1)
+      sys_glibc=$(getconf GNU_LIBC_VERSION 2>/dev/null | awk '{print $NF}')
+      [ -z "$sys_glibc" ] && sys_glibc=$(ldd --version 2>/dev/null | head -n1 | grep -oE '[0-9]+\.[0-9]+$')
+      newest=$(printf '%s\n%s\n' "$sys_glibc" "$mod_glibc" | sort -V | tail -n1)
+      if [ -n "$mod_glibc" ] && [ -n "$sys_glibc" ] \
+         && [ "$newest" = "$mod_glibc" ] && [ "$mod_glibc" != "$sys_glibc" ]; then
+        echo "REFUSING to enable Google Authenticator PAM: module needs glibc $mod_glibc" >&2
+        echo "but system has $sys_glibc -- loading it would fail and lock out SSH" >&2
+        echo "(strict, no nullok). Skipping pam.d wiring; the CLI is still installed." >&2
+      elif [ ! -f "$pam_sshd" ]; then
+        echo "$pam_sshd missing; refusing to create a bare PAM file. Skipping 2FA wiring." >&2
+      else
+        beg="# >>> configs ssh 2fa (password then TOTP, both required) >>>"
+        end="# <<< configs ssh 2fa <<<"
+        pristine=$(awk -v b="$beg" -v e="$end" '
+          $0 == b { inblk = 1; next }
+          $0 == e { inblk = 0; next }
+          inblk { next }
+          /^# configs: Google Authenticator/  { next }
+          $0 ~ /pam_google_authenticator\.so/ { next }
+          { sub(/^#configs-disabled# /, ""); print }
+        ' "$pam_sshd")
+        desired=$(printf '%s\n' "$pristine" | awk -v b="$beg" -v e="$end" -v ga="$pam_line" '
+          !done && $1 == "auth" {
+            print "#configs-disabled# " $0
+            print b; print "auth required pam_unix.so"; print ga; print e
+            done = 1; next
+          }
+          { print }
+          END { if (!done) { print b; print "auth required pam_unix.so"; print ga; print e } }
+        ')
+        if [ "$desired" != "$(cat "$pam_sshd")" ] || ! cmp -s "$ga_so" "$dest_so" 2>/dev/null; then
+          ro=$(steamos-readonly status 2>/dev/null)
+          [ "$ro" = enabled ] && steamos-readonly disable
+          mkdir -p /usr/lib/security
+          command install -m 0644 "$ga_so" "$dest_so"
+          printf '%s\n' "$desired" > "$pam_sshd"
+          echo "Wired SSH auth = pam_unix (password) + TOTP, both required, in $pam_sshd; installed $dest_so"
+          [ "$ro" = enabled ] && steamos-readonly enable
+        fi
+        echo "SSH 2FA wired. Enroll BEFORE reconnecting: run 'google-authenticator' as" \
+             "$login_user and keep your current session open as an escape hatch."
+      fi
+    fi
+  fi
+
   if command -v flatpak >/dev/null 2>&1; then
     flatpak override --user io.mpv.Mpv --filesystem="$CONFIGS_DIR/mpv"
     install_link "$CONFIGS_DIR/mpv" "$HOME/.var/app/io.mpv.Mpv/config/mpv"
@@ -309,8 +436,7 @@ else
 
   # sponge: only purge history on shell exit (not after each command)
   fish -c "set -Ux sponge_purge_only_on_exit true"
-  # install shell
-  #install zsh
+
   install_if_missing fish
 
   # setup default shell
