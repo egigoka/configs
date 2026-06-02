@@ -111,3 +111,4 @@ fish/completions/fisher.fish
 .codex
 __pycache__/
 mpv/scripts/uosc/
+wireguard/

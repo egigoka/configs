@@ -397,6 +397,33 @@ EOF
     fi
   fi
 
+  if [ "$(id -u)" -eq 0 ]; then
+    wg_key="$CONFIGS_DIR/wireguard/wg4.key"
+    wg_tmpl="$CONFIGS_DIR/wireguard/wg4.conf"
+    wg_dest="/etc/wireguard/wg4.conf"
+    if [ -f "$wg_key" ] && [ -f "$wg_tmpl" ]; then
+      wg_conf=$(sed "s|__PRIVATE_KEY__|$(cat "$wg_key")|" "$wg_tmpl")
+      need_conf=false; [ "$wg_conf" != "$(cat "$wg_dest" 2>/dev/null)" ] && need_conf=true
+      need_enable=false; systemctl is-enabled wg-quick@wg4 >/dev/null 2>&1 || need_enable=true
+      if [ "$need_conf" = true ] || [ "$need_enable" = true ]; then
+        ro=$(steamos-readonly status 2>/dev/null)
+        [ "$ro" = enabled ] && steamos-readonly disable
+        if [ "$need_conf" = true ]; then
+          mkdir -p /etc/wireguard
+          printf '%s\n' "$wg_conf" > "$wg_dest"
+          chmod 600 "$wg_dest"
+          echo "Installed $wg_dest (wireguard wg4)"
+        fi
+        if [ "$need_enable" = true ]; then
+          systemctl enable wg-quick@wg4 >/dev/null 2>&1 && echo "Enabled wg-quick@wg4"
+        fi
+        [ "$ro" = enabled ] && steamos-readonly enable
+      fi
+    else
+      echo "WireGuard: $wg_key missing; skipping wg4 (private key not on this machine)." >&2
+    fi
+  fi
+
   if command -v flatpak >/dev/null 2>&1; then
     flatpak override --user io.mpv.Mpv --filesystem="$CONFIGS_DIR/mpv"
     install_link "$CONFIGS_DIR/mpv" "$HOME/.var/app/io.mpv.Mpv/config/mpv"
