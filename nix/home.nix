@@ -25,5 +25,8 @@
     uv            # python tooling (used for virtualfish)
     starship      # prompt
     pstree        # used by fish SSH-detection in config.fish
+    rustup        # rust toolchain installer/manager (rustc, cargo via `rustup default stable`)
+    gcc           # C compiler; provides `cc` (used by cargo/rustc as the linker)
+    gnumake       # GNU make (`make`)
   ];
 }
