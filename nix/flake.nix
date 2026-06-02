@@ -17,11 +17,22 @@
       # same flake works for any user (`deck` on a Steam Deck) without templating.
       username = builtins.getEnv "USER";
       homeDirectory = builtins.getEnv "HOME";
+      # Built from the egigoka/plasma-keyboard fork. Qt/KF6 deps come from the
+      # kdePackages set so they share one Qt; the rest auto-fill from pkgs.
+      plasma-keyboard = pkgs.callPackage ./plasma-keyboard.nix {
+        inherit (pkgs.kdePackages)
+          extra-cmake-modules wrapQtAppsHook
+          qtbase qtdeclarative qtsvg qtvirtualkeyboard qtwayland
+          plasma-wayland-protocols
+          kcoreaddons ki18n kcmutils kconfig kirigami;
+      };
     in {
+      packages.${system}.plasma-keyboard = plasma-keyboard;
+
       homeConfigurations.default = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { inherit username homeDirectory; };
+        extraSpecialArgs = { inherit username homeDirectory plasma-keyboard; };
       };
     };
 }

@@ -1,4 +1,4 @@
-{ pkgs, username, homeDirectory, ... }:
+{ pkgs, username, homeDirectory, plasma-keyboard, ... }:
 
 {
   home.username = username;
@@ -31,5 +31,11 @@
     rustup        # rust toolchain installer/manager (rustc, cargo via `rustup default stable`)
     gcc           # C compiler; provides `cc` (used by cargo/rustc as the linker)
     gnumake       # GNU make (`make`)
+    nix-index     # provides `nix-locate` (find which pkg ships a file); `nix search` is built into nix
+
+    # GUI: Qt Virtual Keyboard based on-screen keyboard for Plasma Desktop Mode
+    # (built from the egigoka fork). Wire it up as KWin's input method via
+    # kwinrc [Wayland] InputMethod -> ~/.nix-profile/share/applications/org.kde.plasma.keyboard.desktop
+    plasma-keyboard
   ];
 }
