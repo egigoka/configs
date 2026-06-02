@@ -15,7 +15,10 @@
     fish          # shell
     pay-respects  # command correction (replaces thefuck)
     fzf           # fuzzy finder
-    coreutils     # provides dircolors
+    # NOTE: do NOT add `coreutils` here. nixpkgs coreutils is built against a
+    # newer glibc than SteamOS; putting it on PATH makes Steam's launch scripts
+    # (dirname/basename/env/...) fail with "GLIBC_2.xx not found" and crash in
+    # Desktop Mode. The system provides dircolors and the rest under /usr/bin.
     python3
     autojump      # `j` directory jumping
     bat           # cat with syntax highlighting
