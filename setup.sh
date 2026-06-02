@@ -428,6 +428,24 @@ EOF
     flatpak override --user io.mpv.Mpv --filesystem="$CONFIGS_DIR/mpv"
     install_link "$CONFIGS_DIR/mpv" "$HOME/.var/app/io.mpv.Mpv/config/mpv"
   fi
+
+  # Tailscale: vendored official Steam Deck installer. It writes /opt + the
+  # systemd unit, but the root partition is read-only here, so toggle
+  # steamos-readonly around it (upstream omits this). The installer only sets up
+  # and starts tailscaled -- authenticate separately (see echo below).
+  if [ ! -x /opt/tailscale/tailscale ]; then
+    echo "Installing Tailscale (tailscale-dev/deck-tailscale)..."
+    ro=$(steamos-readonly status 2>/dev/null)
+    [ "$ro" = enabled ] && sudo steamos-readonly disable
+    sudo bash "$CONFIGS_DIR/install_scripts/install_tailscale.sh"
+    [ "$ro" = enabled ] && sudo steamos-readonly enable
+  fi
+  if [ -x /opt/tailscale/tailscale ]; then
+    [ -e /etc/profile.d/tailscale.sh ] && . /etc/profile.d/tailscale.sh
+    sudo /opt/tailscale/tailscale set --accept-dns=false >/dev/null 2>&1 || true
+    echo "Tailscale ready. Authenticate once with:"
+    echo "  sudo tailscale up --qr --operator=$USER --ssh --accept-dns=false"
+  fi
 elif [ "$is_nixos" = true ]; then
   echo "Packages needed (add to your NixOS configuration):"
   install fish
