@@ -366,6 +366,12 @@ if status is-interactive
   # aider
   set -x AIDER_AUTO_COMMITS False
 
+  # homebrew
+  set -x HOMEBREW_AUTO_UPDATE_SECS 86400  # auto-update at most once every 24h
+  set -x HOMEBREW_NO_ASK 1                # never prompt to confirm installs/upgrades
+  set -x HOMEBREW_NO_INSTALL_CLEANUP 1    # don't auto-cleanup after install
+  set -x HOMEBREW_NO_ENV_HINTS 1          # don't print "Hint: set HOMEBREW_..." nags
+
   # default editor
   if set -q SSH_CONNECTION
     set -x EDITOR micro
