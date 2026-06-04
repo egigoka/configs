@@ -292,24 +292,24 @@ if status is-interactive
         set -l os_id (grep '^ID=' /etc/os-release | cut -d= -f2 | tr -d '"')
         switch $os_id
           case rocky
-            abbr --add updateall --position command fisher update \&\& sudo dnf clean all \&\& sudo dnf makecache \&\& sudo dnf upgrade -y
+            abbr --add updateall --position command sudo dnf clean all \&\& sudo dnf makecache \&\& sudo dnf upgrade -y
             abbr --add install   --position command sudo dnf install -y
             abbr --add uninstall --position command sudo dnf remove -y
           case arch
-            abbr --add updateall --position command fisher update \&\& yay -Syu --devel \&\& yay -Sc
+            abbr --add updateall --position command yay -Syu --devel \&\& yay -Sc
             abbr --add install   --position command yay -S
             abbr --add uninstall --position command yay -Rns
             abbr --add updatemirrors --position command cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak \&\& rate-mirrors arch \| sudo tee /etc/pacman.d/mirrorlist \&\& sudo pacman -Syy
           case debian ubuntu droidian
-            abbr --add updateall --position command fisher update \&\& sudo apt update \&\& sudo apt upgrade \&\& sudo apt dist-upgrade \&\& sudo apt autoremove
+            abbr --add updateall --position command sudo apt update \&\& sudo apt upgrade \&\& sudo apt dist-upgrade \&\& sudo apt autoremove
             abbr --add install   --position command sudo apt install
             abbr --add uninstall --position command sudo apt -y remove
           case opensuse-tumbleweed opensuse-leap
-            abbr --add updateall --position command fisher update \&\& sudo zypper refresh \&\& sudo zypper dup
+            abbr --add updateall --position command sudo zypper refresh \&\& sudo zypper dup
             abbr --add install   --position command sudo zypper -n install
             abbr --add uninstall --position command sudo zypper -n remove
           case alpine
-            abbr --add updateall --position command fisher update \&\& apk upgrade --available
+            abbr --add updateall --position command apk upgrade --available
             abbr --add install   --position command apk add
             abbr --add uninstall --position command apk del
           case nixos
@@ -329,9 +329,9 @@ if status is-interactive
     case Darwin
       # mAcos
       if test (id -u) -eq 0
-        abbr --add updateall --position command fisher update \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo port upgrade outdated \&\& sudo port uninstall inactive \&\& sudo port reclaim --enable-reminders \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh
+        abbr --add updateall --position command sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo port upgrade outdated \&\& sudo port uninstall inactive \&\& sudo port reclaim --enable-reminders \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh
       else
-        abbr --add updateall --position command fisher update \&\& brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo port upgrade outdated \&\& sudo port uninstall inactive \&\& sudo port reclaim --enable-reminders \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh
+        abbr --add updateall --position command brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo port upgrade outdated \&\& sudo port uninstall inactive \&\& sudo port reclaim --enable-reminders \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh
       end
       abbr --add install   --position command brew install
       abbr --add uninstall --position command brew remove
