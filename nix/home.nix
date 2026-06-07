@@ -24,6 +24,7 @@
     uv            # python tooling (used for virtualfish)
     starship      
     pstree        # used by fish SSH-detection in config.fish
+    gping         # ping with a graph
     rustup        
     gcc           
     gnumake       
