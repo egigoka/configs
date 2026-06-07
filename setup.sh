@@ -446,6 +446,10 @@ EOF
     echo "Tailscale ready. Authenticate once with:"
     echo "  sudo tailscale up --qr --operator=$USER --ssh --accept-dns=false"
   fi
+
+  # KDiskMark disk benchmark: AppImage (not the sandboxed Flathub build, which
+  # can't flush the OS cache -- see install_kdiskmark.sh for the why).
+  sh "$CONFIGS_DIR/install_scripts/install_kdiskmark.sh" || true
 elif [ "$is_nixos" = true ]; then
   echo "Packages needed (add to your NixOS configuration):"
   install fish
