@@ -26,6 +26,7 @@
     pstree        # used by fish SSH-detection in config.fish
     gping
     aria2
+    xdelta        # xdelta3 binary
     rustup        
     gcc           
     gnumake       
