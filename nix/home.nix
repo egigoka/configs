@@ -1,4 +1,4 @@
-{ pkgs, username, homeDirectory, plasma-keyboard, ... }:
+{ pkgs, username, homeDirectory, plasma-keyboard, helium, ... }:
 
 {
   home.username = username;
@@ -21,19 +21,20 @@
     lsd           
     difftastic    # difft
     gh            
-    uv            # python tooling (used for virtualfish)
+    uv
     starship      
     pstree        # used by fish SSH-detection in config.fish
-    gping         # ping with a graph
+    gping
     rustup        
     gcc           
     gnumake       
     nix-index     # provides `nix-locate` (find which pkg ships a file); `nix search` is built into nix
     google-authenticator  # wired into /etc/pam.d/sshd by setup.sh
 
-    # GUI: Qt Virtual Keyboard based on-screen keyboard for Plasma Desktop Mode
+    decky-loader
     # (built from the egigoka fork). Wire it up as KWin's input method via
     # kwinrc [Wayland] InputMethod -> ~/.nix-profile/share/applications/org.kde.plasma.keyboard.desktop
     plasma-keyboard
+    helium
   ];
 }

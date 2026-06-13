@@ -7,12 +7,20 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    jovian-nixos = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    helium-browser = {
+      url = "github:vikingnope/helium-browser-nix-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, ... }:
+  outputs = { nixpkgs, home-manager, jovian-nixos, helium-browser, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = nixpkgs.legacyPackages.${system}.extend jovian-nixos.overlays.default;
       # Resolved at eval time from the environment (requires --impure), so the
       # same flake works for any user (`deck` on a Steam Deck) without templating.
       username = builtins.getEnv "USER";
@@ -26,13 +34,14 @@
           plasma-wayland-protocols
           kcoreaddons ki18n kcmutils kconfig kirigami;
       };
+      helium = helium-browser.packages.${system}.helium;
     in {
       packages.${system}.plasma-keyboard = plasma-keyboard;
 
       homeConfigurations.default = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home.nix ];
-        extraSpecialArgs = { inherit username homeDirectory plasma-keyboard; };
+        extraSpecialArgs = { inherit username homeDirectory plasma-keyboard helium; };
       };
     };
 }

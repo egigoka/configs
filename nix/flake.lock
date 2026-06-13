@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "helium-browser": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1781239081,
+        "narHash": "sha256-wap2kGtUr9S7K7OVGHRAMRequGqAJDsBgEyGrOkt5os=",
+        "owner": "vikingnope",
+        "repo": "helium-browser-nix-flake",
+        "rev": "49bf9e02664380b2111510a5c21d3d0be22bb211",
+        "type": "github"
+      },
+      "original": {
+        "owner": "vikingnope",
+        "repo": "helium-browser-nix-flake",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -21,6 +42,49 @@
         "type": "github"
       }
     },
+    "jovian-nixos": {
+      "inputs": {
+        "nix-github-actions": "nix-github-actions",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781180725,
+        "narHash": "sha256-/r9mc3P39QCtm8goasp2d4Ojogq29a7OQFxyTqsv8Oc=",
+        "owner": "Jovian-Experiments",
+        "repo": "Jovian-NixOS",
+        "rev": "e509169aadcdbc5019992cfbec9f83d73c5854ff",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Jovian-Experiments",
+        "repo": "Jovian-NixOS",
+        "type": "github"
+      }
+    },
+    "nix-github-actions": {
+      "inputs": {
+        "nixpkgs": [
+          "jovian-nixos",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1729697500,
+        "narHash": "sha256-VFTWrbzDlZyFHHb1AlKRiD/qqCJIripXKiCSFS8fAOY=",
+        "owner": "zhaofengli",
+        "repo": "nix-github-actions",
+        "rev": "e418aeb728b6aa5ca8c5c71974e7159c2df1d8cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zhaofengli",
+        "ref": "matrix-name",
+        "repo": "nix-github-actions",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1780203844,
@@ -39,8 +103,43 @@
     },
     "root": {
       "inputs": {
+        "helium-browser": "helium-browser",
         "home-manager": "home-manager",
+        "jovian-nixos": "jovian-nixos",
         "nixpkgs": "nixpkgs"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
       }
     }
   },
