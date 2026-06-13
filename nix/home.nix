@@ -25,6 +25,7 @@
     starship      
     pstree        # used by fish SSH-detection in config.fish
     gping
+    aria2
     rustup        
     gcc           
     gnumake       
