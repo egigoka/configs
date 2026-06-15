@@ -7,6 +7,10 @@ palette = "catppuccin_mocha"
 # Inserts a blank line between shell prompts
 add_newline = false
 
+# Timeout for starship to scan files (in milliseconds). Default is 30; doubled to
+# avoid "Scanning current directory timed out" warnings on slow/large directories.
+scan_timeout = 60
+
 format = """
 \
 $os\
