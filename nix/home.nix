@@ -18,7 +18,8 @@
     python3
     autojump      
     bat           
-    lsd           
+    lsd
+    gdu
     difftastic    # difft
     gh            
     uv
