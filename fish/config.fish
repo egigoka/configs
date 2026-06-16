@@ -94,6 +94,7 @@ if status is-interactive
   # disk management
   abbr --add listdisks --position command lsblk -io NAME,TYPE,SIZE,MOUNTPOINT,FSTYPE,MODEL
   abbr --add alldisks --position command listdisks
+  abbr --add fm --position command elio
   
   abbr --add freespace    --position command df -kh .
   abbr --add freespaceall --position command df -kh
