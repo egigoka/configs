@@ -27,6 +27,7 @@
     gping
     aria2
     xdelta        # xdelta3 binary
+    deno
     rustup        
     gcc           
     gnumake       
