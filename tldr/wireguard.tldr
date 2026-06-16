@@ -50,4 +50,10 @@ PostUp = sysctl -q net.ipv4.conf.%i.rp_filter=2
 # then send only what you want, e.g.:
 #   ip route add {DEST_CIDR} dev {WG_IFACE}
 #   curl --interface {WG_IFACE} https://...
+#
+# macOS: no rp_filter. Use Table=off + a tunnel-scoped default route instead;
+# replace the rp_filter PostUp above with (BSD `route`, %i = real utunN):
+PostUp   = route -q -n add  -inet -ifscope %i default -interface %i; route -q -n add  -inet6 -ifscope %i default -interface %i
+PostDown = route -q -n delete -inet -ifscope %i default -interface %i; route -q -n delete -inet6 -ifscope %i default -interface %i
+#   curl --interface "host!{CLIENT_VPN_IP}" https://...   # bind by stable config IP (or {WG_IFACE})
 
