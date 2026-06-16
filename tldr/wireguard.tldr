@@ -37,3 +37,17 @@ systemctl restart wg-quick@{WG_IFACE}.service
 # ENABLE AND START WG-QUICK ON CLIENT
 systemctl enable --now wg-quick@{WG_IFACE}.service
 
+# ROUTE TRAFFIC ONLY WHEN EXPLICITLY WANTED (no default route hijack)
+# By default AllowedIPs = 0.0.0.0/0 makes wg-quick add routes so ALL traffic
+# goes through the tunnel. To instead opt-in per-app / per-destination:
+[Interface]
+Table = off                     # wg-quick won't auto-add any routes; you route yourself
+#DNS = ...                      # omit/comment so system DNS is kept (no DNS push)
+# Loose reverse-path filter (=2) on this iface; strict rp_filter (=1) drops
+# tunnel replies that lack a matching route back via the tunnel, breaking
+# selective use like binding a process with `--interface {WG_IFACE}`.
+PostUp = sysctl -q net.ipv4.conf.%i.rp_filter=2
+# then send only what you want, e.g.:
+#   ip route add {DEST_CIDR} dev {WG_IFACE}
+#   curl --interface {WG_IFACE} https://...
+
