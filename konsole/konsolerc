@@ -13,6 +13,7 @@ Recent URLs[$e]=
 
 [MainWindow]
 MenuBar=Disabled
+ToolBarsMovable=Disabled
 
 [Notification Messages]
 CloseAllTabs=true
