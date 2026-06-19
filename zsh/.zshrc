@@ -30,6 +30,7 @@
 
 ### PATH
 	contains $PATH ~/bin || export PATH=$PATH:~/bin
+	contains $PATH ~/.npm-global/bin || export PATH=$PATH:~/.npm-global/bin
 	contains $PATH ~/go/bin/ || export PATH=$PATH:~/go/bin/
 	contains $PATH ~/.cargo/bin || export PATH=$PATH:~/.cargo/bin  # rust
 	contains $PATH ~/.local/bin/ || export PATH=$PATH:~/.local/bin/
@@ -523,6 +524,10 @@
 
 ### aider configs
 	export AIDER_AUTO_COMMITS=False
+
+### npm / node
+	export npm_config_prefix="$HOME/.npm-global"
+	export NODE_PATH="$HOME/.npm-global/lib/node_modules"
 
 ### default editor
 	if [[ -n $SSH_CONNECTION ]]; then

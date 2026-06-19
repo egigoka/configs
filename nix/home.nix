@@ -37,6 +37,7 @@
     google-authenticator  # wired into /etc/pam.d/sshd by setup.sh
 
     decky-loader
+    curl-impersonate
     # (built from the egigoka fork). Wire it up as KWin's input method via
     # kwinrc [Wayland] InputMethod -> ~/.nix-profile/share/applications/org.kde.plasma.keyboard.desktop
     plasma-keyboard

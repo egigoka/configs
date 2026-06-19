@@ -16,7 +16,8 @@ if status is-interactive
   ensure_path /nix/var/nix/profiles/default/bin
   ensure_path ~/.local/state/nix/profile/bin
   ensure_path ~/.nix-profile/bin
-  ensure_path ~/go/bin
+   ensure_path ~/.npm-global/bin
+   ensure_path ~/go/bin
   ensure_path ~/.cargo/bin
   ensure_path ~/.local/bin
   ensure_path ~/.filen-cli/bin
@@ -349,6 +350,10 @@ if status is-interactive
   abbr --add !!! --position anywhere --function __last_argument
   abbr --add r --position command --function __last_command
   abbr --add where --position command whereis
+
+  # npm / node
+  set -x npm_config_prefix "$HOME/.npm-global"
+  set -x NODE_PATH "$HOME/.npm-global/lib/node_modules"
 
   ### ENVIRONMENT
   # you-should-use
