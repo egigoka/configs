@@ -29,6 +29,7 @@
     aria2
     xdelta        # xdelta3 binary
     deno
+    nodejs        # provides node/npm/npx
     rustup        
     gcc           
     gnumake       
