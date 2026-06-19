@@ -159,10 +159,10 @@
                 		alias uninstall="dnf remove -y"
                 		;;
                     arch)
-                        alias updateall='yay -Syu --devel --timeupdate; yay -Sc'
-                        alias install="yay -S"
-                        alias uninstall="yay -Rns"
-                        alias updatemirrors="cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak; rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; sudo pacman -Syy"
+                        alias updateall='sudo pacman -Syu; sudo pacman -Sc'
+                        alias install="sudo pacman -S"
+                        alias uninstall="sudo pacman -Rns"
+                        alias updatemirrors="cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak; sudo reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist; sudo pacman -Syy"
                         ;;
                     debian|ubuntu|droidian)
                         alias updateall='apt update && apt upgrade && apt dist-upgrade'

@@ -12,10 +12,10 @@ case "$(uname -s)" in
           uninstall() { sudo dnf remove -y "$@"; }
           ;;
         arch)
-          updateall() { yay -Syu --devel --timeupdate; yay -Sc; }
-          install() { yay -S "$@"; }
-          uninstall() { yay -Rns "$@"; }
-          updatemirrors() { cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak; rate-mirrors arch | sudo tee /etc/pacman.d/mirrorlist; sudo pacman -Syy; }
+          updateall() { sudo pacman -Syu; sudo pacman -Sc; }
+          install() { sudo pacman -S "$@"; }
+          uninstall() { sudo pacman -Rns "$@"; }
+          updatemirrors() { cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak; sudo reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist; sudo pacman -Syy; }
           ;;
         debian|ubuntu|droidian)
           updateall() { sudo apt update && sudo apt upgrade && sudo apt dist-upgrade; }

@@ -297,10 +297,10 @@ if status is-interactive
             abbr --add install   --position command sudo dnf install -y
             abbr --add uninstall --position command sudo dnf remove -y
           case arch
-            abbr --add updateall --position command yay -Syu --devel \&\& yay -Sc
-            abbr --add install   --position command yay -S
-            abbr --add uninstall --position command yay -Rns
-            abbr --add updatemirrors --position command cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak \&\& rate-mirrors arch \| sudo tee /etc/pacman.d/mirrorlist \&\& sudo pacman -Syy
+            abbr --add updateall --position command sudo pacman -Syu \&\& sudo pacman -Sc
+            abbr --add install   --position command sudo pacman -S
+            abbr --add uninstall --position command sudo pacman -Rns
+            abbr --add updatemirrors --position command cp /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak \&\& sudo reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist \&\& sudo pacman -Syy
           case debian ubuntu droidian
             abbr --add updateall --position command sudo apt update \&\& sudo apt upgrade \&\& sudo apt dist-upgrade \&\& sudo apt autoremove
             abbr --add install   --position command sudo apt install

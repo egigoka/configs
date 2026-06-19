@@ -526,11 +526,11 @@ else
   git -C "$CONFIGS_DIR" checkout fish/fish_plugins
 
   # apps that used in shell config
-  command -v pay-respects >/dev/null 2>&1 || [ -x "$HOME/.local/bin/pay-respects" ] || install_if_missing pay-respects || sh "$CONFIGS_DIR/install_scripts/install_pay_respects.sh"
+  command -v pay-respects >/dev/null 2>&1 || [ -x "$HOME/.local/bin/pay-respects" ] || sh "$CONFIGS_DIR/install_scripts/install_pay_respects.sh"
   install_if_missing fzf
   install_if_missing dircolors || install_if_missing coreutils
   install_if_missing python3
-  install_if_missing autojump || install_autojump
+  command -v autojump >/dev/null 2>&1 || [ -d "$HOME/.autojump" ] || install_autojump
   install_if_missing bat
   install_if_missing lsd
   command -v difft >/dev/null 2>&1 || [ -x "$HOME/.local/bin/difft" ] || install_if_missing difftastic || sh "$CONFIGS_DIR/install_scripts/install_difftastic.sh"
