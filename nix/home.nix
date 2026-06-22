@@ -42,5 +42,6 @@
     # kwinrc [Wayland] InputMethod -> ~/.nix-profile/share/applications/org.kde.plasma.keyboard.desktop
     plasma-keyboard
     helium
+    mkvtoolnix   # provides mkvmerge, mkvinfo, mkvextract, etc.
   ];
 }
