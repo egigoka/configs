@@ -186,7 +186,7 @@ if [ "$is_steamos" = true ]; then
   git -C "$CONFIGS_DIR" add nix >/dev/null 2>&1 || true
 
   echo "Installing console packages via home-manager..."
-  nix run --impure home-manager/release-26.05 -- switch --impure -b backup \
+  nix run --refresh --impure home-manager/release-26.05 -- switch --impure -b backup \
     --flake "$CONFIGS_DIR/nix#default"
 
   source_nix

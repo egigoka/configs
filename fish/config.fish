@@ -12,12 +12,8 @@ if status is-interactive
   end
 
   ### PATH
-  # nix (home-manager packages live here on SteamOS / nix hosts)
-  ensure_path /nix/var/nix/profiles/default/bin
-  ensure_path ~/.local/state/nix/profile/bin
-  ensure_path ~/.nix-profile/bin
-   ensure_path ~/.npm-global/bin
-   ensure_path ~/go/bin
+  ensure_path ~/.npm-global/bin
+  ensure_path ~/go/bin
   ensure_path ~/.cargo/bin
   ensure_path ~/.local/bin
   ensure_path ~/.filen-cli/bin
@@ -35,6 +31,11 @@ if status is-interactive
   ensure_path /home/linuxbrew/.linuxbrew/bin
   ensure_path ~/.opencode/bin
   ensure_path ~/node_modules/.bin
+
+  # Nix/Home Manager profiles should win over native package managers.
+  ensure_path /nix/var/nix/profiles/default/bin
+  ensure_path ~/.local/state/nix/profile/bin
+  ensure_path ~/.nix-profile/bin
 
   ### ALIASES
   # tar
