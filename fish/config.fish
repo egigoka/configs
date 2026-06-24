@@ -332,9 +332,9 @@ if status is-interactive
     case Darwin
       # mAcos
       if test (id -u) -eq 0
-        abbr --add updateall --position command sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo port upgrade outdated \&\& sudo port uninstall inactive \&\& sudo port reclaim --enable-reminders \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh
+        abbr --add updateall --position command sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh \&\& sudo port upgrade outdated \&\& sudo port uninstall inactive \&\& sudo port reclaim --enable-reminders
       else
-        abbr --add updateall --position command brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo port upgrade outdated \&\& sudo port uninstall inactive \&\& sudo port reclaim --enable-reminders \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh
+        abbr --add updateall --position command brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh \&\& sudo port upgrade outdated \&\& sudo port uninstall inactive \&\& sudo port reclaim --enable-reminders
       end
       abbr --add install   --position command brew install
       abbr --add uninstall --position command brew remove
