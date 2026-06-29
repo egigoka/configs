@@ -67,6 +67,7 @@ in
     gdu
     difftastic    # difft
     gh            
+    git-filter-repo
     uv
     starship      
     pstree        # used by fish SSH-detection in config.fish
