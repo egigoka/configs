@@ -85,7 +85,11 @@ in
     kdePackages.qtvirtualkeyboard  # provides Qt6VirtualKeyboard
     libglvnd      # OpenGL libraries for CMake
     libglvnd.dev  # OpenGL headers for CMake
+    pkg-config    # helps CMake find Wayland via pkg-config
     vulkan-headers # provides VulkanHeaders for WrapVulkanHeaders
+    wayland       # Wayland libraries for Qt6WaylandClient
+    wayland.dev   # Wayland headers/pkg-config files
+    wayland-protocols
     ninja         
     gnumake       
     nix-index     # provides `nix-locate` (find which pkg ships a file); `nix search` is built into nix
