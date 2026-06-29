@@ -88,6 +88,7 @@ in
     plasma-keyboard
     helium
     mkvtoolnix   # provides mkvmerge, mkvinfo, mkvextract, etc.
+    kdotool      # xdotool-like window control for KWin/Wayland
   ];
 
   systemd.user.services.telegram-battery = {
