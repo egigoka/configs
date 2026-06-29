@@ -183,6 +183,11 @@ if status is-interactive
 
   # claude
   abbr --add claude2 --position command env CLAUDE_CONFIG_DIR=\$HOME/.claude2 claude
+  if command -q opencode-memory
+    function opencode
+      command opencode-memory $argv
+    end
+  end
   
   # zellij
   # alias z in function

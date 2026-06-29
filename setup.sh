@@ -93,6 +93,24 @@ install_link() {
   ln -s -- "$src" "$dst"
 }
 
+install_opencode_tools() {
+  npm install -g opencode-with-claude
+  npm install -g opencode-claude-memory
+
+  if command -v opencode-memory >/dev/null 2>&1; then
+    opencode-memory install
+    return 0
+  fi
+
+  local npm_prefix
+  npm_prefix=$(npm prefix -g 2>/dev/null || true)
+  if [ -n "$npm_prefix" ] && [ -x "$npm_prefix/bin/opencode-memory" ]; then
+    "$npm_prefix/bin/opencode-memory" install
+  else
+    echo "opencode-memory installed but not on PATH; skipping shell hook install" >&2
+  fi
+}
+
 # install some packages
 case "$(uname -s)" in
   Linux)
@@ -207,7 +225,7 @@ if [ "$is_steamos" = true ]; then
   uv tool install --force virtualfish
   "$HOME/.local/bin/vf" install
 
-  npm install -g opencode-with-claude
+  install_opencode_tools
 
   # git config
   git config --global user.name egigoka
@@ -476,7 +494,7 @@ elif [ "$is_nixos" = true ]; then
   uv tool install --force virtualfish
   "$HOME/.local/bin/vf" install
 
-  npm install -g opencode-with-claude
+  install_opencode_tools
 else
   # install micro editor
   install_if_missing micro || install_if_missing micro-editor
@@ -548,7 +566,7 @@ else
   uv tool install --force virtualfish
   "$HOME/.local/bin/vf" install
 
-  npm install -g opencode-with-claude
+  install_opencode_tools
   
   # git config
   git config --global user.name egigoka
