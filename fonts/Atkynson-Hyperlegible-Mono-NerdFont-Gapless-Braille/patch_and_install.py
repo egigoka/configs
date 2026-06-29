@@ -30,10 +30,10 @@ def silence_stderr():
 with silence_stderr():
     import fontforge
 
-BLEED_HORIZONTAL = 11
+BLEED_HORIZONTAL = 15
 # 9 - too little, 10 - enough
-BLEED_VERTICAL = 19
-# 15 - too little, 18 - enough
+BLEED_VERTICAL = 45
+# 31 - too little, - enough
 
 # Paths
 CLEAN_SRC_DIR = "/private/tmp/claude-501/-Users-egigoka-configs/734d666d-e27a-4044-a216-fb03ae98ff5c/scratchpad/atkinson/unzipped"
