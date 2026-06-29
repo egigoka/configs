@@ -82,6 +82,8 @@ in
     kdePackages.extra-cmake-modules
     kdePackages.kcodecs
     kdePackages.kcodecs.dev
+    kdePackages.kcolorscheme
+    kdePackages.kcolorscheme.dev
     kdePackages.kcoreaddons
     kdePackages.kcoreaddons.dev
     kdePackages.ki18n

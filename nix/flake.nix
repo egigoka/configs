@@ -32,7 +32,7 @@
           extra-cmake-modules wrapQtAppsHook
           qtbase qtdeclarative qtsvg qtvirtualkeyboard qtwayland
           plasma-wayland-protocols
-          kcoreaddons ki18n kcmutils kconfig kirigami;
+          kcoreaddons ki18n kcmutils kconfig kirigami libplasma;
       };
       helium = helium-browser.packages.${system}.helium;
     in {
