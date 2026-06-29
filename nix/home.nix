@@ -1,4 +1,4 @@
-{ pkgs, username, homeDirectory, plasma-keyboard, helium, ... }:
+{ lib, pkgs, username, homeDirectory, plasma-keyboard, helium, ... }:
 
 let
   py = pkgs.python3Packages;
@@ -44,6 +44,7 @@ let
   ]);
   batteryScriptDir = "${homeDirectory}/Developer/py/telegram_bots";
   batteryDevice = "/org/freedesktop/UPower/devices/battery_BAT1";
+  plasmaKeyboardDesktop = "org.kde.plasma.keyboard.${plasma-keyboard.version}.desktop";
 in
 {
   home.username = username;
@@ -121,13 +122,21 @@ in
 
     decky-loader
     curl-impersonate
-    # (built from the egigoka fork). Wire it up as KWin's input method via
-    # kwinrc [Wayland] InputMethod -> ~/.nix-profile/share/applications/org.kde.plasma.keyboard.desktop
+    # Built from the egigoka fork. KWin is pointed at a versioned desktop file
+    # below so it does not reuse stale cached input-method service metadata.
     plasma-keyboard
     helium
     mkvtoolnix   # provides mkvmerge, mkvinfo, mkvextract, etc.
     kdotool      # xdotool-like window control for KWin/Wayland
   ];
+
+  home.activation.plasmaKeyboardInputMethod = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file kwinrc --group Wayland --key InputMethod \
+      "${homeDirectory}/.nix-profile/share/applications/${plasmaKeyboardDesktop}"
+    ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file kwinrc --group Wayland --key VirtualKeyboardEnabled true
+    command -v kbuildsycoca6 >/dev/null 2>&1 && kbuildsycoca6 --noincremental >/dev/null 2>&1 || true
+    command -v qdbus6 >/dev/null 2>&1 && qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1 || true
+  '';
 
   systemd.user.services.telegram-battery = {
     Unit = {

@@ -32,7 +32,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "plasma-keyboard";
-  version = "6.6.80-unstable-de3c720";
+  version = "6.6.80-unstable-de3c720.e1";
 
   src = fetchFromGitHub {
     owner = "egigoka";
@@ -83,6 +83,8 @@ stdenv.mkDerivation (finalAttrs: {
   postInstall = ''
     substituteInPlace $out/share/applications/org.kde.plasma.keyboard.desktop \
       --replace-fail 'Exec=plasma-keyboard' "Exec=$out/bin/plasma-keyboard"
+    cp $out/share/applications/org.kde.plasma.keyboard.desktop \
+      $out/share/applications/org.kde.plasma.keyboard.${finalAttrs.version}.desktop
   '';
 
   # Point libglvnd at Nix Mesa's absolute-path EGL ICD. SteamOS's ICD JSON uses
