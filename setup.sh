@@ -636,6 +636,10 @@ install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/forge2/AGENTS.md"
 # lsd
 install_link "$CONFIGS_DIR/lsd" "$HOME/.config/lsd"
 
+# fonts
+install_link "$CONFIGS_DIR/fonts/Atkynson-Hyperlegible-Mono-NerdFont-Gapless-Braille" "$HOME/.local/share/fonts/Atkynson-Hyperlegible-Mono-NerdFont-Gapless-Braille"
+command -v fc-cache >/dev/null 2>&1 && fc-cache -f "$HOME/.local/share/fonts" >/dev/null 2>&1
+
 # fontconfig
 install_link "$CONFIGS_DIR/fontconfig" "$HOME/.config/fontconfig/conf.d"
 

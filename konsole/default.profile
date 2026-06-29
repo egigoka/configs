@@ -1,7 +1,7 @@
 [Appearance]
 ColorScheme=GNOMETerminalLight
-Font=MesloLGSDZ Nerd Font Mono,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
-UseFontBrailleChararacters=false
+Font=AtkynsonMono Nerd Font Mono,12,-1,5,400,0,0,0,0,0,0,0,0,0,0,1
+UseFontBrailleChararacters=true
 
 [General]
 Command=env fish

@@ -221,7 +221,7 @@
             "experimental.retroTerminalEffect": false,
             "font":
             {
-                "face": "Source Code Pro for Powerline",
+                "face": "AtkynsonMono Nerd Font Mono",
                 "size": 11.0
             },
             "historySize": 262144,
