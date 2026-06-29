@@ -80,6 +80,16 @@ in
     clang-tools   # provides clang-format
     cmake         
     kdePackages.extra-cmake-modules
+    kdePackages.kcoreaddons
+    kdePackages.kcoreaddons.dev
+    kdePackages.ki18n
+    kdePackages.ki18n.dev
+    kdePackages.kcmutils
+    kdePackages.kcmutils.dev
+    kdePackages.kconfig
+    kdePackages.kconfig.dev
+    kdePackages.kcrash
+    kdePackages.kcrash.dev
     kdePackages.qtbase  # provides qtpaths6
     kdePackages.qtdeclarative  # provides Qt6Qml
     kdePackages.qtvirtualkeyboard  # provides Qt6VirtualKeyboard
