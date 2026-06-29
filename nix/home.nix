@@ -80,6 +80,7 @@ in
     clang-tools   # provides clang-format
     cmake         
     kdePackages.extra-cmake-modules
+    kdePackages.qtbase  # provides qtpaths6
     ninja         
     gnumake       
     nix-index     # provides `nix-locate` (find which pkg ships a file); `nix search` is built into nix
