@@ -1,0 +1,200 @@
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/Geekbench 6.app" --to folder-append --target-folder-id 3AFA0BCA-741B-455B-918D-C067C03839FC
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/LaunchControl.app --to folder-append --target-folder-id 3AFA0BCA-741B-455B-918D-C067C03839FC
+snapshot
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/Launchpad Manager.app" --to folder-append --target-folder-id 3AFA0BCA-741B-455B-918D-C067C03839FC
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/OnyX.app --to folder-append --target-folder-id 3AFA0BCA-741B-455B-918D-C067C03839FC
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/TinkerTool.app --to folder-append --target-folder-id 3AFA0BCA-741B-455B-918D-C067C03839FC
+snapshot
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/TinkerTool System.app" --to folder-append --target-folder-id 3AFA0BCA-741B-455B-918D-C067C03839FC
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Ghostty.app --to folder-append --target-folder-id 49F39A61-EB8E-4534-8E3D-C13733AE48CC
+snapshot
+move --source normal-app --path /Applications/OrbStack.app --to folder-append --target-folder-id BD056E0A-7216-406A-B36D-6F3026EEB380
+snapshot
+move --source normal-app --path /Applications/CrossOver.app --to folder-append --target-folder-id BD056E0A-7216-406A-B36D-6F3026EEB380
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Liviable.app --to folder-append --target-folder-id BD056E0A-7216-406A-B36D-6F3026EEB380
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Viable.app --to folder-append --target-folder-id BD056E0A-7216-406A-B36D-6F3026EEB380
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/VirtualBuddy.app --to folder-append --target-folder-id BD056E0A-7216-406A-B36D-6F3026EEB380
+snapshot
+move --source normal-app --path /Applications/Orchard.app --to folder-append --target-folder-id BD056E0A-7216-406A-B36D-6F3026EEB380
+snapshot
+move --source normal-app --path "/System/Applications/Utilities/ColorSync Utility.app" --to folder-append --target-folder-id CBC8BB30-B910-41A1-AEA8-5FFC46D4B6D0
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Lantern.app --to folder-append --target-folder-id CBC8BB30-B910-41A1-AEA8-5FFC46D4B6D0
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Liberty_macOS.app --to folder-append --target-folder-id CBC8BB30-B910-41A1-AEA8-5FFC46D4B6D0
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Outline.app --to folder-append --target-folder-id CBC8BB30-B910-41A1-AEA8-5FFC46D4B6D0
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Psiphon.app --to folder-append --target-folder-id CBC8BB30-B910-41A1-AEA8-5FFC46D4B6D0
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Tunnelblick.app --to folder-append --target-folder-id CBC8BB30-B910-41A1-AEA8-5FFC46D4B6D0
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/ProtonVPN.app --to folder-append --target-folder-id CBC8BB30-B910-41A1-AEA8-5FFC46D4B6D0
+snapshot
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/i2p/Start I2P Router.app" --to folder-append --target-folder-id CBC8BB30-B910-41A1-AEA8-5FFC46D4B6D0
+snapshot
+move --source normal-app --path /System/Applications/Stocks.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Mission Control.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Dictionary.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Music.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Preview.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Home.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Freeform.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Calculator.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Image Capture.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/TextEdit.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Font Book.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Maps.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Stickies.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Tips.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/QuickTime Player.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/Applications/QuickLook Video.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Utilities/Disk Utility.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Utilities/Bluetooth File Exchange.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Utilities/Screen Sharing.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Utilities/System Information.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Utilities/Grapher.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Utilities/Migration Assistant.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Utilities/Screenshot.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Utilities/Print Center.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Utilities/Digital Color Meter.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Utilities/VoiceOver Utility.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Utilities/Script Editor.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Applications/Utilities/Boot Camp Assistant.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /opt/local/libexec/qt6/bin/Designer.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/System/Library/CoreServices/Applications/Feedback Assistant.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Games.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Journal.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /opt/local/libexec/qt6/bin/Linguist.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Utilities/Magnifier.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /System/Applications/Phone.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /opt/local/libexec/qt6/bin/pixeltool.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /opt/local/libexec/qt6/bin/qdbusviewer.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/Users/egigoka/Applications/CrossOver/WinMerge/User's Guide.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /Applications/Utilities/XQuartz.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/Applications/MacPorts/Python 3.14/Python Launcher.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/Applications/MacPorts/Python 3.13/Python Launcher.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/Users/egigoka/Applications/Claude Code URL Handler.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/BresinkSoftwareUpdater.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/MacPorts/Python 3.12/IDLE.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/MacPorts/Python 3.14/IDLE.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/MacPorts/Python 3.13/IDLE.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/ncat.app --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/NTFS for Mac.app" --to folder-append --target-folder-id 2B7C21C9-D779-437C-93B6-15E657743B72
+snapshot
+move --source normal-app --path /Applications/TinyStopwatch.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path "/Applications/iStat Menus.app" --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path /Applications/noTunes.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path /Applications/MenubarPing.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path "/Applications/Lickable Menu Bar.app" --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path /Applications/DockDoor.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path /Applications/Thaw.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Dropover.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Gestimer.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/Hand Mirror.app" --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Maccy.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path "/Volumes/sharge2k/linked/Applications/Menu Bar Spacing.app" --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Pippo.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/ScreenshotMenu.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Shareful.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/espansoGUI.app --to folder-append --target-folder-id F0212655-5B41-461D-A93F-1A8B6925FB4C
+snapshot
+move --source normal-app --path "/Applications/Ghostery Privacy Ad Blocker.app" --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path "/Applications/Turn Off the Lights for Safari.app" --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path /Applications/PiPer.app --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path "/Applications/Dark Mode for Safari.app" --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path "/Applications/Dark Reader for Safari.app" --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path "/Applications/Dislikes Democratized Desktop.app" --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path "/Applications/Right Click.app" --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path "/Applications/Super Agent.app" --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path /Applications/SponsorBlock.app --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path "/Applications/WOT for Safari.app" --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path "/Applications/Tampermonkey Classic.app" --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path "/Applications/Kagi for Safari.app" --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path /Applications/Wipr.app --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path /Applications/wBlock.app --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
+move --source normal-app --path /Volumes/sharge2k/linked/Applications/Hush.app --to folder-append --target-folder-id 1F712013-78C6-4738-BA43-4F44CB2B0D42
+snapshot
