@@ -80,6 +80,8 @@ in
     clang-tools   # provides clang-format
     cmake         
     kdePackages.extra-cmake-modules
+    kdePackages.kcodecs
+    kdePackages.kcodecs.dev
     kdePackages.kcoreaddons
     kdePackages.kcoreaddons.dev
     kdePackages.ki18n
@@ -92,6 +94,8 @@ in
     kdePackages.kconfigwidgets.dev
     kdePackages.kcrash
     kdePackages.kcrash.dev
+    kdePackages.kwidgetsaddons
+    kdePackages.kwidgetsaddons.dev
     kdePackages.qtbase  # provides qtpaths6
     kdePackages.qtdeclarative  # provides Qt6Qml
     kdePackages.qtvirtualkeyboard  # provides Qt6VirtualKeyboard
@@ -104,6 +108,9 @@ in
     wayland       # Wayland libraries for Qt6WaylandClient
     wayland.dev   # Wayland headers/pkg-config files
     wayland-protocols
+    wayland-scanner.out # provides wayland.xml
+    wayland-scanner.bin # provides wayland-scanner
+    wayland-scanner.dev # provides wayland-scanner.pc
     ninja         
     gnumake       
     nix-index     # provides `nix-locate` (find which pkg ships a file); `nix search` is built into nix
