@@ -88,6 +88,8 @@ in
     kdePackages.kcmutils.dev
     kdePackages.kconfig
     kdePackages.kconfig.dev
+    kdePackages.kconfigwidgets
+    kdePackages.kconfigwidgets.dev
     kdePackages.kcrash
     kdePackages.kcrash.dev
     kdePackages.qtbase  # provides qtpaths6
