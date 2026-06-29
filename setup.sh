@@ -207,6 +207,8 @@ if [ "$is_steamos" = true ]; then
   uv tool install --force virtualfish
   "$HOME/.local/bin/vf" install
 
+  npm install -g opencode-with-claude
+
   # git config
   git config --global user.name egigoka
   git config --global user.email egigoka@gmail.com
@@ -473,6 +475,8 @@ elif [ "$is_nixos" = true ]; then
 
   uv tool install --force virtualfish
   "$HOME/.local/bin/vf" install
+
+  npm install -g opencode-with-claude
 else
   # install micro editor
   install_if_missing micro || install_if_missing micro-editor
@@ -538,9 +542,13 @@ else
   command -v uv >/dev/null 2>&1 || install_if_missing uv || sh "$CONFIGS_DIR/install_scripts/install_uv.sh"
   install_if_missing starship
   install_if_missing pstree
+  command -v node >/dev/null 2>&1 || install_if_missing nodejs || install_if_missing node
+  command -v npm >/dev/null 2>&1 || install_if_missing npm
 
   uv tool install --force virtualfish
   "$HOME/.local/bin/vf" install
+
+  npm install -g opencode-with-claude
   
   # git config
   git config --global user.name egigoka
