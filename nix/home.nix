@@ -78,6 +78,7 @@ in
     rustup        
     gcc           
     clang-tools   # provides clang-format
+    cmake         
     gnumake       
     nix-index     # provides `nix-locate` (find which pkg ships a file); `nix search` is built into nix
     google-authenticator  # wired into /etc/pam.d/sshd by setup.sh
