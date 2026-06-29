@@ -40,6 +40,7 @@ let
     commandsPackage
     telegramePackage
     py.pytelegrambotapi
+    py.xkbcommon
   ]);
   batteryScriptDir = "${homeDirectory}/Developer/py/telegram_bots";
   batteryDevice = "/org/freedesktop/UPower/devices/battery_BAT1";
