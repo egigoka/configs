@@ -81,6 +81,9 @@ in
     cmake         
     kdePackages.extra-cmake-modules
     kdePackages.qtbase  # provides qtpaths6
+    kdePackages.qtdeclarative  # provides Qt6Qml
+    libglvnd      # OpenGL libraries for CMake
+    libglvnd.dev  # OpenGL headers for CMake
     ninja         
     gnumake       
     nix-index     # provides `nix-locate` (find which pkg ships a file); `nix search` is built into nix
