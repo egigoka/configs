@@ -85,6 +85,8 @@ in
     kdePackages.qtvirtualkeyboard  # provides Qt6VirtualKeyboard
     libglvnd      # OpenGL libraries for CMake
     libglvnd.dev  # OpenGL headers for CMake
+    libxkbcommon  # keyboard handling libraries
+    libxkbcommon.dev  # headers/pkg-config files
     pkg-config    # helps CMake find Wayland via pkg-config
     vulkan-headers # provides VulkanHeaders for WrapVulkanHeaders
     wayland       # Wayland libraries for Qt6WaylandClient
