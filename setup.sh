@@ -111,6 +111,32 @@ install_opencode_tools() {
   fi
 }
 
+install_snip() {
+  if ! command -v go >/dev/null 2>&1; then
+    case "$(uname -s)" in
+      Linux)
+        if [ -f /etc/os-release ]; then
+          . /etc/os-release
+          case "$ID" in
+            rocky) install_if_missing golang ;;
+            debian|ubuntu|droidian) install_if_missing golang-go ;;
+            *) install_if_missing go ;;
+          esac
+        fi
+        ;;
+      Darwin)
+        install_if_missing go
+        ;;
+    esac
+  fi
+
+  if command -v go >/dev/null 2>&1; then
+    go install github.com/edouard-claude/snip/cmd/snip@latest
+  else
+    echo "go not found; skipping snip install" >&2
+  fi
+}
+
 # install some packages
 case "$(uname -s)" in
   Linux)
@@ -575,6 +601,8 @@ else
   git -C "$CONFIGS_DIR" config core.hooksPath hooks
 fi
 
+install_snip
+
 # disable mobile-power-saver on droidian
 if [ -f /etc/os-release ]; then
   . /etc/os-release
@@ -610,9 +638,10 @@ install_link "$CONFIGS_DIR/micro/colorschemes" "$HOME/.config/micro/colorschemes
 install_link "$CONFIGS_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
 
 # opencode
+bash "$CONFIGS_DIR/install_scripts/update_caveman.sh"
 install_link "$CONFIGS_DIR/opencode/kv.json" "$HOME/.local/state/opencode/kv.json"
-install_link "$CONFIGS_DIR/opencode/opencode.json" "$HOME/.config/opencode/opencode.json"
-install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.config/opencode/AGENTS.md"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$CONFIGS_DIR/opencode/AGENTS.md"
+install_link "$CONFIGS_DIR/opencode" "$HOME/.config/opencode"
 
 # forgecode
 install_link "$CONFIGS_DIR/forgecode/permissions.yaml" "$HOME/.config/forge/permissions.yaml"
