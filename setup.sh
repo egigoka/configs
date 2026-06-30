@@ -639,6 +639,7 @@ install_link "$CONFIGS_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
 
 # opencode
 bash "$CONFIGS_DIR/install_scripts/update_caveman.sh"
+bash "$CONFIGS_DIR/install_scripts/update_frontend_design_skill.sh"
 install_link "$CONFIGS_DIR/opencode/kv.json" "$HOME/.local/state/opencode/kv.json"
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$CONFIGS_DIR/opencode/AGENTS.md"
 install_link "$CONFIGS_DIR/opencode" "$HOME/.config/opencode"
