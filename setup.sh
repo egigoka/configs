@@ -94,6 +94,10 @@ install_link() {
 }
 
 install_opencode_tools() {
+  if ! command -v opencode >/dev/null 2>&1; then
+    npm i -g opencode-ai@latest
+  fi
+
   npm install -g opencode-with-claude
   npm install -g opencode-claude-memory
 
