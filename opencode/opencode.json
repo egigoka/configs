@@ -8,7 +8,8 @@
     "@tarquinen/opencode-dcp@latest",
     "opencode-snip@latest",
     "@atonev/opencode-short-term-memory@latest",
-    "./plugins/caveman/plugin.js"
+    "./plugins/caveman/plugin.js",
+    "opencode-kilo-auth@latest"
   ],
   "provider": {
     "anthropic": {
