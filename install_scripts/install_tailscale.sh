@@ -20,7 +20,8 @@ cd "${dir}"
 echo -n "Getting version..."
 
 # get info for the latest version of Tailscale
-tarball="$(curl -s 'https://pkgs.tailscale.com/stable/?mode=json' | jq -r .Tarballs.amd64)"
+tarball="$(curl -fsSL 'https://pkgs.tailscale.com/stable/?mode=json' | sed -n 's/.*"amd64"[[:space:]]*:[[:space:]]*"\([^"]*\.tgz\)".*/\1/p')"
+[ -n "$tarball" ] || { echo "ERROR: could not resolve Tailscale amd64 tarball" >&2; exit 1; }
 version="$(echo ${tarball} | cut -d_ -f2)"
 
 echo "got ${version}."
@@ -28,7 +29,7 @@ echo "got ${version}."
 echo "Downloading:"
 
 # download the Tailscale package itself
-wget -q --show-progress -O tailscale.tgz "https://pkgs.tailscale.com/stable/${tarball}"
+curl -fL --progress-bar -o tailscale.tgz "https://pkgs.tailscale.com/stable/${tarball}"
 
 echo -n "Removing Legacy Installations..."
 

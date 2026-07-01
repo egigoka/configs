@@ -522,7 +522,9 @@ EOF
   # systemd unit, but the root partition is read-only here, so toggle
   # steamos-readonly around it (upstream omits this). The installer only sets up
   # and starts tailscaled -- authenticate separately (see echo below).
-  if [ ! -x /opt/tailscale/tailscale ]; then
+  if [ ! -x /opt/tailscale/tailscale ] \
+     || [ ! -f /etc/systemd/system/tailscaled.service ] \
+     || ! systemctl is-enabled tailscaled >/dev/null 2>&1; then
     echo "Installing Tailscale (tailscale-dev/deck-tailscale)..."
     ro=$(steamos-readonly status 2>/dev/null)
     [ "$ro" = enabled ] && sudo steamos-readonly disable
