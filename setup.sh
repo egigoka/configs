@@ -151,6 +151,20 @@ install_snip() {
   fi
 }
 
+install_virtualfish() {
+  if ! command -v vf >/dev/null 2>&1; then
+    uv tool install virtualfish
+  fi
+
+  if command -v vf >/dev/null 2>&1; then
+    vf install
+  elif [ -x "$HOME/.local/bin/vf" ]; then
+    "$HOME/.local/bin/vf" install
+  else
+    echo "vf not found; skipping virtualfish setup" >&2
+  fi
+}
+
 # install some packages
 case "$(uname -s)" in
   Linux)
@@ -262,8 +276,7 @@ if [ "$is_steamos" = true ]; then
   # dircolors-solarized
   [ -d "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized" ] || git clone https://github.com/seebi/dircolors-solarized "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized"
 
-  uv tool install --force virtualfish
-  "$HOME/.local/bin/vf" install
+  install_virtualfish
 
   install_opencode_tools
 
@@ -562,8 +575,7 @@ elif [ "$is_nixos" = true ]; then
   # dircolors-solarized
   [ -d "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized" ] || git clone https://github.com/seebi/dircolors-solarized "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized"
 
-  uv tool install --force virtualfish
-  "$HOME/.local/bin/vf" install
+  install_virtualfish
 
   install_opencode_tools
 else
