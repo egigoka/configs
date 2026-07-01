@@ -141,7 +141,7 @@ in
   home.activation.braveOrigin = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     _brave_base="https://brave-browser-apt-release.s3.brave.com"
     if _brave_packages=$(${pkgs.curl}/bin/curl -sfL "$_brave_base/dists/stable/main/binary-amd64/Packages" 2>/dev/null); then
-      _brave_version=$(printf '%s' "$_brave_packages" | grep -A4 "^Package: brave-origin$" | grep "^Version:" | cut -d' ' -f2)
+      _brave_version=$(printf '%s' "$_brave_packages" | grep -A10 "^Package: brave-origin$" | grep "^Version:" | head -1 | cut -d' ' -f2)
       _brave_filename=$(printf '%s' "$_brave_packages" | grep -A20 "^Package: brave-origin$" | grep "^Filename:" | head -1 | cut -d' ' -f2)
       _brave_target="${homeDirectory}/.local/share/brave-origin"
       _brave_version_file="$_brave_target/.installed-version"
@@ -154,23 +154,25 @@ in
         if ${pkgs.curl}/bin/curl -sfL "$_brave_base/$_brave_filename" -o "$_brave_tmp"; then
           ${pkgs.dpkg}/bin/dpkg-deb --extract "$_brave_tmp" "$_brave_target/root"
           echo "$_brave_version" > "$_brave_version_file"
-          mkdir -p "${homeDirectory}/.local/bin"
-          ln -sf "$_brave_target/root/opt/brave-origin/brave-origin" "${homeDirectory}/.local/bin/brave-origin"
-          if [ -d "$_brave_target/root/usr/share/icons" ]; then
-            cp -r "$_brave_target/root/usr/share/icons/." "${homeDirectory}/.local/share/icons/"
-          fi
-          _brave_desktop="$_brave_target/root/usr/share/applications/brave-origin.desktop"
-          if [ -f "$_brave_desktop" ]; then
-            mkdir -p "${homeDirectory}/.local/share/applications"
-            sed \
-              -e "s|Exec=/usr/bin/brave-origin|Exec=${homeDirectory}/.local/bin/brave-origin|g" \
-              -e "s|Icon=/opt/brave-origin/|Icon=$_brave_target/root/opt/brave-origin/|g" \
-              "$_brave_desktop" > "${homeDirectory}/.local/share/applications/brave-origin.desktop"
-          fi
         else
           echo "brave-origin: download failed" >&2
         fi
         rm -f "$_brave_tmp"
+      fi
+      if [ -x "$_brave_target/root/opt/brave.com/brave-origin/brave-origin" ]; then
+        mkdir -p "${homeDirectory}/.local/bin" "${homeDirectory}/.local/share/applications" "${homeDirectory}/.local/share/icons"
+        ln -sf "$_brave_target/root/opt/brave.com/brave-origin/brave-origin" "${homeDirectory}/.local/bin/brave-origin"
+        ln -sf "$_brave_target/root/opt/brave.com/brave-origin/brave-origin" "${homeDirectory}/.local/bin/brave-origin-stable"
+        if [ -d "$_brave_target/root/usr/share/icons" ]; then
+          cp -r "$_brave_target/root/usr/share/icons/." "${homeDirectory}/.local/share/icons/"
+        fi
+        _brave_desktop="$_brave_target/root/usr/share/applications/brave-origin.desktop"
+        if [ -f "$_brave_desktop" ]; then
+          sed \
+            -e "s|Exec=/usr/bin/brave-origin-stable|Exec=${homeDirectory}/.local/bin/brave-origin-stable|g" \
+            -e "s|Icon=/opt/brave.com/brave-origin/|Icon=$_brave_target/root/opt/brave.com/brave-origin/|g" \
+            "$_brave_desktop" > "${homeDirectory}/.local/share/applications/brave-origin.desktop"
+        fi
       fi
     else
       echo "brave-origin: failed to fetch Packages index" >&2

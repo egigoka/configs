@@ -266,6 +266,25 @@ if [ "$is_steamos" = true ]; then
 
   export NIX_CONFIG="experimental-features = nix-command flakes"
 
+  # Restore Nix build users if SteamOS removed them from /etc/group/passwd.
+  if ! getent group nixbld >/dev/null 2>&1; then
+    _nixbld_gid="$(getent passwd nixbld1 2>/dev/null | cut -d: -f4)"
+    if [ -n "$_nixbld_gid" ]; then
+      sudo groupadd -r -g "$_nixbld_gid" nixbld
+    else
+      sudo groupadd -r nixbld
+    fi
+  fi
+  _nix_nologin="$(command -v nologin 2>/dev/null || printf '%s\n' /usr/bin/nologin)"
+  for _nix_i in $(seq 1 32); do
+    _nix_user="nixbld$_nix_i"
+    if ! getent passwd "$_nix_user" >/dev/null 2>&1; then
+      sudo useradd -r -g nixbld -G nixbld -N -M -d /var/empty -s "$_nix_nologin" "$_nix_user"
+    else
+      sudo usermod -a -G nixbld "$_nix_user"
+    fi
+  done
+
   # Restore the nix-daemon system service if lost (e.g. after a SteamOS update).
   if ! systemctl is-active --quiet nix-daemon 2>/dev/null; then
     _nix_svc_dir=/nix/var/nix/profiles/default/lib/systemd/system
