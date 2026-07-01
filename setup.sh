@@ -266,6 +266,30 @@ if [ "$is_steamos" = true ]; then
 
   export NIX_CONFIG="experimental-features = nix-command flakes"
 
+  # Restore the nix-daemon system service if lost (e.g. after a SteamOS update).
+  if ! systemctl is-active --quiet nix-daemon 2>/dev/null; then
+    _nix_svc_dir=/nix/var/nix/profiles/default/lib/systemd/system
+    if [ -f "$_nix_svc_dir/nix-daemon.service" ]; then
+      sudo cp "$_nix_svc_dir/nix-daemon.service" /etc/systemd/system/nix-daemon.service
+      sudo cp "$_nix_svc_dir/nix-daemon.socket" /etc/systemd/system/nix-daemon.socket 2>/dev/null || true
+    else
+      sudo tee /etc/systemd/system/nix-daemon.service >/dev/null <<'NIXUNIT'
+[Unit]
+Description=Nix Daemon
+After=network.target
+
+[Service]
+ExecStart=/nix/var/nix/profiles/default/bin/nix-daemon --daemon
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+NIXUNIT
+    fi
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now nix-daemon
+  fi
+
   # home-manager reads the flake at ~/.config/home-manager
   install_link "$CONFIGS_DIR/nix" "$HOME/.config/home-manager"
 
@@ -274,8 +298,12 @@ if [ "$is_steamos" = true ]; then
   git -C "$CONFIGS_DIR" add nix >/dev/null 2>&1 || true
 
   echo "Installing console packages via home-manager..."
-  nix run --refresh --impure home-manager/release-26.05 -- switch --impure -b backup \
-    --flake "$CONFIGS_DIR/nix#default"
+  if command -v home-manager >/dev/null 2>&1; then
+    home-manager switch --impure -b backup --flake "$CONFIGS_DIR/nix#default"
+  else
+    nix run --extra-experimental-features "nix-command flakes" --refresh --impure \
+      home-manager/release-26.05 -- switch --impure -b backup --flake "$CONFIGS_DIR/nix#default"
+  fi
 
   source_nix
   fish -c "fish_add_path -g ~/.nix-profile/bin ~/.local/state/nix/profile/bin /nix/var/nix/profiles/default/bin" 2>/dev/null
