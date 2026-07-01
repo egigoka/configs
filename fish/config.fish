@@ -435,10 +435,14 @@ if status is-interactive
   end
 
   ### NO STUPID ENCODINGS
-  set -x LC_COLLATE C
-  set -x LANGUAGE en_US.UTF-8
-  set -x LC_CTYPE en_US.UTF-8
-  set -x LANG en_US.UTF-8
+  # C.UTF-8, not en_US.UTF-8: fish and other Nix binaries run against a Nix glibc
+  # that only ships C.UTF-8, so en_US.UTF-8 fails to load and Qt tools fall back
+  # to plain C (ANSI_X3.4-1968) and warn. C.UTF-8 gives UTF-8 + C-order sort.
+  set -x LC_ALL C.UTF-8
+  set -x LANG C.UTF-8
+  set -e LANGUAGE
+  set -e LC_COLLATE
+  set -e LC_CTYPE
 
   ### SSH AGENT
   if not set -q SSH_AUTH_SOCK

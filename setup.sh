@@ -9,6 +9,16 @@ source "$CONFIGS_DIR/install_scripts/epm.sh"
 
 USER="$(whoami)"
 
+# UTF-8 locale for this script and every child it spawns. Nix-built Qt tools
+# (kwriteconfig6 et al.) warn "Detected locale C ... ANSI_X3.4-1968" and fall
+# back to C under a non-UTF-8 locale. IMPORTANT: the Nix glibc only ships
+# C.UTF-8 -- en_US.UTF-8 is listed by the *system* `locale -a` but is NOT
+# loadable by Nix binaries (setlocale fails -> C). C.UTF-8 loads under both
+# Nix and system glibc, so use it. LC_ALL overrides any inherited C category
+# (fish's LC_COLLATE, KDE Formats' LC_TIME/PAPER/MEASUREMENT).
+export LANG=C.UTF-8 LC_ALL=C.UTF-8
+unset LC_COLLATE LC_CTYPE LC_TIME LC_PAPER LC_MEASUREMENT LC_NUMERIC LANGUAGE
+
 pkg_installed() {
   local pkg=$1
   case "$(uname -s)" in
@@ -342,6 +352,29 @@ EOF
         echo "Generated sudoers line failed validation, not installing:" >&2
         echo "  $sudoers_line" >&2
       fi
+      rm -f "$tmp"
+      [ "$ro" = enabled ] && steamos-readonly enable
+    fi
+  fi
+
+  # Force a UTF-8 locale system-wide. SteamOS ships /etc/environment with only
+  # comments, so logins land in the C locale (ANSI_X3.4-1968) and Qt/CLIs warn.
+  # pam_env reads /etc/environment for every login (bash + fish, all users).
+  # Use C.UTF-8, not en_US.UTF-8: Nix binaries (fish, kwriteconfig6, ...) run
+  # against a Nix glibc that only ships C.UTF-8, so en_US.UTF-8 -- though listed
+  # by the system `locale -a` -- fails to load in them and falls back to C.
+  if [ "$(id -u)" -eq 0 ]; then
+    env_file="/etc/environment"
+    locale_lang="C.UTF-8"
+    if ! grep -qxF "LANG=$locale_lang" "$env_file" 2>/dev/null \
+       || ! grep -qxF "LC_ALL=$locale_lang" "$env_file" 2>/dev/null; then
+      echo "Setting UTF-8 locale ($locale_lang) in $env_file"
+      ro=$(steamos-readonly status 2>/dev/null)
+      [ "$ro" = enabled ] && steamos-readonly disable
+      tmp=$(mktemp)
+      grep -vE '^(LANG|LC_ALL)=' "$env_file" 2>/dev/null > "$tmp" || true
+      printf 'LANG=%s\nLC_ALL=%s\n' "$locale_lang" "$locale_lang" >> "$tmp"
+      command install -m 0644 "$tmp" "$env_file"
       rm -f "$tmp"
       [ "$ro" = enabled ] && steamos-readonly enable
     fi
