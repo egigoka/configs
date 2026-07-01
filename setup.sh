@@ -510,6 +510,12 @@ EOF
   if command -v flatpak >/dev/null 2>&1; then
     flatpak override --user io.mpv.Mpv --filesystem="$CONFIGS_DIR/mpv"
     install_link "$CONFIGS_DIR/mpv" "$HOME/.var/app/io.mpv.Mpv/config/mpv"
+    # Konsole flatpak: user fonts under ~/.local/share/fonts are symlinks into
+    # $CONFIGS_DIR/fonts, which isn't mounted in the sandbox -- grant read access
+    # so the symlinks resolve and fc-list picks the fonts up.
+    if flatpak info org.kde.konsole >/dev/null 2>&1; then
+      flatpak override --user org.kde.konsole --filesystem="$CONFIGS_DIR/fonts:ro"
+    fi
   fi
 
   # Tailscale: vendored official Steam Deck installer. It writes /opt + the
