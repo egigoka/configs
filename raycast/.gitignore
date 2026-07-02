@@ -1,7 +1,0 @@
-com.raycast.macos/NodeJS/
-com.raycast.macos/RaycastWrapped/
-com.raycast.macos/posthog.*
-com.raycast.macos/*.sqlite
-com.raycast.macos/*.sqlite-shm
-com.raycast.macos/*.sqlite-wal
-com.raycast.macos/extensions/*/com.raycast.api.cache/
