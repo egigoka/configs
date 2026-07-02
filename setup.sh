@@ -167,6 +167,12 @@ install_snip() {
   fi
 }
 
+install_usage_tui() {
+  if ! command -v usage >/dev/null 2>&1; then
+    uv tool install git+https://github.com/egigoka/usage
+  fi
+}
+
 install_virtualfish() {
   if ! command -v vf >/dev/null 2>&1; then
     uv tool install virtualfish
@@ -342,6 +348,7 @@ NIXUNIT
   install_virtualfish
 
   install_opencode_tools
+  install_usage_tui
 
   # git config
   git config --global user.name egigoka
@@ -641,6 +648,7 @@ elif [ "$is_nixos" = true ]; then
   install_virtualfish
 
   install_opencode_tools
+  install_usage_tui
 else
   # install micro editor
   install_if_missing micro || install_if_missing micro-editor
@@ -713,7 +721,8 @@ else
   "$HOME/.local/bin/vf" install
 
   install_opencode_tools
-  
+  install_usage_tui
+
   # git config
   git config --global user.name egigoka
   git config --global user.email egigoka@gmail.com
