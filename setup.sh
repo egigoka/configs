@@ -745,6 +745,13 @@ if [ "$(uname -s)" = "Darwin" ]; then
   install_link "$CONFIGS_DIR/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
 fi
 
+# helium tabs backup
+if [ "$(uname -s)" = "Darwin" ]; then
+  install_link "$CONFIGS_DIR/scripts/helium-tabs-backup.py" "$HOME/.scripts/helium-tabs-backup.py"
+  install_link "$CONFIGS_DIR/mac/com.egigoka.helium-tabs-backup.plist" "$HOME/Library/LaunchAgents/com.egigoka.helium-tabs-backup.plist"
+  launchctl load "$HOME/Library/LaunchAgents/com.egigoka.helium-tabs-backup.plist" 2>/dev/null || true
+fi
+
 # opencode
 bash "$CONFIGS_DIR/install_scripts/update_caveman.sh"
 bash "$CONFIGS_DIR/install_scripts/update_frontend_design_skill.sh"
