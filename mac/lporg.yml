@@ -267,7 +267,6 @@ apps:
             - number: 1
               items:
                 - ubports-installer
-                - droidian-installer
                 - AltServer
                 - Apple Configurator
                 - Sideloadly
