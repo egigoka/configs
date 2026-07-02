@@ -750,6 +750,13 @@ install_link "$CONFIGS_DIR/micro/colorschemes" "$HOME/.config/micro/colorschemes
 # starship
 install_link "$CONFIGS_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
 
+# raycast
+if [ "$(uname -s)" = "Darwin" ]; then
+  install_link "$CONFIGS_DIR/raycast/com.raycast.macos.plist" "$HOME/Library/Preferences/com.raycast.macos.plist"
+  install_link "$CONFIGS_DIR/raycast/com.raycast.macos" "$HOME/Library/Application Support/com.raycast.macos"
+  install_link "$CONFIGS_DIR/raycast/com.raycast.shared" "$HOME/Library/Application Support/com.raycast.shared"
+fi
+
 # opencode
 bash "$CONFIGS_DIR/install_scripts/update_caveman.sh"
 bash "$CONFIGS_DIR/install_scripts/update_frontend_design_skill.sh"
