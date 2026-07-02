@@ -110,7 +110,6 @@ install_opencode_tools() {
 
   npm install -g opencode-with-claude
   npm install -g opencode-claude-memory
-  npm install -g opencode-openai-sub-switcher
 
   if command -v opencode-memory >/dev/null 2>&1; then
     opencode-memory install
@@ -123,21 +122,6 @@ install_opencode_tools() {
     "$npm_prefix/bin/opencode-memory" install
   else
     echo "opencode-memory installed but not on PATH; skipping shell hook install" >&2
-  fi
-}
-
-install_opencode_openai_sub_switcher() {
-  if command -v opencode-openai-sub-switcher-install >/dev/null 2>&1; then
-    opencode-openai-sub-switcher-install
-    return 0
-  fi
-
-  local npm_prefix
-  npm_prefix=$(npm prefix -g 2>/dev/null || true)
-  if [ -n "$npm_prefix" ] && [ -x "$npm_prefix/bin/opencode-openai-sub-switcher-install" ]; then
-    "$npm_prefix/bin/opencode-openai-sub-switcher-install"
-  else
-    echo "opencode-openai-sub-switcher installed but installer not on PATH; skipping plugin install" >&2
   fi
 }
 
@@ -772,7 +756,6 @@ bash "$CONFIGS_DIR/install_scripts/update_frontend_design_skill.sh"
 install_link "$CONFIGS_DIR/opencode/kv.json" "$HOME/.local/state/opencode/kv.json"
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$CONFIGS_DIR/opencode/AGENTS.md"
 install_link "$CONFIGS_DIR/opencode" "$HOME/.config/opencode"
-install_opencode_openai_sub_switcher
 
 # forgecode
 install_link "$CONFIGS_DIR/forgecode/permissions.yaml" "$HOME/.config/forge/permissions.yaml"
