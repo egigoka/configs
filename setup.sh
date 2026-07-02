@@ -757,6 +757,11 @@ if [ "$(uname -s)" = "Darwin" ]; then
   install_link "$CONFIGS_DIR/raycast/com.raycast.shared" "$HOME/Library/Application Support/com.raycast.shared"
 fi
 
+# karabiner
+if [ "$(uname -s)" = "Darwin" ]; then
+  install_link "$CONFIGS_DIR/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+fi
+
 # opencode
 bash "$CONFIGS_DIR/install_scripts/update_caveman.sh"
 bash "$CONFIGS_DIR/install_scripts/update_frontend_design_skill.sh"
