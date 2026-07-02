@@ -171,6 +171,15 @@ install_virtualfish() {
   fi
 }
 
+install_usage() {
+  if ! command -v uv >/dev/null 2>&1; then
+    echo "uv not found; skipping usage install" >&2
+    return 0
+  fi
+
+  uv tool install --force --refresh "git+https://github.com/egigoka/usage.git@main"
+}
+
 # install some packages
 case "$(uname -s)" in
   Linux)
@@ -713,6 +722,8 @@ else
   git config --global pull.rebase true
   git -C "$CONFIGS_DIR" config core.hooksPath hooks
 fi
+
+install_usage
 
 install_snip
 
