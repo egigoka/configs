@@ -27,6 +27,9 @@ REPO=plasma-keyboard
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 NIX_FILE="$SCRIPT_DIR/plasma-keyboard.nix"
 CONFIGS_DIR="$(git -C "$SCRIPT_DIR" rev-parse --show-toplevel)"
+export NIX_CONFIG="${NIX_CONFIG:+$NIX_CONFIG
+}experimental-features = nix-command flakes"
+NIX=(nix --extra-experimental-features "nix-command flakes")
 
 REF=master
 BUMP_ONLY=0
@@ -53,9 +56,10 @@ SHORT="${REV:0:7}"
 echo "   rev = $REV"
 
 echo ">> prefetching source hash ..."
-HASH="$(nix run --impure nixpkgs#nix-prefetch-github -- "$OWNER" "$REPO" --rev "$REV" 2>/dev/null \
-  | grep -oE 'sha256-[A-Za-z0-9+/=]{40,}' | head -1)"
-[ -n "${HASH:-}" ] || die "nix-prefetch-github did not return a hash"
+PREFETCH_OUTPUT="$("${NIX[@]}" store prefetch-file --unpack "https://github.com/$OWNER/$REPO/archive/$REV.tar.gz" 2>&1)" \
+  || die "prefetch failed: $PREFETCH_OUTPUT"
+HASH="$(printf '%s\n' "$PREFETCH_OUTPUT" | grep -oE 'sha256-[A-Za-z0-9+/=]{40,}' | head -1 || true)"
+[ -n "${HASH:-}" ] || die "prefetch did not return a hash: $PREFETCH_OUTPUT"
 echo "   hash = $HASH"
 
 echo ">> determining version base ..."
@@ -88,7 +92,7 @@ if [ "$BUMP_ONLY" -eq 1 ]; then
 fi
 
 echo ">> running home-manager switch ..."
-nix run --refresh --impure home-manager/release-26.05 -- switch --impure -b backup \
+"${NIX[@]}" run --refresh --impure home-manager/release-26.05 -- switch --impure -b backup \
   --flake "$CONFIGS_DIR/nix#default"
 
 cat <<EOF

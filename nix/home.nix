@@ -45,6 +45,15 @@ let
   batteryScriptDir = "${homeDirectory}/Developer/py/telegram_bots";
   batteryDevice = "/org/freedesktop/UPower/devices/battery_BAT1";
   plasmaKeyboardDesktop = "org.kde.plasma.keyboard.${plasma-keyboard.version}.desktop";
+  heliumWithDebug = pkgs.symlinkJoin {
+    name = "helium";
+    paths = [ helium ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/helium \
+        --add-flags "--remote-debugging-port=9222"
+    '';
+  };
 in
 {
   home.username = username;
@@ -125,7 +134,7 @@ in
     # Built from the egigoka fork. KWin is pointed at a versioned desktop file
     # below so it does not reuse stale cached input-method service metadata.
     plasma-keyboard
-    helium
+    heliumWithDebug
     mkvtoolnix   # provides mkvmerge, mkvinfo, mkvextract, etc.
     kdotool      # xdotool-like window control for KWin/Wayland
   ];
