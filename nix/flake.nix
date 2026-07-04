@@ -21,10 +21,10 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system}.extend jovian-nixos.overlays.default;
-      # Resolved at eval time from the environment (requires --impure), so the
-      # same flake works for any user (`deck` on a Steam Deck) without templating.
-      username = builtins.getEnv "USER";
-      homeDirectory = builtins.getEnv "HOME";
+      envUsername = builtins.getEnv "USER";
+      envHomeDirectory = builtins.getEnv "HOME";
+      username = if envUsername != "" then envUsername else "deck";
+      homeDirectory = if envHomeDirectory != "" then envHomeDirectory else "/home/${username}";
       # Built from the egigoka/plasma-keyboard fork. Qt/KF6 deps come from the
       # kdePackages set so they share one Qt; the rest auto-fill from pkgs.
       plasma-keyboard = pkgs.callPackage ./plasma-keyboard.nix {
@@ -35,13 +35,15 @@
           kcoreaddons ki18n kcmutils kconfig kirigami libplasma;
       };
       helium = helium-browser.packages.${system}.helium;
-    in {
-      packages.${system}.plasma-keyboard = plasma-keyboard;
-
-      homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
+      homeConfiguration = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home.nix ];
         extraSpecialArgs = { inherit username homeDirectory plasma-keyboard helium; };
       };
+    in {
+      packages.${system}.plasma-keyboard = plasma-keyboard;
+
+      homeConfigurations.${username} = homeConfiguration;
+      homeConfigurations.default = homeConfiguration;
     };
 }
