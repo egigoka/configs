@@ -2,14 +2,21 @@
 """Backup open tabs from Helium browser to JSON with tiered retention."""
 
 import json
+import platform
 import re
 import subprocess
 import sys
+import urllib.request
 from datetime import datetime, timedelta
 from pathlib import Path
 
+PLATFORM = platform.system()
 BACKUP_DIR = Path.home() / "backups" / "helium"
-PROFILE_DIR = Path.home() / "Library" / "Application Support" / "net.imput.helium"
+
+if PLATFORM == "Darwin":
+    PROFILE_DIR = Path.home() / "Library" / "Application Support" / "net.imput.helium"
+else:
+    PROFILE_DIR = Path.home() / ".config" / "net.imput.helium"
 
 JXA_SCRIPT = """
 var app = Application("Helium");
@@ -31,21 +38,44 @@ JSON.stringify(tabs);
 
 
 def helium_running():
+    name = "Helium" if PLATFORM == "Darwin" else "helium"
     return subprocess.run(
-        ["pgrep", "-x", "Helium"],
+        ["pgrep", "-x", name],
         capture_output=True,
         text=True,
     ).returncode == 0
 
 
+def get_tabs_cdp(port=9222):
+    try:
+        with urllib.request.urlopen(f"http://localhost:{port}/json/list", timeout=3) as r:
+            items = json.loads(r.read())
+    except Exception as e:
+        return None, str(e)
+    tabs = []
+    for item in items:
+        if item.get("type") != "page":
+            continue
+        tabs.append({
+            "url": item.get("url", ""),
+            "title": item.get("title", ""),
+            "window": 1,
+            "tab_index": len(tabs) + 1,
+            "active": False,
+        })
+    return tabs, None
+
+
 def get_tabs():
-    result = subprocess.run(
-        ["osascript", "-l", "JavaScript", "-e", JXA_SCRIPT],
-        capture_output=True, text=True
-    )
-    if result.returncode != 0:
-        return None, result.stderr.strip()
-    return json.loads(result.stdout.strip()), None
+    if PLATFORM == "Darwin":
+        result = subprocess.run(
+            ["osascript", "-l", "JavaScript", "-e", JXA_SCRIPT],
+            capture_output=True, text=True
+        )
+        if result.returncode != 0:
+            return None, result.stderr.strip()
+        return json.loads(result.stdout.strip()), None
+    return get_tabs_cdp()
 
 
 def cleanup(backup_dir: Path):
