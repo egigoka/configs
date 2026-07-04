@@ -179,7 +179,7 @@ in
         if [ -f "$_brave_desktop" ]; then
           sed \
             -e "s|Exec=/usr/bin/brave-origin-stable|Exec=${homeDirectory}/.local/bin/brave-origin-stable|g" \
-            -e "s|Icon=/opt/brave.com/brave-origin/|Icon=$_brave_target/root/opt/brave.com/brave-origin/|g" \
+            -e "s|^Icon=.*|Icon=$_brave_target/root/opt/brave.com/brave-origin/product_logo_256.png|g" \
             "$_brave_desktop" > "${homeDirectory}/.local/share/applications/brave-origin.desktop"
         fi
       fi
