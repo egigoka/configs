@@ -188,6 +188,23 @@ in
     fi
   '';
 
+  systemd.user.services.helium-tabs-backup = {
+    Unit.Description = "Backup open Helium tabs";
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.python3}/bin/python3 ${homeDirectory}/configs/scripts/helium-tabs-backup.py";
+    };
+  };
+
+  systemd.user.timers.helium-tabs-backup = {
+    Unit.Description = "Backup Helium tabs hourly";
+    Timer = {
+      OnCalendar = "hourly";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
   systemd.user.services.telegram-battery = {
     Unit = {
       Description = "Telegram battery bot";
