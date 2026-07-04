@@ -38,7 +38,7 @@
     in {
       packages.${system}.plasma-keyboard = plasma-keyboard;
 
-      homeConfigurations.default = home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.${username} = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         modules = [ ./home.nix ];
         extraSpecialArgs = { inherit username homeDirectory plasma-keyboard helium; };
