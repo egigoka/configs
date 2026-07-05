@@ -186,8 +186,8 @@ in
         _text='[0,0,0]'
         _text_muted='[60,60,60]'
       else
-        _text='[240,240,240]'
-        _text_muted='[190,190,190]'
+        _text='[255,255,255]'
+        _text_muted='[255,255,255]'
       fi
 
       ${pkgs.coreutils}/bin/mkdir -p "$_theme_dir"
@@ -208,6 +208,7 @@ in
               "tab_background_text": $text_muted,
               "toolbar_text": $text,
               "bookmark_text": $text,
+              "toolbar_button_icon": $text,
               "ntp_background": [$r, $g, $b],
               "ntp_text": $text
             }
