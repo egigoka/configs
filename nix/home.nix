@@ -211,7 +211,7 @@ in
               "toolbar_text": $text,
               "bookmark_text": $text,
               "toolbar_button_icon": $text,
-              "ntp_background": [$r, $g, $b],
+              "ntp_background": [100, 114, 90],
               "ntp_text": $text
             }
           }
