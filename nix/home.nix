@@ -51,7 +51,8 @@ let
     buildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/helium \
-        --add-flags "--remote-debugging-port=9222"
+        --add-flags "--remote-debugging-port=9222" \
+        --add-flags "--load-extension=${homeDirectory}/.local/share/helium-kde-theme"
     '';
   };
 in
@@ -75,6 +76,7 @@ in
     bat           
     lsd
     gdu
+    btrfs-assistant
     difftastic    # difft
     gh            
     git-filter-repo
@@ -138,6 +140,81 @@ in
     mkvtoolnix   # provides mkvmerge, mkvinfo, mkvextract, etc.
     kdotool      # xdotool-like window control for KWin/Wayland
   ];
+
+  home.file.".local/share/applications/btrfs-assistant.desktop".text = ''
+    [Desktop Entry]
+    Name=Btrfs Assistant
+    Comment=Manage Btrfs snapshots and Snapper
+    Exec=${pkgs.btrfs-assistant}/bin/btrfs-assistant-launcher
+    Terminal=false
+    Type=Application
+    Icon=btrfs-assistant
+    Categories=System;Filesystem;
+    NoDisplay=false
+    StartupNotify=true
+  '';
+
+  home.activation.heliumThemeColor = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    _gtk_colors="${homeDirectory}/.config/gtk-3.0/colors.css"
+    _theme_dir="${homeDirectory}/.local/share/helium-kde-theme"
+    _helium_hex=
+
+    if [ -f "$_gtk_colors" ]; then
+      while IFS= read -r _line; do
+        if [[ $_line =~ ^@define-color\ theme_header_background_[A-Za-z0-9-]+\ \#([0-9A-Fa-f]{6})\;$ ]]; then
+          _helium_hex="''${BASH_REMATCH[1]}"
+          break
+        fi
+      done < "$_gtk_colors"
+
+      if [ -z "$_helium_hex" ]; then
+        while IFS= read -r _line; do
+          if [[ $_line =~ ^@define-color\ theme_bg_color_[A-Za-z0-9-]+\ \#([0-9A-Fa-f]{6})\;$ ]]; then
+            _helium_hex="''${BASH_REMATCH[1]}"
+            break
+          fi
+        done < "$_gtk_colors"
+      fi
+    fi
+
+    if [ -n "$_helium_hex" ]; then
+      _r=$((16#''${_helium_hex:0:2}))
+      _g=$((16#''${_helium_hex:2:2}))
+      _b=$((16#''${_helium_hex:4:2}))
+      _lum=$(( (_r * 299 + _g * 587 + _b * 114) / 1000 ))
+      if [ "$_lum" -gt 128 ]; then
+        _text='[0,0,0]'
+        _text_muted='[60,60,60]'
+      else
+        _text='[240,240,240]'
+        _text_muted='[190,190,190]'
+      fi
+
+      ${pkgs.coreutils}/bin/mkdir -p "$_theme_dir"
+      ${pkgs.jq}/bin/jq -n \
+        --argjson r "$_r" --argjson g "$_g" --argjson b "$_b" \
+        --argjson text "$_text" --argjson text_muted "$_text_muted" \
+        '{
+          "manifest_version": 3,
+          "name": "KDE Panel Theme",
+          "version": "1.0",
+          "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7MS5ENdgy1rRTjQEZyVIOWZ0COYp+kOy90txuPiJ2aVw3GspaOOdmjtJtdGUzLuQu9VDrEeYH1aMtEbgvph2qy1JZNDOyspmOaOBBR8Hh/dhqoHLazBH5JFQH+9HOycfTRftEt4fNlxZdQceq9bfL0++Gx78HAhPFEn8B3GnbKKBTyHB/+GlQ/LkwX9etbuOS8irKrsfd7U3XsQs4+Jgu3T7IEsB9yrIDX9HeKJsZSt6RmXxsxtW7cW7z3WEBDzbHDZnfWCMWjZ5rryjEjMIxuougIdQdxaUu6lIXLs1IDlF2QzAlCMdQnz/Wbz2xNtD213EhCcgWnuTHoYiz9e34wIDAQAB",
+          "theme": {
+            "colors": {
+              "frame": [$r, $g, $b],
+              "frame_inactive": [$r, $g, $b],
+              "toolbar": [$r, $g, $b],
+              "tab_text": $text,
+              "tab_background_text": $text_muted,
+              "toolbar_text": $text,
+              "bookmark_text": $text,
+              "ntp_background": [$r, $g, $b],
+              "ntp_text": $text
+            }
+          }
+        }' > "$_theme_dir/manifest.json"
+    fi
+  '';
 
   home.activation.plasmaKeyboardInputMethod = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file kwinrc --group Wayland --key InputMethod \
