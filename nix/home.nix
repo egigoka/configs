@@ -204,6 +204,8 @@ in
               "frame": [$r, $g, $b],
               "frame_inactive": [$r, $g, $b],
               "toolbar": [$r, $g, $b],
+              "background_tab": [100, 114, 90],
+              "background_tab_inactive": [100, 114, 90],
               "tab_text": $text,
               "tab_background_text": $text_muted,
               "toolbar_text": $text,
