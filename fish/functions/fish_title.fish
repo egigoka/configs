@@ -6,6 +6,11 @@ function fish_title
     # An override for the current command is passed as the first parameter.
     # This is used by `fg` to show the true process name, among others.
     if set -q argv[1]
+        if string match -qr '^z\s+' -- $argv[1]
+            set -l z_args (string split -m1 ' ' -- $argv[1])
+            echo -- $z_args[2] '|' $prefix $PWD
+            return
+        end
         echo -- $prefix (string sub -l 20 -- $argv[1]) $PWD
     else
         # Don't print "fish" because it's redundant
