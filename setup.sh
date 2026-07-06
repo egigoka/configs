@@ -756,6 +756,11 @@ if [ "$(uname -s)" = "Darwin" ]; then
   install_link "$CONFIGS_DIR/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
 fi
 
+# cmux
+if [ "$(uname -s)" = "Darwin" ]; then
+  install_link "$CONFIGS_DIR/cmux/config.ghostty" "$HOME/Library/Application Support/com.cmuxterm.app/config.ghostty"
+fi
+
 # helium tabs backup
 if [ "$(uname -s)" = "Darwin" ]; then
   install_link "$CONFIGS_DIR/scripts/helium-tabs-backup.py" "$HOME/.scripts/helium-tabs-backup.py"
