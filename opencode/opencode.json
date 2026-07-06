@@ -10,8 +10,8 @@
     "@atonev/opencode-short-term-memory@latest",
     "./plugins/caveman/plugin.js",
     "opencode-kilo-auth@latest",
-    "opencode-openai-multi-auth",
-    "@dietrichgeber/ponytail"
+    "@dietrichgeber/ponytail",
+    "opencode-openai-multi-auth"
   ],
   "provider": {
     "anthropic": {
