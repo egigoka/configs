@@ -110,6 +110,7 @@ install_opencode_tools() {
 
   npm install -g opencode-with-claude
   npm install -g opencode-claude-memory
+  npx -y opencode-openai-multi-auth@latest
 
   if command -v opencode-memory >/dev/null 2>&1; then
     opencode-memory install
