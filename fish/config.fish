@@ -153,6 +153,7 @@ if status is-interactive
   # alias mvv in function
 
   # git
+  abbr --add g --position command git
   abbr --add gs --position command git status
   abbr --add gd --position command git diff
   abbr --add gpl --position command git pull
