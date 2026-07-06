@@ -216,6 +216,18 @@ in
             }
           }
         }' > "$_theme_dir/manifest.json"
+
+      _helium_prefs="${homeDirectory}/.config/net.imput.helium/Default/Preferences"
+      if [ -f "$_helium_prefs" ]; then
+        _helium_color=$(( (255 << 24) + (_r << 16) + (_g << 8) + _b - 4294967296 ))
+        _tmp=$(${pkgs.coreutils}/bin/mktemp)
+        ${pkgs.jq}/bin/jq -c \
+          --argjson color "$_helium_color" \
+          '.browser.theme.user_color2 = $color | .browser.theme.color_variant2 = 2' \
+          "$_helium_prefs" > "$_tmp" && \
+          ${pkgs.coreutils}/bin/mv "$_tmp" "$_helium_prefs" || \
+          ${pkgs.coreutils}/bin/rm -f "$_tmp"
+      fi
     fi
   '';
 
