@@ -183,6 +183,11 @@ if status is-interactive
 
   # claude
   abbr --add claude2 --position command env CLAUDE_CONFIG_DIR=\$HOME/.claude2 claude
+
+  # codex
+  set -gx CODEX_HOME_2 $HOME/.codex-2
+  abbr --add codex2 --position command env CODEX_HOME=\$HOME/.codex-2 codex
+
   if command -q opencode-memory
     function opencode
       command opencode-memory $argv

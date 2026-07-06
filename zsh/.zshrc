@@ -332,6 +332,10 @@
 	alias fastfetchdeps="install fastfetch chafa dbus dconf ddcutil directx-headers glib2 imagemagick libnm libpulse mesa libxrandr ocl-icd hwdata vulkan-icd-loader xfconf zlib libdrm || echo chafa dbus dconf ddcutil directx-headers glib2 imagemagick libnm libpulse mesa libxrandr ocl-icd hwdata vulkan-icd-loader xfconf zlib libdrm"
 	alias neofetch="fastfetch"
 
+	# codex
+	export CODEX_HOME_2="$HOME/.codex-2"
+	alias codex2='CODEX_HOME=$HOME/.codex-2 codex'
+
 	# zellij
 	z() {
 	    if [ "$#" -eq 0 ]; then
