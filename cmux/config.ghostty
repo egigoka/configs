@@ -1,4 +1,5 @@
 font-family = "AtkynsonMono Nerd Font Mono"
+font-codepoint-map = U+2800-U+28FF=AtkynsonMono Nerd Font Mono
 font-style = Medium
 font-size = 14
 surface-tab-bar-font-size = 14

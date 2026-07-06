@@ -759,6 +759,7 @@ fi
 # cmux
 if [ "$(uname -s)" = "Darwin" ]; then
   install_link "$CONFIGS_DIR/cmux/config.ghostty" "$HOME/Library/Application Support/com.cmuxterm.app/config.ghostty"
+  install_link "$CONFIGS_DIR/cmux/config.ghostty" "$HOME/Library/Application Support/cmux/config.ghostty"
 fi
 
 # helium tabs backup
