@@ -212,7 +212,12 @@ in
               "bookmark_text": $text,
               "toolbar_button_icon": $text,
               "ntp_background": [100, 114, 90],
-              "ntp_text": $text
+              "ntp_header": [$r, $g, $b],
+              "ntp_link": $text,
+              "ntp_text": $text,
+              "button_background": [$r, $g, $b],
+              "omnibox_background": [100, 114, 90],
+              "omnibox_text": $text
             }
           }
         }' > "$_theme_dir/manifest.json"
