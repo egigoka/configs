@@ -1,12 +1,14 @@
 # Patched opencode-snip
 
-Local bandaid for <https://github.com/VincentHardouin/opencode-snip/pull/14> until upstream merges.
+Local install for <https://github.com/VincentHardouin/opencode-snip/pull/14> until upstream merges.
 
-Patched installed package only:
+Pinned PR head:
+
+`lenucksi/opencode-snip@bdb44108b2c1b26c27f9101c3dc56a2bcbdbf719`
+
+`setup.sh` installs it into opencode's plugin cache:
 
 `~/.cache/opencode/packages/opencode-snip@latest/node_modules/opencode-snip/src/index.ts`
-
-`setup.sh` was not changed.
 
 ## Behavior
 
@@ -15,6 +17,8 @@ Patched installed package only:
 - Leaves unsupported commands unchanged.
 - Checks each pipeline/compound segment independently.
 - Avoids double-prefixing segments already starting with `snip`.
+- Disables itself if `snip check/run` subcommands are missing.
+- Adds system instruction telling agents not to add `snip run --` manually.
 
 ## Verified
 
