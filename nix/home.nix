@@ -154,6 +154,30 @@ in
     StartupNotify=true
   '';
 
+  home.file.".local/share/applications/app.magicpods.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=MagicPods
+    Comment=The control center for your Bluetooth headphones
+    Exec=${homeDirectory}/.local/share/Steam/steamapps/common/MagicPods/magicpods.sh
+    Icon=${homeDirectory}/.local/share/icons/magicpods.png
+    Terminal=false
+    Categories=AudioVideo;Audio;
+    StartupWMClass=MagicPods
+  '';
+
+  home.file.".config/autostart/app.magicpods.desktop".text = ''
+    [Desktop Entry]
+    Type=Application
+    Name=MagicPods
+    Comment=The control center for your Bluetooth headphones
+    Exec=${homeDirectory}/.local/share/Steam/steamapps/common/MagicPods/magicpods.sh
+    Icon=${homeDirectory}/.local/share/icons/magicpods.png
+    Terminal=false
+    Categories=AudioVideo;Audio;
+    StartupWMClass=MagicPods
+  '';
+
   home.activation.heliumThemeColor = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     _gtk_colors="${homeDirectory}/.config/gtk-3.0/colors.css"
     _theme_dir="${homeDirectory}/.local/share/helium-kde-theme"
