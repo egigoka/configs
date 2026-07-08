@@ -296,6 +296,11 @@ in
       _brave_filename=$(printf '%s' "$_brave_packages" | grep -A20 "^Package: brave-origin$" | grep "^Filename:" | head -1 | cut -d' ' -f2)
       _brave_target="${homeDirectory}/.local/share/brave-origin"
       _brave_version_file="$_brave_target/.installed-version"
+      _brave_app="$_brave_target/root/opt/brave.com/brave-origin/brave-origin"
+      if [ -f "$_brave_app" ] && grep -Fq -- '--remote-debugging-port=9223' "$_brave_app"; then
+        echo "brave-origin: restoring launcher overwritten through old symlink..."
+        rm -f "$_brave_version_file"
+      fi
       if [ -n "$_brave_version" ] && [ -n "$_brave_filename" ] && \
          { [ ! -f "$_brave_version_file" ] || [ "$(cat "$_brave_version_file")" != "$_brave_version" ]; }; then
         echo "brave-origin: installing version $_brave_version..."
@@ -310,10 +315,17 @@ in
         fi
         rm -f "$_brave_tmp"
       fi
-      if [ -x "$_brave_target/root/opt/brave.com/brave-origin/brave-origin" ]; then
+      if [ -x "$_brave_app" ]; then
         mkdir -p "${homeDirectory}/.local/bin" "${homeDirectory}/.local/share/applications" "${homeDirectory}/.local/share/icons"
-        ln -sf "$_brave_target/root/opt/brave.com/brave-origin/brave-origin" "${homeDirectory}/.local/bin/brave-origin"
-        ln -sf "$_brave_target/root/opt/brave.com/brave-origin/brave-origin" "${homeDirectory}/.local/bin/brave-origin-stable"
+        for _brave_bin in brave-origin brave-origin-stable; do
+          _brave_wrapper="${homeDirectory}/.local/bin/$_brave_bin"
+          rm -f "$_brave_wrapper"
+          {
+            printf '%s\n' '#!/bin/sh'
+            printf 'exec "%s" --remote-debugging-port=9223 "$@"\n' "$_brave_app"
+          } > "$_brave_wrapper"
+          chmod +x "$_brave_wrapper"
+        done
         if [ -d "$_brave_target/root/usr/share/icons" ]; then
           cp -r "$_brave_target/root/usr/share/icons/." "${homeDirectory}/.local/share/icons/"
         fi
@@ -340,6 +352,40 @@ in
 
   systemd.user.timers.helium-tabs-backup = {
     Unit.Description = "Backup Helium tabs hourly";
+    Timer = {
+      OnCalendar = "hourly";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  systemd.user.services.brave-origin-tabs-backup = {
+    Unit.Description = "Backup open Brave Origin tabs";
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.python3}/bin/python3 ${homeDirectory}/configs/scripts/brave-origin-tabs-backup.py";
+    };
+  };
+
+  systemd.user.timers.brave-origin-tabs-backup = {
+    Unit.Description = "Backup Brave Origin tabs hourly";
+    Timer = {
+      OnCalendar = "hourly";
+      Persistent = true;
+    };
+    Install.WantedBy = [ "timers.target" ];
+  };
+
+  systemd.user.services.firefox-tabs-backup = {
+    Unit.Description = "Backup open Firefox tabs";
+    Service = {
+      Type = "oneshot";
+      ExecStart = "${pkgs.python3}/bin/python3 ${homeDirectory}/configs/scripts/firefox-tabs-backup.py";
+    };
+  };
+
+  systemd.user.timers.firefox-tabs-backup = {
+    Unit.Description = "Backup Firefox tabs hourly";
     Timer = {
       OnCalendar = "hourly";
       Persistent = true;

@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-"""Backup open tabs from Helium browser to JSON with tiered retention."""
+"""Backup open tabs from Brave Origin to JSON with tiered retention."""
 
 import json
-import platform
 import re
-import subprocess
 import sys
 import urllib.request
 from datetime import datetime, timedelta
@@ -12,34 +10,12 @@ from pathlib import Path
 
 from chromium_session_tabs import get_tabs_offline
 
-PLATFORM = platform.system()
-BACKUP_DIR = Path.home() / "backups" / "helium"
-
-if PLATFORM == "Darwin":
-    PROFILE_DIR = Path.home() / "Library" / "Application Support" / "net.imput.helium"
-else:
-    PROFILE_DIR = Path.home() / ".config" / "net.imput.helium"
-
-JXA_SCRIPT = """
-var app = Application("Helium");
-var tabs = [];
-app.windows().forEach(function(win, wIdx) {
-    var activeTab = win.activeTab();
-    win.tabs().forEach(function(tab, tIdx) {
-        tabs.push({
-            url: tab.url(),
-            title: tab.name(),
-            window: wIdx + 1,
-            tab_index: tIdx + 1,
-            active: tab.url() === activeTab.url()
-        });
-    });
-});
-JSON.stringify(tabs);
-"""
+BACKUP_DIR = Path.home() / "backups" / "brave-origin"
+PROFILE_DIR = Path.home() / ".config" / "BraveSoftware" / "Brave-Origin"
+DEBUG_PORT = 9223
 
 
-def get_tabs_cdp(port=9222):
+def get_tabs_cdp(port=DEBUG_PORT):
     try:
         with urllib.request.urlopen(f"http://localhost:{port}/json/list", timeout=3) as r:
             items = json.loads(r.read())
@@ -60,18 +36,9 @@ def get_tabs_cdp(port=9222):
 
 
 def get_tabs():
-    if PLATFORM == "Darwin":
-        result = subprocess.run(
-            ["osascript", "-l", "JavaScript", "-e", JXA_SCRIPT],
-            capture_output=True, text=True
-        )
-        if result.returncode == 0:
-            return json.loads(result.stdout.strip()), "live", None, None
-        live_err = result.stderr.strip()
-    else:
-        data, live_err = get_tabs_cdp()
-        if live_err is None:
-            return data, "live", None, None
+    data, live_err = get_tabs_cdp()
+    if live_err is None:
+        return data, "live", None, None
 
     data, metadata, offline_err = get_tabs_offline(PROFILE_DIR)
     if offline_err is None:
@@ -92,11 +59,9 @@ def cleanup(backup_dir: Path):
     now = datetime.now()
     keep = set()
 
-    # Hourly: keep 24 newest
     for _, f in files[:24]:
         keep.add(f)
 
-    # Daily: 1 per calendar day for days beyond 24h window, up to 7 days
     seen_days = set()
     cutoff_hourly = now - timedelta(hours=24)
     for dt, f in files:
@@ -109,7 +74,6 @@ def cleanup(backup_dir: Path):
         if len(seen_days) >= 7:
             break
 
-    # Weekly: 1 per ISO week beyond 7-day window, up to 4 weeks
     seen_weeks = set()
     cutoff_daily = now - timedelta(days=7)
     for dt, f in files:
@@ -122,7 +86,6 @@ def cleanup(backup_dir: Path):
         if len(seen_weeks) >= 4:
             break
 
-    # Monthly: 1 per month beyond 4-week window, up to 12 months
     seen_months = set()
     cutoff_weekly = now - timedelta(weeks=4)
     for dt, f in files:
@@ -143,7 +106,7 @@ def cleanup(backup_dir: Path):
 def main():
     data, source, metadata, err = get_tabs()
     if err is not None:
-        print(f"Helium tab backup error: {err}", file=sys.stderr)
+        print(f"Brave Origin tab backup error: {err}", file=sys.stderr)
         sys.exit(0)
 
     BACKUP_DIR.mkdir(parents=True, exist_ok=True)
@@ -152,7 +115,7 @@ def main():
     out_file = BACKUP_DIR / f"tabs-{timestamp}.json"
     payload = {
         "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
-        "browser": "Helium",
+        "browser": "Brave Origin",
         "profile_dir": str(PROFILE_DIR),
         "source": source,
         "tab_count": len(data),
