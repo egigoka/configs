@@ -55,6 +55,26 @@ let
         --add-flags "--load-extension=${homeDirectory}/.local/share/helium-kde-theme"
     '';
   };
+  qbittorrentPatched = pkgs.qbittorrent.overrideAttrs (old: {
+    postPatch = (old.postPatch or "") + ''
+      substituteInPlace src/base/utils/misc.h \
+        --replace-fail 'TimeResolution resolution = TimeResolution::Minutes' \
+          'TimeResolution resolution = TimeResolution::Seconds'
+    '';
+  });
+  qbittorrentThemed = pkgs.symlinkJoin {
+    name = "qbittorrent";
+    paths = [ qbittorrentPatched ];
+    buildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/qbittorrent \
+        --set QT_QPA_PLATFORMTHEME kde \
+        --set-default QT_STYLE_OVERRIDE Windows \
+        --prefix QT_PLUGIN_PATH : "${pkgs.kdePackages.plasma-integration}/${pkgs.kdePackages.qtbase.qtPluginPrefix}" \
+        --prefix XDG_DATA_DIRS : "${pkgs.kdePackages.plasma-integration}/share:${pkgs.kdePackages.kconfig}/share:${pkgs.kdePackages.kcolorscheme}/share" \
+        --suffix XDG_DATA_DIRS : "/usr/local/share:/usr/share"
+    '';
+  };
 in
 {
   home.username = username;
@@ -137,6 +157,7 @@ in
     # below so it does not reuse stale cached input-method service metadata.
     plasma-keyboard
     heliumWithDebug
+    qbittorrentThemed
     mkvtoolnix   # provides mkvmerge, mkvinfo, mkvextract, etc.
     kdotool      # xdotool-like window control for KWin/Wayland
   ];
