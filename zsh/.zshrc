@@ -334,7 +334,9 @@
 
 	# codex
 	export CODEX_HOME_2="$HOME/.codex-2"
+	export CODEX_HOME_3="$HOME/.codex-3"
 	alias codex2='CODEX_HOME=$HOME/.codex-2 codex'
+	alias codex3='CODEX_HOME=$HOME/.codex-3 codex'
 
 	# zellij
 	z() {

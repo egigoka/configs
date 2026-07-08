@@ -187,7 +187,9 @@ if status is-interactive
 
   # codex
   set -gx CODEX_HOME_2 $HOME/.codex-2
+  set -gx CODEX_HOME_3 $HOME/.codex-3
   abbr --add codex2 --position command env CODEX_HOME=\$HOME/.codex-2 codex
+  abbr --add codex3 --position command env CODEX_HOME=\$HOME/.codex-3 codex
 
   if command -q opencode-memory
     function opencode

@@ -813,6 +813,8 @@ install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex/AGENTS.md"
 install_link "$CONFIGS_DIR/codex/codex.toml" "$HOME/.codex/config.toml"
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex-2/AGENTS.md"
 install_link "$CONFIGS_DIR/codex/codex.toml" "$HOME/.codex-2/config.toml"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex-3/AGENTS.md"
+install_link "$CONFIGS_DIR/codex/codex.toml" "$HOME/.codex-3/config.toml"
 
 # forge (two-account setup: ~/forge1 + ~/forge2, symlinked via ~/forge)
 if [ -d "$HOME/forge" ] && [ ! -L "$HOME/forge" ]; then
