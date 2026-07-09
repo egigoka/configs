@@ -252,6 +252,23 @@
       }
     }
   },
+  "mcp": {
+    "mobile-mcp": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@mobilenext/mobile-mcp@latest"
+      ],
+      "enabled": true,
+      "env": {
+        "MOBILEMCP_DISABLE_TELEMETRY": "1"
+      }
+    }
+  },
+  "experimental": {
+    "mcp_timeout": 120000
+  },
   "permission": {
     "*": "ask",
     "read": {
