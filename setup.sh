@@ -797,6 +797,7 @@ fi
 bash "$CONFIGS_DIR/install_scripts/update_caveman.sh"
 bash "$CONFIGS_DIR/install_scripts/update_ponytail.sh"
 bash "$CONFIGS_DIR/install_scripts/update_frontend_design_skill.sh"
+bash "$CONFIGS_DIR/install_scripts/update_swiftui_expert_skill.sh"
 install_link "$CONFIGS_DIR/opencode/kv.json" "$HOME/.local/state/opencode/kv.json"
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$CONFIGS_DIR/opencode/AGENTS.md"
 install_link "$CONFIGS_DIR/opencode" "$HOME/.config/opencode"
