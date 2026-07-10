@@ -261,7 +261,7 @@
         "@mobilenext/mobile-mcp@latest"
       ],
       "enabled": true,
-      "env": {
+      "environment": {
         "MOBILEMCP_DISABLE_TELEMETRY": "1"
       }
     }
