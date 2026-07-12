@@ -126,53 +126,6 @@ install_opencode_tools() {
   fi
 }
 
-install_snip() {
-  if ! command -v go >/dev/null 2>&1; then
-    case "$(uname -s)" in
-      Linux)
-        if [ -f /etc/os-release ]; then
-          . /etc/os-release
-          case "$ID" in
-            rocky) install_if_missing golang ;;
-            debian|ubuntu|droidian) install_if_missing golang-go ;;
-            *) install_if_missing go ;;
-          esac
-        fi
-        ;;
-      Darwin)
-        install_if_missing go
-        ;;
-    esac
-  fi
-
-  if command -v go >/dev/null 2>&1; then
-    go install github.com/edouard-claude/snip/cmd/snip@latest
-  else
-    echo "go not found; skipping snip install" >&2
-  fi
-}
-
-install_opencode_snip_pr14() {
-  if ! command -v npm >/dev/null 2>&1; then
-    echo "npm not found; skipping opencode-snip PR 14 install" >&2
-    return 0
-  fi
-
-  local spec="github:lenucksi/opencode-snip#bdb44108b2c1b26c27f9101c3dc56a2bcbdbf719"
-  local pkg_dir="$HOME/.cache/opencode/packages/opencode-snip@latest"
-
-  mkdir -p "$pkg_dir"
-
-  if [ -f "$pkg_dir/package.json" ] \
-     && grep -qF "\"opencode-snip\": \"$spec\"" "$pkg_dir/package.json" \
-     && [ -f "$pkg_dir/node_modules/opencode-snip/src/index.ts" ]; then
-    echo "opencode-snip PR 14 already installed, skipping"
-    return 0
-  fi
-
-  npm install --prefix "$pkg_dir" "$spec"
-}
-
 install_usage_tui() {
   if ! command -v usage >/dev/null 2>&1; then
     uv tool install git+https://github.com/egigoka/usage
@@ -746,10 +699,6 @@ else
 fi
 
 install_usage
-
-install_snip
-
-install_opencode_snip_pr14
 
 # zellij
 install_link "$CONFIGS_DIR/zellij" "$HOME/.config/zellij"

@@ -2,10 +2,6 @@ DO NOT add co authored by in commit message
 commit messages should be 1 liners
 use simple git commit -m "message" format, do NOT use heredoc/EOF for commit messages
 
-snip is prepended to applicable commands to manage context
-for full git diff add --no-pager
-if snip is misbehaving, just use python
-
 <!-- caveman-begin -->
 Respond terse like smart caveman. All technical substance stay. Only fluff die.
 
