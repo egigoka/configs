@@ -1,20 +1,26 @@
 ---
 name: ultragoogle
 description: >
-  Google Search fetching workflow using Python curl_cffi first, with Safari AppleScript debugging fallback.
+  Google Search loading workflow using Python curl_cffi, a local Camoufox browser server, and Safari fallback.
   Use when user asks to Google/search web results manually, bypass brittle fetches, inspect Google SERP HTML,
-  use curl_cffi, or use Safari debug pull.
+  use curl_cffi or Camoufox, or use Safari debug pull.
 ---
 
 # UltraGoogle
 
-Fetch Google results with browser-like HTTP first. If blocked, use Safari rendered DOM pull.
+Fetch Google results in this order:
+
+1. `curl_cffi`: fastest and least stateful; keep result when it contains real titles and snippets.
+2. Camoufox at `http://localhost:9377`: rendered browser fallback for JavaScript, browser state, or interaction.
+3. Safari debug pull: last resort when Camoufox is unavailable or also blocked.
+
+Do not escalate to a browser when `curl_cffi` already returned usable results.
 
 ## Trigger
 
 Use for:
 - Google Search / SERP retrieval where normal `webfetch` or plain `curl` may fail
-- Requests mentioning `ultragoogle`, `curl_cffi`, Google HTML, SERP scraping, Safari debug, Safari pull
+- Requests mentioning `ultragoogle`, `curl_cffi`, Camoufox, Google HTML, SERP scraping, Safari debug, Safari pull
 - Debugging whether Google returned real results, consent, captcha, bot wall, or JS-only content
 
 Do not use for normal URL fetches where `webfetch` is enough.
@@ -61,9 +67,46 @@ Signals request failed as search source:
 
 When response is good, extract minimally with stdlib HTML parser or regex against current HTML. Avoid adding parser deps unless needed. Save large HTML to temp file under `/var/folders/r_/_mr22dqn24d31b7460cz8z5m0000gn/T/opencode` if inspection needs repeated passes.
 
-## Fallback: Safari Debug Pull
+## Fallback 1: Camoufox Server
 
-Use Safari when `curl_cffi` gets bot wall/consent or page needs real browser state.
+Use local Camoufox when `curl_cffi` returns a bot/consent wall, rendered JavaScript is required, or search needs browser interaction. Server API documentation is available at `http://localhost:9377/docs/` and `http://localhost:9377/openapi.json`.
+
+Check health first. If unavailable, skip directly to Safari instead of trying to start or reconfigure the service:
+
+```bash
+curl --fail --silent --show-error http://localhost:9377/health
+```
+
+Create a task-specific tab, navigate with Camoufox's Google macro, then read the accessibility snapshot:
+
+```bash
+BASE=http://localhost:9377
+USER_ID="ultragoogle-$$"
+SESSION_KEY="google-search-$$"
+
+TAB_ID=$(curl --fail --silent --show-error --request POST "$BASE/tabs" \
+  --header 'Content-Type: application/json' \
+  --data "{\"userId\":\"$USER_ID\",\"sessionKey\":\"$SESSION_KEY\"}" \
+  | python3 -c 'import json, sys; print(json.load(sys.stdin)["tabId"])')
+
+curl --fail --silent --show-error --request POST "$BASE/tabs/$TAB_ID/navigate" \
+  --header 'Content-Type: application/json' \
+  --data "{\"userId\":\"$USER_ID\",\"macro\":\"@google_search\",\"query\":\"site:example.com search terms\"}"
+
+curl --fail --silent --show-error \
+  "$BASE/tabs/$TAB_ID/snapshot?userId=$USER_ID&format=text"
+
+curl --fail --silent --show-error --request DELETE \
+  "$BASE/tabs/$TAB_ID?userId=$USER_ID"
+```
+
+Use unique `USER_ID` and `SESSION_KEY` values when concurrent tasks could collide. Close tabs after extraction. Prefer accessibility snapshots and `/tabs/{tabId}/links`; use `/tabs/{tabId}/evaluate` only when structured endpoints cannot expose required data.
+
+Apply same failure signals as `curl_cffi`. A rendered captcha, `/sorry/` URL, or unusual-traffic snapshot is not a valid result; continue to Safari.
+
+## Fallback 2: Safari Debug Pull
+
+Use Safari when Camoufox is unavailable, gets a bot wall/consent page, or needs desktop browser state that only Safari has.
 
 Reference implementation: `/Users/egigoka/Developer/slop/deal-tracker/safari-fetch.mjs`.
 
@@ -92,6 +135,7 @@ If copying pattern inline, use `osascript` to:
 
 Report concise search findings, not raw HTML. Include source URLs and note method only when relevant:
 - `curl_cffi` success
-- Safari fallback used because Google returned bot/consent/JS wall
+- Camoufox fallback used for rendered browser content
+- Safari fallback used because HTTP and Camoufox methods failed
 
-If both methods fail, state exact blocker and preserve shortest diagnostic snippet.
+If all methods fail, state exact blocker for each attempted method and preserve shortest diagnostic snippet.
