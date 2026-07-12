@@ -186,6 +186,7 @@ if status is-interactive
   abbr --add claude2 --position command env CLAUDE_CONFIG_DIR=\$HOME/.claude2 claude
 
   # codex
+  set -gx CODEX_HOME $HOME/.codex
   set -gx CODEX_HOME_2 $HOME/.codex-2
   set -gx CODEX_HOME_3 $HOME/.codex-3
   abbr --add codex2 --position command env CODEX_HOME=\$HOME/.codex-2 codex
@@ -245,6 +246,17 @@ if status is-interactive
 
     # keychain
     abbr --add macosunlockkeychain --position command security unlock-keychain
+
+    # Keep SSH key passphrases in memory only until macOS locks.
+    function ssh --wraps ssh --description "SSH and remember key passphrases until lock"
+      echo "ssh: remembering key passphrase until macOS locks; use ssh-once to avoid remembering it" >&2
+      command ssh -o AddKeysToAgent=yes -o UseKeychain=no $argv
+    end
+
+    function ssh-once --wraps ssh --description "SSH without remembering key passphrases"
+      echo "ssh-once: key passphrase will not be remembered" >&2
+      command ssh -o AddKeysToAgent=no -o UseKeychain=no $argv
+    end
 
     # gdu homebrew
     alias gdu=gdu-go
@@ -453,7 +465,17 @@ if status is-interactive
   set -e LC_CTYPE
 
   ### SSH AGENT
-  if not set -q SSH_AUTH_SOCK
+  if string match -q "Darwin*" -- (uname)
+    set -l ssh_agent_dir "$HOME/.ssh/agent"
+    command mkdir -p -m 700 "$ssh_agent_dir"
+    set -gx SSH_AUTH_SOCK "$ssh_agent_dir/fish-agent.sock"
+
+    command ssh-add -l >/dev/null 2>&1
+    if test $status -gt 1
+      command rm -f "$SSH_AUTH_SOCK"
+      eval (command ssh-agent -c -a "$SSH_AUTH_SOCK") >/dev/null
+    end
+  else if not set -q SSH_AUTH_SOCK
     eval (ssh-agent -c) > /dev/null
   end
 

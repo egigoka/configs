@@ -103,6 +103,46 @@ install_link() {
   ln -s -- "$src" "$dst"
 }
 
+configure_codex_home() {
+  local codex_home=$1
+  local skill agent
+
+  install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$codex_home/AGENTS.md"
+  install_link "$CONFIGS_DIR/codex/codex.toml" "$codex_home/config.toml"
+
+  for skill in \
+    caveman \
+    caveman-commit \
+    caveman-compress \
+    caveman-help \
+    caveman-review \
+    frontend-design \
+    swiftui-expert-skill \
+    ultragoogle
+  do
+    install_link "$CONFIGS_DIR/opencode/skills/$skill" "$codex_home/skills/$skill"
+  done
+
+  install_link "$CONFIGS_DIR/codex/skills/cavecrew" "$codex_home/skills/cavecrew"
+
+  for agent in "$CONFIGS_DIR"/codex/agents/*.toml; do
+    install_link "$agent" "$codex_home/agents/$(basename "$agent")"
+  done
+}
+
+configure_codex() {
+  local codex_home
+
+  for codex_home in "$HOME/.codex" "$HOME/.codex-2" "$HOME/.codex-3"; do
+    configure_codex_home "$codex_home"
+  done
+}
+
+if [ "${1:-}" = "--codex-only" ]; then
+  configure_codex
+  exit 0
+fi
+
 install_opencode_tools() {
   if ! command -v opencode >/dev/null 2>&1; then
     npm i -g opencode-ai@latest
@@ -759,12 +799,7 @@ install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
 install_link "$CONFIGS_DIR/claude/settings.json" "$HOME/.claude/settings.json"
 
 # codex
-install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex/AGENTS.md"
-install_link "$CONFIGS_DIR/codex/codex.toml" "$HOME/.codex/config.toml"
-install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex-2/AGENTS.md"
-install_link "$CONFIGS_DIR/codex/codex.toml" "$HOME/.codex-2/config.toml"
-install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.codex-3/AGENTS.md"
-install_link "$CONFIGS_DIR/codex/codex.toml" "$HOME/.codex-3/config.toml"
+configure_codex
 
 # forge (two-account setup: ~/forge1 + ~/forge2, symlinked via ~/forge)
 if [ -d "$HOME/forge" ] && [ ! -L "$HOME/forge" ]; then

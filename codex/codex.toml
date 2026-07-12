@@ -1,5 +1,5 @@
 personality = "pragmatic"
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "xhigh"
 
 [notice.model_migrations]
@@ -8,6 +8,13 @@ model_reasoning_effort = "xhigh"
 
 [features]
 multi_agent = true
+
+[agents]
+max_threads = 4
+max_depth = 1
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
