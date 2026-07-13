@@ -614,3 +614,9 @@
 	export RUST_BACKTRACE=full
 
 export THEOS=~/theos
+
+# >>> opencode-memory auto-initialization >>>
+opencode() {
+  command opencode-memory "$@"
+}
+# <<< opencode-memory auto-initialization <<<
