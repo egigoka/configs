@@ -25,6 +25,7 @@
 , ki18n
 , kcmutils
 , kconfig
+, kglobalaccel
 , kirigami
 , libplasma
 , mesa
@@ -32,13 +33,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "plasma-keyboard";
-  version = "6.7.80-unstable-dd8bfcd.e6";
+  version = "6.7.80-unstable-aa014ab.e10";
 
   src = fetchFromGitHub {
     owner = "egigoka";
     repo = "plasma-keyboard";
-    rev = "dd8bfcd570d6e97146569b323dad2b39463095a8";
-    hash = "sha256-r7j2mjCWiPir3sLY+wn+KL/9pzfb77wfVDScEAkYikQ=";
+    rev = "aa014abe9114feabe9611c968eb83865955acdc1";
+    hash = "sha256-2Y+6vP5iI1VlfXFzDGp9QkwS4OIjSUdq7yz+h5QeQjI=";
   };
 
   nativeBuildInputs = [
@@ -64,9 +65,12 @@ stdenv.mkDerivation (finalAttrs: {
     ki18n
     kcmutils
     kconfig
+    kglobalaccel
     kirigami
     libplasma # provides PlasmaQuick
   ];
+
+  cmakeFlags = [ "-DPLASMA_KEYBOARD_BUILD_VERSION=${finalAttrs.version}" ];
 
   # The PlasmaQuick version floor (PROJECT_DEP_VERSION) is just KDE's automated
   # per-release bump (GIT_SILENT "Update version for new release"). nixpkgs ships
