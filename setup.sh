@@ -629,6 +629,8 @@ EOF
     echo "  sudo tailscale up --qr --operator=$USER --ssh --accept-dns=false"
   fi
 
+  bash "$CONFIGS_DIR/install_scripts/install_decky.sh" || true
+
   # KDiskMark disk benchmark: AppImage (not the sandboxed Flathub build, which
   # can't flush the OS cache -- see install_kdiskmark.sh for the why).
   sh "$CONFIGS_DIR/install_scripts/install_kdiskmark.sh" || true

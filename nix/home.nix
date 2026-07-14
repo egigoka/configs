@@ -151,7 +151,6 @@ in
     nix-index     # provides `nix-locate` (find which pkg ships a file); `nix search` is built into nix
     google-authenticator  # wired into /etc/pam.d/sshd by setup.sh
 
-    decky-loader
     curl-impersonate
     # Built from the egigoka fork. KWin is pointed at a versioned desktop file
     # below so it does not reuse stale cached input-method service metadata.
