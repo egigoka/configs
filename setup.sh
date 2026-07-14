@@ -363,6 +363,7 @@ NIXUNIT
   git config --global user.email egigoka@gmail.com
   git config --global pull.rebase true
   git -C "$CONFIGS_DIR" config core.hooksPath hooks
+  git -C "$CONFIGS_DIR" config filter.codex-projects.clean hooks/filter-codex-projects
 
   fish_launch_snippet() {
     cat <<'EOF'
@@ -738,6 +739,7 @@ else
   git config --global user.email egigoka@gmail.com
   git config --global pull.rebase true
   git -C "$CONFIGS_DIR" config core.hooksPath hooks
+  git -C "$CONFIGS_DIR" config filter.codex-projects.clean hooks/filter-codex-projects
 fi
 
 install_usage

@@ -44,6 +44,15 @@ let
   ]);
   batteryScriptDir = "${homeDirectory}/Developer/py/telegram_bots";
   batteryDevice = "/org/freedesktop/UPower/devices/battery_BAT1";
+  t3codeAppImage = "${homeDirectory}/.local/share/t3code/T3-Code-nightly-x86_64.AppImage";
+  t3code = pkgs.writeShellScriptBin "t3code" ''
+    if [ ! -x "${t3codeAppImage}" ]; then
+      echo "t3code: nightly AppImage missing; run home-manager switch" >&2
+      exit 1
+    fi
+    export PATH="${homeDirectory}/.opencode/bin:$PATH"
+    exec "${t3codeAppImage}" "$@"
+  '';
   plasmaKeyboardDesktop = "org.kde.plasma.keyboard.${plasma-keyboard.version}.desktop";
   heliumWithDebug = pkgs.symlinkJoin {
     name = "helium";
@@ -92,6 +101,7 @@ in
     fzf           
     micro         
     batteryPython
+    t3code
     autojump      
     bat           
     lsd
@@ -172,6 +182,18 @@ in
     Categories=System;Filesystem;
     NoDisplay=false
     StartupNotify=true
+  '';
+
+  home.file.".local/share/applications/t3code.desktop".text = ''
+    [Desktop Entry]
+    Name=T3 Code (Nightly)
+    Comment=T3 Code desktop build
+    Exec=${t3code}/bin/t3code --no-sandbox %U
+    Terminal=false
+    Type=Application
+    Icon=${homeDirectory}/.local/share/t3code/t3code.png
+    Categories=Development;
+    StartupWMClass=t3code
   '';
 
   home.file.".local/share/applications/app.magicpods.desktop".text = ''
@@ -286,6 +308,69 @@ in
     ${pkgs.kdePackages.kconfig}/bin/kwriteconfig6 --file kwinrc --group Wayland --key VirtualKeyboardEnabled true
     command -v kbuildsycoca6 >/dev/null 2>&1 && kbuildsycoca6 --noincremental >/dev/null 2>&1 || true
     command -v qdbus6 >/dev/null 2>&1 && qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1 || true
+  '';
+
+  home.activation.t3codeNightly = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    _t3code_dir="${homeDirectory}/.local/share/t3code"
+    _t3code_app="${t3codeAppImage}"
+    _t3code_icon="$_t3code_dir/t3code.png"
+    _t3code_url_file="$_t3code_dir/.installed-url"
+    _t3code_api="https://api.github.com/repos/pingdotgg/t3code/releases?per_page=10"
+
+    if _t3code_releases=$(${pkgs.curl}/bin/curl -sfL \
+      -H "Accept: application/vnd.github+json" "$_t3code_api" 2>/dev/null); then
+      _t3code_asset=$(printf '%s' "$_t3code_releases" | ${pkgs.jq}/bin/jq -r '
+        [.[]
+          | select(.prerelease and (.tag_name | contains("-nightly.")))
+          | { tag: .tag_name,
+              asset: (.assets[] | select(.name | endswith("-x86_64.AppImage"))) }]
+        | first
+        | [.tag, .asset.browser_download_url, (.asset.digest // "")]
+        | @tsv
+      ')
+      IFS=$'\t' read -r _t3code_tag _t3code_url _t3code_digest <<< "$_t3code_asset"
+
+      if [ -n "$_t3code_url" ] && \
+         { [ ! -x "$_t3code_app" ] || [ ! -f "$_t3code_url_file" ] || \
+           [ "$(<"$_t3code_url_file")" != "$_t3code_url" ]; }; then
+        echo "t3code: installing $_t3code_tag..."
+        ${pkgs.coreutils}/bin/mkdir -p "$_t3code_dir"
+        _t3code_tmp=$(${pkgs.coreutils}/bin/mktemp "$_t3code_dir/.download-XXXXXX.AppImage")
+        if ${pkgs.curl}/bin/curl -fL "$_t3code_url" -o "$_t3code_tmp"; then
+          _t3code_valid=true
+          if [[ $_t3code_digest == sha256:* ]]; then
+            _t3code_sha256="''${_t3code_digest#sha256:}"
+            printf '%s  %s\n' "$_t3code_sha256" "$_t3code_tmp" \
+              | ${pkgs.coreutils}/bin/sha256sum -c - >/dev/null || _t3code_valid=false
+          fi
+          if $_t3code_valid; then
+            ${pkgs.coreutils}/bin/chmod +x "$_t3code_tmp"
+            ${pkgs.coreutils}/bin/mv "$_t3code_tmp" "$_t3code_app"
+            printf '%s\n' "$_t3code_url" > "$_t3code_url_file"
+          else
+            echo "t3code: checksum verification failed" >&2
+            ${pkgs.coreutils}/bin/rm -f "$_t3code_tmp"
+          fi
+        else
+          echo "t3code: download failed" >&2
+          ${pkgs.coreutils}/bin/rm -f "$_t3code_tmp"
+        fi
+      fi
+    else
+      echo "t3code: failed to fetch GitHub releases" >&2
+    fi
+
+    if [ -x "$_t3code_app" ] && { [ ! -s "$_t3code_icon" ] || [ "$_t3code_app" -nt "$_t3code_icon" ]; }; then
+      _t3code_icon_tmp=$(${pkgs.coreutils}/bin/mktemp "$_t3code_dir/.icon-XXXXXX.png")
+      if ${pkgs.p7zip}/bin/7z x -so "$_t3code_app" \
+        usr/share/icons/hicolor/256x256/apps/t3code.png > "$_t3code_icon_tmp" && \
+        [ -s "$_t3code_icon_tmp" ]; then
+        ${pkgs.coreutils}/bin/mv "$_t3code_icon_tmp" "$_t3code_icon"
+      else
+        echo "t3code: failed to extract icon" >&2
+        ${pkgs.coreutils}/bin/rm -f "$_t3code_icon_tmp"
+      fi
+    fi
   '';
 
   home.activation.braveOrigin = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
