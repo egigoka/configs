@@ -835,10 +835,24 @@ fi
 if command -v kwriteconfig6 >/dev/null 2>&1; then
   for script_dir in "$CONFIGS_DIR"/kde-scripts/*/; do
     script_name=$(basename "$script_dir")
-    install_link "$CONFIGS_DIR/kde-scripts/$script_name" "$HOME/.local/share/kwin/scripts/$script_name"
+    if [ "$is_steamos" = true ]; then
+      rm -rf "$HOME/.local/share/kwin/scripts/$script_name"
+      mkdir -p "$HOME/.local/share/kwin/scripts"
+      cp -a "$CONFIGS_DIR/kde-scripts/$script_name" "$HOME/.local/share/kwin/scripts/$script_name"
+    else
+      install_link "$CONFIGS_DIR/kde-scripts/$script_name" "$HOME/.local/share/kwin/scripts/$script_name"
+    fi
     kwriteconfig6 --file kwinrc --group Plugins --key "${script_name}Enabled" true
   done
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key TileWindowTopHalf "Meta+Ctrl+Alt+Shift+W,none,Tile Window to Top Half"
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key TileWindowRightHalf "Meta+Ctrl+Alt+Shift+D,none,Tile Window to Right Half"
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key TileWindowBottomHalf "Meta+Ctrl+Alt+Shift+X,none,Tile Window to Bottom Half"
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key TileWindowLeftHalf "Meta+Ctrl+Alt+Shift+A,none,Tile Window to Left Half"
   kwriteconfig6 --file kglobalshortcutsrc --group kwin --key TileWindowMaximize "Meta+Ctrl+Alt+Shift+S,none,Maximize Window Without Toggling"
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key TileWindowTopRight "Meta+Ctrl+Alt+Shift+E,none,Tile Window to Upper Right Quadrant"
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key TileWindowTopLeft "Meta+Ctrl+Alt+Shift+Q,none,Tile Window to Upper Left Quadrant"
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key TileWindowBottomLeft "Meta+Ctrl+Alt+Shift+Z,none,Tile Window to Lower Left Quadrant"
+  kwriteconfig6 --file kglobalshortcutsrc --group kwin --key TileWindowBottomRight "Meta+Ctrl+Alt+Shift+C,none,Tile Window to Lower Right Quadrant"
   kwriteconfig6 --file kglobalshortcutsrc --group kwin --key "Window Maximize" "none,Meta+PgUp,Maximize Window"
   qdbus org.kde.KWin /KWin reconfigure 2>/dev/null
 fi
