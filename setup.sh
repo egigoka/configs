@@ -153,6 +153,16 @@ install_opencode_tools() {
     npm i -g opencode-ai@latest
   fi
 
+  local cua_driver_installer="$CONFIGS_DIR/install_scripts/install_cua_driver.sh"
+  local cua_driver_version
+  local cua_driver
+  cua_driver_version=$(bash "$cua_driver_installer" --version)
+  cua_driver=$(command -v cua-driver 2>/dev/null || printf '%s' "$HOME/.local/bin/cua-driver")
+  if [ ! -x "$cua_driver" ] || [ "$("$cua_driver" --version 2>/dev/null)" != "cua-driver $cua_driver_version" ]; then
+    bash "$cua_driver_installer"
+  fi
+  export PATH="$HOME/.local/bin:$PATH"
+
   npm install -g opencode-with-claude
   npm install -g opencode-claude-memory
   npx -y opencode-openai-multi-auth@latest

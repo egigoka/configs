@@ -252,6 +252,14 @@
     }
   },
   "mcp": {
+    "cua-driver": {
+      "type": "local",
+      "command": [
+        "cua-driver",
+        "mcp"
+      ],
+      "enabled": true
+    },
     "mobile-mcp": {
       "type": "local",
       "command": [
