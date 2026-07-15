@@ -105,10 +105,15 @@ install_link() {
 
 configure_codex_home() {
   local codex_home=$1
-  local skill agent
+  local skill agent legacy_ultragoogle
 
   install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$codex_home/AGENTS.md"
   install_link "$CONFIGS_DIR/codex/codex.toml" "$codex_home/config.toml"
+
+  legacy_ultragoogle="$codex_home/skills/ultragoogle"
+  if [ -L "$legacy_ultragoogle" ] && [ "$(readlink -- "$legacy_ultragoogle")" = "$CONFIGS_DIR/opencode/skills/ultragoogle" ]; then
+    rm -- "$legacy_ultragoogle"
+  fi
 
   for skill in \
     caveman \
@@ -118,7 +123,7 @@ configure_codex_home() {
     caveman-review \
     frontend-design \
     swiftui-expert-skill \
-    ultragoogle
+    ultrabrowser
   do
     install_link "$CONFIGS_DIR/opencode/skills/$skill" "$codex_home/skills/$skill"
   done
