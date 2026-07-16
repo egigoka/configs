@@ -84,6 +84,20 @@ let
         --suffix XDG_DATA_DIRS : "/usr/local/share:/usr/share"
     '';
   };
+  makemkvFixed = pkgs.makemkv.overrideAttrs (old: {
+    srcs = [
+      (pkgs.fetchurl {
+        url = "https://www.makemkv.com/download/old/makemkv-bin-${old.version}.tar.gz";
+        curlOptsList = [ "--http1.1" ];
+        hash = "sha256-we5yCukbJ2p8ib6GEUbFuTRjGDHo1sj0U0BkNXJOkr0=";
+      })
+      (pkgs.fetchurl {
+        url = "https://www.makemkv.com/download/old/makemkv-oss-${old.version}.tar.gz";
+        curlOptsList = [ "--http1.1" ];
+        hash = "sha256-vIuwhK46q81QPVu5PvwnPgRuT9RmPTmpg2zgwEf+6CM=";
+      })
+    ];
+  });
 in
 {
   home.username = username;
@@ -168,6 +182,8 @@ in
     heliumWithDebug
     qbittorrentThemed
     mkvtoolnix   # provides mkvmerge, mkvinfo, mkvextract, etc.
+    makemkvFixed # provides makemkvcon
+    lsdvd
     kdotool      # xdotool-like window control for KWin/Wayland
   ];
 

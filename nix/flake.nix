@@ -20,7 +20,11 @@
   outputs = { nixpkgs, home-manager, jovian-nixos, helium-browser, ... }:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system}.extend jovian-nixos.overlays.default;
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [ jovian-nixos.overlays.default ];
+      };
       envUsername = builtins.getEnv "USER";
       envHomeDirectory = builtins.getEnv "HOME";
       username = if envUsername != "" then envUsername else "deck";
