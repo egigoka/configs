@@ -247,10 +247,10 @@ if status is-interactive
     # keychain
     abbr --add macosunlockkeychain --position command security unlock-keychain
 
-    # Keep SSH key passphrases in memory only until macOS locks.
-    function ssh --wraps ssh --description "SSH and remember key passphrases until lock"
-      echo "ssh: remembering key passphrase until macOS locks; use ssh-once to avoid remembering it" >&2
-      command ssh -o AddKeysToAgent=yes -o UseKeychain=no $argv
+    # Save SSH key passphrases in the macOS Keychain.
+    function ssh --wraps ssh --description "SSH and save key passphrases in macOS Keychain"
+      echo "ssh: saving key passphrase in macOS Keychain; use ssh-once to avoid saving it" >&2
+      command ssh -o AddKeysToAgent=yes -o UseKeychain=yes $argv
     end
 
     function ssh-once --wraps ssh --description "SSH without remembering key passphrases"
