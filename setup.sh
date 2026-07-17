@@ -647,6 +647,25 @@ EOF
 
   bash "$CONFIGS_DIR/install_scripts/install_decky.sh" || true
 
+  # decky-launch-options runs inside Steam's environment, where PATH resolves
+  # bare `python` to Nix Python and crashes before the game starts.
+  dlo_run="$HOME/.dlo/run"
+  if [ -f "$dlo_run" ] && grep -qF '/decky-launch-options/run.py' "$dlo_run"; then
+    cat > "$dlo_run" <<'EOF'
+#!/bin/bash
+PYTHON=/usr/bin/python
+[ -x "$PYTHON" ] || PYTHON=/usr/bin/python3
+PLUGIN_RUN="$HOME/homebrew/plugins/decky-launch-options/run.py"
+
+if [ -x "$PYTHON" ] && [ -f "$PLUGIN_RUN" ]; then
+    "$PYTHON" "$PLUGIN_RUN" "$@"
+else
+    exec "$@"
+fi
+EOF
+    chmod +x "$dlo_run"
+  fi
+
   # KDiskMark disk benchmark: AppImage (not the sandboxed Flathub build, which
   # can't flush the OS cache -- see install_kdiskmark.sh for the why).
   sh "$CONFIGS_DIR/install_scripts/install_kdiskmark.sh" || true
