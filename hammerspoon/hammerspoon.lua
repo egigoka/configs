@@ -1,4 +1,5 @@
 local sshAgentSocket = os.getenv("HOME") .. "/.ssh/agent/fish-agent.sock"
+local unlockedSSHKeysDirectory = os.getenv("HOME") .. "/.ssh/.unlocked"
 
 function checkBluetoothResult(rc, stdout, stderr)
     if rc ~= 0 then
@@ -27,13 +28,31 @@ function forgetSSHKeys()
     t:start()
 end
 
+function removeUnlockedSSHKeys()
+    print("Removing temporary unlocked SSH keys")
+    local t = hs.task.new("/bin/rm", function(rc, stdout, stderr)
+        if rc ~= 0 then
+            print(string.format("Unexpected result removing unlocked SSH keys: rc=%d stderr=%s stdout=%s", rc, stderr, stdout))
+        end
+    end, {"-rf", unlockedSSHKeysDirectory})
+    t:start()
+end
+
+function cleanUpSSHKeys()
+    forgetSSHKeys()
+    removeUnlockedSSHKeys()
+end
+
 lidWatcher = hs.caffeinate.watcher.new(function(eventType)
     if (eventType == hs.caffeinate.watcher.screensDidSleep) then
         bluetooth("off")
+        cleanUpSSHKeys()
     elseif (eventType == hs.caffeinate.watcher.screensDidWake) then
         bluetooth("on")
     elseif (eventType == hs.caffeinate.watcher.screensDidLock) then
-        forgetSSHKeys()
+        cleanUpSSHKeys()
+    elseif (eventType == hs.caffeinate.watcher.systemWillPowerOff) then
+        cleanUpSSHKeys()
     end
 end)
 
