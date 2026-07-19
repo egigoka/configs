@@ -4,7 +4,7 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Hyper P -> IINA play/pause",
+                        "description": "Hyper P -> play/pause",
                         "manipulators": [
                             {
                                 "from": {
