@@ -143,12 +143,56 @@ configure_codex() {
   done
 }
 
+configure_rocketsim_agent() {
+  [ "$(uname -s)" = Darwin ] || return 0
+
+  local app=/Applications/RocketSim.app
+  local cli="$app/Contents/Helpers/rocketsim"
+  local skill="$app/Contents/Resources/Agent-Skill/rocketsim"
+
+  if [ ! -d "$app" ]; then
+    printf 'RocketSim not installed; get App Store app 1504940162 to enable iOS Simulator automation\n' >&2
+    return 0
+  fi
+  if [ ! -x "$cli" ] || [ ! -f "$skill/SKILL.md" ]; then
+    printf 'RocketSim CLI or Agent Skill missing from %s\n' "$app" >&2
+    return 1
+  fi
+
+  install_link "$cli" "$HOME/.local/bin/rocketsim"
+  install_link "$skill" "$HOME/.agents/skills/rocketsim"
+}
+
+configure_graphify_agent() {
+  local version=0.9.20
+  local wheel="https://github.com/Graphify-Labs/graphify/releases/download/v$version/graphifyy-$version-py3-none-any.whl"
+  local checksum=2e06d20ecfcd971812e73f26b7d7aef45d6cc2057139e33c66d15ba393e5319e
+  local graphify
+
+  if ! command -v uv >/dev/null 2>&1; then
+    printf 'uv not installed; skipping Graphify installation\n' >&2
+    return 0
+  fi
+
+  export PATH="$HOME/.local/bin:$PATH"
+  graphify=$(command -v graphify 2>/dev/null || printf '%s' "$HOME/.local/bin/graphify")
+  if [ ! -x "$graphify" ] || [ "$("$graphify" --version 2>/dev/null)" != "graphify $version" ]; then
+    uv tool install --force "graphifyy @ $wheel#sha256=$checksum" || return
+    graphify="$HOME/.local/bin/graphify"
+  fi
+
+  "$graphify" install --platform agents
+}
+
 if [ "${1:-}" = "--codex-only" ]; then
   configure_codex
   exit 0
 fi
 
 install_opencode_tools() {
+  configure_rocketsim_agent
+  configure_graphify_agent
+
   if ! command -v opencode >/dev/null 2>&1; then
     npm i -g opencode-ai@latest
   fi

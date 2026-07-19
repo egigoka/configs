@@ -259,18 +259,6 @@
         "mcp"
       ],
       "enabled": true
-    },
-    "mobile-mcp": {
-      "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@mobilenext/mobile-mcp@latest"
-      ],
-      "enabled": true,
-      "environment": {
-        "MOBILEMCP_DISABLE_TELEMETRY": "1"
-      }
     }
   },
   "experimental": {
@@ -302,6 +290,7 @@
       "false": "allow",
       "file": "allow",
       "find": "allow",
+      "graphify *": "allow",
       "git status": "allow",
       "rg": "allow",
       "ripgrep": "allow",
@@ -313,6 +302,7 @@
       "python3 -m py_compile": "allow",
       "pwd": "allow",
       "realpath": "allow",
+      "rocketsim *": "allow",
       "true": "allow",
       "uname": "allow",
       "wc": "allow",
