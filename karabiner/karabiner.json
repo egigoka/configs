@@ -4,14 +4,14 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Command (Super) + P - IINA cycle pause",
+                        "description": "Hyper P -> IINA play/pause",
                         "manipulators": [
                             {
                                 "from": {
                                     "key_code": "p",
-                                    "modifiers": { "mandatory": ["command"] }
+                                    "modifiers": { "mandatory": ["left_command", "left_control", "left_option", "left_shift"] }
                                 },
-                                "to": [{ "shell_command": "osascript -e 'tell application \"IINA\" to playpause'" }],
+                                "to": [{ "consumer_key_code": "play_or_pause" }],
                                 "type": "basic"
                             }
                         ]
