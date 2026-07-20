@@ -132,6 +132,8 @@ in
     xdelta        # xdelta3 binary
     deno
     nodejs        # provides node/npm/npx
+    android-studio
+    android-tools # provides adb for mobile-mcp
     rustup        
     gcc           
     clang-tools   # provides clang-format

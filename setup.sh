@@ -9,6 +9,8 @@ source "$CONFIGS_DIR/install_scripts/epm.sh"
 
 if [ "$(uname -s)" = Darwin ]; then
   OPENCODE_CONFIG_DIR="$CONFIGS_DIR/opencode-macos"
+elif grep -q '^ID=steamos$' /etc/os-release 2>/dev/null; then
+  OPENCODE_CONFIG_DIR="$CONFIGS_DIR/opencode-steamos"
 else
   OPENCODE_CONFIG_DIR="$CONFIGS_DIR/opencode-other"
 fi
@@ -372,6 +374,8 @@ if [ "$is_steamos" = true ]; then
   fi
 
   export NIX_CONFIG="experimental-features = nix-command flakes"
+  export NIXPKGS_ALLOW_UNFREE=1
+  install_link "$CONFIGS_DIR/nix/nixpkgs-config.nix" "$HOME/.config/nixpkgs/config.nix"
 
   # Restore Nix build users if SteamOS removed them from /etc/group/passwd.
   if ! getent group nixbld >/dev/null 2>&1; then
@@ -433,6 +437,12 @@ NIXUNIT
 
   source_nix
   fish -c "fish_add_path -g ~/.nix-profile/bin ~/.local/state/nix/profile/bin /nix/var/nix/profiles/default/bin" 2>/dev/null
+  fish -c "set -Ux NIXPKGS_ALLOW_UNFREE 1"
+  android_studio_version=$(nix eval --impure --raw "$CONFIGS_DIR/nix#homeConfigurations.default.pkgs.android-studio.version")
+  android_studio_config_version=$(printf '%s' "$android_studio_version" | cut -d. -f1,2)
+  install_link \
+    "$CONFIGS_DIR/opencode-steamos/android-studio/mcpServer.xml" \
+    "$HOME/.config/Google/AndroidStudio$android_studio_config_version/options/mcpServer.xml"
 
   # sponge: only purge history on shell exit (not after each command)
   fish -c "set -Ux sponge_purge_only_on_exit true"
