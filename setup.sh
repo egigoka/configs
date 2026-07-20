@@ -675,30 +675,98 @@ EOF
     fi
   fi
 
-  if [ "$(id -u)" -eq 0 ]; then
-    wg_key="$CONFIGS_DIR/wireguard/wg4.key"
-    wg_tmpl="$CONFIGS_DIR/wireguard/wg4.conf"
-    wg_dest="/etc/wireguard/wg4.conf"
-    if [ -f "$wg_key" ] && [ -f "$wg_tmpl" ]; then
-      wg_conf=$(sed "s|__PRIVATE_KEY__|$(cat "$wg_key")|" "$wg_tmpl")
-      need_conf=false; [ "$wg_conf" != "$(cat "$wg_dest" 2>/dev/null)" ] && need_conf=true
-      need_enable=false; systemctl is-enabled wg-quick@wg4 >/dev/null 2>&1 || need_enable=true
-      if [ "$need_conf" = true ] || [ "$need_enable" = true ]; then
-        ro=$(steamos-readonly status 2>/dev/null)
-        [ "$ro" = enabled ] && steamos-readonly disable
-        if [ "$need_conf" = true ]; then
-          mkdir -p /etc/wireguard
-          printf '%s\n' "$wg_conf" > "$wg_dest"
-          chmod 600 "$wg_dest"
-          echo "Installed $wg_dest (wireguard wg4)"
+  if sudo -v; then
+    for wg_interface in wg1 wg4; do
+      wg_key="$CONFIGS_DIR/wireguard/$wg_interface.key"
+      wg_tmpl="$CONFIGS_DIR/wireguard/$wg_interface.conf"
+      wg_dest="/etc/wireguard/$wg_interface.conf"
+      if [ -f "$wg_key" ] && [ -f "$wg_tmpl" ]; then
+        wg_conf=$(sed "s|__PRIVATE_KEY__|$(cat "$wg_key")|" "$wg_tmpl")
+        need_conf=false; [ "$wg_conf" != "$(sudo cat "$wg_dest" 2>/dev/null)" ] && need_conf=true
+        need_enable=false; systemctl is-enabled "wg-quick@$wg_interface" >/dev/null 2>&1 || need_enable=true
+        if [ "$need_conf" = true ] || [ "$need_enable" = true ]; then
+          ro=$(steamos-readonly status 2>/dev/null)
+          [ "$ro" = enabled ] && sudo steamos-readonly disable
+          if [ "$need_conf" = true ]; then
+            sudo mkdir -p /etc/wireguard
+            printf '%s\n' "$wg_conf" | sudo tee "$wg_dest" >/dev/null
+            sudo chmod 600 "$wg_dest"
+            echo "Installed $wg_dest (wireguard $wg_interface)"
+          fi
+          if [ "$need_enable" = true ]; then
+            sudo systemctl enable "wg-quick@$wg_interface" >/dev/null 2>&1 && echo "Enabled wg-quick@$wg_interface"
+          fi
+          [ "$ro" = enabled ] && sudo steamos-readonly enable
         fi
-        if [ "$need_enable" = true ]; then
-          systemctl enable wg-quick@wg4 >/dev/null 2>&1 && echo "Enabled wg-quick@wg4"
-        fi
-        [ "$ro" = enabled ] && steamos-readonly enable
+      else
+        echo "WireGuard: $wg_key missing; skipping $wg_interface (private key not on this machine)." >&2
       fi
-    else
-      echo "WireGuard: $wg_key missing; skipping wg4 (private key not on this machine)." >&2
+    done
+
+    wg_watchdog_interfaces=()
+    for wg_interface in wg1 wg4; do
+      [ -f "/etc/wireguard/$wg_interface.conf" ] \
+        && wg_watchdog_interfaces+=("$wg_interface")
+    done
+    if [ "${#wg_watchdog_interfaces[@]}" -gt 0 ]; then
+      wg_watchdog_service=/etc/systemd/system/wireguard-watchdog@.service
+      wg_watchdog_timer=/etc/systemd/system/wireguard-watchdog@.timer
+      wg_watchdog_service_tmp=$(mktemp)
+      wg_watchdog_timer_tmp=$(mktemp)
+      cat > "$wg_watchdog_service_tmp" <<'EOF'
+[Unit]
+Description=Restart WireGuard %i when 10.0.0.1 is unreachable
+After=network-online.target wg-quick@%i.service
+Wants=network-online.target
+ConditionPathExists=/etc/wireguard/%i.conf
+
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c 'if ! /usr/bin/ping -I %i -c 3 -W 2 10.0.0.1 >/dev/null 2>&1; then echo "WireGuard watchdog: 10.0.0.1 unreachable; restarting %i"; /usr/bin/systemctl restart wg-quick@%i.service; fi'
+EOF
+      cat > "$wg_watchdog_timer_tmp" <<'EOF'
+[Unit]
+Description=Check WireGuard %i every five minutes
+
+[Timer]
+OnBootSec=5min
+OnUnitInactiveSec=5min
+Unit=wireguard-watchdog@%i.service
+
+[Install]
+WantedBy=timers.target
+EOF
+
+      wg_watchdog_changed=false
+      wg_watchdog_enable=false
+      cmp -s "$wg_watchdog_service_tmp" "$wg_watchdog_service" \
+        || wg_watchdog_changed=true
+      cmp -s "$wg_watchdog_timer_tmp" "$wg_watchdog_timer" \
+        || wg_watchdog_changed=true
+      for wg_interface in "${wg_watchdog_interfaces[@]}"; do
+        systemctl is-enabled "wireguard-watchdog@$wg_interface.timer" >/dev/null 2>&1 \
+          || wg_watchdog_enable=true
+      done
+
+      if [ "$wg_watchdog_changed" = true ] || [ "$wg_watchdog_enable" = true ]; then
+        ro=$(steamos-readonly status 2>/dev/null)
+        [ "$ro" = enabled ] && sudo steamos-readonly disable
+        sudo install -m 0644 "$wg_watchdog_service_tmp" "$wg_watchdog_service"
+        sudo install -m 0644 "$wg_watchdog_timer_tmp" "$wg_watchdog_timer"
+        sudo systemctl daemon-reload
+        for wg_interface in "${wg_watchdog_interfaces[@]}"; do
+          sudo systemctl enable "wireguard-watchdog@$wg_interface.timer" >/dev/null 2>&1
+          sudo systemctl restart "wireguard-watchdog@$wg_interface.timer"
+        done
+        [ "$ro" = enabled ] && sudo steamos-readonly enable
+        echo "Enabled WireGuard watchdog for ${wg_watchdog_interfaces[*]} (10.0.0.1 every five minutes)"
+      else
+        for wg_interface in "${wg_watchdog_interfaces[@]}"; do
+          systemctl is-active "wireguard-watchdog@$wg_interface.timer" >/dev/null 2>&1 \
+            || sudo systemctl start "wireguard-watchdog@$wg_interface.timer"
+        done
+      fi
+      rm -f "$wg_watchdog_service_tmp" "$wg_watchdog_timer_tmp"
     fi
   fi
 
