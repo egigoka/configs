@@ -190,6 +190,19 @@ configure_graphify_agent() {
   "$graphify" install --platform agents
 }
 
+install_macos_android_tools() {
+  [ "$(uname -s)" = Darwin ] || return 0
+
+  install_if_missing android-studio
+  install_if_missing android-platform-tools
+
+  if command -v adb >/dev/null 2>&1; then
+    printf 'Android Studio tooling ready; Mobile MCP uses ADB for Android devices\n'
+  else
+    printf 'adb not found; Android Mobile MCP device control will be unavailable\n' >&2
+  fi
+}
+
 install_macos_mobile_mcp_tools() {
   [ "$(uname -s)" = Darwin ] || return 0
 
@@ -219,6 +232,7 @@ install_opencode_tools() {
     npm i -g opencode-ai@latest
   fi
 
+  install_macos_android_tools
   install_macos_mobile_mcp_tools
 
   local cua_driver_installer="$CONFIGS_DIR/install_scripts/install_cua_driver.sh"
