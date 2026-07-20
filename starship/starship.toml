@@ -30,49 +30,9 @@ $git_state\
 $git_metrics\
 $git_status\
 $hg_branch\
+$hg_state\
 $pijul_channel\
 $docker_context\
-$cobol\
-$daml\
-$dart\
-$elixir\
-$elm\
-$erlang\
-$fennel\
-$gleam\
-$guix_shell\
-$haskell\
-$haxe\
-$helm\
-$java\
-$julia\
-$kotlin\
-$gradle\
-$lua\
-$nim\
-$ocaml\
-$opa\
-$perl\
-$php\
-$pulumi\
-$purescript\
-$quarto\
-$raku\
-$rlang\
-$red\
-$ruby\
-$scala\
-$solidity\
-$terraform\
-$typst\
-$vlang\
-$vagrant\
-$zig\
-$buf\
-$nix_shell\
-$conda\
-$meson\
-$spack\
 $memory_usage\
 $aws\
 $gcloud\
@@ -82,7 +42,6 @@ $nats\
 $direnv\
 $env_var\
 $mise\
-$crystal\
 $sudo\
 $time\
 [](bg:black fg:white)\
@@ -108,16 +67,66 @@ $status\
 
 right_format = """\
 $battery\
-$python\
-$nodejs\
-$swift\
-$rust\
 $package\
-$cmake\
-$dotnet\
-$deno\
-$golang\
+$bun\
 $c\
+$cmake\
+$cobol\
+$cpp\
+$crystal\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$fortran\
+$gleam\
+$golang\
+$gradle\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$lua\
+$maven\
+$meson\
+$mojo\
+$nim\
+$nix_shell\
+$nodejs\
+$ocaml\
+$odin\
+$opa\
+$perl\
+$php\
+$pixi\
+$pulumi\
+$purescript\
+$python\
+$quarto\
+$raku\
+$red\
+$rlang\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$spack\
+$swift\
+$terraform\
+$typst\
+$vagrant\
+$vlang\
+$xmake\
+$zig\
+$buf\
+$conda\
 """
 
 [cmd_duration]
@@ -126,6 +135,7 @@ style='bg:black fg:white'
 
 [status]
 disabled=false
+symbol=' '
 format='[$symbol$status]($style)'
 style='bg:black fg:white'
 
@@ -136,7 +146,7 @@ style_root='bg:black fg:red'
 format='[$user]($style)'
 
 [hostname]
-ssh_symbol='🌐'
+ssh_symbol=''
 style='bold bg:black fg:green'
 format='[$ssh_symbol$hostname]($style)'
 
@@ -163,6 +173,7 @@ style='bg:black fg:white'
 
 [git_commit]
 only_detached=true
+tag_symbol='  '
 format='[$hash]($style)'
 style='bg:black fg:white'
 
@@ -214,6 +225,41 @@ Redhat = "󱄛"
 RedHatEnterprise = "󱄛"
 Pop = ""
 NixOS = ""
+AIX = ""
+AlmaLinux = ""
+Alpaquita = ""
+ALTLinux = ""
+AOSC = ""
+Bluefin = ""
+CachyOS = ""
+DragonFly = ""
+Elementary = ""
+Emscripten = ""
+FreeBSD = ""
+Garuda = ""
+HardenedBSD = "󰞌"
+Illumos = ""
+InstantOS = ""
+Ios = "󰀷"
+Kali = ""
+Mabox = ""
+Mariner = ""
+MidnightBSD = ""
+NetBSD = ""
+Nobara = ""
+OpenBSD = ""
+OpenCloudOS = ""
+openEuler = ""
+OracleLinux = "󰺡"
+PikaOS = ""
+Redox = "󰀘"
+RockyLinux = ""
+Solus = ""
+Ultramarine = ""
+Unknown = ""
+Uos = ""
+Void = ""
+Zorin = ""
 
 [jobs]
 style = 'bg:black fg:white'
@@ -253,7 +299,7 @@ format = '[$symbol($version)]($style)'
 [dotnet]
 symbol = ''
 style = 'bg:black fg:white'
-format = '[$symbol($version)(󰓾$tfm)]($style)'
+format = '[$symbol($version)(󰓾$tfm)]($style)'
 
 [deno]
 symbol = ''
@@ -273,6 +319,11 @@ format = '[$symbol($version(-$name) )]($style)'
 version_format = '${raw}'
 
 [battery]
+full_symbol = '󰁹 '
+charging_symbol = '󰂄 '
+discharging_symbol = '󰂃 '
+unknown_symbol = '󰂑 '
+empty_symbol = '󰂎 '
 format ='[$symbol$percentage]($style)'
 [[battery.display]]
 threshold = 10
@@ -283,6 +334,302 @@ style = 'bold bg:black fg:yellow'
 [[battery.display]]
 threshold = 100
 style = 'bold bg:black fg:green'
+
+# Nerd Font symbols and module-specific styling.
+[aws]
+symbol = ' '
+
+[azure]
+symbol = ' '
+
+[buf]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[bun]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[cpp]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version(-$name))]($style)'
+
+[cobol]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[conda]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol$environment]($style)'
+
+[crystal]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[daml]
+symbol = 'Λ'
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[dart]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[direnv]
+symbol = ' '
+
+[elixir]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version \(OTP $otp_version\))]($style)'
+
+[elm]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[erlang]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[fennel]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[fortran]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version(-$name))]($style)'
+
+[fossil_branch]
+symbol = ' '
+
+[gcloud]
+symbol = '󱇶 '
+
+[gleam]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[gradle]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[guix_shell]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol]($style)'
+
+[haskell]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[haxe]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[helm]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[hg_branch]
+symbol = ' '
+
+[java]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[julia]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[kotlin]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[kubernetes]
+symbol = '󱃾 '
+
+[lua]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[maven]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[memory_usage]
+symbol = '󰍛 '
+
+[meson]
+symbol = '󰔷'
+style = 'bg:black fg:white'
+format = '[$symbol$project]($style)'
+
+[mojo]
+symbol = '󰈸'
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[nats]
+symbol = ' '
+
+[netns]
+symbol = '󰛳 '
+
+[nim]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[nix_shell]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol$state( \($name\))]($style)'
+
+[ocaml]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)(\($switch_indicator$switch_name\))]($style)'
+
+[odin]
+symbol = '󰟢'
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[opa]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[openstack]
+symbol = ' '
+
+[perl]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[php]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[pijul_channel]
+symbol = ' '
+
+[pixi]
+symbol = '󰏗'
+style = 'bg:black fg:white'
+format = '[$symbol($version)(\($environment\))]($style)'
+
+[pulumi]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($username@)$stack]($style)'
+
+[purescript]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[quarto]
+symbol = '⨁'
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[raku]
+symbol = '󱖊'
+style = 'bg:black fg:white'
+format = '[$symbol($version-$vm_version)]($style)'
+
+[red]
+symbol = '󱍼'
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[rlang]
+symbol = '󰟔'
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[ruby]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[scala]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[shlvl]
+symbol = '󰹍 '
+
+[singularity]
+symbol = ' '
+
+[solidity]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[spack]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol$environment]($style)'
+
+[sudo]
+symbol = ' '
+
+[terraform]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol$workspace]($style)'
+
+[typst]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[vagrant]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[vlang]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[xmake]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
+
+[zig]
+symbol = ''
+style = 'bg:black fg:white'
+format = '[$symbol($version)]($style)'
 
 [custom.load]
 command = "awk '{print $2}' /proc/loadavg 2>/dev/null || sysctl -n vm.loadavg | awk '{print $2}'"
