@@ -7,6 +7,12 @@ product_name=$(cat /sys/class/dmi/id/product_name 2>/dev/null)
 CONFIGS_DIR="$(cd "$(dirname "$0")" && pwd)"
 source "$CONFIGS_DIR/install_scripts/epm.sh"
 
+if [ "$(uname -s)" = Darwin ]; then
+  OPENCODE_CONFIG_DIR="$CONFIGS_DIR/opencode-macos"
+else
+  OPENCODE_CONFIG_DIR="$CONFIGS_DIR/opencode-other"
+fi
+
 USER="$(whoami)"
 
 # UTF-8 locale for this script and every child it spawns. Nix-built Qt tools
@@ -125,7 +131,7 @@ configure_codex_home() {
     swiftui-expert-skill \
     ultrabrowser
   do
-    install_link "$CONFIGS_DIR/opencode/skills/$skill" "$codex_home/skills/$skill"
+    install_link "$OPENCODE_CONFIG_DIR/skills/$skill" "$codex_home/skills/$skill"
   done
 
   install_link "$CONFIGS_DIR/codex/skills/cavecrew" "$codex_home/skills/cavecrew"
@@ -184,6 +190,20 @@ configure_graphify_agent() {
   "$graphify" install --platform agents
 }
 
+install_macos_mobile_mcp_tools() {
+  [ "$(uname -s)" = Darwin ] || return 0
+
+  if command -v xcrun >/dev/null 2>&1 && xcrun --find mcpbridge >/dev/null 2>&1; then
+    printf 'Xcode MCP ready; enable Xcode > Settings > Intelligence > Allow external agents to use Xcode tools\n'
+  else
+    printf 'Xcode 26.3+ with mcpbridge not found; Xcode MCP will be unavailable\n' >&2
+  fi
+
+  npm install -g \
+    "@mobilenext/mobile-mcp@latest" \
+    "xcodebuildmcp@latest"
+}
+
 if [ "${1:-}" = "--codex-only" ]; then
   configure_codex
   exit 0
@@ -193,9 +213,13 @@ install_opencode_tools() {
   configure_rocketsim_agent
   configure_graphify_agent
 
+  install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/opencode"
+
   if ! command -v opencode >/dev/null 2>&1; then
     npm i -g opencode-ai@latest
   fi
+
+  install_macos_mobile_mcp_tools
 
   local cua_driver_installer="$CONFIGS_DIR/install_scripts/install_cua_driver.sh"
   local cua_driver_version
@@ -207,22 +231,18 @@ install_opencode_tools() {
   fi
   export PATH="$HOME/.local/bin:$PATH"
 
-  npm install -g opencode-with-claude
-  npm install -g opencode-claude-memory
-  npx -y opencode-openai-multi-auth@latest
+  # Claude Code subscription integration remains disabled. Restore from either
+  # config's claude-integration.json.bak before uncommenting this command.
+  # npm install -g opencode-with-claude
 
-  if command -v opencode-memory >/dev/null 2>&1; then
-    opencode-memory install
-    return 0
+  npm install -g opencode-claude-memory@1.7.2
+  local opencode_memory
+  opencode_memory=$(command -v opencode-memory 2>/dev/null || printf '%s' "$(npm prefix -g)/bin/opencode-memory")
+  if [ -x "$opencode_memory" ]; then
+    "$opencode_memory" install
   fi
 
-  local npm_prefix
-  npm_prefix=$(npm prefix -g 2>/dev/null || true)
-  if [ -n "$npm_prefix" ] && [ -x "$npm_prefix/bin/opencode-memory" ]; then
-    "$npm_prefix/bin/opencode-memory" install
-  else
-    echo "opencode-memory installed but not on PATH; skipping shell hook install" >&2
-  fi
+  npx -y opencode-openai-multi-auth@5.0.6
 }
 
 install_usage_tui() {
@@ -878,13 +898,13 @@ if [ "$(uname -s)" = "Darwin" ]; then
 fi
 
 # opencode
-bash "$CONFIGS_DIR/install_scripts/update_caveman.sh"
-bash "$CONFIGS_DIR/install_scripts/update_ponytail.sh"
-bash "$CONFIGS_DIR/install_scripts/update_frontend_design_skill.sh"
-bash "$CONFIGS_DIR/install_scripts/update_swiftui_expert_skill.sh"
-install_link "$CONFIGS_DIR/opencode/kv.json" "$HOME/.local/state/opencode/kv.json"
-install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$CONFIGS_DIR/opencode/AGENTS.md"
-install_link "$CONFIGS_DIR/opencode" "$HOME/.config/opencode"
+bash "$CONFIGS_DIR/install_scripts/update_caveman.sh" "$OPENCODE_CONFIG_DIR"
+bash "$CONFIGS_DIR/install_scripts/update_ponytail.sh" "$OPENCODE_CONFIG_DIR"
+bash "$CONFIGS_DIR/install_scripts/update_frontend_design_skill.sh" "$OPENCODE_CONFIG_DIR"
+bash "$CONFIGS_DIR/install_scripts/update_swiftui_expert_skill.sh" "$OPENCODE_CONFIG_DIR"
+install_link "$OPENCODE_CONFIG_DIR/kv.json" "$HOME/.local/state/opencode/kv.json"
+install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$OPENCODE_CONFIG_DIR/AGENTS.md"
+install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/opencode"
 
 # forgecode
 install_link "$CONFIGS_DIR/forgecode/permissions.yaml" "$HOME/.config/forge/permissions.yaml"

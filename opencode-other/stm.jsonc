@@ -1,0 +1,22 @@
+{
+  // Session memory plugin on/off
+  "enabled": true,
+
+  // Model used by the summarizer (provider/model)
+  "memoryModel": "opencode/minimax-m2.5-free",
+
+  // clean | active
+  "summarizerMode": "clean",
+
+  // Interval at which to inject memory summarization into chat (every N user turns)
+  "remindEveryN": 4,
+
+  // Max chars stored in session memory markdown
+  "maxMemoryLength": 10000,
+
+  // Directory for memory files, relative to project root
+  "memoryDir": ".claude/memory",
+
+  // Debug logging
+  "debug": false,
+}

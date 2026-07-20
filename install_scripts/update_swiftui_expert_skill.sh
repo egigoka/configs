@@ -4,7 +4,12 @@
 set -e
 
 CONFIGS_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-dst="$CONFIGS_DIR/opencode/skills/swiftui-expert-skill"
+if [ "$(uname -s)" = Darwin ]; then
+  default_opencode_dir="$CONFIGS_DIR/opencode-macos"
+else
+  default_opencode_dir="$CONFIGS_DIR/opencode-other"
+fi
+dst="${1:-$default_opencode_dir}/skills/swiftui-expert-skill"
 tmp="$(mktemp -d)"
 
 cleanup() {

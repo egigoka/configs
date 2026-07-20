@@ -4,7 +4,12 @@
 set -e
 
 CONFIGS_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-json="$CONFIGS_DIR/opencode/opencode.json"
+if [ "$(uname -s)" = Darwin ]; then
+  default_opencode_dir="$CONFIGS_DIR/opencode-macos"
+else
+  default_opencode_dir="$CONFIGS_DIR/opencode-other"
+fi
+json="${1:-$default_opencode_dir}/opencode.json"
 
 if ! command -v jq >/dev/null 2>&1; then
   echo "jq not found; skipping ponytail plugin check" >&2
