@@ -229,9 +229,44 @@ install_opencode_tools() {
   configure_graphify_agent
 
   install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/opencode"
+  install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/kilo"
+  install_link "$HOME/.local/share/opencode/auth.json" "$HOME/.local/share/kilo/auth.json"
 
   if ! command -v opencode >/dev/null 2>&1; then
     npm i -g opencode-ai@latest
+  fi
+
+  local kilo_cli_version=7.4.11
+  if ! command -v kilo >/dev/null 2>&1 || [ "$(kilo --version 2>/dev/null)" != "$kilo_cli_version" ]; then
+    npm install -g "@kilocode/cli@$kilo_cli_version"
+  fi
+
+  if [ "$(uname -s)" = Darwin ] && [ -x /Applications/VSCodium.app/Contents/Resources/app/bin/codium ]; then
+    local kilo_extension_version=7.4.13
+    local kilo_extension_platform kilo_extension_sha256 kilo_extension_url temp_dir vsix
+    case "$(uname -m)" in
+      arm64)
+        kilo_extension_platform=darwin-arm64
+        kilo_extension_sha256=13009b6267d541e6e5c0025dd86aa76436b64f742a7516fd74055b590987ec89
+        ;;
+      x86_64)
+        kilo_extension_platform=darwin-x64
+        kilo_extension_sha256=9bb27b6668dbe10e1fbfb8975bb195bd05251976298a39454f5358a3f704ac12
+        ;;
+    esac
+
+    if [ -n "${kilo_extension_platform:-}" ] && \
+      ! /Applications/VSCodium.app/Contents/Resources/app/bin/codium --list-extensions --show-versions | \
+        grep -qFx "kilocode.kilo-code@$kilo_extension_version"; then
+      kilo_extension_url="https://open-vsx.org/api/kilocode/kilo-code/$kilo_extension_platform/$kilo_extension_version/file/kilocode.kilo-code-$kilo_extension_version@$kilo_extension_platform.vsix"
+      temp_dir=$(mktemp -d -t kilo-code) || return
+      vsix="$temp_dir/kilo-code.vsix"
+      if curl --fail --location "$kilo_extension_url" --output "$vsix" && \
+        printf '%s  %s\n' "$kilo_extension_sha256" "$vsix" | shasum -a 256 --check; then
+        /Applications/VSCodium.app/Contents/Resources/app/bin/codium --install-extension "$vsix" --force
+      fi
+      rm -rf -- "$temp_dir"
+    fi
   fi
 
   install_macos_android_tools
@@ -997,6 +1032,7 @@ bash "$CONFIGS_DIR/install_scripts/update_swiftui_expert_skill.sh" "$OPENCODE_CO
 install_link "$OPENCODE_CONFIG_DIR/kv.json" "$HOME/.local/state/opencode/kv.json"
 install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$OPENCODE_CONFIG_DIR/AGENTS.md"
 install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/opencode"
+install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/kilo"
 
 # forgecode
 install_link "$CONFIGS_DIR/forgecode/permissions.yaml" "$HOME/.config/forge/permissions.yaml"

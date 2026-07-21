@@ -9,7 +9,8 @@
     "./plugins/caveman/plugin.js",
     "opencode-kilo-auth@latest",
     "@dietrichgeber/ponytail",
-    "opencode-openai-multi-auth"
+    "opencode-openai-multi-auth",
+    "opencode-openai-sub-switcher@latest"
   ],
   "provider": {
     "openai": {
@@ -284,7 +285,8 @@
     }
   },
   "experimental": {
-    "mcp_timeout": 120000
+    "mcp_timeout": 120000,
+    "openTelemetry": true
   },
   "permission": {
     "*": "ask",
@@ -329,7 +331,52 @@
       "uname": "allow",
       "wc": "allow",
       "whoami": "allow",
-      "which": "allow"
+      "which": "allow",
+      "kilo *": "allow",
+      "opencode *": "allow",
+      "which *": "allow",
+      "gh search code *": "allow",
+      "gh search issues *": "allow",
+      "gh pr view *": "allow",
+      "npm root *": "allow",
+      "gh api 'repos/Kilo-Org/kilocode/git/trees/main?recursive=1' *": "allow",
+      "git status *": "allow",
+      "npm view @kilocode/cli *": "allow",
+      "python3 *": "allow",
+      "git --no-pager *": "allow",
+      "git log *": "allow",
+      "bash *": "allow",
+      "jq *": "allow",
+      "git add *": "allow",
+      "git diff *": "allow",
+      "git commit *": "allow"
+    },
+    "external_directory": {
+      "/Users/egigoka/.config/opencode/*": "allow",
+      "/Users/egigoka/.config/kilo/*": "allow",
+      "/Users/egigoka/.local/share/*": "allow",
+      "/Users/egigoka/.npm-global/lib/node_modules/*": "allow"
+    },
+    "cua-driver_start_session": {
+      "*": "allow"
+    },
+    "cua-driver_launch_app": {
+      "*": "allow"
+    },
+    "cua-driver_list_windows": {
+      "*": "allow"
+    },
+    "cua-driver_page": {
+      "*": "allow"
+    },
+    "cua-driver_end_session": {
+      "*": "allow"
+    },
+    "compress": {
+      "*": "allow"
+    },
+    "task": {
+      "*": "allow"
     }
   }
 }
