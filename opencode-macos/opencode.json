@@ -349,7 +349,8 @@
       "jq *": "allow",
       "git add *": "allow",
       "git diff *": "allow",
-      "git commit *": "allow"
+      "git commit *": "allow",
+      "git push *": "allow"
     },
     "external_directory": {
       "/Users/egigoka/.config/opencode/*": "allow",
