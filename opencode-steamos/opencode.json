@@ -7,7 +7,6 @@
     "@tarquinen/opencode-dcp@latest",
     "@atonev/opencode-short-term-memory@latest",
     "./plugins/caveman/plugin.js",
-    "opencode-kilo-auth@latest",
     "@dietrichgeber/ponytail",
     "opencode-openai-multi-auth"
   ],
