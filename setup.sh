@@ -381,7 +381,6 @@ install_opencode_tools() {
     "$opencode_memory" install
   fi
 
-  npx -y opencode-openai-multi-auth@5.0.6
 }
 
 install_usage_tui() {
