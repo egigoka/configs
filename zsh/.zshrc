@@ -29,6 +29,8 @@
 	        }
 
 ### PATH
+	export BUN_INSTALL="$HOME/.bun"
+	contains $PATH "$BUN_INSTALL/bin" || export PATH="$BUN_INSTALL/bin:$PATH"
 	contains $PATH ~/bin || export PATH=$PATH:~/bin
 	contains $PATH ~/.npm-global/bin || export PATH=$PATH:~/.npm-global/bin
 	contains $PATH ~/go/bin/ || export PATH=$PATH:~/go/bin/

@@ -12,6 +12,8 @@ if status is-interactive
   end
 
   ### PATH
+  set -gx BUN_INSTALL ~/.bun
+  ensure_path $BUN_INSTALL/bin
   ensure_path ~/.npm-global/bin
   ensure_path ~/go/bin
   ensure_path ~/.cargo/bin
