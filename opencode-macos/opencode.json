@@ -9,8 +9,7 @@
     "@atonev/opencode-short-term-memory@latest",
     "./plugins/caveman/plugin.js",
     "@dietrichgeber/ponytail",
-    "opencode-openai-multi-auth",
-    "opencode-openai-sub-switcher@latest"
+    "opencode-openai-multi-auth"
   ],
   "provider": {
     "openai": {
