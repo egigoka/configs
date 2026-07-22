@@ -122,24 +122,27 @@ MAX_RETRIES = 2
 def call_claude(prompt: str) -> str:
     """Send a prompt to Claude.
 
-    Prefers the Anthropic SDK when ANTHROPIC_API_KEY is set; otherwise falls
-    back to the ``claude --print`` CLI (which handles desktop auth).
+    Prefers the Anthropic SDK when ANTHROPIC_API_KEY and CAVEMAN_MODEL are set;
+    otherwise falls back to the ``claude --print`` CLI (which handles desktop
+    auth and uses the session model).
 
     On Windows the CLI subprocess decoding defaults to the system codepage
     (cp1251 / cp1252) and crashes on UTF-8 output — see issue #152. Pinning
     ``encoding="utf-8"`` with ``errors="replace"`` matches the CLI's actual
     native I/O and prevents the UnicodeDecodeError before validation can
     report. Windows users with non-ASCII content can also set
-    ``ANTHROPIC_API_KEY`` to route through the SDK and skip the subprocess.
+    ``ANTHROPIC_API_KEY`` and ``CAVEMAN_MODEL`` to route through the SDK and
+    skip the subprocess.
     """
     api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if api_key:
+    model = os.environ.get("CAVEMAN_MODEL")
+    if api_key and model:
         try:
             import anthropic
 
             client = anthropic.Anthropic(api_key=api_key)
             msg = client.messages.create(
-                model=os.environ.get("CAVEMAN_MODEL", "claude-sonnet-4-5"),
+                model=model,
                 max_tokens=8192,
                 messages=[{"role": "user", "content": prompt}],
             )
