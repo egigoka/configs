@@ -118,6 +118,8 @@ opencode-*/AGENTS.md
 opencode-*/opencode.json.bak*
 opencode-*/.caveman-active
 opencode-*/openai-accounts.json
+opencode-*/codex-accounts.json
+opencode-*/codex-accounts.json.lock
 opencode-*/node_modules/
 opencode-*/package.json
 opencode-*/package-lock.json
