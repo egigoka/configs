@@ -98,55 +98,6 @@ let
       })
     ];
   });
-  tdarrNode = pkgs.tdarr-node.overrideAttrs (old: rec {
-    version = "2.84.01";
-    src = pkgs.fetchzip {
-      url = "https://storage.tdarr.io/versions/${version}/linux_x64/Tdarr_Node.zip";
-      hash = "sha256-SU4yGJSxe11vQoToSPmaL+u/nbAIFPWxik8jBnD/Vfk=";
-      stripRoot = false;
-    };
-    buildInputs = old.buildInputs ++ [ pkgs.openssl ];
-  });
-  tdarrCurrent = pkgs.tdarr.override { tdarr-node = tdarrNode; };
-  configureTdarrNode = pkgs.writeShellScript "configure-tdarr-node" ''
-    set -eu
-    _tdarr_dir="${homeDirectory}/.local/share/tdarr/node/configs"
-    _tdarr_config="$_tdarr_dir/Tdarr_Node_Config.json"
-    ${pkgs.coreutils}/bin/mkdir -p "$_tdarr_dir" "${homeDirectory}/.cache/tdarr"
-    _tdarr_tmp=$(${pkgs.coreutils}/bin/mktemp "$_tdarr_dir/.config-XXXXXX")
-
-    if [ -f "$_tdarr_config" ]; then
-      ${pkgs.jq}/bin/jq '
-        del(.handbrakePath, .ffmpegPath, .ffprobePath, .mkvpropeditPath)
-        + {
-            nodeName: "steamdeck",
-            serverURL: "http://192.168.1.97:8266",
-            serverIP: "192.168.1.97",
-            serverPort: "8266",
-            ccextractorPath: "${pkgs.ccextractor}/bin/ccextractor",
-            pathTranslators: [
-              { server: "/mnt/btr", node: "${homeDirectory}/btr" },
-              { server: "/temp", node: "${homeDirectory}/.cache/tdarr" }
-            ]
-          }
-      ' "$_tdarr_config" > "$_tdarr_tmp"
-    else
-      ${pkgs.jq}/bin/jq -n '{
-        nodeName: "steamdeck",
-        serverURL: "http://192.168.1.97:8266",
-        serverIP: "192.168.1.97",
-        serverPort: "8266",
-        ccextractorPath: "${pkgs.ccextractor}/bin/ccextractor",
-        pathTranslators: [
-          { server: "/mnt/btr", node: "${homeDirectory}/btr" },
-          { server: "/temp", node: "${homeDirectory}/.cache/tdarr" }
-        ]
-      }' > "$_tdarr_tmp"
-    fi
-
-    ${pkgs.coreutils}/bin/chmod 600 "$_tdarr_tmp"
-    ${pkgs.coreutils}/bin/mv "$_tdarr_tmp" "$_tdarr_config"
-  '';
 in
 {
   home.username = username;
@@ -178,8 +129,6 @@ in
     pstree        # used by fish SSH-detection in config.fish
     gping
     aria2
-    rclone
-    tdarrCurrent
     xdelta        # xdelta3 binary
     deno
     nodejs        # provides node/npm/npx
@@ -379,10 +328,6 @@ in
     command -v qdbus6 >/dev/null 2>&1 && qdbus6 org.kde.KWin /KWin reconfigure >/dev/null 2>&1 || true
   '';
 
-  home.activation.btrMountpoint = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ${pkgs.coreutils}/bin/mkdir -p "${homeDirectory}/btr"
-  '';
-
   home.activation.t3codeNightly = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     _t3code_dir="${homeDirectory}/.local/share/t3code"
     _t3code_app="${t3codeAppImage}"
@@ -560,43 +505,6 @@ in
       ExecStart = "${batteryPython}/bin/python ./battery.py ${batteryDevice}";
       Restart = "on-failure";
       RestartSec = 5;
-    };
-
-    Install.WantedBy = [ "default.target" ];
-  };
-
-  systemd.user.services.btr-smb = {
-    Unit = {
-      Description = "Mount btr SMB share";
-      After = [ "network-online.target" ];
-    };
-
-    Service = {
-      Type = "notify";
-      ExecStart = "${pkgs.rclone}/bin/rclone mount btr-smb:btr ${homeDirectory}/btr --config ${homeDirectory}/.config/rclone/rclone.conf --vfs-cache-mode writes --vfs-cache-max-size 100Gi --vfs-cache-max-age 24h --vfs-cache-min-free-space 10Gi";
-      ExecStop = "${pkgs.fuse3}/bin/fusermount3 -u ${homeDirectory}/btr";
-      Restart = "on-failure";
-      RestartSec = 5;
-    };
-
-    Install.WantedBy = [ "default.target" ];
-  };
-
-  systemd.user.services.tdarr-node = {
-    Unit = {
-      Description = "Tdarr transcode node";
-      Requires = [ "btr-smb.service" ];
-      After = [ "network-online.target" "btr-smb.service" ];
-    };
-
-    Service = {
-      ExecStartPre = [
-        "${pkgs.util-linux}/bin/mountpoint -q ${homeDirectory}/btr"
-        configureTdarrNode
-      ];
-      ExecStart = "${tdarrNode}/bin/tdarr-node";
-      Restart = "on-failure";
-      RestartSec = 10;
     };
 
     Install.WantedBy = [ "default.target" ];
