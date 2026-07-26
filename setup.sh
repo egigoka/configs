@@ -320,6 +320,9 @@ install_opencode_tools() {
   install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/kilo"
   install_link "$HOME/.local/share/opencode/auth.json" "$HOME/.local/share/kilo/auth.json"
 
+  bash "$CONFIGS_DIR/install_scripts/install_opencode.sh"
+  export PATH="$HOME/.local/bin:$PATH"
+
   if ! command -v opencode >/dev/null 2>&1; then
     npm i -g opencode-ai@latest
   fi
