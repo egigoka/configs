@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "subagent_depth": 3,
+  "subagent_depth": 2,
   "plugin": [
     "opencode-claude-memory",
     "opencode-throughput",
