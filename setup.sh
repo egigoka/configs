@@ -554,10 +554,10 @@ NIXUNIT
 
   echo "Installing console packages via home-manager..."
   if command -v home-manager >/dev/null 2>&1; then
-    home-manager switch --impure -b backup --flake "$CONFIGS_DIR/nix#default"
+    home-manager switch --refresh --impure -b backup --flake "$CONFIGS_DIR/nix#default"
   else
     nix run --extra-experimental-features "nix-command flakes" --refresh --impure \
-      home-manager/release-26.05 -- switch --impure -b backup --flake "$CONFIGS_DIR/nix#default"
+      home-manager/release-26.05 -- switch --refresh --impure -b backup --flake "$CONFIGS_DIR/nix#default"
   fi
 
   source_nix

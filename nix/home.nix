@@ -2,6 +2,14 @@
 
 let
   py = pkgs.python3Packages;
+  latestPkgs = import (builtins.fetchGit {
+    url = "https://github.com/NixOS/nixpkgs";
+    ref = "nixpkgs-unstable";
+    shallow = true;
+  }) {
+    system = pkgs.stdenv.hostPlatform.system;
+    config.allowUnfree = true;
+  };
   fetchLatestGitHub = repo: builtins.fetchGit {
     url = "https://github.com/egigoka/${repo}";
     ref = "master";
@@ -108,6 +116,14 @@ in
 
   programs.home-manager.enable = true;
 
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Breeze-Dark";
+      package = pkgs.kdePackages.breeze-gtk;
+    };
+  };
+
   # Keep this list in sync with the non-nix `install_if_missing` calls in setup.sh.
   home.packages = with pkgs; [
     fish          
@@ -176,6 +192,7 @@ in
     gnumake       
     nix-index     # provides `nix-locate` (find which pkg ships a file); `nix search` is built into nix
     google-authenticator  # wired into /etc/pam.d/sshd by setup.sh
+    latestPkgs.lutris
 
     curl-impersonate
     # Built from the egigoka fork. KWin is pointed at a versioned desktop file
