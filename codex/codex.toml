@@ -8,6 +8,7 @@ model_reasoning_effort = "xhigh"
 
 [features]
 multi_agent = true
+prevent_idle_sleep = true
 
 [agents]
 max_threads = 4
