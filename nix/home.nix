@@ -10,6 +10,33 @@ let
     system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
   };
+  latestLutrisUnwrapped = latestPkgs.lutris-unwrapped.overrideAttrs (old: {
+    patches = (old.patches or [ ]) ++ [
+      (pkgs.writeText "lutris-sanitize-game-env.patch" ''
+        diff --git a/lutris/monitored_command.py b/lutris/monitored_command.py
+        --- a/lutris/monitored_command.py
+        +++ b/lutris/monitored_command.py
+        @@ -150,5 +150,12 @@ class MonitoredCommand:
+             def get_child_environment(self):
+                 """Returns the calculated environment for the child process."""
+                 env = system.get_environment()
+        +        for variable in (
+        +            "GIO_EXTRA_MODULES",
+        +            "GI_TYPELIB_PATH",
+        +            "GDK_PIXBUF_MODULE_FILE",
+        +            "GST_PLUGIN_SYSTEM_PATH_1_0",
+        +        ):
+        +            env.pop(variable, None)
+                 env.update(self.env)
+                 return env
+      '')
+    ];
+  });
+  latestLutris = latestPkgs.lutris.override {
+    lutris-unwrapped = latestLutrisUnwrapped;
+    extraPkgs = pkgs: [ pkgs.mesa pkgs.procps pkgs.vulkan-tools ];
+    extraLibraries = pkgs: [ pkgs.mesa ];
+  };
   fetchLatestGitHub = repo: builtins.fetchGit {
     url = "https://github.com/egigoka/${repo}";
     ref = "master";
@@ -42,6 +69,29 @@ let
     src = fetchLatestGitHub "telegrame";
     build-system = with py; [ setuptools wheel ];
     dependencies = with py; [ pytelegrambotapi requests ];
+    doCheck = false;
+  };
+  pgsripPackage = py.buildPythonPackage rec {
+    pname = "pgsrip";
+    version = "0.1.12";
+    pyproject = true;
+    src = pkgs.fetchPypi {
+      inherit pname version;
+      hash = "sha256-m1+Qk/t+HUMLIwA+8IkjTEP3WKpFrZDoCvQ1No4xTKw=";
+    };
+    build-system = [ py.poetry-core ];
+    dependencies = with py; [
+      babelfish
+      cleanit
+      click
+      numpy
+      opencv4
+      pysrt
+      pytesseract
+      setuptools
+      trakit
+    ];
+    pythonRemoveDeps = [ "opencv-python" "setuptools" ];
     doCheck = false;
   };
   batteryPython = pkgs.python3.withPackages (_: [
@@ -192,7 +242,7 @@ in
     gnumake       
     nix-index     # provides `nix-locate` (find which pkg ships a file); `nix search` is built into nix
     google-authenticator  # wired into /etc/pam.d/sshd by setup.sh
-    latestPkgs.lutris
+    latestLutris
 
     curl-impersonate
     # Built from the egigoka fork. KWin is pointed at a versioned desktop file
@@ -202,6 +252,8 @@ in
     qbittorrentThemed
     mkvtoolnix   # provides mkvmerge, mkvinfo, mkvextract, etc.
     makemkvFixed # provides makemkvcon
+    pgsripPackage
+    tesseract5
     lsdvd
     kdotool      # xdotool-like window control for KWin/Wayland
   ];
