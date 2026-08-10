@@ -563,6 +563,13 @@ NIXUNIT
   source_nix
   fish -c "fish_add_path -g ~/.nix-profile/bin ~/.local/state/nix/profile/bin /nix/var/nix/profiles/default/bin" 2>/dev/null
   fish -c "set -Ux NIXPKGS_ALLOW_UNFREE 1"
+  mosh_server_wrapper="$HOME/.local/bin/mosh-server-systemd"
+  if [ -x "$mosh_server_wrapper" ]; then
+    ro=$(steamos-readonly status 2>/dev/null)
+    [ "$ro" = enabled ] && sudo steamos-readonly disable
+    sudo ln -sfn -- "$mosh_server_wrapper" /usr/local/bin/mosh-server
+    [ "$ro" = enabled ] && sudo steamos-readonly enable
+  fi
   android_studio_version=$(nix eval --impure --raw "$CONFIGS_DIR/nix#homeConfigurations.default.pkgs.android-studio.version")
   android_studio_config_version=$(printf '%s' "$android_studio_version" | cut -d. -f1,2)
   install_link \

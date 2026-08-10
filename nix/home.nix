@@ -193,6 +193,7 @@ in
     uv
     starship      
     pstree        # used by fish SSH-detection in config.fish
+    mosh
     gping
     aria2
     xdelta        # xdelta3 binary
@@ -243,6 +244,7 @@ in
     nix-index     # provides `nix-locate` (find which pkg ships a file); `nix search` is built into nix
     google-authenticator  # wired into /etc/pam.d/sshd by setup.sh
     latestLutris
+    waydroid
 
     curl-impersonate
     # Built from the egigoka fork. KWin is pointed at a versioned desktop file
@@ -270,6 +272,14 @@ in
     NoDisplay=false
     StartupNotify=true
   '';
+
+  home.file.".local/bin/mosh-server-systemd" = {
+    executable = true;
+    text = ''
+      #!${pkgs.runtimeShell}
+      exec ${pkgs.systemd}/bin/systemd-run --user --scope --quiet ${pkgs.mosh}/bin/mosh-server "$@"
+    '';
+  };
 
   home.file.".local/share/applications/t3code.desktop".text = ''
     [Desktop Entry]
