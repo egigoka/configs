@@ -11,16 +11,22 @@ else
 fi
 dst="${1:-$default_opencode_dir}/skills/swiftui-expert-skill"
 tmp="$(mktemp -d)"
+staged="$dst.update.$$"
 
 cleanup() {
   rm -rf "$tmp"
+  rm -rf "$staged"
 }
 trap cleanup EXIT
 
 git clone --depth=1 "https://github.com/AvdLee/SwiftUI-Agent-Skill" "$tmp/SwiftUI-Agent-Skill"
 
+rm -rf "$staged"
+cp -R "$tmp/SwiftUI-Agent-Skill/skills/swiftui-expert-skill" "$staged"
+cp "$tmp/SwiftUI-Agent-Skill/LICENSE" "$staged/LICENSE"
+[ -f "$staged/SKILL.md" ]
+
 rm -rf "$dst"
-cp -R "$tmp/SwiftUI-Agent-Skill/swiftui-expert-skill" "$dst"
-cp "$tmp/SwiftUI-Agent-Skill/LICENSE" "$dst/LICENSE"
+mv "$staged" "$dst"
 
 echo "swiftui-expert-skill opencode skill updated from upstream repo."

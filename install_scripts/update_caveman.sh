@@ -41,6 +41,10 @@ XDG_CONFIG_HOME="$tmp" \
 #   - AGENTS.md is a Tier-3 ruleset; we keep claude/CLAUDE.md as the
 #     AGENTS source (setup.sh symlinks it).
 #   - opencode.json.bak is an installer backup.
+#   - .caveman-opencode-* tracks installer ownership and rollback data, which
+#     is unnecessary for vendored files managed by Git.
 rm -f "$opencode_dir/AGENTS.md" "$opencode_dir/opencode.json.bak"
+rm -rf "$opencode_dir/.caveman-opencode-backups" \
+  "$opencode_dir/.caveman-opencode-ownership.json"
 
 echo "caveman opencode assets updated."
