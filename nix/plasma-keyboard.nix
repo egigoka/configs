@@ -33,13 +33,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "plasma-keyboard";
-  version = "6.7.80-unstable-f81003e.e13";
+  version = "6.7.80-unstable-5471085.e14";
 
   src = fetchFromGitHub {
     owner = "egigoka";
     repo = "plasma-keyboard";
-    rev = "f81003e4928169185ab408aad0a9aa95949dfd9f";
-    hash = "sha256-V7hQOB9kB8awUY3aivCBOqZA4yLwru5zEkbsEY5LEPw=";
+    rev = "54710856790d4cba7fff338fab75801ed46824c9";
+    hash = "sha256-kZB+iyggG3TCINp9M3hz6WHTI8tf6MV/axFqVtgMZ0o=";
   };
 
   nativeBuildInputs = [
