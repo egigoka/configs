@@ -131,3 +131,6 @@ opencode-*/bun.lock
 # opencode multiacc bs
 opencode-*/cache/
 opencode-*/openai-multi-auth-session-bindings.json
+
+# generated Graphify indexes
+graphify-out/

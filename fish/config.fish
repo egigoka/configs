@@ -521,3 +521,7 @@ if status is-interactive
 end
 
 test -e /Users/egigoka/.iterm2_shell_integration.fish ; and source /Users/egigoka/.iterm2_shell_integration.fish ; or true
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /Users/egigoka/.cache/lm-studio/bin
+# End of LM Studio CLI section
