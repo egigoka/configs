@@ -1,0 +1,7 @@
+repository: https://github.com/mattpocock/skills.git
+commit: 0ab1b63a410a03d3627979a109c8695de27af954
+path: skills/engineering/resolving-merge-conflicts
+source_tree_sha256: 504930268217fe6cf06cdca75f9e48dcd06485e6851136b6cf4394e28d43821e
+installed_content_sha256: 41f3fda433cc3345cdcaa7fbf2a9190225e418692e2bba46f662e4c250826682
+porter_sha256: 56ffbe794c2c3fd2670c433ce3346cc5ca94943da44c64672a880b19b4f8575f
+local_transforms: none
