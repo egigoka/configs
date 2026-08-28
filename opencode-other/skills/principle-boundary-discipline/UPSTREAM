@@ -1,5 +1,5 @@
 repository: https://github.com/cursor/plugins.git
-commit: 46125561306434d8a1d7745d540d8932ab0cd2a2
+commit: 397c8660da6d3d873a91e18c2ca2f22cac1f0ac1
 path: pstack/skills/principle-boundary-discipline
 source_tree_sha256: b3ab2f910396ae5212344a5b1de1b0cdb3c157fd659f99a40e9e613a93d66d1b
 installed_content_sha256: 7f7db8fbf859f9364f44e417e92b044838a73ca10ad16a5dbb50663ffe2dd5c6
