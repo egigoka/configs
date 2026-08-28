@@ -75,6 +75,37 @@ configure_caveman_session_models() {
   python3 "$SETUP_DIR/agents/configure_caveman.py" "$1"
 }
 
+install_opencode_memory_fork() {
+  local repo_url=https://github.com/egigoka/opencode-claude-memory.git
+  local checkout="$HOME/.local/share/opencode-claude-memory"
+  local origin_url
+
+  if [ -e "$checkout" ] && [ ! -d "$checkout/.git" ]; then
+    printf 'Refusing to replace non-git path: %s\n' "$checkout" >&2
+    return 1
+  fi
+
+  if [ ! -d "$checkout/.git" ]; then
+    mkdir -p -- "$(dirname -- "$checkout")" || return
+    git clone --filter=blob:none --single-branch --branch main "$repo_url" "$checkout" || return
+  else
+    origin_url=$(git -C "$checkout" remote get-url origin 2>/dev/null) || return
+    case "$origin_url" in
+      "$repo_url"|git@github.com:egigoka/opencode-claude-memory.git) ;;
+      *)
+        printf 'Unexpected opencode-memory origin at %s: %s\n' "$checkout" "$origin_url" >&2
+        return 1
+        ;;
+    esac
+  fi
+
+  git -C "$checkout" fetch --prune origin main || return
+  git -C "$checkout" checkout --detach --force origin/main || return
+  install_link "$checkout/bin/opencode-memory" "$HOME/.local/bin/opencode-memory" || return
+
+  "$HOME/.local/bin/opencode-memory" install
+}
+
 install_opencode_tools() {
   configure_rocketsim_agent
   configure_graphify_agent
@@ -140,11 +171,6 @@ install_opencode_tools() {
   # config's claude-integration.json.bak before uncommenting this command.
   # npm install -g opencode-with-claude
 
-  npm install -g opencode-claude-memory@1.7.2
-  local opencode_memory
-  opencode_memory=$(command -v opencode-memory 2>/dev/null || printf '%s' "$(npm prefix -g)/bin/opencode-memory")
-  if [ -x "$opencode_memory" ]; then
-    "$opencode_memory" install
-  fi
+  install_opencode_memory_fork || return
 
 }
