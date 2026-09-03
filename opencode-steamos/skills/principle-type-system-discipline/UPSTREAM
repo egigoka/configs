@@ -1,5 +1,5 @@
 repository: https://github.com/cursor/plugins.git
-commit: 46125561306434d8a1d7745d540d8932ab0cd2a2
+commit: 799151d91b6e12ee7dbd09f708eec108d7de9b3b
 path: pstack/skills/principle-type-system-discipline
 source_tree_sha256: 4766e5d779800108885d86f89ae9e79ae0dc6217eeb069859585b4f2502577f5
 installed_content_sha256: feca5300478794f1597b033798a0e6a0c3a2c0d70f397663c31016cf7055d75f

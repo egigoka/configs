@@ -1,6 +1,6 @@
 source: https://github.com/cursor/plugins/tree/main/pstack/skills/unslop
 repository: https://github.com/cursor/plugins.git
-commit: 46125561306434d8a1d7745d540d8932ab0cd2a2
+commit: 799151d91b6e12ee7dbd09f708eec108d7de9b3b
 skill_path: pstack/skills/unslop/SKILL.md
 skill_sha256: 181883e539caec8258ec9129e3ba5f133409144a2cbf2aa361158ab94cfc3441
 license_path: pstack/LICENSE
