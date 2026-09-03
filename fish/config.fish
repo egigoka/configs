@@ -196,6 +196,9 @@ if status is-interactive
 
   if command -q opencode-memory
     function opencode
+      # Prefer the newer standalone OpenCode build over the older Homebrew
+      # formula. opencode-memory resolves the real binary from PATH.
+      set -lx PATH $HOME/.local/bin $PATH
       command opencode-memory $argv
     end
   end

@@ -117,6 +117,7 @@ wireguard/
 opencode-*/AGENTS.md
 opencode-*/opencode.json.bak*
 opencode-*/.caveman-active
+opencode-*/.caveman-opencode-*
 opencode-*/openai-accounts.json
 opencode-*/codex-accounts.json
 opencode-*/codex-accounts.json.lock
