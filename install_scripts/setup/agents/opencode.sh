@@ -75,6 +75,43 @@ configure_caveman_session_models() {
   python3 "$SETUP_DIR/agents/configure_caveman.py" "$1"
 }
 
+install_opencode_codex_auth_fork() {
+  local repo_url=https://github.com/egigoka/opencode-codex-auth.git
+  local checkout="$HOME/.local/share/opencode-codex-auth"
+  local origin_url
+
+  if [ -e "$checkout" ] && [ ! -d "$checkout/.git" ]; then
+    printf 'Refusing to replace non-git path: %s\n' "$checkout" >&2
+    return 1
+  fi
+
+  if [ ! -d "$checkout/.git" ]; then
+    mkdir -p -- "$(dirname -- "$checkout")" || return
+    git clone --filter=blob:none --single-branch --branch main "$repo_url" "$checkout" || return
+  else
+    origin_url=$(git -C "$checkout" remote get-url origin 2>/dev/null) || return
+    case "$origin_url" in
+      "$repo_url"|git@github.com:egigoka/opencode-codex-auth.git) ;;
+      *)
+        printf 'Unexpected opencode-codex-auth origin at %s: %s\n' "$checkout" "$origin_url" >&2
+        return 1
+        ;;
+    esac
+  fi
+
+  git -C "$checkout" fetch --prune origin main || return
+  git -C "$checkout" checkout --detach --force origin/main || return
+  (
+    cd "$checkout" || exit
+    npm ci --no-audit --no-fund && npm run build
+  ) || return
+
+  if [ ! -f "$checkout/dist/index.js" ]; then
+    printf 'opencode-codex-auth build did not produce %s\n' "$checkout/dist/index.js" >&2
+    return 1
+  fi
+}
+
 install_opencode_memory_fork() {
   local repo_url=https://github.com/egigoka/opencode-claude-memory.git
   local checkout="$HOME/.local/share/opencode-claude-memory"
@@ -171,6 +208,7 @@ install_opencode_tools() {
   # config's claude-integration.json.bak before uncommenting this command.
   # npm install -g opencode-with-claude
 
+  install_opencode_codex_auth_fork || return
   install_opencode_memory_fork || return
 
 }

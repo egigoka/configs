@@ -3,6 +3,9 @@ model = "gpt-5.6-sol"
 model_reasoning_effort = "xhigh"
 model_auto_compact_token_limit = 100000
 
+notify = ["/Users/egigoka/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
+service_tier = "default"
+
 [notice.model_migrations]
 "gpt-5.2-codex" = "gpt-5.3-codex"
 "gpt-5.3-codex" = "gpt-5.4"
@@ -10,6 +13,7 @@ model_auto_compact_token_limit = 100000
 [features]
 multi_agent = true
 prevent_idle_sleep = true
+js_repl = false
 
 [agents]
 max_threads = 4
@@ -18,6 +22,85 @@ max_depth = 1
 [mcp_servers.openaiDeveloperDocs]
 url = "https://developers.openai.com/mcp"
 
+[mcp_servers.node_repl]
+args = []
+command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/egigoka/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+CODEX_HOME = "/Users/egigoka/.codex"
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome"
+BROWSER_USE_TINYSKY_ENABLED = "1"
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.831.21537"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/egigoka/.codex/plugins/cache/openai-bundled/browser/26.831.21537/scripts/browser-service.mjs"}'
+CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
+
 [tui.model_availability_nux]
 "gpt-5.5" = 4
 "gpt-5.6-sol" = 4
+gpt-6-astra = 2
+
+[desktop]
+followUpQueueMode = "queue"
+conversationDetailMode = "STEPS_COMMANDS"
+ambient-suggestions-enabled = true
+dock-icon-preference = "codex-system"
+
+[marketplaces.openai-bundled]
+source_type = "local"
+source = "/Users/egigoka/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.openai-primary-runtime]
+source_type = "local"
+source = "/Users/egigoka/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."unified-computer-use@openai-bundled"]
+enabled = true
+
+[hooks.state]
+
+[hooks.state."/Users/egigoka/.codex/hooks.json:pre_tool_use:0:0"]
+trusted_hash = "sha256:3febfc10ba45d8b3b95d8660f0274581251c2b5b181bf16de3eff014217a84df"
+enabled = false
+
+[hooks.state."/Users/egigoka/.codex/hooks.json:post_tool_use:0:0"]
+trusted_hash = "sha256:0fdf32177f055220338840ae07e2e1d685fc2faf46e7e45996722933d91a08aa"
+enabled = false
+
+[hooks.state."/Users/egigoka/.codex/hooks.json:user_prompt_submit:0:0"]
+trusted_hash = "sha256:ea3e6ec9d07c882a972f5b12f7944f1b59c795edbdec74234e9a5b98883c0669"
+enabled = false

@@ -1,9 +1,20 @@
 if status is-interactive
   # Commands to run in interactive sessions can go here
+  set -l _platform (uname -s)
+  set -l _uid (id -u)
+  if not set -q OSTYPE
+    switch $_platform
+      case Darwin
+        set -gx OSTYPE darwin
+      case Linux
+        set -gx OSTYPE linux
+    end
+  end
 
   # Detect SSH even under sudo -i (SSH_TTY/SSH_CONNECTION get cleared by sudo -i)
-  # Starship hostname checks SSH_CONNECTION, fish_title checks SSH_TTY
-  if not set -q SSH_TTY; and pstree -s %self 2>/dev/null | string match -q '*sshd*'
+  # Starship hostname checks SSH_CONNECTION, fish_title checks SSH_TTY.
+  # A local shell cannot be sudo -i over SSH, so avoid the process-tree walk there.
+  if not set -q SSH_TTY; and set -q SUDO_USER; and pstree -s $fish_pid 2>/dev/null | string match -q '*sshd*'
       set -l _ssh_tty (tty 2>/dev/null)
       if test -n "$_ssh_tty"
           set -gx SSH_TTY $_ssh_tty
@@ -112,7 +123,7 @@ if status is-interactive
   abbr --add btrremovesnapshot     --position command btrfs subvolume delete --commit-after
 
   # systemd / launchctl
-  if string match -q "Darwin*" -- (uname)
+  if test "$_platform" = Darwin
     abbr --add sc       --position command launchctl
     abbr --add sc+      --position command launchctl load
     abbr --add sc++     --position command launchctl load -w
@@ -194,7 +205,7 @@ if status is-interactive
   abbr --add codex2 --position command env CODEX_HOME=\$HOME/.codex-2 codex
   abbr --add codex3 --position command env CODEX_HOME=\$HOME/.codex-3 codex
 
-  if command -q opencode-memory
+  if test -x $HOME/.local/bin/opencode-memory
     function opencode
       # Prefer the newer standalone OpenCode build over the older Homebrew
       # formula. opencode-memory resolves the real binary from PATH.
@@ -234,7 +245,7 @@ if status is-interactive
   abbr --add bcrypt --position command mkpasswd --method=bcrypt
   
   # macosspecific
-  if string match -q "Darwin*" -- (uname)
+  if test "$_platform" = Darwin
     # networksetup
     abbr --add listnetworkinterfaces --position command networksetup -listnetworkserviceorder
     abbr --add setroutes        --position command sudo networksetup -setadditionalroutes # name from listnetworinterfaces, ip, mask, router; multiple routes should be set through use of space between
@@ -292,7 +303,7 @@ if status is-interactive
   end
 
   # sudo
-  if test (id -u) -eq 0
+  if test $_uid -eq 0
     # root
     abbr --add unmount --position command umount
     abbr --add iotop --position command sysctl kernel.task_delayacct=1 \&\& iotop \&\& sysctl kernel.task_delayacct=0
@@ -304,7 +315,7 @@ if status is-interactive
     abbr --add zypper --position command sudo zypper
     abbr --add snap --position command sudo snap
     abbr --add yast --position command sudo yast
-    if not string match -q "Darwin*" -- (uname)
+    if test "$_platform" != Darwin
       abbr --add reboot --position command sudo systemctl --force reboot
       abbr --add shutdown --position command sudo /usr/sbin/shutdown now
       abbr --add systemctl --position command sudo systemctl
@@ -323,7 +334,7 @@ if status is-interactive
   end
 
   # easy packet management
-  switch (uname -s)
+  switch $_platform
     case Linux
       # lunix
       if test -f /etc/os-release
@@ -366,7 +377,7 @@ if status is-interactive
       end
     case Darwin
       # mAcos
-      if test (id -u) -eq 0
+      if test $_uid -eq 0
         abbr --add updateall --position command sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh \&\& sudo port upgrade outdated \&\& sudo port uninstall inactive \&\& sudo port reclaim --enable-reminders
       else
         abbr --add updateall --position command brew update \&\& brew upgrade --greedy \&\& brew cleanup --prune=all \&\& sudo git -C /opt/macports-wine pull \&\& sudo port selfupdate \&\& sudo ~/configs/install_scripts/autopatch_qbittorrent_macports.sh \&\& sudo port upgrade outdated \&\& sudo port uninstall inactive \&\& sudo port reclaim --enable-reminders
@@ -421,9 +432,31 @@ if status is-interactive
     set -x EDITOR micro
   end
 
-  # dircolors
-  
-  eval (dircolors -c "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized/dircolors.ansi-light" | string collect)
+  # dircolors (generated output is stable until the binary or palette changes)
+  set -l _dircolors_source "$HOME/configs/zsh/ZSH_CUSTOM/dircolors-solarized/dircolors.ansi-light"
+  set -l _dircolors_name dircolors
+  if test "$_platform" = Darwin
+    set _dircolors_name gdircolors
+  end
+  set -l _dircolors_binary (command -s $_dircolors_name)
+  set -l _cache_base $XDG_CACHE_HOME
+  if test -z "$_cache_base"
+    set _cache_base "$HOME/.cache"
+  end
+  set -l _dircolors_term (string replace -ra '[^A-Za-z0-9._-]' '_' -- "$TERM")
+  set -l _dircolors_cache "$_cache_base/fish/generated-init/v1-dircolors-$_dircolors_term-$version.fish"
+  if test -n "$_dircolors_binary"; and test -f "$_dircolors_source"
+    if not test -s "$_dircolors_cache"; or test "$_dircolors_binary" -nt "$_dircolors_cache"; or test "$_dircolors_source" -nt "$_dircolors_cache"
+      command mkdir -p (dirname "$_dircolors_cache")
+      set -l _dircolors_temp (command mktemp "$_dircolors_cache.XXXXXX")
+      if command "$_dircolors_binary" -c "$_dircolors_source" >"$_dircolors_temp"
+        command mv -f "$_dircolors_temp" "$_dircolors_cache"
+      else
+        command rm -f "$_dircolors_temp"
+      end
+    end
+    test -s "$_dircolors_cache"; and source "$_dircolors_cache"
+  end
   # TODO: separate from zsh configs
 
   # pisces
@@ -475,9 +508,9 @@ if status is-interactive
   set -e LC_CTYPE
 
   ### SSH AGENT
-  if string match -q "Darwin*" -- (uname)
+  if test "$_platform" = Darwin
     set -l ssh_agent_dir "$HOME/.ssh/agent"
-    command mkdir -p -m 700 "$ssh_agent_dir"
+    test -d "$ssh_agent_dir"; or command mkdir -p -m 700 "$ssh_agent_dir"
     set -gx SSH_AUTH_SOCK "$ssh_agent_dir/fish-agent.sock"
 
     command ssh-add -l >/dev/null 2>&1
@@ -497,10 +530,10 @@ if status is-interactive
 
   ### EXTERNAL PROGRAMS INIT
   #zoxide init fish | source
-  pay-respects fish --alias fuck | source
+  __cached_command_init pay-respects pay-respects fish --alias fuck
 
   # extend pay-respects command-not-found with brew which-formula on macOS
-  if string match -q "Darwin*" -- (uname)
+  if test "$_platform" = Darwin
     function fish_command_not_found --on-event fish_command_not_found
       eval $(_PR_LAST_COMMAND="$argv" _PR_ALIAS="$(alias)" _PR_SHELL="fish" _PR_MODE="cnf" "pay-respects")
       set -l formula (brew which-formula $argv[1] 2>/dev/null)
@@ -510,7 +543,7 @@ if status is-interactive
       end
     end
   end
-  fzf --fish | source
+  __cached_command_init fzf fzf --fish
   if test -f $HOME/.autojump/share/autojump/autojump.fish
     source $HOME/.autojump/share/autojump/autojump.fish
   else if test -f /usr/share/autojump/autojump.fish
@@ -519,11 +552,11 @@ if status is-interactive
     source /opt/homebrew/share/autojump/autojump.fish
   end
   
-  starship init fish | source
+  __cached_command_init starship starship init fish --print-full-init
   # enable_transience  # enabling transient shell in starship
-end
 
-test -e /Users/egigoka/.iterm2_shell_integration.fish ; and source /Users/egigoka/.iterm2_shell_integration.fish ; or true
+  test -e "$HOME/.iterm2_shell_integration.fish"; and source "$HOME/.iterm2_shell_integration.fish"
+end
 
 # Added by LM Studio CLI (lms)
 set -gx PATH $PATH /Users/egigoka/.cache/lm-studio/bin
