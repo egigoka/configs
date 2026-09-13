@@ -50,6 +50,11 @@
       "type": "remote",
       "url": "http://127.0.0.1:64342/stream",
       "enabled": true
+    },
+    "sentry": {
+      "type": "remote",
+      "url": "https://mcp.sentry.dev/mcp",
+      "oauth": {}
     }
   },
   "experimental": {
