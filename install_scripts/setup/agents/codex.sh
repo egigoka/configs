@@ -22,7 +22,18 @@ configure_codex_home() {
     caveman-review \
     frontend-design \
     swiftui-expert-skill \
-    ultrabrowser
+    ultrabrowser \
+    iphone-duo \
+    adopt-c-bounds-safety \
+    app-intents-specialist \
+    app-intents-whats-new-27 \
+    audit-xcode-security-settings \
+    building-document-based-swiftui-applications \
+    device-interaction \
+    modernize-tests \
+    swiftui-specialist \
+    swiftui-whats-new-27 \
+    uikit-app-modernization
   do
     install_link "$OPENCODE_CONFIG_DIR/skills/$skill" "$codex_home/skills/$skill"
   done

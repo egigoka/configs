@@ -1,0 +1,5 @@
+source: xcrun agent skills export (Apple Xcode built-in skills)
+xcode_version: 27.0
+xcode_build: 27A266a
+exported: 2026-09-14
+skill: modernize-tests

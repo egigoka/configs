@@ -1,0 +1,29 @@
+Get Bitrig: https://bitrig.link/yt/duo-launch
+
+Your app might run on the iPhone Duo, but that doesn’t mean it’s ready. Apple’s foldable iPhone brings new layout configurations, toolbars that move to the sides, and a lot more to think about than just making your UI wider. In this video, I break down what iOS developers need to know to build a SwiftUI app that feels designed for Duo and why using native components can save you a lot of work.
+
+We’ll cover adaptive layouts and size classes, vertical toolbars and overflow menus, handling the fold with reserved regions, and testing with Xcode 27.1. I also discuss widgets in Standby Mode, Apple Pencil, and drag and drop, plus a hinge interaction that could spark an entirely new app idea. Whether you’re updating an existing app or starting from scratch, you’ll learn what to rethink, what Apple handles for you, and how to avoid shipping a stretched-out iPhone app.
+
+Apple iPhone Duo Videos:
+
+Design for iPhone Duo - https://developer.apple.com/videos/play/tech-talks/111466/
+Prepare Your App for iPhone Duo - https://developer.apple.com/videos/play/tech-talks/111461/
+Raise the Bar with iPhone Duo - https://developer.apple.com/videos/play/tech-talks/111462
+Strike a Pose with Adaptive Layouts on iPhone Duo - https://developer.apple.com/videos/play/tech-talks/111463
+Leverage multiple displays and scenes on iPhone Duo - https://developer.apple.com/videos/play/tech-talks/111464
+
+iPhone Duo Human Interface Guidelines - https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo
+
+Timestamps:
+0:00 - iPhone Duo
+0:19 - Size Classes & Resizability
+2:02 - iPhone Duo Simulator - Xcode 27.1
+2:07 - Agent Skills & Outdated Apps
+2:50 - Vertical Toolbars
+3:29 - Toolbar Nuances (Overflow, Placement & Behaviors)
+5:52 - The Hinge - Continuous, Open, Closed, Partially Open
+6:48 - How to Handle to Fold - Reserved Regions
+7:48 - Layout Container & Arrangements
+8:24 - Horizontal Safe Areas
+8:46 - Standby Mode & More
+9:34 - Apple Videos & HIG

@@ -11,6 +11,7 @@ setup_agent_configs() {
   bash "$CONFIGS_DIR/install_scripts/update_ponytail.sh" "$OPENCODE_CONFIG_DIR"
   bash "$CONFIGS_DIR/install_scripts/update_frontend_design_skill.sh" "$OPENCODE_CONFIG_DIR"
   bash "$CONFIGS_DIR/install_scripts/update_swiftui_expert_skill.sh" "$OPENCODE_CONFIG_DIR"
+  bash "$CONFIGS_DIR/install_scripts/update_apple_agent_skills.sh" "$CONFIGS_DIR" || return
   install_link "$OPENCODE_CONFIG_DIR/kv.json" "$HOME/.local/state/opencode/kv.json"
   install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$OPENCODE_CONFIG_DIR/AGENTS.md"
   install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/opencode"
@@ -22,6 +23,25 @@ setup_agent_configs() {
   # claude code
   install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
   install_link "$CONFIGS_DIR/claude/settings.json" "$HOME/.claude/settings.json"
+
+  # iphone-duo + Apple Xcode skills: shared homes (claude code, shared agents)
+  local agent_skill
+  for agent_skill in \
+    iphone-duo \
+    adopt-c-bounds-safety \
+    app-intents-specialist \
+    app-intents-whats-new-27 \
+    audit-xcode-security-settings \
+    building-document-based-swiftui-applications \
+    device-interaction \
+    modernize-tests \
+    swiftui-specialist \
+    swiftui-whats-new-27 \
+    uikit-app-modernization
+  do
+    install_link "$OPENCODE_CONFIG_DIR/skills/$agent_skill" "$HOME/.claude/skills/$agent_skill"
+    install_link "$OPENCODE_CONFIG_DIR/skills/$agent_skill" "$HOME/.agents/skills/$agent_skill"
+  done
 
   # codex
   configure_codex

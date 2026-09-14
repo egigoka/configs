@@ -1,0 +1,690 @@
+1
+00:00:00,160 --> 00:00:05,200
+Your app might run on the iPhone Duo, but that 
+doesn't mean it's ready. There's a huge difference  
+
+2
+00:00:05,200 --> 00:00:10,240
+between an app that works on the iPhone Duo and 
+one that feels specifically designed for it. So,  
+
+3
+00:00:10,240 --> 00:00:14,480
+what do you need to do to get your app ready? 
+That's what I'm breaking down in this video,  
+
+4
+00:00:14,480 --> 00:00:18,480
+including something cool about the hinge 
+that opens up opportunities for brand new  
+
+5
+00:00:18,480 --> 00:00:22,480
+app ideas. All right, let's start with the big 
+one. Your app is going to have six brand new  
+
+6
+00:00:22,480 --> 00:00:26,560
+layout configurations to support with the 
+iPhone Duo, but you don't build six different  
+
+7
+00:00:26,560 --> 00:00:30,880
+UIs for your app. You're going to support the 
+same size classes you may already be familiar  
+
+8
+00:00:30,880 --> 00:00:35,440
+with with compact and regular. And the iPhone 
+Duo has various combinations of these. There's  
+
+9
+00:00:35,440 --> 00:00:40,240
+the compact width, regular height, which is the 
+typical iPhone combination. But there's a new one,  
+
+10
+00:00:40,240 --> 00:00:44,240
+compact compact. When the iPhone Duo is closed 
+and in landscape, that's going to be a new one  
+
+11
+00:00:44,240 --> 00:00:49,360
+we have to support. And when the Duo is unfolded, 
+we get that regular regular size class combination  
+
+12
+00:00:49,360 --> 00:00:53,520
+that we're already used to with the iPad. 
+So, if your app already fully supports iPad,  
+
+13
+00:00:53,520 --> 00:00:58,640
+you're going to be most of the way there. Now, 
+I want to be clear. I said fully supports iPad.  
+
+14
+00:00:58,640 --> 00:01:05,040
+That means multitasking, resizability, multiple 
+instances of your app, landscape, split view,  
+
+15
+00:01:05,040 --> 00:01:10,960
+and I'd argue that even though most apps work on 
+the iPad, fully supporting the iPad is a different  
+
+16
+00:01:10,960 --> 00:01:15,120
+story. So, you're probably going to have some work 
+to do here because the last thing you want is just  
+
+17
+00:01:15,120 --> 00:01:19,920
+a stretched out version of your iPhone app when 
+the user unfolds the Duo. So to implement these  
+
+18
+00:01:19,920 --> 00:01:23,600
+changes, you're going to want to check the 
+environment values for horizontal size class  
+
+19
+00:01:23,600 --> 00:01:28,640
+and vertical size class and then adapt your UI 
+accordingly. For example, if on a typical iPhone  
+
+20
+00:01:28,640 --> 00:01:31,760
+layout, you have views that are vertically 
+stacked on top of each other, maybe you flip  
+
+21
+00:01:31,760 --> 00:01:36,320
+that to horizontally stacked when you're in the 
+regular regular size class configuration. Or you  
+
+22
+00:01:36,320 --> 00:01:40,480
+can use split view to flatten out your navigation 
+hierarchy if that makes sense for your app or use  
+
+23
+00:01:40,480 --> 00:01:44,720
+the sidebar configuration for your tab view if 
+it's information dense. So, if you've been hard-  
+
+24
+00:01:44,720 --> 00:01:48,800
+coding view widths in your app, or maybe you 
+disabled landscape mode because you just didn't  
+
+25
+00:01:48,800 --> 00:01:53,840
+want to deal with that, not anymore. It's time 
+to fully support that. But on the bright side,  
+
+26
+00:01:53,840 --> 00:01:58,160
+in fully supporting all this, the multitasking, 
+the split views, the multiple instances of your  
+
+27
+00:01:58,160 --> 00:02:02,400
+app, landscape mode, you're going to end up with 
+a really good, fully supported iPad app. So,  
+
+28
+00:02:02,400 --> 00:02:07,520
+it's kind of like a two for one deal. The iPhone 
+Duo Simulator is shipping with Xcode 27.1,  
+
+29
+00:02:07,520 --> 00:02:11,520
+which Apple says will ship in late September 
+of 2026. So, if you're watching this before,  
+
+30
+00:02:11,520 --> 00:02:15,120
+then you're going to have to wait a little bit 
+before you can fully test out all these APIs and  
+
+31
+00:02:15,120 --> 00:02:20,720
+see what your app really looks like on the Duo 
+simulator. Xcode 27.1 also introduces a new AI  
+
+32
+00:02:20,720 --> 00:02:25,040
+agent skill for resizability. So, that should 
+help adapt your app for the iPhone Duo. And  
+
+33
+00:02:25,040 --> 00:02:30,800
+this is what apps are going to look like that 
+are not built with iOS 27 SDK or above. Not a  
+
+34
+00:02:30,800 --> 00:02:35,200
+great look. So, older apps that are no longer 
+updated are really going to stand out on this  
+
+35
+00:02:35,200 --> 00:02:38,960
+device. So hopefully some of your competitors 
+are doing that, but you you need to build on  
+
+36
+00:02:38,960 --> 00:02:43,440
+the iOS 27 SDK and above and your app will start 
+looking like this. Start looking like it actually  
+
+37
+00:02:43,440 --> 00:02:46,880
+supports the iPhone Duo. Of course, you may have 
+to do a little more work to make it look great,  
+
+38
+00:02:46,880 --> 00:02:51,760
+but building for the iOS 27 SDK is going to be a 
+great start. Now, let's talk about your toolbars  
+
+39
+00:02:51,760 --> 00:02:56,160
+and tab views because they're going to have to 
+adjust from the horizontal layout to the vertical  
+
+40
+00:02:56,160 --> 00:03:01,120
+layout and back on the fly depending on what 
+configuration your user has their iPhone Duo in.  
+
+41
+00:03:01,120 --> 00:03:05,840
+And the biggest tip here, which is what I've been 
+saying for years, for situations just like this,  
+
+42
+00:03:05,840 --> 00:03:10,400
+use the native components, use built-in 
+navigation stack, use the default tab view,  
+
+43
+00:03:10,400 --> 00:03:14,480
+use the built-in toolbar API. When you use 
+these, most of the work to support the iPhone  
+
+44
+00:03:14,480 --> 00:03:20,000
+Duo is already done for you. But if you built your 
+own custom toolbar or your own custom tab view,  
+
+45
+00:03:20,000 --> 00:03:23,840
+you're you're going to have a lot of work ahead 
+of you. And I just recommend during that work,  
+
+46
+00:03:23,840 --> 00:03:28,160
+just switch to the native components. You're going 
+to save yourself so much time and headache. And  
+
+47
+00:03:28,160 --> 00:03:32,320
+honestly, with liquid glass, they look great. 
+But of course, even if you're using the native  
+
+48
+00:03:32,320 --> 00:03:36,560
+components, there's still some small nuances and 
+customization you can do. For example, if you have  
+
+49
+00:03:36,560 --> 00:03:41,040
+a tab view and a toolbar with a few buttons, those 
+are going to go on the side along with the status  
+
+50
+00:03:41,040 --> 00:03:44,640
+bar and the live activities. So, if you have a 
+lot of toolbar buttons, you're going to run out  
+
+51
+00:03:44,640 --> 00:03:49,040
+of room pretty quickly. To handle this, you need 
+to adopt the new toolbar overflow API that was  
+
+52
+00:03:49,040 --> 00:03:54,080
+introduced in iOS 27. This is where the toolbar or 
+tab view options will collapse into a menu button,  
+
+53
+00:03:54,080 --> 00:03:57,760
+and you can adjust which should collapse first. 
+Maybe your toolbar buttons are more important  
+
+54
+00:03:57,760 --> 00:04:01,520
+than your tab view and you want the tab view to 
+collapse first. Well, you can configure that with  
+
+55
+00:04:01,520 --> 00:04:06,320
+the toolbar vertical compression behavior API. You 
+can also give individual toolbar items their own  
+
+56
+00:04:06,320 --> 00:04:10,480
+priority if there's certain buttons you don't want 
+to go into the overflow menu. And you can set this  
+
+57
+00:04:10,480 --> 00:04:15,280
+with the visibility priority API. Another nuance 
+to consider with the vertical toolbars is that the  
+
+58
+00:04:15,280 --> 00:04:20,320
+order matters top to bottom. That means you want 
+the primary action to be up top, any prominent  
+
+59
+00:04:20,320 --> 00:04:24,160
+actions to be right below, and any secondary 
+ones below that. For example, when you're in  
+
+60
+00:04:24,160 --> 00:04:28,240
+a navigation stack, the back button is the top 
+button and then the prominent action is right  
+
+61
+00:04:28,240 --> 00:04:32,240
+below. And if you have texton buttons in your 
+toolbar, those are going to stay up top in the  
+
+62
+00:04:32,240 --> 00:04:36,640
+horizontal toolbar because they're wide. There's 
+not enough room in the vertical toolbar. So, Apple  
+
+63
+00:04:36,640 --> 00:04:41,840
+recommends a couple of ways to deal with this. 
+The first is to try and avoid texton buttons when  
+
+64
+00:04:41,840 --> 00:04:46,880
+you can and use Swift UI labels which allow you to 
+give a text and an icon. That way, the system has  
+
+65
+00:04:46,880 --> 00:04:51,280
+the flexibility to determine where it should go. 
+For example, by default, icon only buttons will  
+
+66
+00:04:51,280 --> 00:04:55,520
+go in the vertical toolbar and the texton buttons 
+will go in the horizontal toolbar. But even when  
+
+67
+00:04:55,520 --> 00:05:01,440
+an icon button goes into the overflow menu, well, 
+that menu will now show the icon and the text. So,  
+
+68
+00:05:01,440 --> 00:05:06,240
+when you use a Swift UI label, you're giving the 
+system what it needs to properly show your action  
+
+69
+00:05:06,240 --> 00:05:10,080
+no matter the context. But if you absolutely 
+need a texton button, it's going to go in the  
+
+70
+00:05:10,080 --> 00:05:14,320
+horizontal toolbar. And if there's any related 
+buttons, you should keep them next to it. So,  
+
+71
+00:05:14,320 --> 00:05:20,000
+Apple does give you a way to prefer the horizontal 
+toolbar, even for icon only buttons. And for this,  
+
+72
+00:05:20,000 --> 00:05:24,000
+you can use the access behavior API. Here are 
+some other things to consider for your toolbar. If  
+
+73
+00:05:24,000 --> 00:05:29,200
+you have an icon with a number next to it, like a 
+cart or an inbox, consider using the badge API to  
+
+74
+00:05:29,200 --> 00:05:33,600
+clean that up. Don't add additional spacing in the 
+vertical toolbar with toolbar spacers. And that's  
+
+75
+00:05:33,600 --> 00:05:38,160
+because the vertical screen real estate is already 
+limited. So, let the system do it. And in special  
+
+76
+00:05:38,160 --> 00:05:42,640
+cases where it makes sense to not use a vertical 
+toolbar, like the calculator app, you can disable  
+
+77
+00:05:42,640 --> 00:05:47,280
+that behavior with the toolbar vertical behavior 
+API. And if you've built a custom toolbar and you  
+
+78
+00:05:47,280 --> 00:05:50,960
+want to know when to flip that to the vertical 
+version of it, you can check the toolbar vertical  
+
+79
+00:05:50,960 --> 00:05:55,120
+edge environment value and adjust accordingly. 
+Now, let's talk about the hinge. The hinge is what  
+
+80
+00:05:55,120 --> 00:06:00,240
+makes the iPhone Duo special. It's literally the 
+backbone. And in your code, you can get a highle  
+
+81
+00:06:00,240 --> 00:06:05,680
+status like open, closed, or partially open. And 
+you can even get continuous data on the actual  
+
+82
+00:06:05,680 --> 00:06:10,320
+angle of the hinge in real time. And this opens 
+the door for all kinds of app ideas or feature  
+
+83
+00:06:10,320 --> 00:06:15,120
+ideas or fun animations. For example, this video 
+player app is showing a dynamic reflection of  
+
+84
+00:06:15,120 --> 00:06:19,040
+the content on the bottom part of the screen 
+based on the hinge angle. Apple demonstrated  
+
+85
+00:06:19,040 --> 00:06:23,200
+a toy app they made where the hinge can act 
+as a whammy for guitar. You strum the guitar  
+
+86
+00:06:23,200 --> 00:06:30,000
+strings and then move the hinge back and forth 
+to adjust the pitch bend. Like listen to this.
+
+87
+00:06:34,000 --> 00:06:37,440
+Not going to lie, that's pretty cool. And 
+then here's a little code snippet of what  
+
+88
+00:06:37,440 --> 00:06:41,680
+the onhinge change modifier looks like. Now, 
+of course, that's a fun little toy, but do some  
+
+89
+00:06:41,680 --> 00:06:45,360
+brainstorming. I bet you could come up with some 
+really cool things to do in your app. And even  
+
+90
+00:06:45,360 --> 00:06:50,240
+though it may sound silly, things like this have 
+worked before when adapting your UI to the various  
+
+91
+00:06:50,240 --> 00:06:54,560
+poses the iPhone Duo is capable of. There are 
+certain areas you're going to need to adjust to,  
+
+92
+00:06:54,560 --> 00:06:58,720
+like the fold in the center of the screen or 
+the inner and outer cameras. These are called  
+
+93
+00:06:58,720 --> 00:07:02,960
+reserved regions and your UI needs to adapt to 
+them. For example, if something is in the center  
+
+94
+00:07:02,960 --> 00:07:07,440
+of the phone when it's unfolded, it should move 
+to one side when partially folded. Or view should  
+
+95
+00:07:07,440 --> 00:07:11,360
+adjust their size so they are split evenly when 
+partially folded. Essentially, you don't want  
+
+96
+00:07:11,360 --> 00:07:16,000
+your content or controls to be obstructed by the 
+fold. And if you're using native containers like  
+
+97
+00:07:16,000 --> 00:07:22,320
+navigation stack, split view, tab view, list, 
+scroll view, adjusting to the reserve regions,  
+
+98
+00:07:22,320 --> 00:07:26,880
+that's built right in. However, if you need to 
+handle this manually, Apple gives us some APIs to  
+
+99
+00:07:26,880 --> 00:07:31,360
+do that. You can access the regions, their frame 
+dimensions and whether the region is active or not  
+
+100
+00:07:31,360 --> 00:07:35,440
+with geometry reader. And there are two types of 
+reserved regions. There's dot division which is  
+
+101
+00:07:35,440 --> 00:07:40,000
+the fold and then there's dot occlusion which 
+are the outer and inner cameras. And these can  
+
+102
+00:07:40,000 --> 00:07:44,560
+either be active, for example, when the fold 
+is partially folded or inactive when the duo  
+
+103
+00:07:44,560 --> 00:07:49,040
+is fully unfolded. And like I said, the built-in 
+containers like navigation stack, they handle this  
+
+104
+00:07:49,040 --> 00:07:53,440
+out of the box. But if you do need a custom view 
+to do it, Apple gave us a new container called  
+
+105
+00:07:53,440 --> 00:07:57,520
+layout container. And a layout container takes in 
+something called an arrangement to determine how  
+
+106
+00:07:57,520 --> 00:08:01,680
+to handle the fold. An arrangement can either 
+be a split or an overlay depending on the type  
+
+107
+00:08:01,680 --> 00:08:07,440
+of UI you need. An arrangement takes in inputs and 
+gives outputs. Examples of inputs can be what size  
+
+108
+00:08:07,440 --> 00:08:11,520
+class configuration we're currently in. What's the 
+aspect ratio? What are the reserved regions? And  
+
+109
+00:08:11,520 --> 00:08:15,600
+then based on that input, you can declare whether 
+you want to show a view at all. And if you do want  
+
+110
+00:08:15,600 --> 00:08:19,760
+to show it, you can declare the frame. And Apple 
+gives us various system arrangements that we can  
+
+111
+00:08:19,760 --> 00:08:24,880
+use in our apps. Here's some example code showing 
+an arrangement view in the split configuration.  
+
+112
+00:08:24,880 --> 00:08:29,280
+There's also a new safe area to take into account 
+and that is the horizontal safe area and these  
+
+113
+00:08:29,280 --> 00:08:33,920
+behave just as the normal safe areas we're used 
+to except it's just on the side now but this is  
+
+114
+00:08:33,920 --> 00:08:38,720
+where the vertical toolbar will go. So you can 
+have a full bleed background or background image  
+
+115
+00:08:38,720 --> 00:08:43,600
+using the ignore safe area modifier but just 
+make sure your content and anything scrolling  
+
+116
+00:08:43,600 --> 00:08:47,200
+respects that safe area so it doesn't get 
+covered up by the vertical toolbar. All right,  
+
+117
+00:08:47,200 --> 00:08:52,160
+here's some quick hitting small stuff to wrap up. 
+Standby mode is going to be used a lot more as you  
+
+118
+00:08:52,160 --> 00:08:56,480
+can see in some of these examples. And I bet a lot 
+of you developers out there maybe neglected full  
+
+119
+00:08:56,480 --> 00:09:01,360
+standby mode adoption for your widgets. Well, 
+now's the time. Fix that. Apple Pencil support  
+
+120
+00:09:01,360 --> 00:09:04,960
+is coming later this year. So, if your app can 
+take advantage of that, better start research  
+
+121
+00:09:04,960 --> 00:09:10,320
+and pencil kit. Use the concentric rectangle 
+API to make sure any custom background matches  
+
+122
+00:09:10,320 --> 00:09:14,080
+the asymmetric shape of the front screen. Your 
+sheets are going to appear differently depending  
+
+123
+00:09:14,080 --> 00:09:17,600
+on the various poses. And then you might want 
+to think about drag and drop because if you were  
+
+124
+00:09:17,600 --> 00:09:21,760
+building just an iPhone only app and you didn't 
+fully support the iPad like I talked about with  
+
+125
+00:09:21,760 --> 00:09:26,000
+multitasking side by side, you probably weren't 
+worried about drag and drop into your iPhone app.  
+
+126
+00:09:26,000 --> 00:09:30,000
+Well, now that your app is going to be able to be 
+side by side with any other app if it makes sense  
+
+127
+00:09:30,000 --> 00:09:34,080
+for your app, you might want to think about 
+fully supporting drag and drop because users  
+
+128
+00:09:34,080 --> 00:09:38,080
+are going to be expecting it. And if you want to 
+dive deeper into all of this, Apple released six  
+
+129
+00:09:38,080 --> 00:09:42,240
+videos all about building for the iPhone Duo and 
+they've updated their human interface guidelines  
+
+130
+00:09:42,240 --> 00:09:45,760
+with a special section for it. I'll put the links 
+to those in the description. And if you're trying  
+
+131
+00:09:45,760 --> 00:09:49,920
+to build an amazing app for the iPhone Duo or 
+just Apple platforms in general, you should check  
+
+132
+00:09:49,920 --> 00:09:54,320
+out Bitrig. It's an AI development environment 
+specifically focused on building premium Swift  
+
+133
+00:09:54,320 --> 00:09:58,720
+apps for Apple platforms. It's actually built by 
+the co-creators of Swift UI that were formerly at  
+
+134
+00:09:58,720 --> 00:10:03,200
+Apple. So, it integrates amazingly well with the 
+first party Apple frameworks and it specializes  
+
+135
+00:10:03,200 --> 00:10:08,080
+in Swift and Swift UI. And it will know about all 
+these new APIs and best practices for supporting  
+
+136
+00:10:08,080 --> 00:10:12,400
+the iPhone Duo. It can also create and manage 
+your app store connect listing, set up your inapp  
+
+137
+00:10:12,400 --> 00:10:16,480
+purchases or subscriptions, and even submit to 
+the app store for you. The team ships updates on  
+
+138
+00:10:16,480 --> 00:10:22,240
+a weekly basis, so the product is constantly 
+getting better. Check it out at bitrig.com.
+
