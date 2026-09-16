@@ -8,6 +8,9 @@ function _ssh_with_temporary_unlocked_keys --description "SSH with temporary unl
     # Existing private keys are copied and decrypted once per unlocked session.
     for identity in (command ssh -G $argv 2>/dev/null | string match -r '^identityfile .+' | string replace 'identityfile ' '')
         set identity (string replace -r '^~/' "$HOME/" -- "$identity")
+        # Never trust a config pointing at the unlocked copy: it vanishes on
+        # lock/sleep. Map back to the locked original so this self-heals.
+        set identity (string replace "$unlocked_dir/" "$HOME/.ssh/" -- "$identity")
         test -f "$identity"; or continue
 
         set -l key_name (path basename "$identity")
