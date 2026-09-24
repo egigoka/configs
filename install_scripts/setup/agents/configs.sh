@@ -24,24 +24,47 @@ setup_agent_configs() {
   install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
   install_link "$CONFIGS_DIR/claude/settings.json" "$HOME/.claude/settings.json"
 
-  # iphone-duo + Apple Xcode skills: shared homes (claude code, shared agents)
-  local agent_skill
-  for agent_skill in \
-    iphone-duo \
-    adopt-c-bounds-safety \
-    app-intents-specialist \
-    app-intents-whats-new-27 \
-    audit-xcode-security-settings \
-    building-document-based-swiftui-applications \
-    device-interaction \
-    modernize-tests \
-    swiftui-specialist \
-    swiftui-whats-new-27 \
-    uikit-app-modernization
-  do
-    install_link "$OPENCODE_CONFIG_DIR/skills/$agent_skill" "$HOME/.claude/skills/$agent_skill"
-    install_link "$OPENCODE_CONFIG_DIR/skills/$agent_skill" "$HOME/.agents/skills/$agent_skill"
+  # claude skills/commands/agents: canonical mapping lives in configs/claude/
+  # (symlinks into opencode), live homes link to the repo copies.
+  local repo_entry entry_name
+  mkdir -p "$CONFIGS_DIR/claude/skills" "$CONFIGS_DIR/claude/commands" "$CONFIGS_DIR/claude/agents"
+  for repo_entry in "$OPENCODE_CONFIG_DIR"/skills/*/; do
+    entry_name=$(basename "$repo_entry")
+    install_link "$OPENCODE_CONFIG_DIR/skills/$entry_name" "$CONFIGS_DIR/claude/skills/$entry_name"
   done
+  for repo_entry in "$OPENCODE_CONFIG_DIR"/commands/*.md; do
+    entry_name=$(basename "$repo_entry")
+    install_link "$OPENCODE_CONFIG_DIR/commands/$entry_name" "$CONFIGS_DIR/claude/commands/$entry_name"
+  done
+  for repo_entry in "$OPENCODE_CONFIG_DIR"/agents/*.md; do
+    entry_name=$(basename "$repo_entry")
+    install_link "$OPENCODE_CONFIG_DIR/agents/$entry_name" "$CONFIGS_DIR/claude/agents/$entry_name"
+  done
+  # prune repo links whose opencode source is gone (keep real dirs like sentry-cli)
+  for repo_entry in "$CONFIGS_DIR"/claude/skills/* "$CONFIGS_DIR"/claude/commands/* "$CONFIGS_DIR"/claude/agents/*; do
+    [ -L "$repo_entry" ] && [ ! -e "$repo_entry" ] && rm -- "$repo_entry"
+  done
+  for repo_entry in "$CONFIGS_DIR"/claude/skills/* "$CONFIGS_DIR"/claude/commands/* "$CONFIGS_DIR"/claude/agents/*; do
+    entry_name=$(basename "$repo_entry")
+    case "$repo_entry" in
+      */skills/*)
+        install_link "$repo_entry" "$HOME/.claude/skills/$entry_name"
+        install_link "$repo_entry" "$HOME/.agents/skills/$entry_name"
+        ;;
+      */commands/*) install_link "$repo_entry" "$HOME/.claude/commands/$entry_name" ;;
+      */agents/*) install_link "$repo_entry" "$HOME/.claude/agents/$entry_name" ;;
+    esac
+  done
+
+  # claude MCP servers (mirror opencode.json "mcp"); user scope persists in ~/.claude.json
+  if command -v claude >/dev/null 2>&1; then
+    claude mcp get cua-driver >/dev/null 2>&1 || claude mcp add -s user cua-driver -- cua-driver mcp || return
+    claude mcp get xcode >/dev/null 2>&1 || claude mcp add -s user xcode -- xcrun mcpbridge || return
+    claude mcp get mobile-mcp >/dev/null 2>&1 || claude mcp add -s user mobile-mcp -e MOBILEMCP_DISABLE_TELEMETRY=1 -- mcp-server-mobile || return
+    claude mcp get xcodebuild-mcp >/dev/null 2>&1 || claude mcp add -s user xcodebuild-mcp -e XCODEBUILDMCP_SENTRY_DISABLED=true -- xcodebuildmcp mcp || return
+    claude mcp get safari-mcp >/dev/null 2>&1 || claude mcp add -s user safari-mcp -- /usr/bin/safaridriver --mcp || return
+    claude mcp get sentry >/dev/null 2>&1 || claude mcp add -s user -t http sentry https://mcp.sentry.dev/mcp || return
+  fi
 
   # codex
   configure_codex
