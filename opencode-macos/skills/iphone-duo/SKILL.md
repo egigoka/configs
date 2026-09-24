@@ -15,6 +15,10 @@ Distilled from Bitrig's "I Watched Every iPhone Duo Developer Video. Here's What
 - Strike a Pose with Adaptive Layouts on iPhone Duo — `https://developer.apple.com/videos/play/tech-talks/111463/`
 - Leverage multiple displays and scenes on iPhone Duo — `https://developer.apple.com/videos/play/tech-talks/111464`
 - HIG: Designing for iPhone Duo — `https://developer.apple.com/design/human-interface-guidelines/designing-for-iphone-duo`
+  (digest in `references/hig-designing-for-iphone-duo.md`)
+
+Full English subtitle transcripts of all five Tech Talks are vendored under
+`references/tech-talks/` — consult them for exact API names and demo details.
 
 Core thesis: an app that *runs* on Duo is not an app *designed* for Duo.
 A stretched iPhone UI on the unfolded display is the failure mode to avoid.
