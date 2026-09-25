@@ -28,6 +28,23 @@ class OpenCodeForkSetupTests(unittest.TestCase):
             self.assertIn('homedir()', shim)
             self.assertIn('".local", "share", "opencode-codex-auth", "dist", "index.js"', shim)
             self.assertIn("OpenAIMultiAuthPlugin", shim)
+    def test_setup_installs_and_builds_openai_multi_auth_fork(self) -> None:
+        source = SETUP.read_text()
+        self.assertIn("install_opencode_openai_multi_auth_fork()", source)
+        self.assertIn("https://github.com/egigoka/opencode-openai-multi-auth.git", source)
+        self.assertIn('checkout="$HOME/.local/share/opencode-openai-multi-auth"', source)
+        self.assertIn("install_opencode_openai_multi_auth_fork || return", source)
+
+    def test_configs_load_the_built_multi_auth_fork_through_portable_shim(self) -> None:
+        for config_dir in CONFIG_DIRS:
+            config = (config_dir / "opencode.json").read_text()
+            self.assertIn('"./plugins/openai-multi-auth-fork.js"', config)
+            self.assertNotIn('"opencode-openai-multi-auth"', config)
+            shim = (config_dir / "plugins/openai-multi-auth-fork.js").read_text()
+            self.assertIn('homedir()', shim)
+            self.assertIn('".local", "share", "opencode-openai-multi-auth", "dist", "index.js"', shim)
+            self.assertIn("OpenAIAuthPlugin", shim)
+
     def test_fish_caches_generated_integrations_and_avoids_local_pstree(self) -> None:
         config = (ROOT / "fish/config.fish").read_text()
         helper = (ROOT / "fish/functions/__cached_command_init.fish").read_text()
