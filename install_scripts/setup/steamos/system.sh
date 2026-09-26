@@ -59,7 +59,8 @@ EOF
     echo "Silencing tty stderr in $f"
     local ro; ro=$(steamos-readonly status 2>/dev/null)
     [ "$ro" = enabled ] && sudo steamos-readonly disable
-    sudo sed -i "s|$pat|$repl|g" "$f"
+    sudo sed -i.bak "s|$pat|$repl|g" "$f"
+    sudo rm -f "$f.bak"
     [ "$ro" = enabled ] && sudo steamos-readonly enable
   }
   patch_tty_stderr /etc/profile.d/gpm.sh ' /usr/bin/tty ' ' /usr/bin/tty 2>/dev/null '
