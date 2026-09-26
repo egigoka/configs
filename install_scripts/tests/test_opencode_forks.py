@@ -10,24 +10,17 @@ CONFIG_DIRS = [ROOT / "opencode-macos", ROOT / "opencode-other", ROOT / "opencod
 
 
 class OpenCodeForkSetupTests(unittest.TestCase):
-    def test_setup_installs_and_builds_codex_auth_fork(self) -> None:
+    def test_setup_does_not_install_legacy_codex_auth_fork(self) -> None:
         source = SETUP.read_text()
-        self.assertIn("install_opencode_codex_auth_fork()", source)
-        self.assertIn("https://github.com/egigoka/opencode-codex-auth.git", source)
-        self.assertIn('checkout="$HOME/.local/share/opencode-codex-auth"', source)
-        self.assertIn('npm ci', source)
-        self.assertIn('npm run build', source)
-        self.assertIn("install_opencode_codex_auth_fork || return", source)
+        self.assertNotIn("install_opencode_codex_auth_fork", source)
+        self.assertNotIn("opencode-codex-auth.git", source)
+        self.assertNotIn(".local/share/opencode-codex-auth", source)
 
-    def test_configs_load_the_built_fork_through_portable_shim(self) -> None:
+    def test_configs_do_not_load_legacy_codex_auth_fork(self) -> None:
         for config_dir in CONFIG_DIRS:
             config = (config_dir / "opencode.json").read_text()
-            self.assertIn('"./plugins/codex-auth-fork.js"', config)
-            self.assertNotIn('"@iam-brain/opencode-codex-auth@latest"', config)
-            shim = (config_dir / "plugins/codex-auth-fork.js").read_text()
-            self.assertIn('homedir()', shim)
-            self.assertIn('".local", "share", "opencode-codex-auth", "dist", "index.js"', shim)
-            self.assertIn("OpenAIMultiAuthPlugin", shim)
+            self.assertNotIn("codex-auth-fork", config)
+            self.assertFalse((config_dir / "plugins/codex-auth-fork.js").exists())
     def test_setup_installs_and_builds_openai_multi_auth_fork(self) -> None:
         source = SETUP.read_text()
         self.assertIn("install_opencode_openai_multi_auth_fork()", source)
