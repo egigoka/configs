@@ -1,7 +1,7 @@
 repository: https://github.com/mattpocock/skills.git
-commit: 3cca18b368ae95cdbdebbff572ccafa662551015
+commit: c55ee46073ed923f86ce59a5eb3b6d895095d1b7
 path: skills/engineering/wizard
 source_tree_sha256: 83df3ec4edb19db9a21aa2bcbc351da00919f7ac5a9743eebd5dff2b486c2a65
 installed_content_sha256: 643783f4f3967c86a4aeea19c0846e153612814f483c4a541ae963f9852d7913
-porter_sha256: 56ffbe794c2c3fd2670c433ce3346cc5ca94943da44c64672a880b19b4f8575f
+porter_sha256: 3cdb152c0016ba34422a0de9189be62dbdfea0a798d72fd2f20ea8d1cb0c6f69
 local_transforms: move-template.sh-to-templates/template.sh

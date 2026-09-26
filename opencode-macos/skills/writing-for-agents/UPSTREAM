@@ -1,7 +1,7 @@
 repository: https://github.com/mattpocock/skills.git
-commit: 3cca18b368ae95cdbdebbff572ccafa662551015
+commit: c55ee46073ed923f86ce59a5eb3b6d895095d1b7
 path: skills/productivity/writing-for-agents
 source_tree_sha256: 734e0f5ad823a7583b6a29c98c03c40880832815675f9f014278b88f2163c7ec
 installed_content_sha256: d318b4c9a58906ef21b87de764fabbde06548fb27551279a57a29c351b4976bd
-porter_sha256: 56ffbe794c2c3fd2670c433ce3346cc5ca94943da44c64672a880b19b4f8575f
+porter_sha256: 3cdb152c0016ba34422a0de9189be62dbdfea0a798d72fd2f20ea8d1cb0c6f69
 local_transforms: move-SKILL-MECHANICS.md-to-references/SKILL-MECHANICS.md

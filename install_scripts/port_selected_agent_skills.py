@@ -81,7 +81,7 @@ TRANSFORMS: dict[str, list[tuple[str, str]]] = {
     ],
     "typescript-best-practices": [
         (
-            "Apply the **type-system-discipline** principle skill first; this skill grounds it in TypeScript syntax.",
+            "Apply the **type-system-discipline** principle skill first.",
             "Load **principle-type-system-discipline** first; this skill grounds it in TypeScript syntax.",
         ),
         (
@@ -95,15 +95,15 @@ TRANSFORMS: dict[str, list[tuple[str, str]]] = {
             "the **principle-encode-lessons-in-structure** skill",
         ),
         (
-            "At the end of the run, before handing back, check the log told the truth. Read this run's transcript under the active workspace's `agent-transcripts/` directory (the system prompt names the path). Don't glob across `~/.cursor/projects/*/`; that reads unrelated private chats. Walk the log against what actually happened:",
+            "At the end of the run, before handing back, check the log told the truth. Read this run's transcript under the active workspace's `agent-transcripts/` directory (the system prompt names the path). Don't glob across `~/.cursor/projects/*/`. That reads unrelated private chats. Walk this run's rows against what actually happened. Each stretch of them begins at one of this run's `start` rows, or at the first row if this run created the log, and ends at the next `start` row of another run:",
             "At the end of the run, before handing back, check that the log tells the truth. Use the active harness's current conversation history or targeted session-search tool. Never search unrelated private sessions. Walk the log against what actually happened:",
         ),
         (
-            "Before handing back, you must spawn a subagent on a different model family from the one that did the work. Self-review is not a substitute; the point is fresh eyes you cannot bring yourself. The subagent reads the audit trail and the run's transcript, then flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky.",
+            "Before handing back, spawn a subagent on a different model family from the one that did the work. Self-review is not a substitute. The subagent reads the audit trail and the run's transcript, then flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky.",
             "Before handing back, spawn an independent review subagent when delegation is available. Use a different model family when the harness supports model selection; otherwise use a fresh isolated subagent. If delegation is unavailable, perform a clearly labelled independent second pass. The review reads the audit trail and available run history, then flags what the user should scrutinize. It is a risk scan, not a redo of the work.",
         ),
         (
-            "Every reply for a run that produced a trail ends with an \"Attention\" section. Lead with the reviewer's model on its own line (`reviewed by <model>`), then list each flag pointing to specific rows or moments. \"No flags\" is a valid value; the model name is not. The self-audit asks if the log told the truth; this asks what the user should still scrutinize even when it did.",
+            "Every reply for a run that produced a trail ends with an \"Attention\" section. Lead with the reviewer's model on its own line (`reviewed by <model>`), then list each flag pointing to specific rows or moments. \"No flags\" is a valid value. The model name is not.",
             "Every reply for a run that produced a trail ends with an `Attention` section. Identify the reviewer as `reviewed by <model>` when the model is known, or `reviewed by independent pass` otherwise. List each flag with a pointer to a specific row or moment. `No flags` is valid. The self-audit asks whether the log is truthful; this pass asks what the user should still scrutinize.",
         ),
     ],

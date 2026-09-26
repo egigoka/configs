@@ -1,7 +1,7 @@
 repository: https://github.com/mattpocock/skills.git
-commit: 3cca18b368ae95cdbdebbff572ccafa662551015
+commit: c55ee46073ed923f86ce59a5eb3b6d895095d1b7
 path: skills/engineering/codebase-design
 source_tree_sha256: e9eb21ca7e4106aebf08ae67954258837b40519d76ef1d83bc5db8115a19a9d4
 installed_content_sha256: 84f47688780acf3fd7fd54c77642a42f600286a1e6b4d45beec3c1b289241327
-porter_sha256: 56ffbe794c2c3fd2670c433ce3346cc5ca94943da44c64672a880b19b4f8575f
+porter_sha256: 3cdb152c0016ba34422a0de9189be62dbdfea0a798d72fd2f20ea8d1cb0c6f69
 local_transforms: move-DEEPENING.md-to-references/DEEPENING.md, move-DESIGN-IT-TWICE.md-to-references/DESIGN-IT-TWICE.md

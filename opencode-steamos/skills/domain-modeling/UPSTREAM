@@ -1,7 +1,7 @@
 repository: https://github.com/mattpocock/skills.git
-commit: 3cca18b368ae95cdbdebbff572ccafa662551015
+commit: c55ee46073ed923f86ce59a5eb3b6d895095d1b7
 path: skills/engineering/domain-modeling
 source_tree_sha256: 9d44449dcda602186cc07d958928a203b76d625273224725bd7bd179f845a6cc
 installed_content_sha256: cb9c1e9665e848b146b5acfbb942494095d526c2e34357295c72592056dc0ba2
-porter_sha256: 56ffbe794c2c3fd2670c433ce3346cc5ca94943da44c64672a880b19b4f8575f
+porter_sha256: 3cdb152c0016ba34422a0de9189be62dbdfea0a798d72fd2f20ea8d1cb0c6f69
 local_transforms: move-CONTEXT-FORMAT.md-to-references/CONTEXT-FORMAT.md, move-ADR-FORMAT.md-to-references/ADR-FORMAT.md
