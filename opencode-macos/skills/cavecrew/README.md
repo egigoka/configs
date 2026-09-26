@@ -4,7 +4,10 @@ Decision guide. When to delegate to caveman subagents instead of doing the work 
 
 ## What it does
 
-Tells the main thread when to spawn a caveman-style subagent versus the vanilla equivalent. The win: subagent tool-results inject back into main context verbatim, and caveman output is roughly 1/3 the size of vanilla prose. Across 20 delegations in one session, that is the difference between context exhaustion and finishing the task.
+Tells main thread when to spawn a caveman-style subagent. Compact return
+contracts can reduce repeated prose when results return to main context, but
+effect depends on task, agent, and delegation count. This skill publishes no
+universal reduction rate.
 
 Three subagents:
 
@@ -26,7 +29,7 @@ Triggers on phrases like "delegate to subagent", "use cavecrew", "spawn investig
 
 Locate → fix → verify (most common):
 
-1. `cavecrew-investigator` returns site list (`path:line — symbol — note`)
+1. `cavecrew-investigator` returns site list (`path:line`, symbol, note)
 2. Main thread picks 1-2 sites, hands paths to `cavecrew-builder`
 3. `cavecrew-reviewer` audits the resulting diff
 
@@ -54,8 +57,8 @@ Overrides patch only the `model:` line in the installed agent's frontmatter; the
 
 ## See also
 
-- [`SKILL.md`](./SKILL.md) — full decision matrix and output contracts
+- [`SKILL.md`](./SKILL.md): full decision matrix and output contracts
 - [`agents/cavecrew-investigator.md`](../../agents/cavecrew-investigator.md)
 - [`agents/cavecrew-builder.md`](../../agents/cavecrew-builder.md)
 - [`agents/cavecrew-reviewer.md`](../../agents/cavecrew-reviewer.md)
-- [Caveman README](../../README.md) — repo overview
+- [Caveman README](../../README.md): repo overview
