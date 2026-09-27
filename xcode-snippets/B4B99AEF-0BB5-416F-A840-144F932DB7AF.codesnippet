@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>markclass</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>// MARK: - Class/Struct Declaration
+    // MARK: - IB Outlets
+    // MARK: - Public Properties
+    // MARK: - Private Properties
+    // MARK: - Initializers
+    // MARK: - Lifecycle Methods
+    // MARK: - Deinitializer
+    // MARK: - Override Methods
+    // MARK: - Navigation
+    // MARK: - IB Actions
+    // MARK: - Public Methods
+    // MARK: - Private Methods
+    // MARK: - Error Handling
+    // MARK: - Protocol Conformance
+    // MARK: - Static Methods
+    // MARK: - Closures and Callbacks</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>B4B99AEF-0BB5-416F-A840-144F932DB7AF</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>markclass</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
