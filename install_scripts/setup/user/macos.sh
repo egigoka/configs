@@ -26,6 +26,26 @@ setup_macos_integrations() {
     launchctl load "$HOME/Library/LaunchAgents/com.egigoka.helium-tabs-backup.plist" 2>/dev/null || true
   fi
 
+  # xcode file templates (Clean Swift)
+  if [ "$(uname -s)" = "Darwin" ]; then
+    install_link "$CONFIGS_DIR/xcode-templates/Clean Swift" "$HOME/Library/Developer/Xcode/Templates/File Templates/Clean Swift"
+  fi
+
+  # xcode file templates (VIPER, Swift 6)
+  if [ "$(uname -s)" = "Darwin" ]; then
+    install_link "$CONFIGS_DIR/xcode-templates/VIPER" "$HOME/Library/Developer/Xcode/Templates/File Templates/VIPER"
+  fi
+
+  # xcode codesnippets
+  if [ "$(uname -s)" = "Darwin" ]; then
+    install_link "$CONFIGS_DIR/xcode-snippets" "$HOME/Library/Developer/Xcode/UserData/CodeSnippets"
+  fi
+
+  # xcode keybindings
+  if [ "$(uname -s)" = "Darwin" ]; then
+    install_link "$CONFIGS_DIR/xcode-keybindings" "$HOME/Library/Developer/Xcode/UserData/KeyBindings"
+  fi
+
   # Remove temporary unlocked SSH keys whenever the user's launchd session starts.
   if [ "$(uname -s)" = "Darwin" ]; then
     install_link "$CONFIGS_DIR/scripts/clean-unlocked-ssh-keys.sh" "$HOME/.scripts/clean-unlocked-ssh-keys.sh"
