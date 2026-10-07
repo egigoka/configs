@@ -1,1 +1,1 @@
-/Users/egigoka/configs/opencode-macos/commands/caveman-stats.md
+/home/egorov/configs/opencode-other/commands/caveman-stats.md

@@ -29,9 +29,10 @@ fi
 echo "Updating caveman opencode assets from upstream..."
 # --only opencode: just the opencode provider. --force: overwrite stale vendored
 # files. --non-interactive: never prompt. Pin XDG so it writes into the repo.
+# npm 12 blocks Git packages by default; allow the requested root package.
 ln -s "$opencode_dir" "$tmp/opencode"
 XDG_CONFIG_HOME="$tmp" \
-  npx -y github:JuliusBrussee/caveman -- \
+  npx -y --allow-git=root github:JuliusBrussee/caveman -- \
   --only opencode --force --non-interactive || {
     echo "caveman update failed; keeping existing vendored assets" >&2
     exit 0

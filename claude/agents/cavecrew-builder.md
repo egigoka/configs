@@ -1,1 +1,1 @@
-/Users/egigoka/configs/opencode-macos/agents/cavecrew-builder.md
+/home/egorov/configs/opencode-other/agents/cavecrew-builder.md

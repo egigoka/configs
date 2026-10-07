@@ -12,7 +12,6 @@ matt_names=(
   codebase-design
   domain-modeling
   improve-codebase-architecture
-  resolving-merge-conflicts
   wizard
   writing-for-agents
   grilling
@@ -143,7 +142,6 @@ checkout_exact "$matt_repo" "$matt_ref" "$matt_checkout" \
   skills/engineering/codebase-design \
   skills/engineering/domain-modeling \
   skills/engineering/improve-codebase-architecture \
-  skills/engineering/resolving-merge-conflicts \
   skills/engineering/wizard \
   skills/productivity/writing-for-agents \
   skills/productivity/grilling \

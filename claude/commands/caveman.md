@@ -1,1 +1,1 @@
-/Users/egigoka/configs/opencode-macos/commands/caveman.md
+/home/egorov/configs/opencode-other/commands/caveman.md

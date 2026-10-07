@@ -18,7 +18,6 @@ MATT_SKILLS = {
     "codebase-design": "skills/engineering/codebase-design",
     "domain-modeling": "skills/engineering/domain-modeling",
     "improve-codebase-architecture": "skills/engineering/improve-codebase-architecture",
-    "resolving-merge-conflicts": "skills/engineering/resolving-merge-conflicts",
     "wizard": "skills/engineering/wizard",
     "writing-for-agents": "skills/productivity/writing-for-agents",
     "grilling": "skills/productivity/grilling",
@@ -40,7 +39,7 @@ SUPPORT_RELOCATIONS: dict[str, list[tuple[str, str]]] = {
         ("DESIGN-IT-TWICE.md", "references/DESIGN-IT-TWICE.md"),
     ],
     "domain-modeling": [
-        ("CONTEXT-FORMAT.md", "references/CONTEXT-FORMAT.md"),
+        ("GLOSSARY-FORMAT.md", "references/GLOSSARY-FORMAT.md"),
         ("ADR-FORMAT.md", "references/ADR-FORMAT.md"),
     ],
     "improve-codebase-architecture": [
@@ -71,7 +70,7 @@ TRANSFORMS: dict[str, list[tuple[str, str]]] = {
             "1. Read the change. Inspect the diff, PR, commits, and every symbol it adds, changes, or deletes. Work out what now behaves differently, including effects the diff does not state explicitly. Use the available Git and hosting tools directly; `why` is optional.",
         ),
         (
-            "6. For a big or wide change, run it as an `arena`. Ask several models the same question and merge the answers. Different models catch different real bugs.",
+            "6. For a big or wide change, run it as an `arena`. Ask more than one model the same question and merge the answers. Different models catch different real bugs.",
             "6. For a big or wide change, dispatch independent review subagents in parallel when the active harness supports it, then verify and merge their findings yourself. A single-agent review remains valid when delegation is unavailable.",
         ),
         (

@@ -1,0 +1,1 @@
+/home/egorov/configs/opencode-other/commands/megacave.md

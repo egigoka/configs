@@ -1,1 +1,1 @@
-/Users/egigoka/configs/opencode-macos/commands/create-personality.md
+/home/egorov/configs/opencode-other/commands/create-personality.md

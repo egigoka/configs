@@ -67,7 +67,23 @@ sync_dir() {
 command -v python3 >/dev/null 2>&1 || retain_or_fail 'python3 is unavailable'
 
 if ! command -v xcrun >/dev/null 2>&1; then
-  retain_or_fail 'xcrun is unavailable; cannot re-export Apple skills'
+  # Hosts without Xcode can install the exports already vendored in the repo.
+  # Keep existing installations and fill only missing skills.
+  for skill_dir in "$configs_dir/opencode-macos/skills"/*/; do
+    [ -s "$skill_dir/SKILL.md" ] || continue
+    if [ "$skill_dir" != "$canonical/" ]; then
+      [ -s "$skill_dir/UPSTREAM" ] || continue
+      grep -q '^source: xcrun agent skills export' "$skill_dir/UPSTREAM" || continue
+    fi
+    name=$(basename "$skill_dir")
+    for root in "${roots[@]}"; do
+      [ -s "$root/$name/SKILL.md" ] && continue
+      sync_dir "$skill_dir" "$root/$name" || retain_or_fail "could not install vendored $root/$name"
+    done
+  done
+  all_installed || retain_or_fail 'vendored Apple skills are incomplete'
+  printf 'Apple agent skills available from vendored copies (xcrun unavailable)\n'
+  exit 0
 fi
 
 tmp_dir=$(mktemp -d "${TMPDIR:-/tmp}/apple-agent-skills.XXXXXX") || retain_or_fail 'could not create staging directory'

@@ -1,1 +1,1 @@
-/Users/egigoka/configs/opencode-macos/agents/cavecrew-investigator.md
+/home/egorov/configs/opencode-other/agents/cavecrew-investigator.md
