@@ -1,1 +1,1 @@
-/home/egorov/configs/opencode-other/agents/cavecrew-investigator.md
+/root/configs/opencode-other/agents/cavecrew-investigator.md

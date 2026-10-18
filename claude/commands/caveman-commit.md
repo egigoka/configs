@@ -1,1 +1,1 @@
-/home/egorov/configs/opencode-other/commands/caveman-commit.md
+/root/configs/opencode-other/commands/caveman-commit.md

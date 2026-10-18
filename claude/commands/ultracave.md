@@ -1,1 +1,1 @@
-/home/egorov/configs/opencode-other/commands/ultracave.md
+/root/configs/opencode-other/commands/ultracave.md

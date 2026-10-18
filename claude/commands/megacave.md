@@ -1,1 +1,1 @@
-/home/egorov/configs/opencode-other/commands/megacave.md
+/root/configs/opencode-other/commands/megacave.md

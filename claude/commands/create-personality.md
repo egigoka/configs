@@ -1,1 +1,1 @@
-/home/egorov/configs/opencode-other/commands/create-personality.md
+/root/configs/opencode-other/commands/create-personality.md

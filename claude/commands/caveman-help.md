@@ -1,1 +1,1 @@
-/home/egorov/configs/opencode-other/commands/caveman-help.md
+/root/configs/opencode-other/commands/caveman-help.md

@@ -1,1 +1,1 @@
-/home/egorov/configs/opencode-other/agents/cavecrew-builder.md
+/root/configs/opencode-other/agents/cavecrew-builder.md

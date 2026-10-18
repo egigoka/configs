@@ -1,1 +1,1 @@
-/home/egorov/configs/opencode-other/agents/cavecrew-reviewer.md
+/root/configs/opencode-other/agents/cavecrew-reviewer.md
