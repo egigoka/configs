@@ -64,7 +64,7 @@ Correct the log, not the story. The audit never edits or removes a row, even an 
 
 ## Cross-model review of the trail
 
-Before handing back, spawn an independent review subagent when delegation is available. Use a different model family when the harness supports model selection; otherwise use a fresh isolated subagent. If delegation is unavailable, perform a clearly labelled independent second pass. The review reads the audit trail and available run history, then flags what the user should scrutinize. It is a risk scan, not a redo of the work.
+Before handing back, spawn an independent review subagent when delegation is available. Use a different model family when the harness supports model selection; otherwise use a fresh isolated subagent. If delegation is unavailable, perform a clearly labelled independent second pass. The review reads the audit trail and available run history, then flags what the user should scrutinize. It is a risk scan, not a redo of the work. Pick each subagent's reasoning level and fast or standard speed for the job, per the Subagents section of the **poteto-mode** skill.
 
 - Decisions logged with weak or absent evidence.
 - Verification steps skipped or claimed without proof in the transcript.

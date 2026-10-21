@@ -56,11 +56,11 @@ SUPPORT_RELOCATIONS: dict[str, list[tuple[str, str]]] = {
 TRANSFORMS: dict[str, list[tuple[str, str]]] = {
     "code-review": [
         (
-            "The issue tracker should have been provided to you. If `docs/agents/issue-tracker.md` is missing, tell the user to run `/setup-matt-pocock-skills`.",
+            "The issue tracker should have been provided to you. If not, tell the user to run `/setup-matt-pocock-skills`.",
             "If `docs/agents/issue-tracker.md` exists, use it. Otherwise inspect issue references with the available Git and hosting tools. Do not block the review on repository-specific Matt Pocock setup.",
         ),
         (
-            "1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.), fetched via the workflow in `docs/agents/issue-tracker.md`.",
+            "1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.), fetched via the workflow in the tracker doc.",
             "1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.), fetched through `docs/agents/issue-tracker.md` when present or through the available GitHub, GitLab, or Git tools.",
         ),
     ],

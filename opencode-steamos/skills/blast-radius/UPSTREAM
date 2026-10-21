@@ -1,7 +1,7 @@
 repository: https://github.com/cursor/plugins.git
-commit: 9f451cf875ad1239912762f67741e8e5ba6ac0f1
+commit: 190d28736eff128ec94f502a22c7fe0c4b56cd37
 path: pstack/skills/blast-radius
 source_tree_sha256: b7a89ce84164a9900d6f6a52e82cc5eb070bb08e0648bdb16d967a130c19e167
 installed_content_sha256: 80c4458a20c5b82d3a1e79ba75255d76be49fa3b0214352f6008ec3ca081e81a
-porter_sha256: 415c2cb16996102df748c7d95a62e137a34f60b65ed7af8653a65e728225653b
+porter_sha256: ec48928a516fc126747a3fe12a3fb4f309abfcf5a1fd5f178a251879d9971abb
 local_transforms: portability-transform-1, portability-transform-2, portability-transform-3
