@@ -1,1 +1,1 @@
-/home/egigoka/configs/opencode-other/commands/caveman.md
+/home/rocky/configs/opencode-other/commands/caveman.md

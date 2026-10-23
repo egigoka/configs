@@ -1,1 +1,1 @@
-/home/egigoka/configs/opencode-other/commands/caveman-review.md
+/home/rocky/configs/opencode-other/commands/caveman-review.md

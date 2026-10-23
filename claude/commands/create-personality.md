@@ -1,1 +1,1 @@
-/home/egigoka/configs/opencode-other/commands/create-personality.md
+/home/rocky/configs/opencode-other/commands/create-personality.md

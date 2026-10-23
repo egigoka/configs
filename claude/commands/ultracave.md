@@ -1,1 +1,1 @@
-/home/egigoka/configs/opencode-other/commands/ultracave.md
+/home/rocky/configs/opencode-other/commands/ultracave.md

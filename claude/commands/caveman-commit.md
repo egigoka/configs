@@ -1,1 +1,1 @@
-/home/egigoka/configs/opencode-other/commands/caveman-commit.md
+/home/rocky/configs/opencode-other/commands/caveman-commit.md

@@ -1,1 +1,1 @@
-/home/egigoka/configs/opencode-other/agents/cavecrew-investigator.md
+/home/rocky/configs/opencode-other/agents/cavecrew-investigator.md

@@ -1,1 +1,1 @@
-/home/egigoka/configs/opencode-other/commands/caveman-help.md
+/home/rocky/configs/opencode-other/commands/caveman-help.md
