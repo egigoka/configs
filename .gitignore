@@ -135,3 +135,10 @@ opencode-*/openai-multi-auth-session-bindings.json
 
 # generated Graphify indexes
 graphify-out/
+
+# platform-specific generated symlinks (setup.sh links claude/* per-OS)
+claude/agents/
+claude/commands/
+claude/skills/*
+!claude/skills/sentry-cli/
+*.preinstall

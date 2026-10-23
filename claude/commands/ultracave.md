@@ -1,1 +1,0 @@
-../../opencode-other/commands/ultracave.md

@@ -1,1 +1,0 @@
-../../opencode-other/agents/cavecrew-investigator.md
