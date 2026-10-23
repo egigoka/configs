@@ -4,14 +4,22 @@
 
 configure_codex_home() {
   local codex_home=$1
-  local skill agent legacy_ultragoogle
+  local skill agent legacy_ultragoogle legacy_target legacy_resolved
 
   install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$codex_home/AGENTS.md"
   install_link "$CONFIGS_DIR/codex/codex.toml" "$codex_home/config.toml"
 
   legacy_ultragoogle="$codex_home/skills/ultragoogle"
-  if [ -L "$legacy_ultragoogle" ] && [ "$(readlink -- "$legacy_ultragoogle")" = "$CONFIGS_DIR/opencode/skills/ultragoogle" ]; then
-    rm -- "$legacy_ultragoogle"
+  if [ -L "$legacy_ultragoogle" ]; then
+    legacy_target=$(readlink -- "$legacy_ultragoogle" 2>/dev/null) || legacy_target=""
+    case "$legacy_target" in
+      "$CONFIGS_DIR/opencode/skills/ultragoogle") rm -- "$legacy_ultragoogle" ;;
+      *)
+        # Also match relative form (../../.../configs/opencode/skills/ultragoogle).
+        legacy_resolved=$(python3 -c 'import os.path,sys; p=sys.argv[1]; print(os.path.normpath(os.path.join(sys.argv[2], p)) if not os.path.isabs(p) else p)' "$legacy_target" "$(dirname -- "$legacy_ultragoogle")" 2>/dev/null) || legacy_resolved=""
+        [ -n "$legacy_resolved" ] && [ "$legacy_resolved" = "$CONFIGS_DIR/opencode/skills/ultragoogle" ] && rm -- "$legacy_ultragoogle"
+        ;;
+    esac
   fi
 
   for skill in \

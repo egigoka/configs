@@ -37,7 +37,7 @@ initialize_setup_context() {
 }
 
 install_link() {
-  local src dst parent
+  local src dst parent link_target
 
   if [ $# -ne 2 ]; then
     printf 'Usage: %s SRC DST\n' "${0##*/}" >&2
@@ -47,13 +47,22 @@ install_link() {
   src=$1
   dst=$2
 
+  dst="${dst%/}"  # strip slash at the end
   parent=$(dirname -- "$dst")
   mkdir -p -- "$parent" || return
 
-  dst="${dst%/}"  # strip slash at the end
+  # Relative target keeps username/host paths out of the link.
+  case "$src" in
+    /*)
+      link_target=$(python3 -c 'import os.path,sys; print(os.path.relpath(sys.argv[1], sys.argv[2]))' "$src" "$parent" 2>/dev/null) || link_target=$src
+      ;;
+    *)
+      link_target=$src
+      ;;
+  esac
 
   # A correct symlink needs no work.
-  if [ -L "$dst" ] && [ "$(readlink -- "$dst")" = "$src" ]; then
+  if [ -L "$dst" ] && [ "$(readlink -- "$dst")" = "$link_target" ]; then
     return 0
   fi
 
@@ -65,5 +74,5 @@ install_link() {
     fi
   fi
 
-  ln -s -- "$src" "$dst"
+  ln -s -- "$link_target" "$dst"
 }
