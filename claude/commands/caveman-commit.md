@@ -1,1 +1,1 @@
-/home/rocky/configs/opencode-other/commands/caveman-commit.md
+../../opencode-other/commands/caveman-commit.md

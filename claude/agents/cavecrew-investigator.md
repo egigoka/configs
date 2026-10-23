@@ -1,1 +1,1 @@
-/home/rocky/configs/opencode-other/agents/cavecrew-investigator.md
+../../opencode-other/agents/cavecrew-investigator.md

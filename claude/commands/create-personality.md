@@ -1,1 +1,1 @@
-/home/rocky/configs/opencode-other/commands/create-personality.md
+../../opencode-other/commands/create-personality.md

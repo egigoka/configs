@@ -1,1 +1,1 @@
-/home/rocky/configs/opencode-other/agents/cavecrew-reviewer.md
+../../opencode-other/agents/cavecrew-reviewer.md

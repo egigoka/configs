@@ -1,1 +1,1 @@
-/home/rocky/configs/opencode-other/commands/ultracave.md
+../../opencode-other/commands/ultracave.md

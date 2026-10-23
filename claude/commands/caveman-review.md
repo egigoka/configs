@@ -1,1 +1,1 @@
-/home/rocky/configs/opencode-other/commands/caveman-review.md
+../../opencode-other/commands/caveman-review.md

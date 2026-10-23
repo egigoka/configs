@@ -1,1 +1,1 @@
-/home/rocky/configs/opencode-other/commands/caveman-compress.md
+../../opencode-other/commands/caveman-compress.md

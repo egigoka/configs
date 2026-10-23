@@ -1,1 +1,1 @@
-/home/rocky/configs/opencode-other/commands/megacave.md
+../../opencode-other/commands/megacave.md
