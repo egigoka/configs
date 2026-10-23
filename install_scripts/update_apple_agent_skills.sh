@@ -42,7 +42,7 @@ sync_dir() {
   dst=$2
   parent=$(dirname "$dst")
   mkdir -p "$parent" || return 1
-  if [ -d "$dst" ] && [ ! -L "$dst" ] && diff -r -q -x '.DS_Store' "$src" "$dst" >/dev/null 2>&1; then
+  if [ -d "$dst" ] && [ ! -L "$dst" ] && diff -r -q -x '.DS_Store' -x 'UPSTREAM' "$src" "$dst" >/dev/null 2>&1; then
     printf 'current -> %s\n' "$dst"
     return 0
   fi
