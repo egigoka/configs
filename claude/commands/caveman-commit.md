@@ -1,1 +1,1 @@
-/root/configs/opencode-other/commands/caveman-commit.md
+/home/egigoka/configs/opencode-other/commands/caveman-commit.md

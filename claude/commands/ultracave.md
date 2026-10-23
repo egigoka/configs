@@ -1,1 +1,1 @@
-/root/configs/opencode-other/commands/ultracave.md
+/home/egigoka/configs/opencode-other/commands/ultracave.md

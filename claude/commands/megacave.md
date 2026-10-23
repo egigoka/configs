@@ -1,1 +1,1 @@
-/root/configs/opencode-other/commands/megacave.md
+/home/egigoka/configs/opencode-other/commands/megacave.md
