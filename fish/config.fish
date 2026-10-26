@@ -205,15 +205,6 @@ if status is-interactive
   abbr --add codex2 --position command env CODEX_HOME=\$HOME/.codex-2 codex
   abbr --add codex3 --position command env CODEX_HOME=\$HOME/.codex-3 codex
 
-  if test -x $HOME/.local/bin/opencode-memory
-    function opencode
-      # Prefer the newer standalone OpenCode build over the older Homebrew
-      # formula. opencode-memory resolves the real binary from PATH.
-      set -lx PATH $HOME/.local/bin $PATH
-      command opencode-memory $argv
-    end
-  end
-  
   # zellij
   # alias z in function
   abbr --add zls --position command zellij ls | grep -v "attach to resurrect"

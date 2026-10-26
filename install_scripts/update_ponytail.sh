@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Ensure @dietrichgeber/ponytail is in opencode.json plugin list.
+# Ensure @dietrichgebert/ponytail@5.3.2 is in opencode.json V2 plugin list.
 
 set -e
 
@@ -16,12 +16,12 @@ if ! command -v jq >/dev/null 2>&1; then
   exit 0
 fi
 
-if jq -e '.plugin | index("@dietrichgeber/ponytail")' "$json" >/dev/null 2>&1; then
+if jq -e '.plugins | index("@dietrichgebert/ponytail@5.3.2")' "$json" >/dev/null 2>&1; then
   echo "ponytail already in opencode.json, skipping"
   exit 0
 fi
 
 tmp=$(mktemp)
-jq '.plugin += ["@dietrichgeber/ponytail"]' "$json" > "$tmp"
+jq '.plugins += ["@dietrichgebert/ponytail@5.3.2"]' "$json" > "$tmp"
 mv "$tmp" "$json"
-echo "Added @dietrichgeber/ponytail to opencode.json"
+echo "Added @dietrichgebert/ponytail@5.3.2 to opencode.json"

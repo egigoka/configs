@@ -125,6 +125,16 @@ opencode-*/node_modules/
 opencode-*/package.json
 opencode-*/package-lock.json
 opencode-*/bun.lock
+opencode-*/service.json
+opencode-*/service-daily.json
+kilo-*/service.json
+kilo-*/service-daily.json
+kilo-*/openai-accounts.json
+kilo-*/codex-accounts.json
+kilo-*/codex-accounts.json.lock
+kilo-*/openai-multi-auth-session-bindings.json
+kilo-*/node_modules/
+kilo-*/cache/
 
 # fontconfig cache-binding artifacts
 .uuid
@@ -135,6 +145,12 @@ opencode-*/openai-multi-auth-session-bindings.json
 
 # generated Graphify indexes
 graphify-out/
+
+# runtime-generated, no secrets but noise/privacy
+.opencode/
+mpv/watch_history.jsonl
+mpv/watch_later/
+opencode-*/.caveman-mode-log.jsonl
 
 # platform-specific generated symlinks (setup.sh links claude/* per-OS)
 claude/agents/

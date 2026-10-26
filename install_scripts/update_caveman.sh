@@ -17,6 +17,8 @@ opencode_dir="${1:-$default_opencode_dir}"
 tmp="$(mktemp -d)"
 
 cleanup() {
+  [ ! -f "$tmp/config.json" ] || cp "$tmp/config.json" "$opencode_dir/opencode.json"
+  [ ! -f "$tmp/server.js" ] || cp "$tmp/server.js" "$opencode_dir/plugins/caveman/server.js"
   rm -rf "$tmp"
 }
 trap cleanup EXIT
@@ -30,6 +32,10 @@ echo "Updating caveman opencode assets from upstream..."
 # --only opencode: just the opencode provider. --force: overwrite stale vendored
 # files. --non-interactive: never prompt. Pin XDG so it writes into the repo.
 # npm 12 blocks Git packages by default; allow the requested root package.
+cp "$opencode_dir/opencode.json" "$tmp/config.json"
+if [ -f "$opencode_dir/plugins/caveman/server.js" ]; then
+  cp "$opencode_dir/plugins/caveman/server.js" "$tmp/server.js"
+fi
 ln -s "$opencode_dir" "$tmp/opencode"
 XDG_CONFIG_HOME="$tmp" \
   npx -y --allow-git=root github:JuliusBrussee/caveman -- \

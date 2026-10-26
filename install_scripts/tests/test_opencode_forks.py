@@ -28,15 +28,18 @@ class OpenCodeForkSetupTests(unittest.TestCase):
         self.assertIn('checkout="$HOME/.local/share/opencode-openai-multi-auth"', source)
         self.assertIn("install_opencode_openai_multi_auth_fork || return", source)
 
-    def test_configs_load_the_built_multi_auth_fork_through_portable_shim(self) -> None:
+    def test_configs_load_v2_ports_and_preserve_kilo(self) -> None:
+        import json
         for config_dir in CONFIG_DIRS:
-            config = (config_dir / "opencode.json").read_text()
-            self.assertIn('"./plugins/openai-multi-auth-fork.js"', config)
-            self.assertNotIn('"opencode-openai-multi-auth"', config)
-            shim = (config_dir / "plugins/openai-multi-auth-fork.js").read_text()
-            self.assertIn('homedir()', shim)
-            self.assertIn('".local", "share", "opencode-openai-multi-auth", "dist", "index.js"', shim)
-            self.assertIn("OpenAIAuthPlugin", shim)
+            config = json.loads((config_dir / "opencode.json").read_text())
+            self.assertNotIn("plugin", config)
+            self.assertIn("./v2-plugins/opencode-openai-multi-auth-v2", config["plugins"])
+            shim = (config_dir / "v2-plugins/opencode-openai-multi-auth-v2/server.js").read_text()
+            self.assertIn("homedir()", shim)
+            self.assertIn("opencode-v2-plugins", shim)
+            kilo = ROOT / config_dir.name.replace("opencode-", "kilo-")
+            self.assertIn("plugin", json.loads((kilo / "opencode.json").read_text()))
+            self.assertTrue((kilo / "plugins/openai-multi-auth-fork.js").exists())
 
     def test_fish_caches_generated_integrations_and_avoids_local_pstree(self) -> None:
         config = (ROOT / "fish/config.fish").read_text()

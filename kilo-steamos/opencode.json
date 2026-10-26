@@ -1,0 +1,108 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "subagent_depth": 1,
+  "plugin": [
+    "opencode-claude-memory",
+    "opencode-throughput",
+    "opencode-log-sanitizer",
+    "@tarquinen/opencode-dcp@latest",
+    "@atonev/opencode-short-term-memory@latest",
+    "./plugins/caveman/plugin.js",
+    "@dietrichgeber/ponytail",
+    "./plugins/openai-multi-auth-fork.js"
+  ],
+  "provider": {
+    "openai": {
+      "options": {
+        "reasoningEffort": "medium",
+        "reasoningSummary": "auto",
+        "textVerbosity": "medium",
+        "include": [
+          "reasoning.encrypted_content"
+        ],
+        "store": false
+      }
+    }
+  },
+  "mcp": {
+    "cua-driver": {
+      "type": "local",
+      "command": [
+        "cua-driver",
+        "mcp"
+      ],
+      "enabled": true
+    },
+    "mobile-mcp": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@mobilenext/mobile-mcp@latest"
+      ],
+      "environment": {
+        "MOBILEMCP_DISABLE_TELEMETRY": "1"
+      },
+      "enabled": true
+    },
+    "android-studio": {
+      "type": "remote",
+      "url": "http://127.0.0.1:64342/stream",
+      "enabled": true
+    },
+    "sentry": {
+      "type": "remote",
+      "url": "https://mcp.sentry.dev/mcp",
+      "oauth": {}
+    }
+  },
+  "experimental": {
+    "mcp_timeout": 120000
+  },
+  "permission": {
+    "*": "ask",
+    "read": {
+      "*": "allow",
+      "*.env": "deny",
+      "*.env.*": "deny",
+      "*.env.example": "allow",
+      "*secrets.py": "deny",
+      "*secret*": "deny",
+      "*token*": "deny",
+      "*.key": "deny",
+      "*.pem": "deny"
+    },
+    "glob": "allow",
+    "grep": "allow",
+    "todowrite": "allow",
+    "webfetch": "allow",
+    "skill": "allow",
+    "bash": {
+      "*": "ask",
+      "basename": "allow",
+      "date": "allow",
+      "dirname": "allow",
+      "false": "allow",
+      "file": "allow",
+      "find": "allow",
+      "graphify *": "allow",
+      "git status": "allow",
+      "rg": "allow",
+      "ripgrep": "allow",
+      "grep": "allow",
+      "id": "allow",
+      "ls": "allow",
+      "ls *": "allow",
+      "printf": "allow",
+      "python3 -m py_compile": "allow",
+      "pwd": "allow",
+      "realpath": "allow",
+      "rocketsim *": "allow",
+      "true": "allow",
+      "uname": "allow",
+      "wc": "allow",
+      "whoami": "allow",
+      "which": "allow"
+    }
+  }
+}

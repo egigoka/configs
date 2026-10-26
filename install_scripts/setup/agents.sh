@@ -10,6 +10,6 @@ source "$AGENT_SETUP_DIR/agents/configs.sh"
 unset AGENT_SETUP_DIR
 
 install_agent_tools() {
-  install_opencode_tools
+  install_opencode_tools || return
   install_usage_tui
 }

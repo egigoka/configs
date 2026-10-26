@@ -112,54 +112,17 @@ install_opencode_openai_multi_auth_fork() {
   fi
 }
 
-install_opencode_memory_fork() {
-  local repo_url=https://github.com/egigoka/opencode-claude-memory.git
-  local checkout="$HOME/.local/share/opencode-claude-memory"
-  local origin_url
-
-  if [ -e "$checkout" ] && [ ! -d "$checkout/.git" ]; then
-    printf 'Refusing to replace non-git path: %s\n' "$checkout" >&2
-    return 1
-  fi
-
-  if [ ! -d "$checkout/.git" ]; then
-    mkdir -p -- "$(dirname -- "$checkout")" || return
-    git clone --filter=blob:none --single-branch --branch main "$repo_url" "$checkout" || return
-  else
-    origin_url=$(git -C "$checkout" remote get-url origin 2>/dev/null) || return
-    case "$origin_url" in
-      "$repo_url"|git@github.com:egigoka/opencode-claude-memory.git) ;;
-      *)
-        printf 'Unexpected opencode-memory origin at %s: %s\n' "$checkout" "$origin_url" >&2
-        return 1
-        ;;
-    esac
-  fi
-
-  git -C "$checkout" fetch --prune origin main || return
-  git -C "$checkout" checkout --detach --force origin/main || return
-  install_link "$checkout/bin/opencode-memory" "$HOME/.local/bin/opencode-memory" || return
-
-  "$HOME/.local/bin/opencode-memory" install
-}
-
 install_opencode_tools() {
   configure_rocketsim_agent
   configure_graphify_agent
 
   install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/opencode"
-  install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/kilo"
+  install_link "${OPENCODE_CONFIG_DIR/opencode-/kilo-}" "$HOME/.config/kilo"
   install_link "$HOME/.local/share/opencode/auth.json" "$HOME/.local/share/kilo/auth.json"
 
   export PATH="$HOME/.local/bin:$PATH"
 
-  if [ "$SETUP_OS" != Darwin ]; then
-    bash "$CONFIGS_DIR/install_scripts/install_opencode.sh"
-
-    if ! command -v opencode >/dev/null 2>&1; then
-      npm i -g opencode-ai@latest
-    fi
-  fi
+  bash "$CONFIGS_DIR/install_scripts/install_opencode.sh" || return
 
   local kilo_cli_version=7.4.11
   if ! command -v kilo >/dev/null 2>&1 || [ "$(kilo --version 2>/dev/null)" != "$kilo_cli_version" ]; then
@@ -215,6 +178,6 @@ install_opencode_tools() {
   # "openai" and steals requests from opencode-openai-multi-auth, causing
   # 404 {"detail":"Not Found"}. Only one openai auth plugin may be enabled.
   install_opencode_openai_multi_auth_fork || return
-  install_opencode_memory_fork || return
+  bash "$CONFIGS_DIR/install_scripts/install_opencode_plugins.sh" || return
 
 }

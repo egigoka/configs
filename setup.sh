@@ -26,7 +26,7 @@ fi
 
 prepare_host_packages || exit 1
 setup_platform_prerequisites || exit 1
-install_agent_tools
+install_agent_tools || exit 1
 setup_platform_integrations
 
 install_usage

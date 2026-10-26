@@ -617,8 +617,5 @@
 
 export THEOS=~/theos
 
-# >>> opencode-memory auto-initialization >>>
-opencode() {
-  command opencode-memory "$@"
-}
-# <<< opencode-memory auto-initialization <<<
+# Prefer OpenCode V2 over package-manager V1 builds.
+export PATH="$HOME/.opencode/bin:$HOME/.local/bin:$PATH"
