@@ -75,9 +75,9 @@ configure_caveman_session_models() {
   python3 "$SETUP_DIR/agents/configure_caveman.py" "$1"
 }
 
-install_opencode_openai_multi_auth_fork() {
-  local repo_url=https://github.com/egigoka/opencode-openai-multi-auth.git
-  local checkout="$HOME/.local/share/opencode-openai-multi-auth"
+install_opencode_codex_auth_fork() {
+  local repo_url=https://github.com/egigoka/opencode-codex-auth.git
+  local checkout="$HOME/.local/share/opencode-codex-auth"
   local origin_url
 
   if [ -e "$checkout" ] && [ ! -d "$checkout/.git" ]; then
@@ -91,9 +91,9 @@ install_opencode_openai_multi_auth_fork() {
   else
     origin_url=$(git -C "$checkout" remote get-url origin 2>/dev/null) || return
     case "$origin_url" in
-      "$repo_url"|git@github.com:egigoka/opencode-openai-multi-auth.git) ;;
+      "$repo_url"|git@github.com:egigoka/opencode-codex-auth.git) ;;
       *)
-        printf 'Unexpected opencode-openai-multi-auth origin at %s: %s\n' "$checkout" "$origin_url" >&2
+        printf 'Unexpected opencode-codex-auth origin at %s: %s\n' "$checkout" "$origin_url" >&2
         return 1
         ;;
     esac
@@ -107,7 +107,7 @@ install_opencode_openai_multi_auth_fork() {
   ) || return
 
   if [ ! -f "$checkout/dist/index.js" ]; then
-    printf 'opencode-openai-multi-auth build did not produce %s\n' "$checkout/dist/index.js" >&2
+    printf 'opencode-codex-auth build did not produce %s\n' "$checkout/dist/index.js" >&2
     return 1
   fi
 }
@@ -174,10 +174,10 @@ install_opencode_tools() {
   # config's claude-integration.json.bak before uncommenting this command.
   # npm install -g opencode-with-claude
 
-  # NOTE: opencode-codex-auth (v1.x) was removed: it also registers provider
-  # "openai" and steals requests from opencode-openai-multi-auth, causing
-  # 404 {"detail":"Not Found"}. Only one openai auth plugin may be enabled.
-  install_opencode_openai_multi_auth_fork || return
+  # NOTE: opencode-openai-multi-auth was replaced by egigoka/opencode-codex-auth
+  # (v2.x): both register provider "openai", so only one auth plugin may be
+  # enabled. Codex-auth won: native Codex OAuth with multi-account rotation.
+  install_opencode_codex_auth_fork || return
   bash "$CONFIGS_DIR/install_scripts/install_opencode_plugins.sh" || return
 
 }

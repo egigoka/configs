@@ -32,7 +32,7 @@
     "@tarquinen/opencode-dcp@3.2.0",
     "./v2-plugins/opencode-short-term-memory-v2",
     "@dietrichgebert/ponytail@5.3.2",
-    "./v2-plugins/opencode-openai-multi-auth-v2",
+    "./v2-plugins/opencode-codex-auth",
     "./plugins/caveman"
   ],
   "providers": {
