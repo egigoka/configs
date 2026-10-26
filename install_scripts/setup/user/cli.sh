@@ -31,6 +31,9 @@ setup_cli_configs() {
 
   # starship
   install_link "$CONFIGS_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
+
+  # telegram notifier (needs ~/.scripts/telegram_secrets.py with token/chatid, never committed)
+  install_link "$CONFIGS_DIR/scripts/notify.py" "$HOME/.scripts/notify.py"
 }
 
 setup_file_listing_config() {
