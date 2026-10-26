@@ -33,6 +33,12 @@ PSTACK_SKILLS = {
     "principle-encode-lessons-in-structure": "pstack/skills/principle-encode-lessons-in-structure",
 }
 
+TSTACK_SKILLS = {
+    "sol-loop": "skills/sol-loop",
+    "full-send": "skills/full-send",
+    "full-stop": "skills/full-stop",
+}
+
 SUPPORT_RELOCATIONS: dict[str, list[tuple[str, str]]] = {
     "codebase-design": [
         ("DEEPENING.md", "references/DEEPENING.md"),
@@ -259,6 +265,8 @@ def main() -> None:
     parser.add_argument("--matt-ref", required=True)
     parser.add_argument("--pstack-root", type=Path, required=True)
     parser.add_argument("--pstack-ref", required=True)
+    parser.add_argument("--tstack-root", type=Path, required=True)
+    parser.add_argument("--tstack-ref", required=True)
     parser.add_argument("--configs-dir", type=Path, required=True)
     parser.add_argument("--hermes-home", type=Path, required=True)
     args = parser.parse_args()
@@ -268,10 +276,13 @@ def main() -> None:
         prepared: dict[str, Path] = {}
         matt_license = args.matt_root / "LICENSE"
         pstack_license = args.pstack_root / "pstack/LICENSE"
+        tstack_license = args.tstack_root / "LICENSE"
         if "MIT License" not in matt_license.read_text(encoding="utf-8"):
             raise ValueError("Matt Pocock repository license is not MIT")
         if "MIT License" not in pstack_license.read_text(encoding="utf-8"):
             raise ValueError("pstack license is not MIT")
+        if "MIT License" not in tstack_license.read_text(encoding="utf-8"):
+            raise ValueError("tstack repository license is not MIT")
 
         for name, source_path in MATT_SKILLS.items():
             prepared[name] = prepare_skill(
@@ -290,6 +301,16 @@ def main() -> None:
                 source_repo="https://github.com/cursor/plugins.git",
                 source_ref=args.pstack_ref,
                 license_path=pstack_license,
+                name=name,
+                staging_root=staging_root,
+            )
+        for name, source_path in TSTACK_SKILLS.items():
+            prepared[name] = prepare_skill(
+                source_root=args.tstack_root,
+                source_path=source_path,
+                source_repo="https://github.com/t3dotgg/tstack.git",
+                source_ref=args.tstack_ref,
+                license_path=tstack_license,
                 name=name,
                 staging_root=staging_root,
             )

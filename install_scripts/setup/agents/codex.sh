@@ -41,7 +41,10 @@ configure_codex_home() {
     modernize-tests \
     swiftui-specialist \
     swiftui-whats-new-27 \
-    uikit-app-modernization
+    uikit-app-modernization \
+    sol-loop \
+    full-send \
+    full-stop
   do
     install_link "$OPENCODE_CONFIG_DIR/skills/$skill" "$codex_home/skills/$skill"
   done

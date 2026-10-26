@@ -6,6 +6,7 @@ hermes_home=${HERMES_HOME:-"$HOME/.hermes"}
 porter="$configs_dir/install_scripts/port_selected_agent_skills.py"
 matt_repo=https://github.com/mattpocock/skills.git
 pstack_repo=https://github.com/cursor/plugins.git
+tstack_repo=https://github.com/t3dotgg/tstack.git
 
 matt_names=(
   code-review
@@ -25,6 +26,11 @@ pstack_names=(
   principle-boundary-discipline
   principle-encode-lessons-in-structure
 )
+tstack_names=(
+  sol-loop
+  full-send
+  full-stop
+)
 roots=(
   "$configs_dir/opencode-macos/skills"
   "$configs_dir/opencode-other/skills"
@@ -35,7 +41,7 @@ roots=(
 all_installed() {
   local root name
   for root in "${roots[@]}"; do
-    for name in "${matt_names[@]}" "${pstack_names[@]}"; do
+    for name in "${matt_names[@]}" "${pstack_names[@]}" "${tstack_names[@]}"; do
       [ -s "$root/$name/SKILL.md" ] || return 1
       [ -s "$root/$name/LICENSE" ] || return 1
       [ -s "$root/$name/UPSTREAM" ] || return 1
@@ -66,7 +72,7 @@ hash_file() {
 }
 
 all_current() {
-  local matt_ref=$1 pstack_ref=$2 porter_ref=$3 root name actual
+  local matt_ref=$1 pstack_ref=$2 tstack_ref=$3 porter_ref=$4 root name actual
   all_installed || return 1
   for root in "${roots[@]}"; do
     for name in "${matt_names[@]}"; do
@@ -78,6 +84,12 @@ all_current() {
     for name in "${pstack_names[@]}"; do
       actual=$(read_field "$root/$name/UPSTREAM" commit) || return 1
       [ "$actual" = "$pstack_ref" ] || return 1
+      actual=$(read_field "$root/$name/UPSTREAM" porter_sha256) || return 1
+      [ "$actual" = "$porter_ref" ] || return 1
+    done
+    for name in "${tstack_names[@]}"; do
+      actual=$(read_field "$root/$name/UPSTREAM" commit) || return 1
+      [ "$actual" = "$tstack_ref" ] || return 1
       actual=$(read_field "$root/$name/UPSTREAM" porter_sha256) || return 1
       [ "$actual" = "$porter_ref" ] || return 1
     done
@@ -124,9 +136,10 @@ porter_ref=$(hash_file "$porter") || retain_or_fail 'no SHA-256 utility is avail
 
 matt_ref=$(resolve_ref "$matt_repo") || retain_or_fail 'could not resolve mattpocock/skills main to an exact commit'
 pstack_ref=$(resolve_ref "$pstack_repo") || retain_or_fail 'could not resolve cursor/plugins main to an exact commit'
+tstack_ref=$(resolve_ref "$tstack_repo") || retain_or_fail 'could not resolve t3dotgg/tstack main to an exact commit'
 
-if all_current "$matt_ref" "$pstack_ref" "$porter_ref"; then
-  printf 'Selected agent skills already current at matt=%s pstack=%s\n' "$matt_ref" "$pstack_ref"
+if all_current "$matt_ref" "$pstack_ref" "$tstack_ref" "$porter_ref"; then
+  printf 'Selected agent skills already current at matt=%s pstack=%s tstack=%s\n' "$matt_ref" "$pstack_ref" "$tstack_ref"
   exit 0
 fi
 
@@ -136,6 +149,7 @@ trap cleanup EXIT INT TERM
 
 matt_checkout="$temporary/matt"
 pstack_checkout="$temporary/pstack"
+tstack_checkout="$temporary/tstack"
 
 checkout_exact "$matt_repo" "$matt_ref" "$matt_checkout" \
   skills/engineering/code-review \
@@ -157,13 +171,21 @@ checkout_exact "$pstack_repo" "$pstack_ref" "$pstack_checkout" \
   pstack/skills/principle-encode-lessons-in-structure \
   || retain_or_fail 'could not fetch the selected pstack skill directories'
 
+checkout_exact "$tstack_repo" "$tstack_ref" "$tstack_checkout" \
+  skills/sol-loop \
+  skills/full-send \
+  skills/full-stop \
+  || retain_or_fail 'could not fetch the selected tstack skill directories'
+
 python3 "$porter" \
   --matt-root "$matt_checkout" \
   --matt-ref "$matt_ref" \
   --pstack-root "$pstack_checkout" \
   --pstack-ref "$pstack_ref" \
+  --tstack-root "$tstack_checkout" \
+  --tstack-ref "$tstack_ref" \
   --configs-dir "$configs_dir" \
   --hermes-home "$hermes_home" \
   || retain_or_fail 'selected skill validation, portability transforms, or installation failed'
 
-printf 'Selected agent skills updated at matt=%s pstack=%s\n' "$matt_ref" "$pstack_ref"
+printf 'Selected agent skills updated at matt=%s pstack=%s tstack=%s\n' "$matt_ref" "$pstack_ref" "$tstack_ref"
