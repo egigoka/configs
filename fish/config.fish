@@ -435,12 +435,17 @@ if status is-interactive
     set _cache_base "$HOME/.cache"
   end
   set -l _dircolors_term (string replace -ra '[^A-Za-z0-9._-]' '_' -- "$TERM")
+  # Empty/dumb TERM yields a ~20-byte stub (empty LS_COLORS) that would then
+  # be reused by every TERM-less shell. Fall back to a full palette instead.
+  if test -z "$_dircolors_term" -o "$_dircolors_term" = dumb
+    set _dircolors_term xterm-256color
+  end
   set -l _dircolors_cache "$_cache_base/fish/generated-init/v1-dircolors-$_dircolors_term-$version.fish"
   if test -n "$_dircolors_binary"; and test -f "$_dircolors_source"
     if not test -s "$_dircolors_cache"; or test "$_dircolors_binary" -nt "$_dircolors_cache"; or test "$_dircolors_source" -nt "$_dircolors_cache"
       command mkdir -p (dirname "$_dircolors_cache")
       set -l _dircolors_temp (command mktemp "$_dircolors_cache.XXXXXX")
-      if command "$_dircolors_binary" -c "$_dircolors_source" >"$_dircolors_temp"
+      if env TERM=$_dircolors_term command "$_dircolors_binary" -c "$_dircolors_source" >"$_dircolors_temp"
         command mv -f "$_dircolors_temp" "$_dircolors_cache"
       else
         command rm -f "$_dircolors_temp"
