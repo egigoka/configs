@@ -3,5 +3,5 @@ commit: 99b609a72323b70204eab407c622f436e858e112
 path: pstack/skills/show-me-your-work
 source_tree_sha256: b4c9eb95b22fd9020429bd030e4cb38cb33ac363d8f55eb5d240a3db8805b287
 installed_content_sha256: 60e367d597b34ee112adca85f52d4d531ab6a97cfeb6d6150b1ddff3fa3401a3
-porter_sha256: cd6724367b7ffd98002e9501d980bfc7343f8b35cc317632862a0d26fd8efdf2
+porter_sha256: 64009283adaada7d01a1a7bc6b9735a8b55dcb5658f50fd80fb41177f190e5b0
 local_transforms: portability-transform-1, portability-transform-2, portability-transform-3, portability-transform-4

@@ -37,6 +37,9 @@ TSTACK_SKILLS = {
     "sol-loop": "skills/sol-loop",
     "full-send": "skills/full-send",
     "full-stop": "skills/full-stop",
+    "file-pr": "skills/file-pr",
+    "babysit-pr": "skills/babysit-pr",
+    "leaving-pr-comments": "skills/leaving-pr-comments",
 }
 
 SUPPORT_RELOCATIONS: dict[str, list[tuple[str, str]]] = {

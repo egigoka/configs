@@ -44,7 +44,10 @@ configure_codex_home() {
     uikit-app-modernization \
     sol-loop \
     full-send \
-    full-stop
+    full-stop \
+    file-pr \
+    babysit-pr \
+    leaving-pr-comments
   do
     install_link "$OPENCODE_CONFIG_DIR/skills/$skill" "$codex_home/skills/$skill"
   done

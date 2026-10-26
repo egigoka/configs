@@ -3,5 +3,5 @@ commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
 path: skills/engineering/codebase-design
 source_tree_sha256: 637100872efb8d8c77d2cde5f1d609c9fe5b4b4e763691a53cebbf944ac0153b
 installed_content_sha256: af4d729cb60c7f12eb731ddb7c05db5d57d3d96f71e8fac5dc63b13791526e08
-porter_sha256: cd6724367b7ffd98002e9501d980bfc7343f8b35cc317632862a0d26fd8efdf2
+porter_sha256: 64009283adaada7d01a1a7bc6b9735a8b55dcb5658f50fd80fb41177f190e5b0
 local_transforms: move-DEEPENING.md-to-references/DEEPENING.md, move-DESIGN-IT-TWICE.md-to-references/DESIGN-IT-TWICE.md

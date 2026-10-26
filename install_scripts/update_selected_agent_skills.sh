@@ -30,6 +30,9 @@ tstack_names=(
   sol-loop
   full-send
   full-stop
+  file-pr
+  babysit-pr
+  leaving-pr-comments
 )
 roots=(
   "$configs_dir/opencode-macos/skills"
@@ -175,6 +178,9 @@ checkout_exact "$tstack_repo" "$tstack_ref" "$tstack_checkout" \
   skills/sol-loop \
   skills/full-send \
   skills/full-stop \
+  skills/file-pr \
+  skills/babysit-pr \
+  skills/leaving-pr-comments \
   || retain_or_fail 'could not fetch the selected tstack skill directories'
 
 python3 "$porter" \

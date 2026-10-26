@@ -1,0 +1,7 @@
+repository: https://github.com/t3dotgg/tstack.git
+commit: 7de017b3fc9d50c03cf3ecb98fb71e0ca65a78bd
+path: skills/babysit-pr
+source_tree_sha256: e631b46d602f11337c6bce173ada9ea383ade8b29e426d8ae84059642e8477bd
+installed_content_sha256: 31f2eaee87988bdaffa1e98ce117db8f294955f98fc553816af80b7d57d66c3d
+porter_sha256: 64009283adaada7d01a1a7bc6b9735a8b55dcb5658f50fd80fb41177f190e5b0
+local_transforms: none
