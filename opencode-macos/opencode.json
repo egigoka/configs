@@ -51,6 +51,14 @@
         "type": "remote",
         "url": "https://mcp.sentry.dev/mcp",
         "oauth": {}
+      },
+      "rea": {
+        "type": "local",
+        "command": [
+          "/Users/egigoka/.npm-global/bin/rea",
+          "mcp"
+        ],
+        "disabled": false
       }
     },
     "timeout": {
