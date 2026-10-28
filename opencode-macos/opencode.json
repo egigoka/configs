@@ -55,7 +55,7 @@
       "rea": {
         "type": "local",
         "command": [
-          "/Users/egigoka/.npm-global/bin/rea",
+          "rea",
           "mcp"
         ],
         "disabled": false

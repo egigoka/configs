@@ -159,3 +159,4 @@ claude/skills/*
 !claude/skills/sentry-cli/
 *.preinstall
 *.rea.backup
+*.rea.backup.*

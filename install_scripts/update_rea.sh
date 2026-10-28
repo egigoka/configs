@@ -97,6 +97,20 @@ OPENCODE_CONFIG_DIR="$opencode_dir" rea setup \
   echo "Warning: rea setup exited nonzero; verifying registrations" >&2
 }
 
+# rea setup writes an absolute binary path; these files are shared across
+# hosts, so keep the bare command and let PATH resolve it.
+python3 - "$configs_dir/codex/codex.toml" "$opencode_dir/opencode.json" <<'PY'
+import re, sys
+for path in sys.argv[1:]:
+    try:
+        text = open(path).read()
+    except FileNotFoundError:
+        continue
+    fixed = re.sub(r'"/[^"\n]*/rea"', '"rea"', text)
+    if fixed != text:
+        open(path, "w").write(fixed)
+PY
+
 fail=0
 python3 - "$opencode_dir/opencode.json" <<'PY' || fail=1
 import json, sys
