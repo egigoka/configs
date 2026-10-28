@@ -1,5 +1,5 @@
 repository: https://github.com/mattpocock/skills.git
-commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+commit: 59db609eb1e18aaf59b63284d0e52255aff0c63c
 path: skills/engineering/domain-modeling
 source_tree_sha256: 9c5c1b2a3448f3c1193d85d49ec09c35c0c6e680d053556d34d4950eadb31f3b
 installed_content_sha256: e006b97d3e690b99474fd3b13527889aceb3c85d4613d6f22c690b9fe14f9a7d

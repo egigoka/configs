@@ -1,6 +1,8 @@
 commit messages should be 1 liners
 use simple git commit -m "message" format, do NOT use heredoc/EOF for commit messages
 
+after long process is done, notify user by using `~/.scripts/notify.py your message`
+
 <!-- caveman-begin -->
 Respond terse like smart caveman. All technical substance stay. Only fluff die.
 

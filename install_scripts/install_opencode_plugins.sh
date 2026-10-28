@@ -21,6 +21,7 @@ mkdir -p "$root"
 
 while read -r name revision; do
   [ -n "$name" ] || continue
+  [ -n "${revision:-}" ] || revision=main
   checkout="$root/$name"
   repo="egigoka/$name"
   if [ ! -e "$checkout" ]; then
@@ -48,7 +49,7 @@ while read -r name revision; do
     exit 1
   fi
   git -C "$checkout" fetch origin "$revision"
-  git -C "$checkout" checkout --detach "$revision"
+  git -C "$checkout" checkout --detach "origin/$revision"
   (
     cd "$checkout"
     npm ci --ignore-scripts --no-audit --no-fund

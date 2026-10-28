@@ -1,7 +1,16 @@
 #!/bin/bash
 set -euo pipefail
 
-version=0.7.1
+# Installs the latest cua-driver-rs release. Pin via CUA_DRIVER_VERSION=x.y.z.
+resolve_version() {
+  if [ -n "${CUA_DRIVER_VERSION:-}" ]; then printf '%s\n' "$CUA_DRIVER_VERSION"; return 0; fi
+  curl -fsSL "https://api.github.com/repos/trycua/cua/releases?per_page=50" |
+    python3 -c 'import json,sys; print(next(r["tag_name"] for r in json.load(sys.stdin) if r["tag_name"].startswith("cua-driver-rs-v")))' |
+    sed 's/^cua-driver-rs-v//'
+}
+
+version=$(resolve_version)
+[ -n "$version" ] || { printf 'Could not resolve cua-driver-rs version\n' >&2; exit 1; }
 tag="cua-driver-rs-v$version"
 base_url="https://github.com/trycua/cua/releases/download/$tag"
 
@@ -15,17 +24,14 @@ arch=$(uname -m)
 case "$os-$arch" in
   Darwin-arm64|Darwin-aarch64|Darwin-x86_64)
     archive="cua-driver-rs-$version-darwin-universal.tar.gz"
-    checksum="3bd574f162bf293089ca9d28653c8ac2b869f1577a15b92ff95203c6279a08a1"
     target="darwin-universal"
     ;;
   Linux-x86_64|Linux-amd64)
     archive="cua-driver-rs-$version-linux-x86_64-binary.tar.gz"
-    checksum="157dd2d037374250aeca36a0250149854f80f2a62d954e58e89f23d0256fa2eb"
     target="x86_64-unknown-linux-gnu"
     ;;
   Linux-arm64|Linux-aarch64)
     archive="cua-driver-rs-$version-linux-arm64-binary.tar.gz"
-    checksum="1ce73e6f128a7857e9695f55862219d515021fc95027d7de1e7d7706aa4e68e0"
     target="aarch64-unknown-linux-gnu"
     ;;
   *)
@@ -39,14 +45,18 @@ trap 'rm -rf "$tmp_dir"' EXIT
 
 curl --fail --location --silent --show-error \
   "$base_url/$archive" -o "$tmp_dir/$archive"
+curl --fail --location --silent --show-error \
+  "$base_url/SHA256SUMS" -o "$tmp_dir/SHA256SUMS"
 
+expected=$(grep -F "  $archive" "$tmp_dir/SHA256SUMS" | cut -d' ' -f1)
+[ -n "$expected" ] || { printf 'No checksum for %s in %s/SHA256SUMS\n' "$archive" "$tag" >&2; exit 1; }
 if command -v sha256sum >/dev/null 2>&1; then
   actual=$(sha256sum "$tmp_dir/$archive" | cut -d' ' -f1)
 else
   actual=$(shasum -a 256 "$tmp_dir/$archive" | cut -d' ' -f1)
 fi
-if [ "$actual" != "$checksum" ]; then
-  printf 'cua-driver checksum mismatch: expected %s, got %s\n' "$checksum" "$actual" >&2
+if [ "$actual" != "$expected" ]; then
+  printf 'cua-driver checksum mismatch: expected %s, got %s\n' "$expected" "$actual" >&2
   exit 1
 fi
 

@@ -23,9 +23,11 @@ configure_rocketsim_agent() {
 }
 
 configure_graphify_agent() {
-  local version=0.9.20
-  local wheel="https://github.com/Graphify-Labs/graphify/releases/download/v$version/graphifyy-$version-py3-none-any.whl"
-  local checksum=2e06d20ecfcd971812e73f26b7d7aef45d6cc2057139e33c66d15ba393e5319e
+  local tag version wheel
+  tag=$(curl -fsSL https://api.github.com/repos/Graphify-Labs/graphify/releases/latest |
+    python3 -c 'import json,sys; print(json.load(sys.stdin)["tag_name"])') || return
+  version=${tag#v}
+  wheel="https://github.com/Graphify-Labs/graphify/releases/download/$tag/graphifyy-$version-py3-none-any.whl"
   local graphify
 
   if ! command -v uv >/dev/null 2>&1; then
@@ -36,7 +38,7 @@ configure_graphify_agent() {
   export PATH="$HOME/.local/bin:$PATH"
   graphify=$(command -v graphify 2>/dev/null || printf '%s' "$HOME/.local/bin/graphify")
   if [ ! -x "$graphify" ] || [ "$("$graphify" --version 2>/dev/null)" != "graphify $version" ]; then
-    uv tool install --force "graphifyy @ $wheel#sha256=$checksum" || return
+    uv tool install --force "graphifyy @ $wheel" || return
     graphify="$HOME/.local/bin/graphify"
   fi
 
@@ -129,33 +131,34 @@ install_opencode_tools() {
 
   bash "$CONFIGS_DIR/install_scripts/install_opencode.sh" || return
 
-  local kilo_cli_version=7.4.11
-  if ! command -v kilo >/dev/null 2>&1 || [ "$(kilo --version 2>/dev/null)" != "$kilo_cli_version" ]; then
-    npm install -g "@kilocode/cli@$kilo_cli_version"
+  local kilo_have kilo_latest
+  kilo_have=$(kilo --version 2>/dev/null || true)
+  if [ -z "$kilo_have" ]; then
+    npm install -g "@kilocode/cli@latest" || return
+  else
+    kilo_latest=$(npm view "@kilocode/cli" version 2>/dev/null || true)
+    if [ -n "$kilo_latest" ] && [ "$kilo_have" != "$kilo_latest" ]; then
+      npm install -g "@kilocode/cli@latest" || return
+    fi
   fi
 
   if [ "$(uname -s)" = Darwin ] && [ -x /Applications/VSCodium.app/Contents/Resources/app/bin/codium ]; then
-    local kilo_extension_version=7.4.13
-    local kilo_extension_platform kilo_extension_sha256 kilo_extension_url temp_dir vsix
+    local kilo_extension_platform kilo_ext_api kilo_extension_version kilo_extension_url temp_dir vsix
     case "$(uname -m)" in
-      arm64)
-        kilo_extension_platform=darwin-arm64
-        kilo_extension_sha256=13009b6267d541e6e5c0025dd86aa76436b64f742a7516fd74055b590987ec89
-        ;;
-      x86_64)
-        kilo_extension_platform=darwin-x64
-        kilo_extension_sha256=9bb27b6668dbe10e1fbfb8975bb195bd05251976298a39454f5358a3f704ac12
-        ;;
+      arm64) kilo_extension_platform=darwin-arm64 ;;
+      x86_64) kilo_extension_platform=darwin-x64 ;;
     esac
+
+    kilo_ext_api=$(curl -fsSL https://open-vsx.org/api/kilocode/kilo-code) || return
+    kilo_extension_version=$(printf '%s' "$kilo_ext_api" | python3 -c 'import json,sys; print(json.load(sys.stdin)["version"])') || return
+    kilo_extension_url=$(printf '%s' "$kilo_ext_api" | python3 -c 'import json,sys; print(json.load(sys.stdin)["downloads"]["'"$kilo_extension_platform"'"])') || return
 
     if [ -n "${kilo_extension_platform:-}" ] && \
       ! /Applications/VSCodium.app/Contents/Resources/app/bin/codium --list-extensions --show-versions | \
         grep -qFx "kilocode.kilo-code@$kilo_extension_version"; then
-      kilo_extension_url="https://open-vsx.org/api/kilocode/kilo-code/$kilo_extension_platform/$kilo_extension_version/file/kilocode.kilo-code-$kilo_extension_version@$kilo_extension_platform.vsix"
       temp_dir=$(mktemp -d -t kilo-code) || return
       vsix="$temp_dir/kilo-code.vsix"
-      if curl --fail --location "$kilo_extension_url" --output "$vsix" && \
-        printf '%s  %s\n' "$kilo_extension_sha256" "$vsix" | shasum -a 256 --check; then
+      if curl --fail --location "$kilo_extension_url" --output "$vsix"; then
         /Applications/VSCodium.app/Contents/Resources/app/bin/codium --install-extension "$vsix" --force
       fi
       rm -rf -- "$temp_dir"

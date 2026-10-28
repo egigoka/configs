@@ -1,5 +1,5 @@
 repository: https://github.com/mattpocock/skills.git
-commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+commit: 59db609eb1e18aaf59b63284d0e52255aff0c63c
 path: skills/engineering/code-review
 source_tree_sha256: eb9170150c77ba63d51c4b71d98c24e24d131d0a0628ba4492f61b8e1037b924
 installed_content_sha256: a90f1519c062d2e7fc72169bdac497f758e3ab714f37f3ccbfb5014f0ca51e6d

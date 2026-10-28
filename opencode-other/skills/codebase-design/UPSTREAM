@@ -1,5 +1,5 @@
 repository: https://github.com/mattpocock/skills.git
-commit: 5beb35b040e3de97e54fa9e386d7e42d15c295c2
+commit: 59db609eb1e18aaf59b63284d0e52255aff0c63c
 path: skills/engineering/codebase-design
 source_tree_sha256: 637100872efb8d8c77d2cde5f1d609c9fe5b4b4e763691a53cebbf944ac0153b
 installed_content_sha256: af4d729cb60c7f12eb731ddb7c05db5d57d3d96f71e8fac5dc63b13791526e08

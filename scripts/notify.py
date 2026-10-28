@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import socket
 import sys
 import urllib.parse
 import urllib.request
@@ -20,7 +21,7 @@ def main():
     if not text:
         print(f"usage: {Path(__file__).name} \"message\"", file=sys.stderr)
         sys.exit(2)
-    data = urllib.parse.urlencode({"chat_id": chatid, "text": text}).encode()
+    data = urllib.parse.urlencode({"chat_id": chatid, "text": f"[{socket.gethostname()}] {text}"}).encode()
     req = urllib.request.Request(f"https://api.telegram.org/bot{token}/sendMessage", data=data)
     with urllib.request.urlopen(req, timeout=30) as r:
         if r.status != 200:
