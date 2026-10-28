@@ -1,5 +1,5 @@
 repository: https://github.com/cursor/plugins.git
-commit: 519d36aa98955bf680db01bcde5fdfba686dc901
+commit: c742dd61706fbacc1b95f1a20b7b988cf096ce6c
 path: pstack/skills/typescript-best-practices
 source_tree_sha256: ee4b6be25067cf666f7df568589a5a8d5fee03868ad28cfde36896d678060428
 installed_content_sha256: dcb2b46a53df8977c2b0675dd568c4d979b2bb8ae1ba189b498be10d6c7e61d6
