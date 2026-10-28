@@ -39,9 +39,9 @@
     "./v2-plugins/opencode-log-sanitizer-v2",
     "@tarquinen/opencode-dcp@3.2.0",
     "./v2-plugins/opencode-short-term-memory-v2",
-    "@dietrichgebert/ponytail@5.3.2",
     "./v2-plugins/opencode-codex-auth",
-    "./plugins/caveman"
+    "./plugins/caveman",
+    "@dietrichgebert/ponytail@latest"
   ],
   "providers": {
     "openai": {
