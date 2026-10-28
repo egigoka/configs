@@ -122,6 +122,11 @@ install_opencode_tools() {
 
   export PATH="$HOME/.local/bin:$PATH"
 
+  # System npm prefix (e.g. /usr/local) is often not user-writable.
+  if ! [ -w "$(npm root -g 2>/dev/null || printf '/nonexistent')" ]; then
+    npm config set prefix "$HOME/.local"
+  fi
+
   bash "$CONFIGS_DIR/install_scripts/install_opencode.sh" || return
 
   local kilo_cli_version=7.4.11
