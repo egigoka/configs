@@ -30,7 +30,13 @@ node_ok() {
   ver_ge "$cur" "$floor"
 }
 install_local_node() {
-  local version=26.12.1 os arch ext dest tmp
+  local version os arch ext dest tmp
+  # No pinned version: take newest 26.x; 26.12.0 is the oldest known-good.
+  version=$(curl -fsSL https://nodejs.org/dist/index.json | python3 -c \
+    'import json,sys; print(next(v["version"] for v in json.load(sys.stdin) if v["version"].startswith("v26.")))')
+  [ -n "${version:-}" ] || { echo "Could not resolve latest node 26.x" >&2; return 1; }
+  version=${version#v}
+  ver_ge "$version" 26.12.0 || { echo "Resolved node $version below known-good 26.12.0" >&2; return 1; }
   case "$(uname -s)" in
     Darwin) os=darwin; ext=tar.gz ;;
     Linux) os=linux; ext=tar.xz ;;
