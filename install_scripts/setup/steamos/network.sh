@@ -4,7 +4,7 @@
 
 setup_steamos_wireguard() {
   if sudo -v; then
-    for wg_interface in wg1 wg4; do
+    for wg_interface in wg1; do
       wg_key="$CONFIGS_DIR/wireguard/$wg_interface.key"
       wg_tmpl="$CONFIGS_DIR/wireguard/$wg_interface.conf"
       wg_dest="/etc/wireguard/$wg_interface.conf"
@@ -32,7 +32,7 @@ setup_steamos_wireguard() {
     done
 
     wg_watchdog_interfaces=()
-    for wg_interface in wg1 wg4; do
+    for wg_interface in wg1; do
       [ -f "/etc/wireguard/$wg_interface.conf" ] \
         && wg_watchdog_interfaces+=("$wg_interface")
     done
