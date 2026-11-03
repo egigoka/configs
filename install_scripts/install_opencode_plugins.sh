@@ -2,7 +2,15 @@
 set -euo pipefail
 
 script_dir=$(cd "$(dirname "$0")" && pwd)
+# shellcheck source=install_scripts/node_build.sh
+source "$script_dir/node_build.sh"
 root="${OPENCODE_PLUGIN_DIR:-$HOME/.local/share/opencode-v2-plugins}"
+
+build_opencode_plugin() {
+  npm ci --ignore-scripts --no-audit --no-fund &&
+    npm run build &&
+    npm run test:v2
+}
 
 # setup.sh never installs bun, so self-install user-local (nodejs-style).
 if ! command -v bun >/dev/null 2>&1; then
@@ -18,6 +26,7 @@ for tool in git node npm bun; do
   command -v "$tool" >/dev/null || { printf 'Required tool missing: %s\n' "$tool" >&2; exit 1; }
 done
 mkdir -p "$root"
+bun_version=$(bun --version)
 
 while read -r name revision; do
   [ -n "$name" ] || continue
@@ -50,11 +59,5 @@ while read -r name revision; do
   fi
   git -C "$checkout" fetch origin "$revision"
   git -C "$checkout" checkout --detach "origin/$revision"
-  (
-    cd "$checkout"
-    npm ci --ignore-scripts --no-audit --no-fund
-    npm run build
-    npm run test:v2
-    test -f dist/index.js
-  )
+  build_node_checkout "$checkout" build_opencode_plugin "$bun_version"
 done < "$script_dir/opencode_plugins.lock"

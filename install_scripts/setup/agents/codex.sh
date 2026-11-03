@@ -55,7 +55,7 @@ configure_codex_home() {
   install_link "$CONFIGS_DIR/codex/skills/cavecrew" "$codex_home/skills/cavecrew"
 
   for agent in "$CONFIGS_DIR"/codex/agents/*.toml; do
-    install_link "$agent" "$codex_home/agents/$(basename "$agent")"
+    install_link "$agent" "$codex_home/agents/${agent##*/}"
   done
 }
 

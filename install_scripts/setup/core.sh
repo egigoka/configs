@@ -37,7 +37,7 @@ initialize_setup_context() {
 }
 
 install_link() {
-  local src dst parent link_target
+  local src dst parent link_target common prefix
 
   if [ $# -ne 2 ]; then
     printf 'Usage: %s SRC DST\n' "${0##*/}" >&2
@@ -48,13 +48,50 @@ install_link() {
   dst=$2
 
   dst="${dst%/}"  # strip slash at the end
-  parent=$(dirname -- "$dst")
-  mkdir -p -- "$parent" || return
+  parent=${dst%/*}
+  [ "$parent" != "$dst" ] || parent=.
+  [ -n "$parent" ] || parent=/
+  [ -d "$parent" ] || mkdir -p -- "$parent" || return
 
   # Relative target keeps username/host paths out of the link.
   case "$src" in
     /*)
-      link_target=$(python3 -c 'import os.path,sys; print(os.path.relpath(sys.argv[1], sys.argv[2]))' "$src" "$parent" 2>/dev/null) || link_target=$src
+      # Most reruns already have the correct relative link. Avoid starting
+      # Python for every skill in every agent home when nothing changed.
+      if [ -L "$dst" ] && [ "$src" -ef "$dst" ]; then
+        case "$(readlink -- "$dst")" in
+          /*) ;;
+          *) return 0 ;;
+        esac
+      fi
+      # Normal absolute paths need only string operations. Keep Python's path
+      # normalization for relative parents, dot segments, and repeated slashes.
+      case "$parent" in
+        /*)
+          case "$src/|$parent/" in
+            *//*|*/./*|*/../*) link_target= ;;
+            *)
+              common=$parent
+              prefix=
+              while [ -n "$common" ] && [ "$src" != "$common" ] && \
+                [ "${src#"$common"/}" = "$src" ]; do
+                common=${common%/*}
+                prefix=../$prefix
+              done
+              if [ "$src" = "$common" ]; then
+                link_target=${prefix%/}
+              else
+                link_target=$prefix${src#"$common"/}
+              fi
+              link_target=${link_target:-.}
+              ;;
+          esac
+          ;;
+        *) link_target= ;;
+      esac
+      if [ -z "$link_target" ]; then
+        link_target=$(python3 -c 'import os.path,sys; print(os.path.relpath(sys.argv[1], sys.argv[2]))' "$src" "$parent" 2>/dev/null) || link_target=$src
+      fi
       ;;
     *)
       link_target=$src

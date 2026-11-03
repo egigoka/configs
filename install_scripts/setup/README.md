@@ -1,6 +1,6 @@
 # Setup modules
 
-`setup.sh` is the entry point. It loads source-only modules, detects the host, and calls their public functions in order.
+`setup.sh` is the entry point. It loads source-only modules, detects the host, and reports progress for each phase.
 
 ## Execution order
 
@@ -9,21 +9,48 @@
 3. `setup_platform_prerequisites`
 4. `install_agent_tools`
 5. `setup_platform_integrations`
-6. `install_usage`
-7. `setup_cli_configs`
-8. `setup_macos_integrations`
-9. `setup_agent_configs`
-10. `setup_file_listing_config`
-11. `setup_desktop_configs`
-12. Replace the setup process with Fish
+6. `setup_cli_configs`
+7. `setup_macos_integrations`
+8. `setup_agent_configs`
+9. `setup_file_listing_config`
+10. `setup_desktop_configs`
+11. Replace the setup process with Fish
 
-This split keeps OpenCode and Usage installation visible as a common phase while preserving its original position between each platform's package setup and later Git or SteamOS integration work.
+`install_agent_tools` runs Graphify, Usage, and CUA driver installation alongside the foreground OpenCode installation. Global npm and system package installs remain sequential. Usage installs once per run.
+
+OpenCode skips reinstallation when its installed version matches the latest release and `opencode run --help` succeeds. Failed version lookups or CLI checks fall back to the installer.
+
+Mobile MCP, XcodeBuildMCP, and REA check npm for the latest version on every run. Matching versions skip installation only when their declared commands still point to executable files in the installed package. Changed versions, missing commands, unreadable package metadata, and failed registry checks use the normal npm installer. REA still registers every client on every run.
+
+The Codex auth fork and V2 plugins fetch upstream changes on every run. Successful builds are cached in each checkout's Git metadata. Unchanged checkouts skip `npm ci`, builds, and V2 tests when their dependencies and `dist/index.js` still exist. Changes to the revision, Node version, platform, architecture, npm version, `NODE_ENV`, or build recipe invalidate the cache. V2 plugins also track the Bun version. Every rebuild removes the previous success marker before it starts.
+
+Graphify and CUA driver release checks prefer authenticated `gh` requests, then fall back to anonymous HTTP. If release metadata is unavailable, setup retains working installed binaries. Missing binaries still fail with a clear error. Failed HTTP responses never reach the JSON parser.
+
+Graphify installs use standard CPython 3.13 for compatibility with its native tree-sitter dependencies. This overrides uv's default interpreter, which may be a newer or free-threaded build. uv downloads a compatible interpreter if needed.
+
+`setup_agent_configs` updates Caveman alongside Unslop, selected agent skills, and Apple skills. Each updater writes separate skill directories; only Caveman touches agent configuration during this group. Later updates that share those configuration files wait for the group to finish.
+
+Claude MCP setup reads existing user registrations from `~/.claude.json` once. Missing or malformed entries, unreadable configurations, and custom `CLAUDE_CONFIG_DIR` settings fall back to `claude mcp get`. This preserves project and local scope checks before adding a user registration.
 
 `setup.sh --codex-only` stops after `configure_codex`.
+
+## Progress and concurrency
+
+Terminals show a colored progress bar, completed phase counts, and elapsed time. Parallel groups show their own task counts and a spinner while waiting. Redirected output uses plain lines. `NO_COLOR=1` disables color, and `TERM=dumb` disables terminal animation.
+
+`SETUP_JOBS` limits concurrent tasks, including the foreground task. The default is 4, and values above 32 use 32. `SETUP_JOBS=1 ./setup.sh` runs tasks sequentially.
+
+Foreground commands keep their output and terminal input. Background tasks save output in a private temporary directory printed at startup. Failed tasks print their logs and stop the group. Cancellation stops worker process groups, including child installers. Logs remain available after setup exits.
+
+Homebrew package checks share an inventory cache for each run. Cache misses still resolve aliases through Homebrew. Normal absolute paths use Bash string operations to calculate relative symlink targets. Paths with dot segments, repeated separators, or relative destination parents use Python for normalization. Existing relative symlinks skip Python when they already point to the source. Agent-link loops extract filenames in Bash.
 
 ## Files
 
 - `core.sh` detects the host and provides `install_link`.
+- `progress.sh` reports progress and runs independent tasks with a concurrency limit.
+- `../github_release.sh` fetches and validates GitHub release metadata.
+- `../node_build.sh` caches successful Node builds by revision, runtime, and recipe.
+- `../npm_packages.sh` checks global CLI versions and command files before reinstalling npm packages.
 - `packages.sh` detects and installs command-line packages.
 - `agents.sh` loads agent-specific modules and exposes the common agent-tool phase.
 - `platforms.sh` dispatches platform prerequisite and integration phases.
@@ -50,3 +77,7 @@ Modules resolve their own child-module paths from `BASH_SOURCE`; they do not rel
 - Unsupported hosts return a nonzero status instead of printing an error and accidentally exiting successfully.
 - The quarter-window helper uses `CONFIGS_DIR` instead of assuming the checkout is always at `~/configs`.
 - Required skill-updater failures stop setup before it launches Fish.
+
+## Validation
+
+`python3 -m unittest discover -s install_scripts/tests -v` checks scheduling, cancellation, progress output, package caching, symlink targets, build-cache invalidation, and release-lookup failures. Installer tests use temporary Git checkouts and local command stubs. Tests do not install packages or change the user's configuration.

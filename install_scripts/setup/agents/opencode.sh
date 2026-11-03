@@ -2,6 +2,13 @@
 
 # OpenCode, Kilo, Graphify, mobile tooling, and generated skill patches.
 
+# shellcheck source=install_scripts/github_release.sh
+source "$(dirname "${BASH_SOURCE[0]}")/../../github_release.sh"
+# shellcheck source=install_scripts/node_build.sh
+source "$(dirname "${BASH_SOURCE[0]}")/../../node_build.sh"
+# shellcheck source=install_scripts/npm_packages.sh
+source "$(dirname "${BASH_SOURCE[0]}")/../../npm_packages.sh"
+
 configure_rocketsim_agent() {
   [ "$(uname -s)" = Darwin ] || return 0
 
@@ -23,26 +30,33 @@ configure_rocketsim_agent() {
 }
 
 configure_graphify_agent() {
-  local tag version wheel
-  tag=$(curl -fsSL https://api.github.com/repos/Graphify-Labs/graphify/releases/latest |
-    python3 -c 'import json,sys; print(json.load(sys.stdin)["tag_name"])') || return
-  version=${tag#v}
-  wheel="https://github.com/Graphify-Labs/graphify/releases/download/$tag/graphifyy-$version-py3-none-any.whl"
-  local graphify
-
   if ! command -v uv >/dev/null 2>&1; then
     printf 'uv not installed; skipping Graphify installation\n' >&2
     return 0
   fi
 
+  local tag version wheel graphify installed_version=''
   export PATH="$HOME/.local/bin:$PATH"
   graphify=$(command -v graphify 2>/dev/null || printf '%s' "$HOME/.local/bin/graphify")
-  if [ ! -x "$graphify" ] || [ "$("$graphify" --version 2>/dev/null)" != "graphify $version" ]; then
-    uv tool install --force "graphifyy @ $wheel" || return
-    graphify="$HOME/.local/bin/graphify"
+  if [ -x "$graphify" ]; then
+    installed_version=$("$graphify" --version 2>/dev/null) || installed_version=
+  fi
+  if tag=$(github_release_tag Graphify-Labs/graphify); then
+    version=${tag#v}
+    wheel="https://github.com/Graphify-Labs/graphify/releases/download/$tag/graphifyy-$version-py3-none-any.whl"
+    if [ "$installed_version" != "graphify $version" ]; then
+      # Native tree-sitter wheels require the standard CPython ABI.
+      uv tool install --force --python cpython@3.13 "graphifyy @ $wheel" || return
+      graphify="$HOME/.local/bin/graphify"
+    fi
+  elif [ -n "$installed_version" ]; then
+    printf 'Warning: could not check Graphify updates; keeping %s\n' "$installed_version" >&2
+  else
+    printf 'Graphify is not installed and its release could not be resolved\n' >&2
+    return 1
   fi
 
-  "$graphify" install --platform agents
+  "$graphify" install --platform agents || return
   "$graphify" install --platform hermes
 }
 
@@ -68,13 +82,15 @@ install_macos_mobile_mcp_tools() {
     printf 'Xcode 26.3+ with mcpbridge not found; Xcode MCP will be unavailable\n' >&2
   fi
 
-  npm install -g \
-    "@mobilenext/mobile-mcp@latest" \
-    "xcodebuildmcp@latest"
+  install_latest_npm_packages "@mobilenext/mobile-mcp" "xcodebuildmcp"
 }
 
 configure_caveman_session_models() {
   python3 "$SETUP_DIR/agents/configure_caveman.py" "$1"
+}
+
+build_opencode_codex_auth_fork() {
+  npm ci --no-audit --no-fund && npm run build
 }
 
 install_opencode_codex_auth_fork() {
@@ -99,24 +115,15 @@ install_opencode_codex_auth_fork() {
         return 1
         ;;
     esac
+    git -C "$checkout" fetch --prune origin main || return
   fi
 
-  git -C "$checkout" fetch --prune origin main || return
   git -C "$checkout" checkout --detach --force origin/main || return
-  (
-    cd "$checkout" || exit
-    npm ci --no-audit --no-fund && npm run build
-  ) || return
-
-  if [ ! -f "$checkout/dist/index.js" ]; then
-    printf 'opencode-codex-auth build did not produce %s\n' "$checkout/dist/index.js" >&2
-    return 1
-  fi
+  build_node_checkout "$checkout" build_opencode_codex_auth_fork
 }
 
 install_opencode_tools() {
   configure_rocketsim_agent
-  configure_graphify_agent
 
   install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/opencode"
   install_link "${OPENCODE_CONFIG_DIR/opencode-/kilo-}" "$HOME/.config/kilo"
@@ -143,19 +150,20 @@ install_opencode_tools() {
   fi
 
   if [ "$(uname -s)" = Darwin ] && [ -x /Applications/VSCodium.app/Contents/Resources/app/bin/codium ]; then
-    local kilo_extension_platform kilo_ext_api kilo_extension_version kilo_extension_url temp_dir vsix
+    local kilo_extension_platform kilo_ext_api kilo_extension_metadata kilo_extension_version kilo_extension_url temp_dir vsix
     case "$(uname -m)" in
       arm64) kilo_extension_platform=darwin-arm64 ;;
       x86_64) kilo_extension_platform=darwin-x64 ;;
     esac
 
     kilo_ext_api=$(curl -fsSL https://open-vsx.org/api/kilocode/kilo-code) || return
-    kilo_extension_version=$(printf '%s' "$kilo_ext_api" | python3 -c 'import json,sys; print(json.load(sys.stdin)["version"])') || return
-    kilo_extension_url=$(printf '%s' "$kilo_ext_api" | python3 -c 'import json,sys; print(json.load(sys.stdin)["downloads"]["'"$kilo_extension_platform"'"])') || return
+    kilo_extension_metadata=$(printf '%s' "$kilo_ext_api" | python3 -c 'import json,sys; data=json.load(sys.stdin); print(data["version"]); print(data["downloads"][sys.argv[1]])' "$kilo_extension_platform") || return
+    kilo_extension_version=${kilo_extension_metadata%%$'\n'*}
+    kilo_extension_url=${kilo_extension_metadata#*$'\n'}
 
     if [ -n "${kilo_extension_platform:-}" ] && \
       ! /Applications/VSCodium.app/Contents/Resources/app/bin/codium --list-extensions --show-versions | \
-        grep -qFx "kilocode.kilo-code@$kilo_extension_version"; then
+        grep -Fx "kilocode.kilo-code@$kilo_extension_version" >/dev/null; then
       temp_dir=$(mktemp -d -t kilo-code) || return
       vsix="$temp_dir/kilo-code.vsix"
       if curl --fail --location "$kilo_extension_url" --output "$vsix"; then
@@ -168,16 +176,6 @@ install_opencode_tools() {
   install_macos_android_tools
   install_macos_mobile_mcp_tools
 
-  local cua_driver_installer="$CONFIGS_DIR/install_scripts/install_cua_driver.sh"
-  local cua_driver_version
-  local cua_driver
-  cua_driver_version=$(bash "$cua_driver_installer" --version)
-  cua_driver=$(command -v cua-driver 2>/dev/null || printf '%s' "$HOME/.local/bin/cua-driver")
-  if [ ! -x "$cua_driver" ] || [ "$("$cua_driver" --version 2>/dev/null)" != "cua-driver $cua_driver_version" ]; then
-    bash "$cua_driver_installer"
-  fi
-  export PATH="$HOME/.local/bin:$PATH"
-
   # Claude Code subscription integration remains disabled. Restore from either
   # config's claude-integration.json.bak before uncommenting this command.
   # npm install -g opencode-with-claude
@@ -188,4 +186,24 @@ install_opencode_tools() {
   install_opencode_codex_auth_fork || return
   bash "$CONFIGS_DIR/install_scripts/install_opencode_plugins.sh" || return
 
+}
+
+install_cua_driver() {
+  local installer="$CONFIGS_DIR/install_scripts/install_cua_driver.sh"
+  local version driver installed_version=''
+  driver=$(command -v cua-driver 2>/dev/null || printf '%s' "$HOME/.local/bin/cua-driver")
+  if [ -x "$driver" ]; then
+    installed_version=$("$driver" --version 2>/dev/null) || installed_version=
+  fi
+  if ! version=$(bash "$installer" --version); then
+    if [ -n "$installed_version" ]; then
+      printf 'Warning: could not check CUA driver updates; keeping %s\n' "$installed_version" >&2
+      return 0
+    fi
+    printf 'CUA driver is not installed and its release could not be resolved\n' >&2
+    return 1
+  fi
+  if [ "$installed_version" != "cua-driver $version" ]; then
+    CUA_DRIVER_VERSION="$version" bash "$installer"
+  fi
 }

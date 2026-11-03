@@ -3,6 +3,9 @@
 # (opencode, claude code, codex). Skill installs with each registration by default.
 set -u
 
+# shellcheck source=install_scripts/npm_packages.sh
+source "$(dirname "${BASH_SOURCE[0]}")/npm_packages.sh"
+
 configs_dir=${1:-"$(cd "$(dirname "$0")/.." && pwd)"}
 export PATH="$HOME/.npm-global/bin:$HOME/.local/bin:$PATH"
 
@@ -87,7 +90,7 @@ if ! have_rea; then
     exit 1
   }
 else
-  npm install --global 'rea-agents@latest' >/dev/null 2>&1 || \
+  install_latest_npm_packages rea-agents || \
     echo "Warning: rea-agents update failed; retaining installed rea" >&2
 fi
 

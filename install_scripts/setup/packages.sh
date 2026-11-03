@@ -4,7 +4,7 @@
 
 pkg_installed() {
   local pkg=$1
-  case "$(uname -s)" in
+  case "${SETUP_OS:-$(uname -s)}" in
     Linux)
       if [ -f /etc/os-release ]; then
         . /etc/os-release
@@ -24,7 +24,26 @@ pkg_installed() {
       fi
       ;;
     Darwin)
-      brew list --formula "$pkg" >/dev/null 2>&1 || brew list --cask "$pkg" >/dev/null 2>&1
+      if [ "${SETUP_BREW_CACHE_READY:-0}" -eq 0 ]; then
+        local formulae casks
+        if formulae=$(brew list --formula -1 2>/dev/null) && casks=$(brew list --cask -1 2>/dev/null); then
+          SETUP_BREW_PACKAGES="$formulae"$'\n'"$casks"
+          SETUP_BREW_CACHE_READY=1
+        else
+          brew list --formula "$pkg" >/dev/null 2>&1 || brew list --cask "$pkg" >/dev/null 2>&1
+          return
+        fi
+      fi
+      case $'\n'"$SETUP_BREW_PACKAGES"$'\n' in
+        *$'\n'"$pkg"$'\n'*) return 0 ;;
+      esac
+      # Inventory names omit aliases such as python3 and nodejs. Resolve cache
+      # misses through Homebrew, including packages installed by other tools.
+      if brew list --formula "$pkg" >/dev/null 2>&1 || brew list --cask "$pkg" >/dev/null 2>&1; then
+        SETUP_BREW_PACKAGES+=$'\n'"$pkg"
+        return 0
+      fi
+      return 1
       ;;
     *)
       return 1
@@ -38,7 +57,10 @@ install_if_missing() {
     if pkg_installed "$pkg"; then
       echo "$pkg already installed, skipping"
     else
-      install "$pkg"
+      install "$pkg" || return
+      if [ "${SETUP_BREW_CACHE_READY:-0}" -eq 1 ]; then
+        SETUP_BREW_PACKAGES+=$'\n'"$pkg"
+      fi
     fi
   done
 }
@@ -55,12 +77,6 @@ install_autojump() {
   rm -rf "$CONFIGS_DIR/autojump"
   cd "$previous_dir" || return
   export SHELL=$previous_shell
-}
-
-install_usage_tui() {
-  if ! command -v usage >/dev/null 2>&1; then
-    uv tool install git+https://github.com/egigoka/usage
-  fi
 }
 
 install_virtualfish() {

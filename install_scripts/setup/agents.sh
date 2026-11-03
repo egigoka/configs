@@ -10,6 +10,7 @@ source "$AGENT_SETUP_DIR/agents/configs.sh"
 unset AGENT_SETUP_DIR
 
 install_agent_tools() {
-  install_opencode_tools || return
-  install_usage_tui
+  export PATH="$HOME/.local/bin:$PATH"
+  setup_parallel "Agent utilities" --foreground install_opencode_tools \
+    configure_graphify_agent install_usage install_cua_driver
 }

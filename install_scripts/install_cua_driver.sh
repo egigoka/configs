@@ -1,12 +1,15 @@
 #!/bin/bash
 set -euo pipefail
 
+# shellcheck source=install_scripts/github_release.sh
+source "$(dirname "${BASH_SOURCE[0]}")/github_release.sh"
+
 # Installs the latest cua-driver-rs release. Pin via CUA_DRIVER_VERSION=x.y.z.
 resolve_version() {
   if [ -n "${CUA_DRIVER_VERSION:-}" ]; then printf '%s\n' "$CUA_DRIVER_VERSION"; return 0; fi
-  curl -fsSL "https://api.github.com/repos/trycua/cua/releases?per_page=50" |
-    python3 -c 'import json,sys; print(next(r["tag_name"] for r in json.load(sys.stdin) if r["tag_name"].startswith("cua-driver-rs-v")))' |
-    sed 's/^cua-driver-rs-v//'
+  local tag
+  tag=$(github_release_tag trycua/cua cua-driver-rs-v) || return
+  printf '%s\n' "${tag#cua-driver-rs-v}"
 }
 
 version=$(resolve_version)
