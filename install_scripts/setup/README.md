@@ -16,7 +16,7 @@
 10. `setup_desktop_configs`
 11. Replace the setup process with Fish
 
-`install_agent_tools` runs Graphify, Usage, and CUA driver installation alongside the foreground OpenCode installation. Global npm and system package installs remain sequential. Usage installs once per run.
+`install_agent_tools` runs Graphify, Usage, and CUA driver installation alongside the foreground OpenCode installation. The Graphify worker also refreshes the SwiftUI expert skill before agent configuration begins. Global npm and system package installs remain sequential. Usage installs once per run.
 
 OpenCode skips reinstallation when its installed version matches the latest release and `opencode run --help` succeeds. Failed version lookups or CLI checks fall back to the installer.
 
@@ -29,6 +29,10 @@ Graphify and CUA driver release checks prefer authenticated `gh` requests, then 
 Graphify installs use standard CPython 3.13 for compatibility with its native tree-sitter dependencies. This overrides uv's default interpreter, which may be a newer or free-threaded build. uv downloads a compatible interpreter if needed.
 
 `setup_agent_configs` updates Caveman alongside Unslop, selected agent skills, and Apple skills. Each updater writes separate skill directories; only Caveman touches agent configuration during this group. Later updates that share those configuration files wait for the group to finish.
+
+Caveman keeps a source checkout under `${XDG_CACHE_HOME:-$HOME/.cache}/configs/caveman` and fetches upstream HEAD on every run. Its OpenCode installer runs directly with Node and repairs vendored assets even when upstream is unchanged. Failed checkout refreshes or installer runs fall back to the npm installer. Local configuration and the custom plugin server remain preserved.
+
+Fontconfig checks its own cache validity on every run and rebuilds stale font caches without forcing a rescan of unchanged fonts.
 
 Claude MCP setup reads existing user registrations from `~/.claude.json` once. Missing or malformed entries, unreadable configurations, and custom `CLAUDE_CONFIG_DIR` settings fall back to `claude mcp get`. This preserves project and local scope checks before adding a user registration.
 

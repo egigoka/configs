@@ -5,7 +5,7 @@
 setup_desktop_configs() {
   # fonts
   install_link "$CONFIGS_DIR/fonts/Atkynson-Hyperlegible-Mono-NerdFont-Gapless-Braille" "$HOME/.local/share/fonts/Atkynson-Hyperlegible-Mono-NerdFont-Gapless-Braille"
-  command -v fc-cache >/dev/null 2>&1 && fc-cache -f "$HOME/.local/share/fonts" >/dev/null 2>&1
+  command -v fc-cache >/dev/null 2>&1 && fc-cache "$HOME/.local/share/fonts" >/dev/null 2>&1
 
   # fontconfig
   install_link "$CONFIGS_DIR/fontconfig" "$HOME/.config/fontconfig/conf.d"

@@ -149,6 +149,43 @@ setup_agent_configs
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.calls(), ["config"])
 
+    def test_swiftui_update_overlaps_tools_and_finishes_before_return(self):
+        result = self.run_config(f'''
+source "{MODULES}/agents.sh"
+source "{MODULES}/progress.sh"
+setup_progress_init 1 || exit
+CONFIGS_DIR=$HOME/checkout
+OPENCODE_CONFIG_DIR=$CONFIGS_DIR/opencode
+configure_graphify_agent() {{ echo graphify >>"$TEST_TRACE"; }}
+install_usage() {{ :; }}
+install_cua_driver() {{ :; }}
+bash() {{
+  [ "$1" = "$CONFIGS_DIR/install_scripts/update_swiftui_expert_skill.sh" ] || return 12
+  [ "$2" = "$OPENCODE_CONFIG_DIR" ] || return 13
+  touch "$HOME/swiftui.started"
+  for ((i=0; i<100; i++)); do
+    if [ -f "$HOME/tools.started" ]; then
+      touch "$HOME/swiftui.done"
+      return
+    fi
+    sleep 0.01
+  done
+  return 14
+}}
+install_opencode_tools() {{
+  touch "$HOME/tools.started"
+  for ((i=0; i<100; i++)); do
+    [ ! -f "$HOME/swiftui.started" ] || return 0
+    sleep 0.01
+  done
+  return 15
+}}
+install_agent_tools || exit
+[ -f "$HOME/swiftui.done" ] || exit 16
+''')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.calls(), ["graphify"])
+
 
 if __name__ == "__main__":
     unittest.main()

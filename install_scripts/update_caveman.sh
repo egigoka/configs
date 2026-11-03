@@ -23,10 +23,44 @@ cleanup() {
 }
 trap cleanup EXIT
 
-if ! command -v npx >/dev/null 2>&1; then
-  echo "npx not found; skipping caveman update" >&2
-  exit 0
-fi
+refresh_caveman_checkout() {
+  local checkout=$1 repo=https://github.com/JuliusBrussee/caveman.git origin status
+  command -v git >/dev/null 2>&1 && command -v node >/dev/null 2>&1 || return 1
+  if [ ! -e "$checkout" ] && [ ! -L "$checkout" ]; then
+    git clone --depth=1 --single-branch "$repo" "$tmp/caveman" || return
+    mkdir -p "${checkout%/*}" || return
+    mv "$tmp/caveman" "$checkout" || return
+  else
+    [ ! -L "$checkout" ] && [ -d "$checkout/.git" ] || return 1
+    origin=$(git -C "$checkout" config --get remote.origin.url) || return
+    [ "$origin" = "$repo" ] || return 1
+    status=$(git -C "$checkout" status --porcelain) || return
+    [ -z "$status" ] || return 1
+    git -C "$checkout" fetch --depth=1 origin HEAD || return
+    git -C "$checkout" checkout --detach FETCH_HEAD || return
+  fi
+  [ -f "$checkout/installer/install.js" ]
+}
+
+run_caveman_installer() {
+  # The OpenCode installer uses only Node's standard library. Keep its source
+  # checkout current without npm resolving and preparing a Git package each run.
+  local checkout="${XDG_CACHE_HOME:-$HOME/.cache}/configs/caveman"
+  if refresh_caveman_checkout "$checkout"; then
+    if XDG_CONFIG_HOME="$tmp" node "$checkout/installer/install.js" \
+      --only opencode --force --non-interactive; then
+      return 0
+    fi
+  fi
+  if command -v npx >/dev/null 2>&1; then
+    echo "Cached caveman installer unavailable or failed; falling back to npx" >&2
+    XDG_CONFIG_HOME="$tmp" npx -y --allow-git=root github:JuliusBrussee/caveman -- \
+      --only opencode --force --non-interactive
+  else
+    echo "No caveman installer available" >&2
+    return 1
+  fi
+}
 
 echo "Updating caveman opencode assets from upstream..."
 # --only opencode: just the opencode provider. --force: overwrite stale vendored
@@ -37,9 +71,7 @@ if [ -f "$opencode_dir/plugins/caveman/server.js" ]; then
   cp "$opencode_dir/plugins/caveman/server.js" "$tmp/server.js"
 fi
 ln -s "$opencode_dir" "$tmp/opencode"
-XDG_CONFIG_HOME="$tmp" \
-  npx -y --allow-git=root github:JuliusBrussee/caveman -- \
-  --only opencode --force --non-interactive || {
+run_caveman_installer || {
     echo "caveman update failed; keeping existing vendored assets" >&2
     exit 0
   }

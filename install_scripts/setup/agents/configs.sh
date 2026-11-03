@@ -74,7 +74,6 @@ setup_agent_configs() {
   configure_caveman_session_models "$OPENCODE_CONFIG_DIR"
   bash "$CONFIGS_DIR/install_scripts/update_ponytail.sh" "$OPENCODE_CONFIG_DIR"
   bash "$CONFIGS_DIR/install_scripts/update_frontend_design_skill.sh" "$OPENCODE_CONFIG_DIR"
-  bash "$CONFIGS_DIR/install_scripts/update_swiftui_expert_skill.sh" "$OPENCODE_CONFIG_DIR"
   bash "$CONFIGS_DIR/install_scripts/update_rea.sh" "$CONFIGS_DIR" || return
   install_link "$OPENCODE_CONFIG_DIR/kv.json" "$HOME/.local/state/opencode/kv.json"
   install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$OPENCODE_CONFIG_DIR/AGENTS.md"
