@@ -3,7 +3,7 @@
 # SteamOS WireGuard, watchdog, and Tailscale configuration.
 
 setup_steamos_wireguard() {
-  if sudo -v; then
+  if sudo -n true 2>/dev/null || sudo -v; then
     for wg_interface in wg1; do
       wg_key="$CONFIGS_DIR/wireguard/$wg_interface.key"
       wg_tmpl="$CONFIGS_DIR/wireguard/$wg_interface.conf"

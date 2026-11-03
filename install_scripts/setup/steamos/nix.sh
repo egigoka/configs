@@ -115,7 +115,7 @@ NIXUNIT
   # fish config + plugins
   install_link "$CONFIGS_DIR/fish" "$HOME/.config/fish"
   FISH_PLUGINS=$(grep -v '^[[:space:]]*$' "$CONFIGS_DIR/fish/fish_plugins" | tr '\n' ' ')
-  fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install $FISH_PLUGINS"
+  fish -c "cat $CONFIGS_DIR/install_scripts/install_fisher.fish | source && fisher install $FISH_PLUGINS" || return
   git -C "$CONFIGS_DIR" checkout fish/fish_plugins
 
   # dircolors-solarized

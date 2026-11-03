@@ -8,7 +8,7 @@ Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
 - **Standards**: does the code conform to this repo's documented coding standards?
 - **Spec**: does the code faithfully implement the originating issue / spec?
 
-Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
+Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings. Start every sub-agent with a fresh context window.
 
 If `docs/agents/issue-tracker.md` exists, use it. Otherwise inspect issue references with the available Git and hosting tools. Do not block the review on repository-specific Matt Pocock setup.
 

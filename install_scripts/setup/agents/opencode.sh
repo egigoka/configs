@@ -122,7 +122,7 @@ install_opencode_codex_auth_fork() {
   build_node_checkout "$checkout" build_opencode_codex_auth_fork
 }
 
-install_opencode_tools() {
+prepare_opencode_tools() {
   configure_rocketsim_agent
 
   install_link "$OPENCODE_CONFIG_DIR" "$HOME/.config/opencode"
@@ -135,7 +135,9 @@ install_opencode_tools() {
   if ! [ -w "$(npm root -g 2>/dev/null || printf '/nonexistent')" ]; then
     npm config set prefix "$HOME/.local"
   fi
+}
 
+install_opencode_tools() {
   bash "$CONFIGS_DIR/install_scripts/install_opencode.sh" || return
 
   local kilo_have kilo_latest
@@ -179,13 +181,14 @@ install_opencode_tools() {
   # Claude Code subscription integration remains disabled. Restore from either
   # config's claude-integration.json.bak before uncommenting this command.
   # npm install -g opencode-with-claude
+}
 
+install_opencode_builds() {
   # NOTE: opencode-openai-multi-auth was replaced by egigoka/opencode-codex-auth
   # (v2.x): both register provider "openai", so only one auth plugin may be
   # enabled. Codex-auth won: native Codex OAuth with multi-account rotation.
   install_opencode_codex_auth_fork || return
-  bash "$CONFIGS_DIR/install_scripts/install_opencode_plugins.sh" || return
-
+  bash "$CONFIGS_DIR/install_scripts/install_opencode_plugins.sh"
 }
 
 install_cua_driver() {

@@ -38,16 +38,14 @@ retain_or_fail() {
 }
 
 sync_dir() {
-  src=$1
-  dst=$2
-  parent=$(dirname "$dst")
+  local src=$1 dst=$2 parent=${2%/*} name=${2##*/} staged backup
   mkdir -p "$parent" || return 1
   if [ -d "$dst" ] && [ ! -L "$dst" ] && diff -r -q -x '.DS_Store' -x 'UPSTREAM' "$src" "$dst" >/dev/null 2>&1; then
     printf 'current -> %s\n' "$dst"
     return 0
   fi
-  staged="$parent/.$(basename "$dst").new.$$"
-  backup="$parent/.$(basename "$dst").old.$$"
+  staged="$parent/.$name.new.$$"
+  backup="$parent/.$name.old.$$"
   rm -rf "$staged" "$backup" || return 1
   cp -R "$src" "$staged" || return 1
   if [ -e "$dst" ] || [ -L "$dst" ]; then
@@ -75,7 +73,8 @@ if ! command -v xcrun >/dev/null 2>&1; then
       [ -s "$skill_dir/UPSTREAM" ] || continue
       grep -q '^source: xcrun agent skills export' "$skill_dir/UPSTREAM" || continue
     fi
-    name=$(basename "$skill_dir")
+    name=${skill_dir%/}
+    name=${name##*/}
     for root in "${roots[@]}"; do
       [ -s "$root/$name/SKILL.md" ] && continue
       sync_dir "$skill_dir" "$root/$name" || retain_or_fail "could not install vendored $root/$name"
@@ -93,46 +92,65 @@ if ! xcrun agent skills export --output-dir "$tmp_dir/export" >/dev/null 2>&1; t
   retain_or_fail 'xcrun agent skills export failed'
 fi
 
-xcode_version=$(xcodebuild -version 2>/dev/null | awk '/^Xcode /{print $2; exit}')
-xcode_build=$(xcodebuild -version 2>/dev/null | awk '/Build version/{print $3; exit}')
+xcode_info=$(xcodebuild -version 2>/dev/null)
+xcode_version=$(printf '%s\n' "$xcode_info" | awk '/^Xcode /{print $2; exit}')
+xcode_build=$(printf '%s\n' "$xcode_info" | awk '/Build version/{print $3; exit}')
 today=$(date +%F)
 
-count=0
+exported_skills=()
 for skill_dir in "$tmp_dir/export"/*/; do
   [ -d "$skill_dir" ] || continue
-  name=$(basename "$skill_dir")
-  if ! python3 - "$skill_dir" "$name" <<'PY'
+  exported_skills+=("${skill_dir%/}")
+done
+count=${#exported_skills[@]}
+[ "$count" -gt 0 ] || retain_or_fail 'Apple skill export produced no skills'
+
+# Validate the complete export in one interpreter before publishing any skill.
+if ! invalid_skill=$(python3 - "${exported_skills[@]}" <<'PY'
 from pathlib import Path
 import re
 import sys
 
-directory, expected = Path(sys.argv[1]), sys.argv[2]
-skill = directory / "SKILL.md"
-raw = skill.read_bytes()
-if not raw or len(raw) > 500_000 or b"\0" in raw:
-    raise SystemExit(f"invalid SKILL.md size/content: {skill}")
-text = raw.decode("utf-8")
-match = re.match(r"\A---\n(.*?)\n---\n(.*)\Z", text, re.DOTALL)
-if not match:
-    raise SystemExit(f"invalid frontmatter: {skill}")
-frontmatter, body = match.groups()
-found = re.search(r"(?m)^name:\s*([^\n]+?)\s*$", frontmatter)
-if not found or found.group(1).strip("\"' ") != expected:
-    raise SystemExit(f"unexpected skill name in {skill}")
-description = re.search(r"(?m)^description:\s*(.+?)\s*$", frontmatter)
-if not description or not description.group(1).strip("\"' "):
-    raise SystemExit(f"empty description in {skill}")
-if not body.strip():
-    raise SystemExit(f"empty body in {skill}")
-for path in directory.rglob("*"):
-    if path.is_symlink():
-        raise SystemExit(f"symlink rejected: {path}")
-    if path.is_file() and path.stat().st_size > 5_000_000:
-        raise SystemExit(f"oversized support file: {path}")
+
+def validate(directory):
+    skill = directory / "SKILL.md"
+    raw = skill.read_bytes()
+    if not raw or len(raw) > 500_000 or b"\0" in raw:
+        raise SystemExit(f"invalid SKILL.md size/content: {skill}")
+    text = raw.decode("utf-8")
+    match = re.match(r"\A---\n(.*?)\n---\n(.*)\Z", text, re.DOTALL)
+    if not match:
+        raise SystemExit(f"invalid frontmatter: {skill}")
+    frontmatter, body = match.groups()
+    found = re.search(r"(?m)^name:\s*([^\n]+?)\s*$", frontmatter)
+    if not found or found.group(1).strip("\"' ") != directory.name:
+        raise SystemExit(f"unexpected skill name in {skill}")
+    description = re.search(r"(?m)^description:\s*(.+?)\s*$", frontmatter)
+    if not description or not description.group(1).strip("\"' "):
+        raise SystemExit(f"empty description in {skill}")
+    if not body.strip():
+        raise SystemExit(f"empty body in {skill}")
+    for path in directory.rglob("*"):
+        if path.is_symlink():
+            raise SystemExit(f"symlink rejected: {path}")
+        if path.is_file() and path.stat().st_size > 5_000_000:
+            raise SystemExit(f"oversized support file: {path}")
+
+
+for argument in sys.argv[1:]:
+    directory = Path(argument)
+    try:
+        validate(directory)
+    except (Exception, SystemExit):
+        print(directory.name)
+        raise
 PY
-  then
-    retain_or_fail "exported Apple skill failed validation: $name"
-  fi
+); then
+  retain_or_fail "exported Apple skill failed validation: $invalid_skill"
+fi
+
+for skill_dir in "${exported_skills[@]}"; do
+  name=${skill_dir##*/}
   cat > "$skill_dir/UPSTREAM" <<EOF
 source: xcrun agent skills export (Apple Xcode built-in skills)
 xcode_version: ${xcode_version:-unknown}
@@ -140,13 +158,10 @@ xcode_build: ${xcode_build:-unknown}
 exported: $today
 skill: $name
 EOF
-  count=$((count + 1))
 done
 
-[ "$count" -gt 0 ] || retain_or_fail 'Apple skill export produced no skills'
-
-for skill_dir in "$tmp_dir/export"/*/; do
-  name=$(basename "$skill_dir")
+for skill_dir in "${exported_skills[@]}"; do
+  name=${skill_dir##*/}
   for root in "${roots[@]}"; do
     sync_dir "$skill_dir" "$root/$name" || retain_or_fail "could not update $root/$name"
   done

@@ -5,6 +5,7 @@
 configure_codex_home() {
   local codex_home=$1
   local skill agent legacy_ultragoogle legacy_target legacy_resolved
+  local -a links=()
 
   install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$codex_home/AGENTS.md"
   install_link "$CONFIGS_DIR/codex/codex.toml" "$codex_home/config.toml"
@@ -49,20 +50,21 @@ configure_codex_home() {
     babysit-pr \
     leaving-pr-comments
   do
-    install_link "$OPENCODE_CONFIG_DIR/skills/$skill" "$codex_home/skills/$skill"
+    links+=("$OPENCODE_CONFIG_DIR/skills/$skill" "$codex_home/skills/$skill")
   done
 
-  install_link "$CONFIGS_DIR/codex/skills/cavecrew" "$codex_home/skills/cavecrew"
+  links+=("$CONFIGS_DIR/codex/skills/cavecrew" "$codex_home/skills/cavecrew")
 
   for agent in "$CONFIGS_DIR"/codex/agents/*.toml; do
-    install_link "$agent" "$codex_home/agents/${agent##*/}"
+    links+=("$agent" "$codex_home/agents/${agent##*/}")
   done
+  install_links "${links[@]}"
 }
 
 configure_codex() {
   local codex_home
 
   for codex_home in "$HOME/.codex" "$HOME/.codex-2" "$HOME/.codex-3"; do
-    configure_codex_home "$codex_home"
+    configure_codex_home "$codex_home" || return
   done
 }

@@ -71,6 +71,7 @@ function fisher --argument-names cmd --description "A plugin manager for Fish"
 
             set --local pid_list
             set --local source_plugins
+            set --local failed_plugins
             set --local fetch_plugins $update_plugins $install_plugins
             set --local fish_path (status fish-path)
 
@@ -82,9 +83,9 @@ function fisher --argument-names cmd --description "A plugin manager for Fish"
 
                 command mkdir -p $source/{completions,conf.d,themes,functions}
 
-                $fish_path --command "
+                $fish_path --no-config --command "
                     if test -e $plugin
-                        command cp -Rf $plugin/* $source
+                        command cp -Rf $plugin/* $source; or command rm -rf $source
                     else
                         set temp (command mktemp -d)
                         set repo (string split -- \@ $plugin) || set repo[2] HEAD
@@ -98,8 +99,9 @@ function fisher --argument-names cmd --description "A plugin manager for Fish"
 
                         echo Fetching (set_color --underline)\$url(set_color normal)
 
-                        if command curl -q --silent -L \$url | command tar -xzC \$temp -f - 2>/dev/null
-                            command cp -Rf \$temp/*/* $source
+                        if command curl -q --fail --silent --show-error --location --connect-timeout 15 --max-time 120 \$url -o \$temp/archive.tar.gz
+                            and command tar -xzC \$temp -f \$temp/archive.tar.gz
+                            and command cp -Rf \$temp/*/* $source
                         else
                             echo fisher: Invalid plugin name or host unavailable: \\\"$plugin\\\" >&2
                             command rm -rf $source
@@ -118,6 +120,7 @@ function fisher --argument-names cmd --description "A plugin manager for Fish"
 
             for plugin in $fetch_plugins
                 if set --local source $source_plugins[(contains --index -- "$plugin" $fetch_plugins)] && test ! -e $source
+                    set --append failed_plugins $plugin
                     if set --local index (contains --index -- "$plugin" $install_plugins)
                         set --erase install_plugins[$index]
                     else
@@ -163,17 +166,33 @@ function fisher --argument-names cmd --description "A plugin manager for Fish"
                     set --local conflict_files
 
                     for file in (string replace -- $source/ $fisher_path/ $files)
-                        contains -- $file $user_files && set --append conflict_files $file
+                        if contains -- $file $user_files
+                            # Adopt identical vendored files without overwriting local edits.
+                            set --local original (string replace -- $fisher_path/ $source/ $file)
+                            command cmp -s -- $original $file || set --append conflict_files $file
+                        end
                     end
 
                     if set --query conflict_files[1] && set --erase install_plugins[$index]
                         echo -s "fisher: Cannot install \"$plugin\": please remove or move conflicting files first:" \n"        "$conflict_files >&2
+                        set --append failed_plugins $plugin
                         continue
                     end
                 end
 
-                for file in (string replace -- $source/ "" $files)
-                    command cp -RLf $source/$file $fisher_path/$file
+                for directory in functions themes conf.d completions
+                    set --local copy_files $source/$directory/*
+                    set --query copy_files[1] || continue
+
+                    # Batch ordinary files; retain exact copy semantics for directories.
+                    set --local directories $source/$directory/*/ $fisher_path/$directory/*/
+                    if set --query directories[1]
+                        for file in (string replace -- $source/ "" $copy_files)
+                            command cp -RLf $source/$file $fisher_path/$file
+                        end
+                    else
+                        command cp -RLf $copy_files $fisher_path/$directory/
+                    end
                 end
 
                 set --local plugin_files_var _fisher_(string escape --style=var -- $plugin)_files
@@ -219,6 +238,9 @@ function fisher --argument-names cmd --description "A plugin manager for Fish"
                 test $total[2] = 0 || echo "Updated $total[2]") (
                 test $total[3] = 0 || echo "Removed $total[3]")
             ) plugin/s
+            if set --query failed_plugins[1]
+                return 1
+            end
         case \*
             echo "fisher: Unknown command: \"$cmd\"" >&2 && return 1
     end

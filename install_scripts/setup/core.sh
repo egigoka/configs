@@ -113,3 +113,42 @@ install_link() {
 
   ln -s -- "$link_target" "$dst"
 }
+
+# Check large link sets in one process, then use the normal installer for any
+# missing or changed link. Results live only for this call, never across runs.
+install_links() {
+  local pending index
+  local -a links=("$@")
+  [ "$(($# % 2))" -eq 0 ] || return 1
+  [ "$#" -gt 0 ] || return 0
+  if ! command -v python3 >/dev/null 2>&1; then
+    while [ "$#" -gt 0 ]; do
+      install_link "$1" "$2" || return
+      shift 2
+    done
+    return 0
+  fi
+  pending=$(python3 - "$@" <<'PY'
+import os
+import sys
+
+links = sys.argv[1:]
+for index in range(0, len(links), 2):
+    source, destination = links[index:index + 2]
+    destination = destination.rstrip("/")
+    try:
+        target = os.readlink(destination)
+        if os.path.isabs(source):
+            current = not os.path.isabs(target) and os.path.samefile(source, destination)
+        else:
+            current = target == source
+    except OSError:
+        current = False
+    if not current:
+        print(index)
+PY
+  ) || return
+  for index in $pending; do
+    install_link "${links[$index]}" "${links[$((index + 1))]}" || return
+  done
+}

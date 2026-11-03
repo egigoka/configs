@@ -16,7 +16,7 @@
 10. `setup_desktop_configs`
 11. Replace the setup process with Fish
 
-`install_agent_tools` runs Graphify, Usage, and CUA driver installation alongside the foreground OpenCode installation. The Graphify worker also refreshes the SwiftUI expert skill before agent configuration begins. Global npm and system package installs remain sequential. Usage installs once per run.
+`install_agent_tools` overlaps three independent workers with foreground OpenCode and CUA driver installation. One worker updates local plugin builds and Usage. Another updates Graphify, SwiftUI, and Caveman. The third refreshes Unslop, selected agent skills, and Apple skills. Global npm and system package installs remain sequential. Usage installs once per run.
 
 OpenCode skips reinstallation when its installed version matches the latest release and `opencode run --help` succeeds. Failed version lookups or CLI checks fall back to the installer.
 
@@ -28,7 +28,7 @@ Graphify and CUA driver release checks prefer authenticated `gh` requests, then 
 
 Graphify installs use standard CPython 3.13 for compatibility with its native tree-sitter dependencies. This overrides uv's default interpreter, which may be a newer or free-threaded build. uv downloads a compatible interpreter if needed.
 
-`setup_agent_configs` updates Caveman alongside Unslop, selected agent skills, and Apple skills. Each updater writes separate skill directories; only Caveman touches agent configuration during this group. Later updates that share those configuration files wait for the group to finish.
+Agent configuration waits for all tool and skill workers to finish. Only Caveman writes agent configuration during this group. Standalone `setup_agent_configs` calls still refresh shared skills before changing configuration.
 
 Caveman keeps a source checkout under `${XDG_CACHE_HOME:-$HOME/.cache}/configs/caveman` and fetches upstream HEAD on every run. Its OpenCode installer runs directly with Node and repairs vendored assets even when upstream is unchanged. Failed checkout refreshes or installer runs fall back to the npm installer. Local configuration and the custom plugin server remain preserved.
 
@@ -46,7 +46,17 @@ Terminals show a colored progress bar, completed phase counts, and elapsed time.
 
 Foreground commands keep their output and terminal input. Background tasks save output in a private temporary directory printed at startup. Failed tasks print their logs and stop the group. Cancellation stops worker process groups, including child installers. Logs remain available after setup exits.
 
+Background plugin builds disable Git and SSH prompts. Failed builds retry in the foreground after workers finish, using the caller's original credentials and terminal input. Sequential mode runs builds directly in the foreground. Update checks still contact upstream on every run.
+
 Homebrew package checks share an inventory cache for each run. Cache misses still resolve aliases through Homebrew. Normal absolute paths use Bash string operations to calculate relative symlink targets. Paths with dot segments, repeated separators, or relative destination parents use Python for normalization. Existing relative symlinks skip Python when they already point to the source. Agent-link loops extract filenames in Bash.
+
+Agent link sets check current relative symlinks together in one Python process. Missing or changed links use the same backup and repair rules as individual links. Results apply only to that call; every run checks links again.
+
+Mutable Linux hosts check installed commands before querying package aliases. Package providers vary by distribution: `coreutils` supplies `dircolors`, `psmisc` supplies `pstree`, and Arch supplies `gh` through `github-cli`. Setup installs CUA's XInput and xkbcommon runtime libraries, `jq`, and the `zstd` extractor when needed. Rocky uses Starship's official installer because its default repositories lack the package. Required prerequisite failures stop setup.
+
+Fish configures command paths for interactive and noninteractive sessions so SSH commands can find user-installed tools and Nix profiles.
+
+Fisher adopts byte-identical vendored plugin files. Conflicting local edits remain untouched and stop setup. Failed downloads and extraction also return failure instead of silently skipping plugins. Fetch workers skip Fish startup configuration.
 
 ## Files
 

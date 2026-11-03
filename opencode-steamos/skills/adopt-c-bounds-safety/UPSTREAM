@@ -1,5 +1,5 @@
 source: xcrun agent skills export (Apple Xcode built-in skills)
-xcode_version: 27.1
-xcode_build: 27A9275
-exported: 2026-10-27
+xcode_version: 27.2
+xcode_build: 27B52
+exported: 2026-11-03
 skill: adopt-c-bounds-safety

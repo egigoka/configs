@@ -330,5 +330,48 @@ class SetupRuntimeTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
 
 
+    def test_link_batch_checks_current_links_and_repairs_changes(self):
+        result = self.run_bash(f'source "{MODULES}/core.sh"\n' + """
+            mkdir -p 'source space' home
+            echo original >home/replaced
+            install_links "$PWD/source space" "$PWD/home/current" \
+              "$PWD/source space" "$PWD/home/replaced" || exit 1
+            test "$(cat home/replaced.preinstall)" = original || exit 2
+            # Correct relative links must not invoke the per-link installer.
+            eval "$(declare -f install_link | sed '1s/install_link/original_install_link/')"
+            install_link() { echo "$2" >>repairs; original_install_link "$@"; }
+            install_links "$PWD/source space" "$PWD/home/current" \
+              "$PWD/source space" "$PWD/home/replaced" || exit 3
+            test ! -f repairs || exit 4
+            rm home/current
+            ln -s "$PWD/source space" home/current
+            install_links "$PWD/source space" "$PWD/home/current" || exit 5
+            test "$(readlink home/current)" = '../source space' || exit 6
+            test "$(wc -l <repairs | tr -d ' ')" = 1 || exit 7
+            rm home/current
+            ln -s ../missing home/current
+            install_links "$PWD/source space" "$PWD/home/current" || exit 8
+            test "$(readlink home/current)" = '../source space' || exit 9
+            install_links '../source space' home/relative || exit 10
+            test "$(readlink home/relative)" = '../source space' || exit 11
+            install_links "$PWD/missing" "$PWD/home/dangling" || exit 12
+            test "$(readlink home/dangling)" = ../missing || exit 13
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_link_batch_propagates_check_and_repair_failures(self):
+        result = self.run_bash(f'source "{MODULES}/core.sh"\n' + """
+            install_link() { return 17; }
+            install_links missing destination
+            test "$?" = 17 || exit 1
+            python3() { return 23; }
+            install_links missing destination
+            test "$?" = 23 || exit 2
+            install_links odd
+            test "$?" != 0 || exit 3
+        """)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -65,12 +65,45 @@ install_if_missing() {
   done
 }
 
+install_starship() {
+  command -v starship >/dev/null 2>&1 && return 0
+  if [ "${ID:-}" != rocky ]; then
+    install_if_missing starship
+    return
+  fi
+
+  # Rocky's default repositories do not ship Starship. Use its official installer.
+  local installer result
+  installer=$(mktemp) || return
+  if curl --fail --location --silent --show-error --connect-timeout 15 --max-time 120 \
+    https://raw.githubusercontent.com/starship/starship/master/install/install.sh -o "$installer"; then
+    mkdir -p "$HOME/.local/bin" && sh "$installer" --yes --bin-dir "$HOME/.local/bin"
+    result=$?
+  else
+    result=$?
+  fi
+  rm -f "$installer"
+  return "$result"
+}
+
+install_cua_runtime_packages() {
+  [ "${SETUP_OS:-}" = Linux ] || return 0
+  # The upstream binary links XInput and xkbcommon even on headless hosts.
+  case "${ID:-}" in
+    debian|ubuntu|droidian) install_if_missing libxi6 libxkbcommon0 ;;
+    arch) install_if_missing libxi libxkbcommon ;;
+    opensuse-*) install_if_missing libXi6 libxkbcommon0 ;;
+    rocky) install_if_missing libXi libxkbcommon ;;
+    alpine) install_if_missing libxi libxkbcommon ;;
+  esac
+}
+
 # if no package
 install_autojump() {
   local previous_dir=$PWD
   local previous_shell=$SHELL
 
-  git clone https://github.com/wting/autojump.git "$CONFIGS_DIR/autojump" || return
+  git clone --depth 1 https://github.com/wting/autojump.git "$CONFIGS_DIR/autojump" || return
   cd "$CONFIGS_DIR/autojump" || return
   export SHELL=/bin/zsh
   python3 "$CONFIGS_DIR/autojump/install.py"

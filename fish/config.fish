@@ -1,3 +1,31 @@
+### PATH
+set -gx BUN_INSTALL ~/.bun
+ensure_path $BUN_INSTALL/bin
+ensure_path ~/.npm-global/bin
+ensure_path ~/go/bin
+ensure_path ~/.cargo/bin
+ensure_path ~/.local/bin
+ensure_path ~/.filen-cli/bin
+ensure_path /opt/homebrew/bin
+ensure_path /opt/homebrew/sbin
+ensure_path /opt/homebrew/opt/llvm/bin
+ensure_path /opt/homebrew/opt/ccache/libexec
+ensure_path /opt/homebrew/opt/ffmpeg-full/bin
+ensure_path /opt/homebrew/opt/imagemagick-full/bin
+ensure_path /opt/local/bin
+ensure_path /opt/local/sbin
+ensure_path /usr/games
+ensure_path /usr/sbin
+ensure_path /usr/local/bin
+ensure_path /home/linuxbrew/.linuxbrew/bin
+ensure_path ~/.opencode/bin
+ensure_path ~/node_modules/.bin
+
+# Nix/Home Manager profiles should win over native package managers.
+ensure_path /nix/var/nix/profiles/default/bin
+ensure_path ~/.local/state/nix/profile/bin
+ensure_path ~/.nix-profile/bin
+
 if status is-interactive
   # Commands to run in interactive sessions can go here
   set -l _platform (uname -s)
@@ -21,34 +49,6 @@ if status is-interactive
           set -gx SSH_CONNECTION "sudo-i"
       end
   end
-
-  ### PATH
-  set -gx BUN_INSTALL ~/.bun
-  ensure_path $BUN_INSTALL/bin
-  ensure_path ~/.npm-global/bin
-  ensure_path ~/go/bin
-  ensure_path ~/.cargo/bin
-  ensure_path ~/.local/bin
-  ensure_path ~/.filen-cli/bin
-  ensure_path /opt/homebrew/bin
-  ensure_path /opt/homebrew/sbin
-  ensure_path /opt/homebrew/opt/llvm/bin
-  ensure_path /opt/homebrew/opt/ccache/libexec
-  ensure_path /opt/homebrew/opt/ffmpeg-full/bin
-  ensure_path /opt/homebrew/opt/imagemagick-full/bin
-  ensure_path /opt/local/bin
-  ensure_path /opt/local/sbin
-  ensure_path /usr/games
-  ensure_path /usr/sbin
-  ensure_path /usr/local/bin
-  ensure_path /home/linuxbrew/.linuxbrew/bin
-  ensure_path ~/.opencode/bin
-  ensure_path ~/node_modules/.bin
-
-  # Nix/Home Manager profiles should win over native package managers.
-  ensure_path /nix/var/nix/profiles/default/bin
-  ensure_path ~/.local/state/nix/profile/bin
-  ensure_path ~/.nix-profile/bin
 
   ### ALIASES
   # tar

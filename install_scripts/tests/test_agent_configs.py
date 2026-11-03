@@ -142,6 +142,7 @@ configure_caveman_session_models() {{
 }}
 bash() {{ :; }}
 install_link() {{ :; }}
+install_links() {{ :; }}
 configure_claude_mcp_servers() {{ :; }}
 configure_codex() {{ :; }}
 setup_agent_configs
@@ -156,6 +157,10 @@ source "{MODULES}/progress.sh"
 setup_progress_init 1 || exit
 CONFIGS_DIR=$HOME/checkout
 OPENCODE_CONFIG_DIR=$CONFIGS_DIR/opencode
+prepare_opencode_tools() {{ :; }}
+install_opencode_builds() {{ :; }}
+update_setup_vendor_skills() {{ :; }}
+update_setup_caveman() {{ echo caveman >>"$TEST_TRACE"; }}
 configure_graphify_agent() {{ echo graphify >>"$TEST_TRACE"; }}
 install_usage() {{ :; }}
 install_cua_driver() {{ :; }}
@@ -182,9 +187,83 @@ install_opencode_tools() {{
 }}
 install_agent_tools || exit
 [ -f "$HOME/swiftui.done" ] || exit 16
+[ "$SETUP_AGENT_SKILLS_READY" -eq 1 ] || exit 17
 ''')
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertEqual(self.calls(), ["graphify"])
+        self.assertEqual(self.calls(), ["graphify", "caveman"])
+
+    def test_build_retry_waits_for_workers_and_keeps_terminal_environment(self):
+        for retry_status in (0, 29):
+            with self.subTest(retry_status=retry_status):
+                self.trace.unlink(missing_ok=True)
+                result = self.run_config(f'''
+source "{MODULES}/agents.sh"
+source "{MODULES}/progress.sh"
+setup_progress_init 1 || exit
+CONFIGS_DIR=$HOME/checkout
+OPENCODE_CONFIG_DIR=$CONFIGS_DIR/opencode
+unset GIT_TERMINAL_PROMPT GIT_ASKPASS SSH_ASKPASS GCM_INTERACTIVE GIT_SSH_COMMAND
+rm -f "$HOME/tools.done" "$HOME/vendor.done"
+prepare_opencode_tools() {{ :; }}
+install_opencode_tools() {{ touch "$HOME/tools.done"; }}
+install_cua_driver() {{ :; }}
+install_usage() {{ :; }}
+prepare_external_agent_skills() {{ :; }}
+update_setup_vendor_skills() {{ touch "$HOME/vendor.done"; }}
+install_opencode_builds() {{
+  if [ "${{GIT_TERMINAL_PROMPT:-}}" = 0 ]; then
+    [ "$GIT_ASKPASS:$SSH_ASKPASS:$GCM_INTERACTIVE" = false:false:Never ] || exit 31
+    case "$GIT_SSH_COMMAND" in *-oBatchMode=yes) ;; *) exit 32 ;; esac
+    echo background >>"$TEST_TRACE"
+    return 23
+  fi
+  [ -f "$HOME/tools.done" ] && [ -f "$HOME/vendor.done" ] || return 33
+  [ -z "${{GIT_ASKPASS+x}}${{SSH_ASKPASS+x}}${{GCM_INTERACTIVE+x}}${{GIT_SSH_COMMAND+x}}" ] || return 34
+  echo foreground >>"$TEST_TRACE"
+  return {retry_status}
+}}
+install_agent_tools
+status=$?
+[ "$status" -eq {retry_status} ] || exit 35
+[ "$SETUP_AGENT_SKILLS_READY" -eq {int(retry_status == 0)} ] || exit 36
+''')
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(self.calls(), ["background", "foreground"])
+
+    def test_one_job_runs_updates_once_with_terminal_access(self):
+        self.environment["SETUP_JOBS"] = "1"
+        result = self.run_config(f'''
+source "{MODULES}/agents.sh"
+source "{MODULES}/progress.sh"
+setup_progress_init 1 || exit
+CONFIGS_DIR=$HOME/checkout
+OPENCODE_CONFIG_DIR=$CONFIGS_DIR/opencode
+unset GIT_TERMINAL_PROMPT
+prepare_opencode_tools() {{ echo prepare >>"$TEST_TRACE"; }}
+install_opencode_tools() {{ echo tools >>"$TEST_TRACE"; }}
+install_cua_driver() {{ echo cua >>"$TEST_TRACE"; }}
+install_opencode_builds() {{
+  [ -z "${{GIT_TERMINAL_PROMPT+x}}" ] || return 31
+  echo builds >>"$TEST_TRACE"
+}}
+install_usage() {{ echo usage >>"$TEST_TRACE"; }}
+configure_graphify_agent() {{ echo graphify >>"$TEST_TRACE"; }}
+bash() {{
+  [ "$1" = "$CONFIGS_DIR/install_scripts/update_swiftui_expert_skill.sh" ] || return 32
+  echo swiftui >>"$TEST_TRACE"
+}}
+update_setup_caveman() {{ echo caveman >>"$TEST_TRACE"; }}
+update_setup_unslop_skill() {{ echo unslop >>"$TEST_TRACE"; }}
+update_setup_selected_skills() {{ echo selected >>"$TEST_TRACE"; }}
+update_setup_apple_skills() {{ echo apple >>"$TEST_TRACE"; }}
+install_agent_tools || exit
+[ "$SETUP_AGENT_SKILLS_READY" -eq 1 ] || exit 33
+''')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.calls(), [
+            "prepare", "tools", "cua", "builds", "usage", "graphify", "swiftui",
+            "caveman", "unslop", "selected", "apple",
+        ])
 
 
 if __name__ == "__main__":

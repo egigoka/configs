@@ -53,13 +53,25 @@ all_installed() {
   return 0
 }
 
-read_field() {
-  local file=$1 field=$2 line prefix
-  prefix="$field: "
+upstream_current() {
+  local file=$1 expected_commit=$2 expected_porter=$3 line commit_seen=0 porter_seen=0
+  # Read both fields once without forking a command substitution per field.
   while IFS= read -r line; do
     case "$line" in
-      "$prefix"*) printf '%s\n' "${line#"$prefix"}"; return 0 ;;
+      'commit: '*)
+        if [ "$commit_seen" -eq 0 ]; then
+          [ "${line#'commit: '}" = "$expected_commit" ] || return 1
+          commit_seen=1
+        fi
+        ;;
+      'porter_sha256: '*)
+        if [ "$porter_seen" -eq 0 ]; then
+          [ "${line#'porter_sha256: '}" = "$expected_porter" ] || return 1
+          porter_seen=1
+        fi
+        ;;
     esac
+    [ "$commit_seen$porter_seen" = 11 ] && return 0
   done < "$file"
   return 1
 }
@@ -75,26 +87,17 @@ hash_file() {
 }
 
 all_current() {
-  local matt_ref=$1 pstack_ref=$2 tstack_ref=$3 porter_ref=$4 root name actual
+  local matt_ref=$1 pstack_ref=$2 tstack_ref=$3 porter_ref=$4 root name
   all_installed || return 1
   for root in "${roots[@]}"; do
     for name in "${matt_names[@]}"; do
-      actual=$(read_field "$root/$name/UPSTREAM" commit) || return 1
-      [ "$actual" = "$matt_ref" ] || return 1
-      actual=$(read_field "$root/$name/UPSTREAM" porter_sha256) || return 1
-      [ "$actual" = "$porter_ref" ] || return 1
+      upstream_current "$root/$name/UPSTREAM" "$matt_ref" "$porter_ref" || return 1
     done
     for name in "${pstack_names[@]}"; do
-      actual=$(read_field "$root/$name/UPSTREAM" commit) || return 1
-      [ "$actual" = "$pstack_ref" ] || return 1
-      actual=$(read_field "$root/$name/UPSTREAM" porter_sha256) || return 1
-      [ "$actual" = "$porter_ref" ] || return 1
+      upstream_current "$root/$name/UPSTREAM" "$pstack_ref" "$porter_ref" || return 1
     done
     for name in "${tstack_names[@]}"; do
-      actual=$(read_field "$root/$name/UPSTREAM" commit) || return 1
-      [ "$actual" = "$tstack_ref" ] || return 1
-      actual=$(read_field "$root/$name/UPSTREAM" porter_sha256) || return 1
-      [ "$actual" = "$porter_ref" ] || return 1
+      upstream_current "$root/$name/UPSTREAM" "$tstack_ref" "$porter_ref" || return 1
     done
   done
   return 0

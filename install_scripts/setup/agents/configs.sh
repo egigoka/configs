@@ -69,8 +69,10 @@ PY
 
 setup_agent_configs() {
   # opencode
-  setup_parallel "Shared skills" --foreground update_setup_caveman \
-    update_setup_unslop_skill update_setup_selected_skills update_setup_apple_skills || return
+  if [ "${SETUP_AGENT_SKILLS_READY:-0}" -ne 1 ]; then
+    setup_parallel "Shared skills" --foreground update_setup_caveman \
+      update_setup_unslop_skill update_setup_selected_skills update_setup_apple_skills || return
+  fi
   configure_caveman_session_models "$OPENCODE_CONFIG_DIR"
   bash "$CONFIGS_DIR/install_scripts/update_ponytail.sh" "$OPENCODE_CONFIG_DIR"
   bash "$CONFIGS_DIR/install_scripts/update_frontend_design_skill.sh" "$OPENCODE_CONFIG_DIR"
@@ -90,41 +92,45 @@ setup_agent_configs() {
   # claude skills/commands/agents: canonical mapping lives in configs/claude/
   # (symlinks into opencode), live homes link to the repo copies.
   local repo_entry entry_name
+  local -a links=()
   mkdir -p "$CONFIGS_DIR/claude/skills" "$CONFIGS_DIR/claude/commands" "$CONFIGS_DIR/claude/agents"
   for repo_entry in "$OPENCODE_CONFIG_DIR"/skills/*/; do
     entry_name=${repo_entry%/}
     entry_name=${entry_name##*/}
-    install_link "$OPENCODE_CONFIG_DIR/skills/$entry_name" "$CONFIGS_DIR/claude/skills/$entry_name"
+    links+=("$OPENCODE_CONFIG_DIR/skills/$entry_name" "$CONFIGS_DIR/claude/skills/$entry_name")
   done
   for repo_entry in "$OPENCODE_CONFIG_DIR"/commands/*.md; do
     entry_name=${repo_entry##*/}
-    install_link "$OPENCODE_CONFIG_DIR/commands/$entry_name" "$CONFIGS_DIR/claude/commands/$entry_name"
+    links+=("$OPENCODE_CONFIG_DIR/commands/$entry_name" "$CONFIGS_DIR/claude/commands/$entry_name")
   done
   for repo_entry in "$OPENCODE_CONFIG_DIR"/agents/*.md; do
     entry_name=${repo_entry##*/}
-    install_link "$OPENCODE_CONFIG_DIR/agents/$entry_name" "$CONFIGS_DIR/claude/agents/$entry_name"
+    links+=("$OPENCODE_CONFIG_DIR/agents/$entry_name" "$CONFIGS_DIR/claude/agents/$entry_name")
   done
+  install_links "${links[@]}" || return
   # prune repo links whose opencode source is gone (keep real dirs like sentry-cli)
   for repo_entry in "$CONFIGS_DIR"/claude/skills/* "$CONFIGS_DIR"/claude/commands/* "$CONFIGS_DIR"/claude/agents/*; do
     [ -L "$repo_entry" ] && [ ! -e "$repo_entry" ] && rm -- "$repo_entry"
   done
+  links=()
   for repo_entry in "$CONFIGS_DIR"/claude/skills/* "$CONFIGS_DIR"/claude/commands/* "$CONFIGS_DIR"/claude/agents/*; do
     entry_name=${repo_entry##*/}
     case "$repo_entry" in
       */skills/*)
-        install_link "$repo_entry" "$HOME/.claude/skills/$entry_name"
-        install_link "$repo_entry" "$HOME/.agents/skills/$entry_name"
+        links+=("$repo_entry" "$HOME/.claude/skills/$entry_name")
+        links+=("$repo_entry" "$HOME/.agents/skills/$entry_name")
         ;;
-      */commands/*) install_link "$repo_entry" "$HOME/.claude/commands/$entry_name" ;;
-      */agents/*) install_link "$repo_entry" "$HOME/.claude/agents/$entry_name" ;;
+      */commands/*) links+=("$repo_entry" "$HOME/.claude/commands/$entry_name") ;;
+      */agents/*) links+=("$repo_entry" "$HOME/.claude/agents/$entry_name") ;;
     esac
   done
+  install_links "${links[@]}" || return
 
   # claude MCP servers (mirror opencode.json "mcp"); user scope persists in ~/.claude.json
   configure_claude_mcp_servers || return
 
   # codex
-  configure_codex
+  configure_codex || return
 
   # forge (two-account setup: ~/forge1 + ~/forge2, symlinked via ~/forge)
   if [ -d "$HOME/forge" ] && [ ! -L "$HOME/forge" ]; then

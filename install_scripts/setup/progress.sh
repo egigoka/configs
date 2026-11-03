@@ -193,6 +193,9 @@ setup_parallel() (
       fi
     done
     [ "$failed" -eq 0 ] || return 1
+    if [ "$next" -lt "${#tasks[@]}" ] && [ "$running" -lt "$worker_limit" ]; then
+      continue
+    fi
     if [ "$done" -lt "${#tasks[@]}" ]; then
       setup_progress_draw "$done" "${#tasks[@]}" \
         "$label · $running running ${frames:tick%4:1}" 1
