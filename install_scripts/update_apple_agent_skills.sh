@@ -106,9 +106,10 @@ count=${#exported_skills[@]}
 [ "$count" -gt 0 ] || retain_or_fail 'Apple skill export produced no skills'
 
 # Validate the complete export in one interpreter before publishing any skill.
-if ! invalid_skill=$(python3 - "${exported_skills[@]}" <<'PY'
+if ! invalid_skill=$(python3 - "$configs_dir/opencode-macos/skills" "${exported_skills[@]}" <<'PY'
 from pathlib import Path
 import re
+import stat
 import sys
 
 
@@ -137,13 +138,45 @@ def validate(directory):
             raise SystemExit(f"oversized support file: {path}")
 
 
-for argument in sys.argv[1:]:
-    directory = Path(argument)
+directories = [Path(argument) for argument in sys.argv[2:]]
+for directory in directories:
     try:
         validate(directory)
     except (Exception, SystemExit):
         print(directory.name)
         raise
+
+
+def fields(raw):
+    # Xcode varies the order of these two fields, including block descriptions.
+    # Match only this exact layout; all values and body bytes must still agree.
+    match = re.fullmatch(
+        rb"---\n(?:(name:[^\n]*\n)(description:[^\n]*(?:\n[ \t][^\n]*)*\n)"
+        rb"|(description:[^\n]*(?:\n[ \t][^\n]*)*\n)(name:[^\n]*\n))---\n(.*)",
+        raw, re.DOTALL,
+    )
+    if match:
+        return (match[1] or match[4], match[2] or match[3], match[5])
+
+
+reference = Path(sys.argv[1])
+for directory in directories:
+    skill = directory / "SKILL.md"
+    raw = skill.read_bytes()
+    incoming = fields(raw)
+    if incoming is None:
+        continue
+    try:
+        installed = (reference / directory.name / "SKILL.md").read_bytes()
+    except OSError:
+        continue
+    if raw != installed and fields(installed) == incoming:
+        mode = stat.S_IMODE(skill.stat().st_mode)
+        try:
+            skill.chmod(mode | stat.S_IWUSR)
+            skill.write_bytes(installed)
+        finally:
+            skill.chmod(mode)
 PY
 ); then
   retain_or_fail "exported Apple skill failed validation: $invalid_skill"

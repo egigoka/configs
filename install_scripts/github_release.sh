@@ -16,7 +16,19 @@ github_release_tag() {
   local repository=$1 prefix=${2:-} endpoint response
   endpoint="repos/$repository/releases/latest"
   [ -z "$prefix" ] || endpoint="repos/$repository/releases?per_page=50"
-  if ! response=$(github_api_get "$endpoint"); then
+  response=
+  if [ -n "$prefix" ] && command -v gh >/dev/null 2>&1; then
+    # Keep GitHub's default release order, including component prereleases.
+    # Query only tags: REST includes several MB of unused release assets.
+    # shellcheck disable=SC2016
+    response=$(gh api graphql -f owner="${repository%%/*}" -f name="${repository#*/}" \
+      -f 'query=query($owner: String!, $name: String!) {
+        repository(owner: $owner, name: $name) {
+          releases(first: 50) { nodes { tagName } }
+        }
+      }' --jq '.data.repository.releases.nodes | map({tag_name: .tagName})' 2>/dev/null) || response=
+  fi
+  if [ -z "$response" ] && ! response=$(github_api_get "$endpoint"); then
     printf 'Could not fetch GitHub releases for %s; check gh authentication or API quota\n' "$repository" >&2
     return 1
   fi

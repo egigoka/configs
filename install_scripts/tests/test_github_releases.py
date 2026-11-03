@@ -72,6 +72,35 @@ class GitHubReleaseTests(unittest.TestCase):
         self.assertEqual(result.stdout.strip(), "cua-driver-rs-v0.38.0")
         self.assertIn("https://api.github.com/repos/trycua/cua/releases?per_page=50", self.trace.read_text())
 
+    def test_component_lookup_requests_only_tags_in_default_release_order(self):
+        self.response("gh", [
+            {"tag_name": "other-v2.0.0"},
+            {"tag_name": "cua-driver-rs-v0.38.0"},
+            {"tag_name": "cua-driver-rs-v0.37.0"},
+        ])
+        result = self.lookup("trycua/cua", "cua-driver-rs-v")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.strip(), "cua-driver-rs-v0.38.0")
+        trace = self.trace.read_text()
+        self.assertIn("gh api graphql -f owner=trycua -f name=cua", trace)
+        self.assertIn("releases(first: 50) { nodes { tagName } }", trace)
+        self.assertNotIn("orderBy", trace)
+        self.assertNotIn("releases?per_page", trace)
+        self.assertNotIn("curl", trace)
+
+    def test_graphql_failure_falls_back_to_authenticated_rest(self):
+        self.stub("gh", '''
+if [ "$2" = graphql ]; then exit 1; fi
+echo '[{"tag_name":"cua-driver-rs-v0.38.0","prerelease":true}]'
+''')
+        result = self.lookup("trycua/cua", "cua-driver-rs-v")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(result.stdout.strip(), "cua-driver-rs-v0.38.0")
+        trace = self.trace.read_text()
+        self.assertIn("gh api graphql", trace)
+        self.assertIn("gh api repos/trycua/cua/releases?per_page=50", trace)
+        self.assertNotIn("curl", trace)
+
     def test_http_failure_does_not_invoke_json_parser(self):
         self.stub("python3", "echo parser-should-not-run >&2; exit 99\n")
         result = self.lookup()

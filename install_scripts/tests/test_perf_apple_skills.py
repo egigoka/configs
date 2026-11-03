@@ -108,6 +108,38 @@ cp -R "$APPLE_TEST_EXPORT" "$5"
         self.assertEqual(before, {path: path.stat().st_mtime_ns for path in before})
         self.assertEqual(upstream.read_text(), "preserve existing metadata\n")
 
+    def test_metadata_field_order_does_not_republish_identical_skills(self):
+        exported = self.export / "app-resizability" / "SKILL.md"
+        for description in ("Example skill", "|\n  First line.\n  Second line."):
+            with self.subTest(description=description):
+                exported.chmod(0o644)
+                exported.write_text(
+                    f"---\nname: app-resizability\ndescription: {description}\n---\nnew body\n"
+                )
+                self.assertEqual(self.run_updater().returncode, 0)
+                before = {path: path.stat().st_mtime_ns for root in self.roots
+                          for path in root.rglob("*") if path.is_file()}
+                exported.write_text(
+                    f"---\ndescription: {description}\nname: app-resizability\n---\nnew body\n"
+                )
+                exported.chmod(0o444)
+                result = self.run_updater()
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertNotIn("retaining installed", result.stderr)
+                self.assertIn("Apple agent skills updated", result.stdout)
+                self.assertEqual(self.calls("cp"), 1)
+                self.assertEqual(self.calls("mv"), 0)
+                self.assertEqual(before, {path: path.stat().st_mtime_ns for path in before})
+
+    def test_reordered_metadata_with_changed_description_still_publishes(self):
+        self.assertEqual(self.run_updater().returncode, 0)
+        content = "---\ndescription: Changed description\nname: app-resizability\n---\nnew body\n"
+        (self.export / "app-resizability" / "SKILL.md").write_text(content)
+        result = self.run_updater()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        for root in self.roots:
+            self.assertEqual((root / "app-resizability" / "SKILL.md").read_text(), content)
+
     def test_support_file_changes_replace_tree_and_remove_stale_files(self):
         self.assertEqual(self.run_updater().returncode, 0)
         for root in self.roots:

@@ -16,7 +16,7 @@
 10. `setup_desktop_configs`
 11. Replace the setup process with Fish
 
-`install_agent_tools` overlaps three independent workers with foreground OpenCode and CUA driver installation. One worker updates local plugin builds and Usage. Another updates Graphify, SwiftUI, and Caveman. The third refreshes Unslop, selected agent skills, and Apple skills. Global npm and system package installs remain sequential. Usage installs once per run.
+`install_agent_tools` overlaps three independent workers with foreground OpenCode and CUA driver installation. One worker updates local plugin builds. Another updates Graphify, SwiftUI, and Caveman. The third refreshes Unslop, selected agent skills, and Apple skills, then installs Usage. Global npm and system package installs remain sequential. Usage installs once per run.
 
 OpenCode skips reinstallation when its installed version matches the latest release and `opencode run --help` succeeds. Failed version lookups or CLI checks fall back to the installer.
 
@@ -25,6 +25,8 @@ Mobile MCP, XcodeBuildMCP, and REA check npm for the latest version on every run
 The Codex auth fork and V2 plugins fetch upstream changes on every run. Successful builds are cached in each checkout's Git metadata. Unchanged checkouts skip `npm ci`, builds, and V2 tests when their dependencies and `dist/index.js` still exist. Changes to the revision, Node version, platform, architecture, npm version, `NODE_ENV`, or build recipe invalidate the cache. V2 plugins also track the Bun version. Every rebuild removes the previous success marker before it starts.
 
 Graphify and CUA driver release checks prefer authenticated `gh` requests, then fall back to anonymous HTTP. If release metadata is unavailable, setup retains working installed binaries. Missing binaries still fail with a clear error. Failed HTTP responses never reach the JSON parser.
+
+Component release checks request only tags through GraphQL when `gh` is available. They retain GitHub's default release order and the same 50-release window, including prereleases. GraphQL failures fall back to the existing REST lookup.
 
 Graphify installs use standard CPython 3.13 for compatibility with its native tree-sitter dependencies. This overrides uv's default interpreter, which may be a newer or free-threaded build. uv downloads a compatible interpreter if needed.
 
@@ -52,9 +54,13 @@ Homebrew package checks share an inventory cache for each run. Cache misses stil
 
 Agent link sets check current relative symlinks together in one Python process. Missing or changed links use the same backup and repair rules as individual links. Results apply only to that call; every run checks links again.
 
+Apple skill exports still run every time. If Xcode only swaps the `name` and `description` fields, setup preserves their installed order. Values, body text, and support files still participate in change detection.
+
 Mutable Linux hosts check installed commands before querying package aliases. Package providers vary by distribution: `coreutils` supplies `dircolors`, `psmisc` supplies `pstree`, and Arch supplies `gh` through `github-cli`. Setup installs CUA's XInput and xkbcommon runtime libraries, `jq`, and the `zstd` extractor when needed. Rocky uses Starship's official installer because its default repositories lack the package. Required prerequisite failures stop setup.
 
 Fish configures command paths for interactive and noninteractive sessions so SSH commands can find user-installed tools and Nix profiles.
+
+Prerequisite writes to Fish universal variables use `--no-config` to avoid loading plugins for each setting. Fisher still loads the normal shell configuration before updating plugins.
 
 Fisher adopts byte-identical vendored plugin files. Conflicting local edits remain untouched and stop setup. Failed downloads and extraction also return failure instead of silently skipping plugins. Fetch workers skip Fish startup configuration.
 

@@ -15,11 +15,11 @@ setup_standard_prerequisites() {
   # set micro as default editor on macOS (for current zsh session and persistent fish)
   if [ "$(uname -s)" = "Darwin" ]; then
     export EDITOR=micro
-    fish -c "set -Ux EDITOR micro"
+    fish --no-config -c "set -Ux EDITOR micro"
   fi
 
   # sponge: only purge history on shell exit (not after each command)
-  fish -c "set -Ux sponge_purge_only_on_exit true"
+  fish --no-config -c "set -Ux sponge_purge_only_on_exit true"
 
   # setup default shell
   case "$(uname -s)" in
@@ -39,7 +39,7 @@ setup_standard_prerequisites() {
 
   # add homebrew to fish path on macOS
   if [ -d /opt/homebrew/bin ]; then
-    fish -c "set -U fish_user_paths /opt/homebrew/bin \$fish_user_paths"
+    fish --no-config -c "set -U fish_user_paths /opt/homebrew/bin \$fish_user_paths"
   fi
 
   # custom zsh plugins (still needed for dircolors-solarized)

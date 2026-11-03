@@ -80,6 +80,25 @@ setup_agent_configs || exit
 ''')
         self.assertEqual(result.returncode, 0, result.stderr)
 
+    def test_usage_overlaps_builds_and_runs_once(self):
+        result = self.run_setup(overrides='''
+wait_for_peer() {
+  touch "$HOME/$1.started"
+  for ((i=0; i<100; i++)); do
+    [ ! -f "$HOME/$2.started" ] || return 0
+    sleep 0.01
+  done
+  return 17
+}
+install_opencode_builds() { wait_for_peer builds usage; }
+install_usage() {
+  echo usage >>"$HOME/usage.calls"
+  wait_for_peer usage builds
+}
+''')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual((self.directory / "usage.calls").read_text().splitlines(), ["usage"])
+
     def test_required_failures_keep_config_barrier_closed(self):
         for name in ("prepare", "packages", "cua", "builds", "usage", "graphify", "swiftui", "caveman", "unslop", "selected", "apple"):
             with self.subTest(name=name):
