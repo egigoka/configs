@@ -5,12 +5,13 @@ import os
 import pathlib
 import subprocess
 import tempfile
+import tomllib
 import unittest
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 MODULES = ROOT / "install_scripts/setup"
-SERVERS = ("cua-driver", "xcode", "mobile-mcp", "xcodebuild-mcp", "safari-mcp", "sentry")
+SERVERS = ("cua-driver", "open-computer-use", "xcode", "mobile-mcp", "xcodebuild-mcp", "safari-mcp", "sentry")
 
 
 class AgentConfigTests(unittest.TestCase):
@@ -58,6 +59,29 @@ esac
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.calls(), [])
 
+    def test_open_computer_use_registered_in_all_repo_configs(self):
+        for path in sorted(ROOT.glob("*/opencode.json")):
+            with self.subTest(path=path):
+                mcp = json.loads(path.read_text())["mcp"]
+                server = mcp.get("servers", mcp)["open-computer-use"]
+                self.assertEqual(server["command"], ["open-computer-use", "mcp"])
+                self.assertFalse(server.get("disabled", False))
+                self.assertTrue(server.get("enabled", True))
+        config = tomllib.loads((ROOT / "codex/codex.toml").read_text())
+        server = config["mcp_servers"]["open-computer-use"]
+        self.assertEqual(server["command"], "open-computer-use")
+        self.assertEqual(server["args"], ["mcp"])
+
+    def test_missing_open_computer_use_registration_is_added(self):
+        self.write_config({name: {"command": name} for name in SERVERS if name != "open-computer-use"})
+        self.environment["TEST_MISSING"] = "open-computer-use"
+        result = self.run_config()
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(self.calls(), [
+            "mcp get open-computer-use",
+            "mcp add -s user open-computer-use -- open-computer-use mcp",
+        ])
+
     def test_missing_user_entry_checks_other_scopes_before_adding(self):
         self.write_config({name: {"command": name} for name in SERVERS if name != "mobile-mcp"})
         result = self.run_config()
@@ -84,7 +108,7 @@ esac
                 self.trace.unlink()
 
     def test_invalid_server_entries_fall_back_to_cli(self):
-        self.write_config(dict(zip(SERVERS, ({}, [], None, {"command": 3}, {"type": "http"}, {"type": "unknown"}))))
+        self.write_config(dict(zip(SERVERS, ({}, [], None, {"command": 3}, {"type": "http"}, {"type": "unknown"}, {}))))
         result = self.run_config()
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.calls(), [f"mcp get {name}" for name in SERVERS])

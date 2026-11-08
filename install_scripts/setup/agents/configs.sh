@@ -38,7 +38,7 @@ configure_claude_mcp_servers() {
 import json
 import sys
 
-names = ("cua-driver", "xcode", "mobile-mcp", "xcodebuild-mcp", "safari-mcp", "sentry")
+names = ("cua-driver", "open-computer-use", "xcode", "mobile-mcp", "xcodebuild-mcp", "safari-mcp", "sentry")
 
 def registered(server):
     if not isinstance(server, dict):
@@ -60,6 +60,7 @@ PY
   fi
 
   claude_mcp_server_present cua-driver "$user_servers" || claude mcp add -s user cua-driver -- cua-driver mcp || return
+  claude_mcp_server_present open-computer-use "$user_servers" || claude mcp add -s user open-computer-use -- open-computer-use mcp || return
   claude_mcp_server_present xcode "$user_servers" || claude mcp add -s user xcode -- xcrun mcpbridge || return
   claude_mcp_server_present mobile-mcp "$user_servers" || claude mcp add -s user mobile-mcp -e MOBILEMCP_DISABLE_TELEMETRY=1 -- mcp-server-mobile || return
   claude_mcp_server_present xcodebuild-mcp "$user_servers" || claude mcp add -s user xcodebuild-mcp -e XCODEBUILDMCP_SENTRY_DISABLED=true -- xcodebuildmcp mcp || return

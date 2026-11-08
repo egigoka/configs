@@ -2,6 +2,11 @@
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
     "servers": {
+      "open-computer-use": {
+        "type": "local",
+        "command": ["open-computer-use", "mcp"],
+        "disabled": false
+      },
       "cua-driver": {
         "type": "local",
         "command": [

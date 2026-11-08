@@ -25,6 +25,10 @@ max_depth = 1
 [mcp_servers.openaiDeveloperDocs]
 url = "https://developers.openai.com/mcp"
 
+[mcp_servers.open-computer-use]
+command = "open-computer-use"
+args = ["mcp"]
+
 [mcp_servers.node_repl]
 args = []
 command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"

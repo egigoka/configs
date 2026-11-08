@@ -138,6 +138,7 @@ prepare_opencode_tools() {
 }
 
 install_opencode_tools() {
+  install_latest_npm_packages open-computer-use || return
   bash "$CONFIGS_DIR/install_scripts/install_opencode.sh" || return
 
   local kilo_have kilo_latest

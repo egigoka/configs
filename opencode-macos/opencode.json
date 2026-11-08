@@ -59,6 +59,14 @@
           "mcp"
         ],
         "disabled": false
+      },
+      "open-computer-use": {
+        "type": "local",
+        "command": [
+          "open-computer-use",
+          "mcp"
+        ],
+        "disabled": false
       }
     },
     "timeout": {
