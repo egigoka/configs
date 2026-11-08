@@ -1,6 +1,7 @@
 {
   "plugins": [
     "@tarquinen/opencode-dcp@3.2.0",
+    "opencode-subagent-statusline@latest",
     "./cli-plugins/opencode-throughput-v2",
     "./cli-plugins/opencode-short-term-memory-v2",
     "./cli-plugins/opencode-codex-auth"
