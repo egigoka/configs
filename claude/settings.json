@@ -105,6 +105,10 @@
       "No capping"
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "bash \"$HOME/.claude/caveman-statusline.sh\""
+  },
   "effortLevel": "xhigh",
   "modelSettings": {
     "claude-opus-5-5": {

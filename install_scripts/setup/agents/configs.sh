@@ -89,6 +89,9 @@ setup_agent_configs() {
   # claude code
   install_link "$CONFIGS_DIR/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
   install_link "$CONFIGS_DIR/claude/settings.json" "$HOME/.claude/settings.json"
+  # stable path for settings.json statusLine; plugin cache dirs carry a version hash
+  install_link "$HOME/.claude/plugins/marketplaces/caveman/src/hooks/caveman-statusline.sh" \
+    "$HOME/.claude/caveman-statusline.sh"
 
   # claude skills/commands/agents: canonical mapping lives in configs/claude/
   # (symlinks into opencode), live homes link to the repo copies.
