@@ -52,13 +52,14 @@
       "mcp__cua-driver__launch_app",
       "mcp__cua-driver__list_windows",
       "mcp__cua-driver__page",
-      "mcp__cua-driver__end_session"
+      "mcp__cua-driver__end_session",
+      "Read(/Users/egigoka/Developer/pomodorough/apple/Sources/UITestRoomSecretStore.swift)"
     ],
     "deny": [
       "Read(**/*.env)",
       "Read(**/*.env.*)",
       "Read(**/*secrets.py)",
-      "Read(**/*secret*)",
+      "Read(**/*secrets.*)",
       "Read(**/*token*)",
       "Read(**/*.key)",
       "Read(**/*.pem)"
@@ -66,11 +67,113 @@
     "defaultMode": "auto"
   },
   "model": "opus",
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/egigoka/.config/iterm2/it2\" handle-agent-hook"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/egigoka/.config/iterm2/it2\" handle-agent-hook"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/egigoka/.config/iterm2/it2\" handle-agent-hook"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/egigoka/.config/iterm2/it2\" handle-agent-hook"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/egigoka/.config/iterm2/it2\" handle-agent-hook"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/egigoka/.config/iterm2/it2\" handle-agent-hook"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/egigoka/.config/iterm2/it2\" handle-agent-hook"
+          }
+        ]
+      }
+    ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/egigoka/.config/iterm2/it2\" handle-agent-hook"
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/egigoka/.config/iterm2/it2\" handle-agent-hook"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"/Users/egigoka/.config/iterm2/it2\" handle-agent-hook"
+          }
+        ]
+      }
+    ]
+  },
   "enabledPlugins": {
-    "swift-lsp@claude-plugins-official": true,
-    "frontend-design@claude-plugins-official": true,
+    "caveman@caveman": true,
     "clangd-lsp@claude-plugins-official": true,
-    "caveman@caveman": true
+    "frontend-design@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "caveman": {
@@ -112,10 +215,16 @@
   "effortLevel": "xhigh",
   "modelSettings": {
     "claude-opus-5-5": {
-      "effortLevel": "xhigh"
+      "effortLevel": "high"
+    },
+    "claude-fable-5-2": {
+      "effortLevel": "high"
     }
   },
   "awaySummaryEnabled": false,
+  "remote": {
+    "defaultEnvironmentId": "env_01JcCYCZAQWQ6pAWagR5mG6q"
+  },
   "tui": "fullscreen",
   "skipDangerousModePermissionPrompt": true,
   "theme": "auto",
@@ -149,8 +258,5 @@
       "**Trusted repo**: /Users/egigoka/Developer/slop/deal-tracker (no remotes configured — purely local working copy)",
       "**Org-specific CLIs**: None configured"
     ]
-  },
-  "remote": {
-    "defaultEnvironmentId": "env_01JcCYCZAQWQ6pAWagR5mG6q"
   }
 }

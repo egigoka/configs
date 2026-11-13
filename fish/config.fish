@@ -557,3 +557,5 @@ end
 # Added by LM Studio CLI (lms)
 set -gx PATH $PATH /Users/egigoka/.cache/lm-studio/bin
 # End of LM Studio CLI section
+
+export PATH="$PATH:$HOME/.local/bin"

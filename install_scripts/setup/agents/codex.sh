@@ -48,7 +48,8 @@ configure_codex_home() {
     full-stop \
     file-pr \
     babysit-pr \
-    leaving-pr-comments
+    leaving-pr-comments \
+    fleet
   do
     links+=("$OPENCODE_CONFIG_DIR/skills/$skill" "$codex_home/skills/$skill")
   done
