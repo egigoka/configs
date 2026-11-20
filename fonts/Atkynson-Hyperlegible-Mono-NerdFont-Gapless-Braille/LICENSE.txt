@@ -1,6 +1,9 @@
 Copyright 2020, Braille Institute of America, Inc. (https://www.brailleinstitute.org/), with
 Reserved Font Names: “ATKINSON” and “HYPERLEGIBLE”.
 
+Cyrillic glyphs are derived from Source Code Pro:
+Copyright 2023 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'.
+
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 https://openfontlicense.org
