@@ -37,7 +37,7 @@ Parallel scout: spawn 2-3 `cavecrew-investigator` calls in one message with diff
 
 ## Model overrides
 
-By default, cavecrew agents use the API session model. Set env vars in your shell before launching Claude Code to override per-agent:
+By default, `cavecrew-reviewer` and `cavecrew-investigator` pin `model: haiku` in their frontmatter; `cavecrew-builder` has no `model:` line (uses the API session default). Set env vars in your shell before launching Claude Code to override per-agent:
 
 | Env var | Agent |
 |---|---|
@@ -45,15 +45,18 @@ By default, cavecrew agents use the API session model. Set env vars in your shel
 | `CAVECREW_BUILDER_MODEL` | `cavecrew-builder` |
 | `CAVECREW_INVESTIGATOR_MODEL` | `cavecrew-investigator` |
 
-Example: override the reviewer model, keep others on default:
+Example: run reviewer on sonnet and keep others on default.
 
 ```sh
-export CAVECREW_REVIEWER_MODEL=your-model-name
+export CAVECREW_REVIEWER_MODEL=sonnet
 ```
 
-Use the same model name string you'd use in Claude Code agent frontmatter.
+Use the same model name strings you'd use in any Claude Code agent frontmatter (e.g. `haiku`, `sonnet`, `opus`).
 
-Overrides patch only the `model:` line in the installed agent's frontmatter; the prompt body is untouched and keeps receiving upstream updates. Plugin installs only; standalone hook installs have no local agent files to patch. Unset or blank = no change. The patch persists in the installed file until the plugin is updated or reinstalled.
+Overrides patch only `model:` line in installed agent frontmatter; prompt body
+stays untouched and continues receiving upstream updates. Only plugin installs
+have local agent files to patch. Empty variables do nothing. Patch persists until
+plugin update or reinstall.
 
 ## See also
 

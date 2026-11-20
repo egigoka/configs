@@ -741,17 +741,18 @@ def call_openai_compat(prompt: str) -> str:
 def call_claude(prompt: str) -> str:
     """Send a prompt to the configured compression provider.
 
-    Prefers the Anthropic SDK when ANTHROPIC_API_KEY and CAVEMAN_MODEL are set;
-    otherwise falls back to the ``claude --print`` CLI (which handles desktop
-    auth and uses the session model).
+    Prefers the Anthropic SDK when ANTHROPIC_API_KEY is set; otherwise falls
+    back to the ``claude --print`` CLI (which handles desktop auth). Set
+    ``CAVEMAN_COMPRESS_PROVIDER=opencode`` and ``CAVEMAN_COMPRESS_MODEL`` (or
+    ``CAVEMAN_MODEL``) to route compression through opencode instead, or
+    ``openai-compat`` for an OpenAI-compatible server such as local Ollama.
 
     On Windows the CLI subprocess decoding defaults to the system codepage
     (cp1251 / cp1252) and crashes on UTF-8 output — see issue #152. Pinning
     ``encoding="utf-8"`` with ``errors="replace"`` matches the CLI's actual
     native I/O and prevents the UnicodeDecodeError before validation can
     report. Windows users with non-ASCII content can also set
-    ``ANTHROPIC_API_KEY`` and ``CAVEMAN_MODEL`` to route through the SDK and
-    skip the subprocess.
+    ``ANTHROPIC_API_KEY`` to route through the SDK and skip the subprocess.
     """
     provider = configured_provider()
     if provider == PROVIDER_OPENCODE:
